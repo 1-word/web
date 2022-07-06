@@ -35,8 +35,33 @@
   top: 25%;
 }
 
+/* 임의의 영역 생성 */
+.scrollBar { 
+  width: 200px;
+  height: 200px;
+  overflow-y: scroll;
+}
+
+/* 아래의 모든 코드는 영역::코드로 사용 */
+
+.squareframe::-webkit-scrollbar {
+    width: 10px;  /* 스크롤바의 너비 */
+}
+
+.squareframe::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: #217af4; /* 스크롤바의 색상 */
+    
+    border-radius: 10px;
+}
+
+.squareframe::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+}
+
 .add .addframe .squareframe {
     position: absolute;
+    overflow: auto;
     /* background-color: rgba(36, 36, 36, 0.0392156862745098); */
     /* background-color: rgba(240, 240, 240, 100); */
     background-color: rgba(250, 250, 250, 100);
@@ -197,12 +222,57 @@
   background:url(/public/img/save_icon_over.png) no-repeat; 
 }
 
+.addGroup{
+    position: relative;
+    width: 450px;
+    height: 50.00px;
+    padding-bottom: 35px;
+    left: 30px;
+    display: flex;
+    flex-direction: row;
+}
+
+.addGroup .plus_btn{
+  position: relative;
+  width: 56.00px;
+  height: 56.00px;
+  left: 300px;
+  top: 1px;
+  background:url(/public/img/plus_icon.png) no-repeat;
+  border: none;
+}
+
+.addGroup .plus_btn:hover{
+    background:url(/public/img/plus_icon_over.png) no-repeat;
+  border: none;  
+}
+
+.addGroup .minus_btn{
+    position: relative;
+  width: 56.00px;
+  height: 56.00px;
+  left: 300px;
+  top: 1px;
+  background:url(/public/img/minus_icon.png) no-repeat;
+  border: none;
+}
+
+.addGroup .minus_btn:hover{
+  background:url(/public/img/minus_icon_over.png) no-repeat;
+  border: none;  
+}
+
 .add .addframe .add7cea4238 .addgrid {
   position: absolute;
-  width: 380.00px;
-  height: 332.00px;
+  /* width: 380.00px; */
+  overflow: auto;
+  width: 515.00px;
+  height: 351.00px;
+  /* height: 332.00px;*/
   left: 0.00px;
   top: 0.00px;
+  display: flex;
+  flex-direction:column;
 }
 
 .add .addframe .add7cea4238 .addgrid .x23876 {
@@ -224,25 +294,18 @@
     filter: drop-shadow(0px 1px 6px rgba(0, 0, 0, 0.1607843137254902));
     width: 223.00px;
     height: 44.00px;
-    left: 157.00px;
+    left: 150.00px;
 }
 
 .add .addframe .add7cea4238 .addgrid .xa20b892b {
-  position: absolute;
-  background-color: rgba(255, 255, 255, 0);
-  text-align: left;
-  line-height: 80.00px;
-  letter-spacing: -1.40px;
-  color: rgba(25, 25, 25, 1);
-  -webkit-text-stroke: 1.00px rgba(0, 0, 0, 0);
+  text-align: center;
   font-size: 28.00px;
-  font-weight: 400;
   font-style: normal;
   font-family: 'Noto Sans CJK KR', Arial;
-  width: 50.00px;
-  height: 41.00px;
+  width: 100px;
+  height: auto;
   left: 65.00px;
-  top: -17.50px;
+  top: 3px;
 }
 
 .add .addframe .add7cea4238 .addgrid .x7689 {

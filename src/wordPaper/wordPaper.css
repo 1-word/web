@@ -1028,44 +1028,24 @@ input:focus {outline:none;}
 }
 
 .wordPaper .framec6cc90c6 .frame .frame83f7e349 .wordea5202cf .xd9f3fdf8 {
-    position: absolute;
+    
       box-sizing: content-box;
-      -ms-transform: rotate(0.00deg);
-    -webkit-transform: rotate(0.00deg);
-    transform: rotate(0.00deg);
-    -ms-transform-origin: center;
-    -webkit-transform-origin: center;
-    transform-origin: center;
-      opacity: 1;
-      cursor: default;
-      margin-top: 0.00px;
-      margin-right: 0.00px;
-      margin-bottom: 0.00px;
-      margin-left: 0.00px;
-      padding-top: 0.00px;
-      padding-right: 0.00px;
-      padding-bottom: 0.00px;
-      padding-left: 0.00px;
-      background-color: rgba(255, 255, 255, 0);
       text-align: left;
-      line-height: 77.00px;
-      letter-spacing: -1.15px;
-      color: rgba(25, 25, 25, 1);
-      -webkit-text-stroke: 1.00px rgba(0, 0, 0, 0);
       font-size: 23.00px;
       font-weight: 400;
-    font-style: normal;
+      font-style: normal;
       font-family: 'Noto Sans CJK KR', Arial;
-      text-decoration: none;
-      box-shadow: none;
-      overflow-x: unset;
-      overflow-y: unset;
-      white-space: pre;
-      width: 242.00px;
-    height: 34.00px;
-    left: 91.00px;
-    top: 71.50px;
+      width: auto;  /* 텍스트 크기로 설정 */
 
+}
+
+.synonymsContainer{
+  position: absolute;
+  width: 500px;
+  height: 34px;
+  top: 95.50px;
+  left: 80px;
+  display: flex;  /* 요소 가로 정렬 */
 }
 
 .wordPaper .framec6cc90c6 .frame .frame83f7e349 .wordea5202cf .x16d628d6 {
