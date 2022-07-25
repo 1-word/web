@@ -16,8 +16,8 @@ async function connect(_method, _uri, _id, _data){
         let dev = "http://localhost:8088/"
         //운영
         let prod = "http://144.24.78.52:8088/";
-        let env = prod;
-        let url = env + _uri + "/" +_id
+        let host = process.env.REACT_APP_HOST;
+        let url = host + _uri + "/" +_id
         console.log("[axiosUtil url]: "+ url);
 
         await axios({
