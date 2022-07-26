@@ -68,7 +68,7 @@ jobs:
 
   deploy-docker:
     needs: build-image
-    name: deploy
+    name: deploy-server
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@master
@@ -86,6 +86,7 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER_NAME }}
-          key: ${{ secrets.PRIVATE_KEY }}
+          password: ${{ secrets.PASSWORD }}
+          #key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: "sudo docker-compose pull && sudo docker-compose up -d"
