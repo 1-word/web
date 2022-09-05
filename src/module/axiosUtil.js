@@ -9,7 +9,6 @@ import axios from "axios";
 */
 
 async function connect(_method, _uri, _id, _data){
-    try{
         var response = [];
 
         //개발
@@ -17,25 +16,22 @@ async function connect(_method, _uri, _id, _data){
         //운영
         let prod = "http://144.24.78.52:8088/";
         let host = process.env.REACT_APP_HOST;
-        let url = host + _uri + "/" +_id
+        let url = host + _uri + "/" +_id;
         console.log("[axiosUtil url]: "+ url);
 
-        await axios({
+        let res = await axios({
             method: _method,
             url: url,
             data: _data
-        }).then((res) => {      //.then의 res는 프로미스로 반환됨.
-            response  = res.data;
-            console.log("[axiosUtil res]: " + response);
-            return response;
-        }).catch((err) => {
-            console.log(err)
-        })
-    } catch(err){
-        console.log(err)
-    }
+        });
+        console.log(res);
+        if(res.status === 200){
+            let data = res.data;
+            console.log(data);
+            return data;
+        }
 
-    return response;
+        throw new Error(res.status);
 }
 
 export default connect;

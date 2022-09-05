@@ -39,28 +39,26 @@ function WordPaper(){
     var datasList = datas;
 
     useEffect(() => {
-    console.log('1234');
-    connect("get", "read", "")
-    .then((res)=> {
-      /*
-        res :
-          word_id: 기본키
-          word: 단어
-          mean: 뜻
-          wread: 발음
-          memo: 메모
-          synonyms: [ {
-                synonym_id: 기본키
-                synonym: 유의어
-                memo: 메모
-          }]
-      */
-     datasList = res;
-      setDatas(datasList);  //서버에서 가져온 값 매핑
-    })
-    .catch((err)=>{console.log(err)})
+        console.log('1234');
+        connect("get", "read", "")
+        .then( res => {
+        /*
+            res :
+            word_id: 기본키
+            word: 단어
+            mean: 뜻
+            wread: 발음
+            memo: 메모
+            synonyms: [{
+                    synonym_id: 기본키
+                    synonym: 유의어
+                    memo: 메모
+            }]
+        */
+            datasList = res;
+            setDatas(datasList);  //서버에서 가져온 값 매핑
+        }).catch( err => {console.log(err)})
     }, []);
-
    //const gridDatas = ["단어1"];
    console.log(datasList)
    // console.log(datasList[0].synonyms[0].synonym)
@@ -181,7 +179,7 @@ function WordPaper(){
         <button className="plus_btn" id="plus_btn" onClick={e => {handleModal("open")}}/>
         <div  className="framec6cc90c6">{/*단어 전체 그리드*/}
         {dataList}
-        {state.modal && (<ModalPortal>
+        {state.modal && (<ModalPortal id='modal'>
             <Add closePopup={e=> {handleModal("close")}}></Add>
         </ModalPortal>
         )
