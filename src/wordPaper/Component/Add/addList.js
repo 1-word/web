@@ -1,4 +1,3 @@
-import React, { useEffect, useState, useRef } from "react";
 import wordListStore, { INPUT_NAME } from "../../../stores/wordListStore";
 
 function AddList(props){
@@ -21,8 +20,7 @@ function AddList(props){
             saveList.synonyms = saveList.synonyms.filter((item, idx) => idx !== target_id);
             saveWordList(saveList);
         }        
-    }
-    
+    }   
 
     const handleOnchange = e => {
         //변수 설정
@@ -50,13 +48,12 @@ function AddList(props){
     }
 
     return <div className="addGroup">
-         <div className="xa20b892b">{props.text}</div>
-                <input className="x23876" name={props.name} id={props.id} value={props.value}type="text"onChange={handleOnchange}/>
-                {props.name === "synonym_input"?
-                    <button className={props.btnname} name={props.btnname} id={props.id} value={props.value} onClick={handleOnClick} />
-                 :null
-            }
-           </div>    
+            <div className="xa20b892b">{props.text}</div>
+            <input className="x23876" name={props.name} id={props.id} value={props.value}type="text"onChange={handleOnchange}/>
+            {props.name === "synonym_input"
+            ? <button className={props.btnname} name={props.btnname} id={props.id} value={props.value} onClick={handleOnClick} />
+            : null}
+        </div>    
 }
 
 export default AddList;

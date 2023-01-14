@@ -24,13 +24,14 @@ export default function Alert({ children, type, message }) {
     setIsShow(false);
   };
 
-  return (<div className={style.alert_box} ref={alertBox}>
+  return (
+  <div className={style.alert_box} ref={alertBox}>
     <div className={css(style.alert, style[type], !isShow && style.hide)}>
       <span className={style.closebtn} onClick={handleClose}>
         &times;
       </span>
-      {children ? renderElAlert() : message}
+    {children ? renderElAlert() : message}
     </div>
-    </div>
+  </div>
   );
 }
