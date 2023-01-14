@@ -1,11 +1,20 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 
+export const INPUT_NAME = {
+    WORD_INPUT: "word_input", 
+    MEAN_INPUT: "mean_input",
+    WREAD_INPUT: "wread_input",
+    SYNONYM_INPUT: "synonym_input"
+}
+
 /**
  * @Description WordList 상태 관리
  * @Author 정현경
  * @LastEdit 20230112
  */
+
+
 const store = set => ({
     wordList: [{
             "word_id": 0,
@@ -32,6 +41,8 @@ const store = set => ({
         "wread": "",
         "memo": "",
         "synonyms": [{
+            "synonym": "",
+            "memo": ""
         }]
     },
 
@@ -77,15 +88,20 @@ const store = set => ({
         wordList: state.wordList.filter(item => item.word_id !== wordId)
     })),
 
-    saveWordList: (wordId, wordListRequest) => set(state => ({
-        saveList: state.saveList.map(item =>
-            item.word_id === wordId
-            ? {
-                ...wordListRequest
-              }
-            : item
-        )
-    }))
+    saveWordList: (saveListRequest) => set(state => ({
+        saveList: saveListRequest
+    })),
+
+    saveListClear: () => set(() => ({
+        saveList: {"word": "",
+            "mean": "",
+            "wread": "",
+            "memo": "",
+            "synonyms": [{
+                "synonym": "",
+                "memo": ""
+            }]
+    }}))
 })
 
 const wordListStore = create(

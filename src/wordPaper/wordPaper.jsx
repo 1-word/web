@@ -11,7 +11,8 @@ import wordListStore from "../stores/wordListStore";
 //class WordPaper extends React.Component {
 function WordPaper(){
     // Store 사용
-    const {wordList, createWordList, updateWordList, deleteWordList} = wordListStore(state => state);
+    const {wordList, createWordList, updateWordList, deleteWordList, saveListClear} = wordListStore(state => state);
+
 
     const [state, setState] = useState({
         modal: false
@@ -76,6 +77,7 @@ function WordPaper(){
         }
         else if(flag === "close"){
             setState({modal:false})
+            saveListClear()
         }
         console.log(state.modal)
     }
