@@ -2,10 +2,11 @@ import React, { useEffect, useState, useRef } from "react";
 import connect from "../../../module/axiosUtil";
 import "./add.css";
 import AddList from "./addList";
+import wordListStore from "../../../stores/wordListStore";
 
 function Add(props){
 
-    var datas = {"word": "",
+    let datas = {"word": "",
             "mean": "",
             "wread": "",
             "memo": "",
@@ -16,7 +17,8 @@ function Add(props){
 
     const synonymInputRef = useRef([]);
 
-    const [wordData, setWordData] = useState(datas);
+    //const [saveList, saveWordList] = useState(datas);
+    const {saveList, saveWordList} = wordListStore(state => state);
 
     const handleClick = (e) => {
         let target_name = e.target.name;
@@ -24,8 +26,8 @@ function Add(props){
         //저장 버튼 클릭시
         if(target_name === "save_btn"){
             console.log("저장");
-            console.log(wordData);
-            connect("POST", "save", "", wordData)
+            console.log(saveList);
+            connect("POST", "save", "", saveList)
             .then(res => {
                 console.log(res);
             });
@@ -35,12 +37,14 @@ function Add(props){
 
     const getsetDatas = (work, _datas) => {
         //set일 때, 변수에 입력한 데이터 저장
+        console.log(_datas);
+
         if(work === "set"){
-            setWordData(_datas);
+            saveWordList(_datas);
         //get일 때, 데이터 리턴
         }else if(work === "get"){
-            console.log(wordData);
-            return wordData;
+            console.log(saveList);
+            return saveList;
         }        
     }
 
@@ -57,7 +61,7 @@ function Add(props){
         }
     }   
 
-    const synonymInputList = wordData.synonyms.map((data, idx) => (
+    const synonymInputList = saveList.synonyms.map((data, idx) => (
         <AddList key={idx}
                  btnname = {idx===0? "plus_btn" : "minus_btn"} 
                  /*btnname = "minus_btn"*/

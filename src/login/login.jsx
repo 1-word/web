@@ -4,8 +4,14 @@ import ModalPortal from "../module/ModalPortal"
 import "./login.css";
 
 function Login(){
+    const [ismsg, setmsgShow] = useState(false);
+
     const handleClick = () => {
-        console.log("click");
+        setmsgShow(true);
+        let timer = setTimeout(() => {
+            setmsgShow(false);
+            }, 3000);
+            return ()=>{ clearTimeout(timer) }
     }
 
     return <div className="login">        
@@ -24,10 +30,12 @@ function Login(){
                     <div className="x80b3bbb6">로그인</div>
                 </div>
             </div>
-        <ModalPortal id='alert'>
+        {ismsg? <ModalPortal id='alert'>
             <Alert type="error" message="아이디 또는 비밀번호를 확인해주세요.">
             </Alert>
         </ModalPortal>
+        : ''
+        }
         </div>
 }
 

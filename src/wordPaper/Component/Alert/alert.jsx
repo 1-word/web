@@ -9,10 +9,10 @@ export default function Alert({ children, type, message }) {
   //alert 창 timer 설정
   //timer 변경 시 style.module.css의 .alert_box animation 변경
   useEffect(() => {
-    let timer = setTimeout(() => {
-      setIsShow(!isShow);
-    }, 3000);
-    return ()=>{ clearTimeout(timer) }
+    // let timer = setTimeout(() => {
+    //   setIsShow(!isShow);
+    // }, 3000);
+    // return ()=>{ clearTimeout(timer) }
   }, []);
 
   const renderElAlert = function () {

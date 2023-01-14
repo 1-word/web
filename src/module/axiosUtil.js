@@ -1,11 +1,27 @@
 import axios from "axios";
 
+/**
+    @param {*} _method http method (GET, POST, PUT, DELETE)
+    @param {*} _uri uri (read, search, save, update, remove...)
+    @param {*} _id 검색, 삭제, 업데이트 시 URL에 붙일 데이터
+    @param {*} _data POST, PUT, DELETE인 경우만 해당, BODY에 넣을 데이터
+*/
+
 /*
-    @param: 
-        _method: http method (GET, POST, PUT, DELETE)
-        _uri: uri (read, search, save, update, remove...)
-        _id: 검색, 삭제, 업데이트 시 URL에 붙일 데이터
-        _data: POST, PUT, DELETE인 경우만 해당, BODY에 넣을 데이터
+    읽기API 호출 ex) {project_url}:{port}/read
+    const result = await connect("get", "read", "");
+
+    수정API 호출
+
+
+    삭제API 호출 ex) {project_url}:{port}/remove/1
+    connect("delete", "remove", e.target.id)
+
+    검색API 호출 ex) {project_url}:{port}/search/1
+    connect("get", "search", searchText)
+
+    저장API 호출
+    connect("POST", "save", "", wordData)
 */
 
 async function connect(_method, _uri, _id, _data){

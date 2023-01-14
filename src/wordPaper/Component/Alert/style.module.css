@@ -8,18 +8,22 @@
 
 @keyframes fadeUpDown {
   0%{
+    height: auto;
     opacity:0;
     transform: translate3d(0, -100%, 0);
   }
   40%{
+    height: auto;
     opacity: 1;
     transform: translateZ(0);
   }
   80% {
+    height: auto;
     opacity: 1;
     transform: translateZ(0);
   }
   100% {
+    height: auto;
     opacity: 0;        
     transform: translate3d(0, -100%, 0);
   }
@@ -28,6 +32,10 @@
 /* The alert message box */
 
 .alert_box{
+  position: relative;
+  z-index: 99;
+  overflow: hidden;
+  height: 0;
   animation-name: fadeUpDown;
   animation: fadeUpDown 3s;
   font-family: 'Noto Sans CJK KR', Arial
@@ -83,7 +91,7 @@
   font-size: 22px;
   line-height: 20px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 3s;
 }
 
 /* When moving the mouse over the close button */

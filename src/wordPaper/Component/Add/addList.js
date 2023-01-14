@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import wordListStore from "../../../stores/wordListStore";
 
 function AddList(props){
 
@@ -11,11 +12,14 @@ function AddList(props){
             ]};
 
     wordDatas = props.getsetDatas("get");
+
+    const {saveList, saveWordList} = wordListStore(state => state);
     
     const synonymInputRef = useRef([]);
 
     // 버튼 이벤트 
     const handleOnClick = e => {
+        console.log("handleOnclick")
         let target_name = e.target.name;
         let target_id = e.target.id-1;
         wordDatas = props.getsetDatas("get");
@@ -57,6 +61,7 @@ function AddList(props){
     
 
     const handleOnchange = e => {
+        console.log("addList 시작..")
         //부모에게서 데이터 가져옴
         wordDatas = props.getsetDatas("get");
         //변수 설정
