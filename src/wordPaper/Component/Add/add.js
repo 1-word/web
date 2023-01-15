@@ -3,10 +3,11 @@ import connect from "../../../util/axiosUtil";
 import "./add.css";
 import AddList from "./addList";
 import wordListStore, { WORD_KEY } from "../../../stores/wordListStore";
+import { btnClick, MODE } from "../../../js/word";
 
 function Add(props){
 
-    const {update, saveList, setUpdateFlag, saveWordList, saveListClear} = wordListStore(state => state);
+    const {update, saveList, setUpdateFlag, saveListClear} = wordListStore(state => state);
 
     const handleClick = (e) => {
         let target_name = e.target.name;
@@ -14,11 +15,10 @@ function Add(props){
         //저장 버튼 클릭시
         if(target_name === "save_btn"){
             async function saveWordData(){
-                const result = await connect("POST", "save", "", saveList)
-                saveWordList(saveList);
-                saveListClear();
-                props.closePopup();
+                const res = await btnClick('', MODE.SAVE, saveList)
+                saveListClear()
                 setUpdateFlag()
+                props.closePopup();
             }
             saveWordData();
         }

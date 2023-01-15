@@ -1,4 +1,4 @@
-import connect, {connect2, CONNECT_MODE} from "../util/axiosUtil"
+import connect, {CONNECT_MODE} from "../util/axiosUtil"
 
 export const MODE = {
     READ: "read",
@@ -6,6 +6,7 @@ export const MODE = {
     SEARCH: "search",
     DELETE: "delete",
     UPDATE: "update",
+    SAVE: "save",
     OPEN: "open",
     CLOSE: "close",
     LOGIN: "login",
@@ -14,20 +15,23 @@ export const MODE = {
 }
 
 const clickMap = {
-    async read(){
-        return await executeSrvConnect(CONNECT_MODE.READ)
+    read(){
+        return executeSrvConnect(CONNECT_MODE.READ)
     },
     all(){
-        
+        return executeSrvConnect(CONNECT_MODE.SEARCH, MODE.SEARCH_ALL)  
     },
-    search(){
-
+    search(e, text){
+        return executeSrvConnect(CONNECT_MODE.SEARCH, text)
     },
-    delete(e, data, func){
-        func()
+    delete(e, id){
+        return executeSrvConnect(CONNECT_MODE.DELETE, id)
     },
     update(){
         
+    },
+    save(e, data){
+        return executeSrvConnect(CONNECT_MODE.SAVE, "", data)
     },
     open(){
 
@@ -35,17 +39,17 @@ const clickMap = {
     close(){
 
     },
-    async login(e, user){
-        return await connect("POST", "api/login","", user)
+    login(e, user){
+        return executeSrvConnect(CONNECT_MODE.LOGIN, "", user)
     }
 }
 
-async function executeSrvConnect(connectMode, data){
-    return await connect2(connectMode, data)
+async function executeSrvConnect(connectMode, id, data){
     try {
-
+        return await connect(connectMode, "", id, data)
     } catch (error) {
         console.log(error)
+        return error
     }
 }
 

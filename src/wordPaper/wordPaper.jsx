@@ -10,57 +10,48 @@ import wordListStore from "../stores/wordListStore";
 import Store from "../stores/store";
 import { btnClick, MODE } from "../js/word";
 
-//class WordPaper extends React.Component {
 function WordPaper(){
     // Store 사용
     const {update, wordList, createWordList, setUpdateFlag, saveListClear} = wordListStore(state => state);
     const {modal, alert, setModal, setAlert} = Store(state=>state);
 
+    const searchInput = useRef();
+
     useEffect(() => {        
-        console.log('1234');
-        async function getWordData(){
-            const result = await connect("get", "read", "");
-            //const result = await btnClick('', MODE.READ)
-            createWordList(result.list);
-        }
         getWordData();
-    }, [update]);   //해당 state가 업데이트될 때 해당 로직 수행
+
+        async function getWordData(){
+            const res = await btnClick('', MODE.READ)
+            createWordList(res.list);
+        }
+    }, [update]);   //해당 state가 변경될 때 해당 로직 수행
 
    // 버튼 이벤트 
     const handleClick = mode => e => {
+        const id = e.target.id;
         console.log("[mode]: "+ mode+ "// [id]: ", e.target.id);
-        if(mode === "search"){
-            //검색API 호출 ex) {project_url}:{port}/search/1
-          let searchText = document.getElementById("search_input").value;
-          console.log(searchText);
-        //   const data = connect("get", "search", searchText)
-        //   console.log("[wordSearch]: ", data)
-          connect("get", "search", searchText)
-            .then(res => {
-            console.log("[wordSearch]: ", res)
-            let wordListrequest = res.list
-            //검색한 데이터 저장
-            if(Array.isArray(wordListrequest)){
-                createWordList(wordListrequest)
-            }else{
-                let arr = []
-                arr.push(wordListrequest)
-                createWordList(arr)
-            }
-          });
-        }else if (mode === "delete"){
-            //삭제API 호출 ex) {project_url}:{port}/remove/1
-           connect("delete", "remove", e.target.id)
-                .then(res =>{
-                    console.log(res)
-                    btnClick(e, mode, '', setUpdateFlag)
-                });
-           console.log("[wordDelete]: ");  
+
+        switch (mode) {
+            case MODE.UPDATE:
+                
+                break;
+            case MODE.DELETE:
+                updateWordData(MODE.DELETE, id)
+                break;
+        
+            default:
+                break;
+        }
+
+        async function updateWordData(modeType, id){
+            let res = await btnClick('', modeType, id)
+            console.log(res)
+            setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
         }
     }
 
     // 팝업 이벤트
-    const handleModal = (flag) => {
+    const handleModal = (flag) => e => {
         if (flag === MODE.OPEN){
             console.log("open")
             setModal(true)
@@ -73,25 +64,19 @@ function WordPaper(){
     }
 
     const onSearchHandler = e => {
-        console.log("[input id]: ", e.target.id)
-        //검색API 호출 ex) {project_url}:{port}/search/1
-        //let searchText = document.getElementById("search_input").value
-        let searchText = e.target.value
-        console.log(searchText)
-        if (searchText === "") searchText = MODE.SEARCH_ALL
-        connect("get", "search", searchText)
-            .then(res => {
-            console.log("[wordSearch]: ", res)
+        let searchText = searchInput.current.value
+        searchText !== "" ? searchText=searchText : searchText=MODE.SEARCH_ALL
+        searchWordData()
+
+        async function searchWordData(){
+            let res = await btnClick('', MODE.SEARCH, searchText)
             let wordListrequest = res.list
-            //검색한 데이터 저장
-            if(Array.isArray(wordListrequest)){
-                createWordList(wordListrequest)
-            }else{
-                let arr = []
-                arr.push(wordListrequest)
-                createWordList(arr)
-            }
-        });
+            // 검색한 단어가 한개이면 배열이 아니므로 배열로 만들어줌
+            if(Array.isArray(wordListrequest)) return createWordList(wordListrequest)
+            let arr = []
+            arr.push(wordListrequest)
+            createWordList(arr)
+        }
     }
 
 
@@ -124,17 +109,17 @@ function WordPaper(){
           <div  className="wordPaper">        
             <div  className="x8bc1b3ee">            
                 <div  className="x18458">                
-                    <button className="search_btn" id="search_btn" onClick={handleClick(MODE.SEARCH)}></button>
+                    <button className="search_btn" id="search_btn" onClick={onSearchHandler}></button>
                 </div>
                 <div  className="xf958f200">
-                    <input className="text_input" id="search_input" placeholder="" type="text" required="" onChange={onSearchHandler}/>
+                    <input ref={searchInput} className="text_input" id="search_input" placeholder="" type="text" required="" onChange={onSearchHandler}/>
                 </div>
             </div> 
-        <button className="plus_btn" id="plus_btn" onClick={e => {handleModal(MODE.OPEN)}}/>
+        <button className="plus_btn" id="plus_btn" onClick={handleModal(MODE.OPEN)}/>
         <div  className="framec6cc90c6">{/*단어 전체 그리드*/}
             {dataList}
             {modal && (<ModalPortal id='modal'>
-                <Add closePopup={e=> {handleModal(MODE.CLOSE)}}></Add>
+                <Add closePopup={handleModal(MODE.CLOSE)}></Add>
             </ModalPortal>)
             }{''} 
         </div>
