@@ -1,9 +1,11 @@
 import style from "./style.module.css"
 import css from "classnames";
 import React, { useEffect, useState, useRef } from "react";
+import Store from "../../../stores/store";
 
 export default function Alert({ children, type, message }) {
   const [isShow, setIsShow] = useState(true);
+  const {alert, setAlert} = Store(state=>state);
   const alertBox = useRef();
 
   //alert 창 timer 설정
@@ -21,7 +23,7 @@ export default function Alert({ children, type, message }) {
 
   const handleClose = (e) => {
     e.preventDefault();
-    setIsShow(false);
+    setAlert(false);
   };
 
   return (

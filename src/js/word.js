@@ -1,4 +1,4 @@
-import connect from "../util/axiosUtil"
+import connect, {connect2, CONNECT_MODE} from "../util/axiosUtil"
 
 export const MODE = {
     READ: "read",
@@ -8,12 +8,14 @@ export const MODE = {
     UPDATE: "update",
     OPEN: "open",
     CLOSE: "close",
-    LOGIN: "login"
+    LOGIN: "login",
+    PLUS_BTN: "plus_btn",
+    MINUS_BTN: "minus_btn"
 }
 
 const clickMap = {
-    read(){
-
+    async read(){
+        return await executeSrvConnect(CONNECT_MODE.READ)
     },
     all(){
         
@@ -21,11 +23,11 @@ const clickMap = {
     search(){
 
     },
-    delete(){
-
+    delete(e, data, func){
+        func()
     },
     update(){
-
+        
     },
     open(){
 
@@ -34,21 +36,27 @@ const clickMap = {
 
     },
     async login(e, user){
-        const result = await connect("POST", "api/login","", user)
-        console.log(result)
-        // result?.code === 0? dataSave(result) : console.log("실패")
-        result?.code === 0? console.log("성공") : console.log("실패")
-        return result
+        return await connect("POST", "api/login","", user)
     }
-    // login(e, data){
-    //     console.log("login")
-    // }
 }
 
-function search(){
+async function executeSrvConnect(connectMode, data){
+    return await connect2(connectMode, data)
+    try {
 
+    } catch (error) {
+        console.log(error)
+    }
 }
 
-export function btnClick(e, modeType, data){
-    return clickMap[modeType](e, data);
+/**
+ * 
+ * @param {*} e 이벤트가 일어난 객체
+ * @param {*} modeType 함수명
+ * @param {*} data 데이터
+ * @param {*} func 실행시킬 함수
+ * @returns modeType명의 함수 결과
+ */
+export function btnClick(e, modeType, data, func){
+    return clickMap[modeType](e, data, func)
 }

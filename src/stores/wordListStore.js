@@ -1,11 +1,12 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 
-export const INPUT_NAME = {
-    WORD_INPUT: "word_input", 
-    MEAN_INPUT: "mean_input",
-    WREAD_INPUT: "wread_input",
-    SYNONYM_INPUT: "synonym_input"
+export const WORD_KEY = {
+    WORD: "word", 
+    MEAN: "mean",
+    WREAD: "wread",
+    SYNONYMS: "synonyms",
+    SYNONYM: "synonym"
 }
 
 /**
@@ -45,7 +46,7 @@ const store = set => ({
             "memo": ""
         }]
     },
-
+    update: false,
     /**
      * @param {*} wordList (Object) 전체 word데이터 리스트
      * @returns 
@@ -54,7 +55,7 @@ const store = set => ({
      */
 
     createWordList: (wordListRequest) => {set(() => ({
-        wordList: [...wordListRequest]
+        wordList: wordListRequest
     }))
     console.log("hello")
     },
@@ -101,7 +102,11 @@ const store = set => ({
                 "synonym": "",
                 "memo": ""
             }]
-    }}))
+    }})),
+
+    setUpdateFlag: () => set((state) => ({
+        update: !state.update
+    }))
 })
 
 const wordListStore = create(

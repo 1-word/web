@@ -7,31 +7,27 @@ import ModalPortal from "../util/ModalPortal";
 import connect from "../util/axiosUtil";
 import Alert from "./Component/Alert/alert";
 import wordListStore from "../stores/wordListStore";
+import Store from "../stores/store";
+import { btnClick, MODE } from "../js/word";
 
 //class WordPaper extends React.Component {
 function WordPaper(){
     // Store 사용
-    const {wordList, createWordList, updateWordList, deleteWordList, saveListClear} = wordListStore(state => state);
-
-
-    const [state, setState] = useState({
-        modal: false
-    })
-
-    //var datasList = [];
-    //var datasList = datas;
+    const {update, wordList, createWordList, setUpdateFlag, saveListClear} = wordListStore(state => state);
+    const {modal, alert, setModal, setAlert} = Store(state=>state);
 
     useEffect(() => {        
         console.log('1234');
         async function getWordData(){
             const result = await connect("get", "read", "");
+            //const result = await btnClick('', MODE.READ)
             createWordList(result.list);
         }
         getWordData();
-    }, []);
+    }, [update]);   //해당 state가 업데이트될 때 해당 로직 수행
 
    // 버튼 이벤트 
-    const handleClick = (mode, e) => {
+    const handleClick = mode => e => {
         console.log("[mode]: "+ mode+ "// [id]: ", e.target.id);
         if(mode === "search"){
             //검색API 호출 ex) {project_url}:{port}/search/1
@@ -57,38 +53,32 @@ function WordPaper(){
            connect("delete", "remove", e.target.id)
                 .then(res =>{
                     console.log(res)
+                    btnClick(e, mode, '', setUpdateFlag)
                 });
            console.log("[wordDelete]: ");  
         }
-        
-        /*axios.delete('http://localhost:8088/remove/'+ e.target.id)
-        .then((res) =>{
-            console.log(res);
-        }).catch((err) => {
-            console.log(err);
-        })*/
     }
 
     // 팝업 이벤트
     const handleModal = (flag) => {
-        if (flag === "open"){
+        if (flag === MODE.OPEN){
             console.log("open")
-            setState({modal:true})
+            setModal(true)
         }
-        else if(flag === "close"){
-            setState({modal:false})
+        if(flag === MODE.CLOSE){
+            setModal(false)
             saveListClear()
         }
-        console.log(state.modal)
+        console.log(modal)
     }
 
-    const onSearchHandler = (e) => {
+    const onSearchHandler = e => {
         console.log("[input id]: ", e.target.id)
         //검색API 호출 ex) {project_url}:{port}/search/1
         //let searchText = document.getElementById("search_input").value
         let searchText = e.target.value
         console.log(searchText)
-        if (searchText === "") searchText = "all"
+        if (searchText === "") searchText = MODE.SEARCH_ALL
         connect("get", "search", searchText)
             .then(res => {
             console.log("[wordSearch]: ", res)
@@ -121,7 +111,7 @@ function WordPaper(){
                 <div  className="xd106727b">
                     <div  className="x4154b626">{data?.mean}</div>
                     <div  className="xb9a31159">
-                        <button id={data?.word_id} class="delete_btn" onClick={e => {handleClick("delete", e)}}/>                            
+                        <button id={data?.word_id} class="delete_btn" onClick={handleClick("delete")}/>                            
                         <div  className="x471465d67bb6"></div>
                     </div> 
                 </div>
@@ -134,17 +124,17 @@ function WordPaper(){
           <div  className="wordPaper">        
             <div  className="x8bc1b3ee">            
                 <div  className="x18458">                
-                    <button className="search_btn" id="search_btn" onClick={ e => {handleClick("search", e)}}></button>
+                    <button className="search_btn" id="search_btn" onClick={handleClick(MODE.SEARCH)}></button>
                 </div>
                 <div  className="xf958f200">
-                    <input class="text_input" id="search_input" placeholder="" type="text" required="" onChange={onSearchHandler}/>
+                    <input className="text_input" id="search_input" placeholder="" type="text" required="" onChange={onSearchHandler}/>
                 </div>
             </div> 
-        <button className="plus_btn" id="plus_btn" onClick={e => {handleModal("open")}}/>
+        <button className="plus_btn" id="plus_btn" onClick={e => {handleModal(MODE.OPEN)}}/>
         <div  className="framec6cc90c6">{/*단어 전체 그리드*/}
             {dataList}
-            {state.modal && (<ModalPortal id='modal'>
-                <Add closePopup={e=> {handleModal("close")}}></Add>
+            {modal && (<ModalPortal id='modal'>
+                <Add closePopup={e=> {handleModal(MODE.CLOSE)}}></Add>
             </ModalPortal>)
             }{''} 
         </div>

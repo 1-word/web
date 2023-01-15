@@ -12,12 +12,10 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={
-        <div>
-        {isMobile ? 
-        <WordPaperMobile></WordPaperMobile> : <WordPaper></WordPaper>
-        }
-      </div>
-      }/>
+        <div>{isMobile 
+          ? <WordPaperMobile></WordPaperMobile> 
+          : <WordPaper></WordPaper>}
+      </div>}/>
       <Route path="/login" element={<Login></Login>}/>
     </Routes>
   );

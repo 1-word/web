@@ -11,18 +11,23 @@ import persist from '../util/persist'
 
 const useStore = set => ({
     modal: false,
+    alert: false,
     setModal: (flag) => {
         set((state) => ({
             modal: flag
         }))
     },
-    authStore
+    setAlert: (flag) => {
+        set((state) => ({
+            alert: flag
+        }))
+    }
 })    
 
-const store = create(
+const Store = create(
     process.env.NODE_ENV !== 'prod' ? devtools(useStore) : useStore
 )
 
 // const wordListStore = create(devtools(store))
 
-export default store
+export default Store

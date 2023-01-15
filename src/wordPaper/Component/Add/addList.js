@@ -1,4 +1,4 @@
-import wordListStore, { INPUT_NAME } from "../../../stores/wordListStore";
+import wordListStore, { WORD_KEY } from "../../../stores/wordListStore";
 
 function AddList(props){
 
@@ -26,31 +26,18 @@ function AddList(props){
         //변수 설정
         let target_id = e.target.id;
         let target_value = e.target.value;        
-        let target = e.target.name;
+        let target_name = e.target.name;
 
-        //단어 입력
-        if(target === INPUT_NAME.WORD_INPUT){
-            saveList.word = target_value;
-        //뜻 입력
-        }else if(target === INPUT_NAME.MEAN_INPUT){
-            saveList.mean = target_value;
-        //읽기 입력
-        }else if(target === INPUT_NAME.WREAD_INPUT){
-            saveList.wread = target_value;
-        //유의어 입력
-        }else if(target === INPUT_NAME.SYNONYM_INPUT){
-            saveList.synonyms[target_id].synonym = target_value;
-        //해당하는 이벤트 아닐 때
-        }else{
-            console.log("[add handleOnchange]: else")
-        }
+        //wordListStore.WORD_KEY
+        //객체 저장과 배열(유의어) 저장 분기
+        target_name === WORD_KEY.SYNONYMS? saveList[target_name][target_id][WORD_KEY.SYNONYM] = target_value : saveList[target_name] = target_value;
         saveWordList(saveList);
     }
 
     return <div className="addGroup">
             <div className="xa20b892b">{props.text}</div>
             <input className="x23876" name={props.name} id={props.id} value={props.value}type="text"onChange={handleOnchange}/>
-            {props.name === "synonym_input"
+            {props.name === WORD_KEY.SYNONYMS
             ? <button className={props.btnname} name={props.btnname} id={props.id} value={props.value} onClick={handleOnClick} />
             : null}
         </div>    

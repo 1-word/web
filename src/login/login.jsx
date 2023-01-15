@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Alert from "../wordPaper/Component/Alert/alert";
-import ModalPortal from "../module/ModalPortal"
-//import { btnClick, MODE } from "../js/word";
+import ModalPortal from "../util/ModalPortal"
 import "./login.css";
 import { btnClick, MODE } from "../js/word";
 import authStore from "../stores/authStore";
@@ -43,7 +42,7 @@ function Login(){
     }
 
     const onKeyDown = (e) => {
-        if(e.key== 'Enter'){
+        if(e.key === 'Enter'){
             handleClick();
         }
     }
