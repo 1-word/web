@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
   props.children: 호출할 컴포넌트(오브젝트)
 */
 const ModalPortal = (props) => {
-  //const el = document.getElementById('modal');
   const el = document.getElementById(props.id);
   return ReactDOM.createPortal(props.children, el);
 };

@@ -53,14 +53,13 @@ async function connect(_method, _uri, _id, _data){
         //개발
         let dev = "http://localhost:8088/"
         //운영
-        let prod = "http://144.24.78.52:8088/";
+        //let prod = "http://144.24.78.52:8088/";
+        let prod = "http://app:8088/"
         let host = process.env.REACT_APP_HOST;
-        //let url = host + _uri + "/" +_id;
         
         let method = _method.METHOD
         let rId = _id ?? ""
         let uri = _method.URI ?? ""
-        //let url = host + uri + "/" + rId;
         let url = `${host}${uri}/${rId}`
         console.log("[axiosUtil url]: "+ url);
 
@@ -70,19 +69,8 @@ async function connect(_method, _uri, _id, _data){
             data: _data
         });
 
-        // let res = await axios({
-        //     method: _method,
-        //     url: url,
-        //     data: _data
-        // });
         console.log(res);
-        if(res.status === 200){
-            let data = res.data;
-            console.log(data);
-            return data;
-        }
-
-        throw new Error(res.status);
+        return res.data
 }
 
 export default connect;

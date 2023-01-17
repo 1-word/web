@@ -1,6 +1,5 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
-import connect from '../util/axiosUtil'
 import persist from '../util/persist'
 
 /**

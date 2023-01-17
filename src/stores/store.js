@@ -1,7 +1,5 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
-import connect from '../util/axiosUtil'
-import persist from '../util/persist'
 
 /**
  * @Description 전체 store 상태 관리
@@ -9,17 +7,31 @@ import persist from '../util/persist'
  * @LastEdit 20230112
  */
 
+export const ALERT_TYPE = {
+    SUCCESS: "success",
+    ERROR: "error",
+    WARNING: "warning",
+    PRIMARY: "primary",
+    SECONDARY: "secondary",
+    INFO: "info"
+}
+
 const useStore = set => ({
     modal: false,
-    alert: false,
+    // alert: false,
+    alert: {
+        show: false,
+        type: ALERT_TYPE.SUCCESS,
+        message: "성공",
+    },
     setModal: (flag) => {
         set((state) => ({
             modal: flag
         }))
     },
-    setAlert: (flag) => {
+    setAlert: (alertRequest) => {
         set((state) => ({
-            alert: flag
+            alert: alertRequest
         }))
     }
 })    
@@ -27,7 +39,5 @@ const useStore = set => ({
 const Store = create(
     process.env.NODE_ENV !== 'prod' ? devtools(useStore) : useStore
 )
-
-// const wordListStore = create(devtools(store))
 
 export default Store
