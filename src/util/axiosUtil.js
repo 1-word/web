@@ -27,19 +27,19 @@ import axios from "axios";
 export const CONNECT_MODE = {
     READ: {
         METHOD: "get",
-        URI: "read"
+        URI: "word/read"
     },
     SEARCH: {
         METHOD: "get",
-        URI: "search"
+        URI: "word/search"
     },
     DELETE: {
         METHOD: "delete",
-        URI: "remove"
+        URI: "word/remove"
     },
     SAVE: {
         METHOD: "post",
-        URI: "save"
+        URI: "word/save"
     },
     LOGIN: {
         METHOD: "post",
@@ -47,7 +47,7 @@ export const CONNECT_MODE = {
     }
 }
 
-async function connect(_method, _uri, _id, _data){
+async function connect(_method, _id, _data, _token){
         var response = [];
 
         //개발
@@ -58,15 +58,21 @@ async function connect(_method, _uri, _id, _data){
         let host = process.env.REACT_APP_HOST;
         
         let method = _method.METHOD
-        let rId = _id ?? ""
+        let id = _id ?? ""
         let uri = _method.URI ?? ""
-        let url = `${host}${uri}/${rId}`
+        let token = uri !== CONNECT_MODE.LOGIN.URI? _token : ""
+        let url = `${host}${uri}/${id}`
+        if (_method.URI == CONNECT_MODE.SEARCH.URI) url = `${host}${uri}/${id}/${_data}`
         console.log("[axiosUtil url]: "+ url);
 
         let res = await axios({
             method: method,
             url: url,
-            data: _data
+            data: _data,
+            headers:{
+                contentType: 'application/json',
+                Authorization: `Bearer ${token}`
+            }
         });
 
         console.log(res);

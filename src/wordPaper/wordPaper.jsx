@@ -4,11 +4,13 @@ import SynonsymsList from "./Component/synonymsList";
 import wordListStore from "../stores/wordListStore";
 import Store from "../stores/store";
 import useEvntHandler, { MODE } from "../js/useEvntHandler";
+import authStore from "../stores/authStore";
 
 function WordPaper(){
     // Store 사용
     const {update, wordList, createWordList, setUpdateFlag, saveListClear} = wordListStore(state => state)
     const {modal, alert, setModal, setAlert} = Store(state=>state)
+
     const onClickHandler = useEvntHandler()
 
     const searchInput = useRef()

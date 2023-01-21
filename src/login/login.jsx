@@ -3,7 +3,7 @@ import "./login.css";
 import useEvntHandler, { MODE } from "../js/useEvntHandler";
 
 function Login(){
-    const [loginData, setLoginData] = useState({username: '', password: ''});
+    const [loginData, setLoginData] = useState({user_id: '', password: ''});
 
     const onClickHandler = useEvntHandler()
 
@@ -34,7 +34,7 @@ function Login(){
                 <div className="group">                    
                     <div className="x2a307169">아이디</div>
                     <div className="login_input"></div>
-                    <input id="username" type="text" name="username" style={{top:"141px"}}placeholder="아이디를 입력해주세요." onChange={setLoginInput} onKeyDown={onKeyDown}/>  
+                    <input id="username" type="text" name="user_id" style={{top:"141px"}}placeholder="아이디를 입력해주세요." onChange={setLoginInput} onKeyDown={onKeyDown}/>  
                     <div className="xb4bf6ba8">비밀번호</div>
                     <div className="login_input" style={{top:"255px"}}></div> 
                     <input id="password" type="password" name="password" style={{top:"215px"}} placeholder="비밀번호를 입력해주세요." onChange={setLoginInput} onKeyDown={onKeyDown}/>  

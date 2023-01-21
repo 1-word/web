@@ -3,6 +3,7 @@ import Store, {ALERT_TYPE} from "../stores/store"
 import wordListStore from "../stores/wordListStore"
 import authStore from "../stores/authStore"
 import {useEffect, useState} from "react"
+import { useNavigate } from "react-router"
 
 export const MODE = {
     READ: "read",
@@ -31,13 +32,15 @@ export const MODE = {
  */
 function useEvntHandler(e, modeType, data, func){
     
-    const {update, wordList, createWordList, setUpdateFlag, saveListClear} = wordListStore(state => state);
-    const {modal, alert, setModal, setAlert} = Store(state=>state);
-    const {auth, save, saveToken} = authStore(state => state)    
+    const {update, wordList, createWordList, setUpdateFlag, saveListClear} = wordListStore(state => state)
+    const {modal, alert, setModal, setAlert} = Store(state=>state)
+    const {token, user_id, save, saveToken, clearToken} = authStore(state=>state)
+    const navigate = useNavigate()
 
     const handlerMap = {
     async read(e, data, func){
-        const res = await executeSrvConnect(CONNECT_MODE.READ)
+        console.log(user_id)
+        const res = await executeSrvConnect(CONNECT_MODE.READ, user_id)
         if (!dataCheck(res)) return
         createWordList(res.list);
         setAlertState(alert, ALERT_TYPE.SUCCESS, "성공적으로 데이터를 불러왔습니다.")
@@ -49,7 +52,7 @@ function useEvntHandler(e, modeType, data, func){
     async search(e, data){
         let searchText = data.current.value || ""
         searchText !== "" ? searchText = searchText : searchText = MODE.SEARCH_ALL
-        const res = await executeSrvConnect(CONNECT_MODE.SEARCH, searchText)
+        const res = await executeSrvConnect(CONNECT_MODE.SEARCH, user_id, searchText)
         if (!dataCheck(res)) return
 
         let wordListrequest = res.list
@@ -69,7 +72,8 @@ function useEvntHandler(e, modeType, data, func){
         
     },
     async save(e, data, func){
-        let res = await executeSrvConnect(CONNECT_MODE.SAVE, "", data)
+        data.user_id = user_id
+        let res = await executeSrvConnect(CONNECT_MODE.SAVE, '', data)
         saveListClear()
         setUpdateFlag()
         func()
@@ -83,8 +87,9 @@ function useEvntHandler(e, modeType, data, func){
     },
     async login(e, user){
         const res = await executeSrvConnect(CONNECT_MODE.LOGIN, '', user)
-        if(res.code === -1) {
-            setAlertState(alert, ALERT_TYPE.INFO, "아이디 또는 비밀번호를 잘못 입력했습니다.")
+        if(res.code === 6006) {
+            setAlertState(alert, ALERT_TYPE.INFO, res.msg)
+            clearToken()
             return
         }
         save(res)
@@ -92,8 +97,9 @@ function useEvntHandler(e, modeType, data, func){
             "refreshToken": res.data.refreshToken,
             "accessToken": res.data.accessToken
         }
-        saveToken(data)
+        saveToken(data, user.user_id)
         setAlertState(alert, ALERT_TYPE.SUCCESS, "로그인 성공")
+        navigate("/word")
     }
 }
 
@@ -106,10 +112,14 @@ function useEvntHandler(e, modeType, data, func){
      */
     const executeSrvConnect = async function(connectMode, id, data){
         try {
-            return await connect(connectMode, "", id, data)
+            return await connect(connectMode, id, data, token.accessToken)
         } catch (error) {
-            console.log(error)
-            setAlertState(alert, ALERT_TYPE.ERROR, "오류가 발생했습니다.")
+            console.log(error?.response?.data)
+            let msg = error?.response?.data || ""
+            setAlertState(alert, ALERT_TYPE.ERROR, msg)
+            clearToken()
+            navigate("/")
+            // setAlertState(alert, ALERT_TYPE.ERROR, error?.response?.data?.msg)
             throw new Error(error);
             //return -1
         }
@@ -137,6 +147,11 @@ function useEvntHandler(e, modeType, data, func){
     const dataCheck = data => {
         if (typeof data === "undefined" || data === -1 || data === "") return false
         return true
+    }
+
+    const dataAdd = (data, addData) => {
+        const result = {addData, ...data}
+        return result
     }
 
     /**

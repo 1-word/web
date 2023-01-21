@@ -10,13 +10,14 @@ import persist from '../util/persist'
 
 const store = persist({
         key: 'auth',
-        allowlist: ['isAuthenticated', 'token']
+        allowlist: ['isAuthenticated', 'token', "user_id"]
     }, (set) => ({
         isAuthenticated: false,
         token: {
             "refreshToken": "",
             "accessToken": ""
         },
+        user_id: "",
         data: {
             "success": false,
             "code": 0,
@@ -29,8 +30,8 @@ const store = persist({
             }
         },
         /**
-         * 
-         * @param {*} user {username: '', password: ''}
+         * 로그인 데이터 저장
+         * @param {*} user {user_id: '', password: ''}
          */
         save: (loginRequest) => set(() => ({
             data: loginRequest
@@ -40,10 +41,19 @@ const store = persist({
             isAuthenticated: flag
         })),
         /**
+         * 토큰 저장
          * @param {*} tokenRequest {refreshToken: '', accessToken: ''}
          */  
-        saveToken: (tokenRequest) => set(() => ({
-            token: tokenRequest
+        saveToken: (tokenRequest, user_id) => set(() => ({
+            token: tokenRequest,
+            user_id: user_id
+        })),
+        clearToken: () => set(() => ({
+            token: {
+            "refreshToken": "",
+            "accessToken": ""
+            },
+            user_id: ""
         }))
     }))
 

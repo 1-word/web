@@ -37,7 +37,9 @@ const store = set => ({
             ]
         }
     ],
-    saveList: {"word": "",
+    saveList: {
+        "user_id": "",
+        "word": "",
         "mean": "",
         "wread": "",
         "memo": "",
@@ -94,7 +96,9 @@ const store = set => ({
     })),
 
     saveListClear: () => set(() => ({
-        saveList: {"word": "",
+        saveList: {
+            "user_id": "",
+            "word": "",
             "mean": "",
             "wread": "",
             "memo": "",
