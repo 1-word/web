@@ -28,9 +28,13 @@
 /* The alert message box */
 
 .alert_box{
+  position: fixed;
+  z-index: 99;
   animation-name: fadeUpDown;
   animation: fadeUpDown 3s;
-  font-family: 'Noto Sans CJK KR', Arial
+  animation-fill-mode: forwards;
+  font-family: 'Noto Sans CJK KR', Arial;
+  width: calc(100%)
 }
 
 .alert {
@@ -83,7 +87,7 @@
   font-size: 22px;
   line-height: 20px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 3s;
 }
 
 /* When moving the mouse over the close button */

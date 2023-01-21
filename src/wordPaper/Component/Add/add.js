@@ -1,90 +1,43 @@
-import React, { useEffect, useState, useRef } from "react";
-import connect from "../../../module/axiosUtil";
+import React from "react";
 import "./add.css";
 import AddList from "./addList";
+import wordListStore, { WORD_KEY } from "../../../stores/wordListStore";
+import useEvntHandler, { MODE } from "../../../js/useEvntHandler";
 
 function Add(props){
 
-    var datas = {"word": "",
-            "mean": "",
-            "wread": "",
-            "memo": "",
-            "synonyms": [{
-            }
-        ]
-    };
-
-    const synonymInputRef = useRef([]);
-
-    const [wordData, setWordData] = useState(datas);
+    const {update, saveList, setUpdateFlag, saveListClear} = wordListStore(state => state);
+    const onClickHandler = useEvntHandler()
 
     const handleClick = (e) => {
         let target_name = e.target.name;
         let target_id = e.target.id;
         //저장 버튼 클릭시
-        if(target_name === "save_btn"){
-            console.log("저장");
-            console.log(wordData);
-            connect("POST", "save", "", wordData)
-            .then(res => {
-                console.log(res);
-            });
-        //유의어 추가 버튼 클릭
-        }
+        if(target_name === MODE.SAVE_BTN)
+            onClickHandler(e, MODE.SAVE, saveList, props.closePopup)
     }
 
-    const getsetDatas = (work, _datas) => {
-        //set일 때, 변수에 입력한 데이터 저장
-        if(work === "set"){
-            setWordData(_datas);
-        //get일 때, 데이터 리턴
-        }else if(work === "get"){
-            console.log(wordData);
-            return wordData;
-        }        
-    }
-
-    // const getsetRef = (work, id, el) => {
-    //     if(work === "set"){
-    //         console.log("set Ref!!");
-    //         //synonymInputRef.current[id-1] = el;
-    //     }
-    // }
-
-    function getsetRef(work, id, el){
-         if(work === "set"){
-            synonymInputRef.current[id] = el;
-        }
-    }   
-
-    const synonymInputList = wordData.synonyms.map((data, idx) => (
+    const synonymInputList = saveList.synonyms.map((data, idx) => (
         <AddList key={idx}
-                 btnname = {idx===0? "plus_btn" : "minus_btn"} 
-                 /*btnname = "minus_btn"*/
-                 name="synonym_input" 
-                 text= {"유의어" + idx} 
-                 id = {idx+1}
-                 getsetDatas={getsetDatas}
-                 getsetRef={getsetRef}
+            btnname = {idx===0? "plus_btn" : "minus_btn"} 
+            name= {WORD_KEY.SYNONYMS}
+            text= {idx===0? "유의어" : ""} 
+            id = {idx}
+            value = { data.synonym }
         />
     ));
 
-    return   <div  class="add">        
-                <div  class="addframe">            
-                    <div  class="squareframe"></div>
-                    <button  class="delete" onClick={props.closePopup}> </button>
-                <div  class="add7cea4238">                
-                <button  class="save_btn" name="save_btn" onClick={handleClick}/>                    
-                        <div class="addgrid">          
-                            <AddList name="word_input" text="단어" getsetDatas={getsetDatas}></AddList>          
-                            <AddList name="mean_input" text="뜻"  getsetDatas={getsetDatas}></AddList>
-                            <AddList name="wread_input" text="발음"  getsetDatas={getsetDatas}></AddList>
+    return  <div className="add">        
+                <div className="addframe">            
+                    <div className="squareframe"></div>
+                    <button className="delete" onClick={props.closePopup}> </button>
+                    <div className="add7cea4238">                
+                        <button className="save_btn" name="save_btn" onClick={handleClick}/>                    
+                        <div className="addgrid">          
+                            <AddList name="word" text="단어" value={saveList.word} ></AddList>          
+                            <AddList name="mean" text="뜻" value={saveList.mean} ></AddList>
+                            <AddList name="wread" text="발음" value={saveList.wread} ></AddList>
                             {synonymInputList}
-                            {/*<AddList 
-                                name="synonym_input" 
-                                text= "유의어" 
-                                getsetDatas={getsetDatas}
-    />*/}
                         </div>
                     </div>
                 </div>
