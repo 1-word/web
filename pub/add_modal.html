@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div className="add">        
+        <div className="addframe">            
+            <div className="squareframe"></div>
+            <button className="delete" onClick={props.closePopup}> </button>
+            <div className="add7cea4238">                
+                <button className="save_btn" name="save_btn" onClick={handleClick}></button>                    
+                <div className="addgrid">          
+                    <div className="addGroup">
+                        <div className="xa20b892b">{props.text}</div>
+                        <input className="x23876" name={props.name} id={props.id} value={props.value}type="text"onChange={handleOnchange}></div>
+                        {props.name === WORD_KEY.SYNONYMS
+                        ? <button className={props.btnname} name={props.btnname} id={props.id} value={props.value} onClick={handleOnClick}></button>
+                        : null}
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

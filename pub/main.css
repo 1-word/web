@@ -1,0 +1,238 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+ul,ol,dl{
+  list-style: none;
+}
+
+a{
+  text-decoration: none;
+  color: #333;
+}
+
+button{
+  border: none;
+  outline: none;
+  
+}
+
+.disN{
+  display: none;
+}
+
+.flex{
+  display: flex;
+}
+
+nav{
+  width: 1280px;
+  margin:  0 auto;
+  padding: 10px 0;
+}
+
+.wrap{
+  width: 1280px;
+  margin: 0 auto;
+}
+
+.search_wrap{
+  width: 50%;
+  margin: 0 auto;
+  padding: 80px 0 0;
+  position: relative;
+}
+
+.seacrch_cont{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #356afd;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  border-radius: 30px;
+}
+
+.s_text{
+  padding: 10px 15px;
+  font-size: 22px;
+  border: 0;
+  width: 80%;
+}
+
+.s_text:focus-visible{
+  outline: 0;
+}
+
+.search_icon{
+  cursor: pointer;
+  font-size: 40px;
+  color: #356afd;
+}
+
+#s-icon:checked +label{}
+
+.s_pop{
+  position: absolute;
+  width: 0%;
+  overflow: hidden;
+  transition: 0.36s ease;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.s_pop_cont{
+  padding: 20px;
+
+}
+
+.s_pop p{
+  padding: 6px 0;
+  border-bottom: 1px solid #999;
+}
+
+.s_pop ul li{
+  padding: 10px 0;
+  justify-content: space-between;
+}
+
+.s_pop ul li a{
+  display: block;
+  width: 100%;
+}
+
+.s_pop ul li button{
+  padding: 6px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.36s ease;
+}
+
+.s_pop ul li button:hover,
+.s_pop ul li button:focus{
+  background: #ccc;
+}
+
+/*단어장 탭부분*/
+
+.word_tab_area{
+  padding: 30px 0 0;
+}
+
+.word_tab_area div{
+  cursor: pointer;
+  padding: 15px 0;
+  margin: 0 20px;
+  position: relative;
+}
+
+.word_tab_area div.active{
+  font-weight: bold;
+}
+
+.word_tab_area div.active::before{
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 4px;
+  background-color: #356afd;
+}
+
+/*단어장 내용부분*/
+
+.word_wrap{
+  width: 100%;
+  margin: 30px auto;
+}
+
+.word_cont{
+}
+
+.word{
+  margin-bottom: 10px;
+  padding: 15px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
+}
+
+.word:last-child{
+  margin: 0;
+}
+
+.top_area{
+  justify-content: space-between;
+}
+
+.top_area span,
+.top_area .xi-headset::before{
+  font-size: 24px;
+}
+
+.top_area .xi-headset{
+  cursor: pointer;
+}
+
+.mid_area{
+  padding: 10px 0;
+}
+
+.mean_wrap{
+  padding: 15px;
+  background: #e9e9e9;
+  border-radius: 6px;
+}
+
+.synonym_wrap{
+  padding: 15px;
+}
+
+.synonym_wrap span{
+  display: block;
+  width: 60px;
+  padding: 4px 5px;
+  margin-right: 30px;
+  background: #356afd;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  color: #fff;
+  border-radius: 30px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.synonym_cont{
+  align-items: center;
+  justify-content: center;
+}
+
+.synonym_cont p{
+  margin-right: 20px;
+}
+
+.foot_area{
+  justify-content: space-between;
+}
+
+.check,
+.close{
+  cursor: pointer;
+  background: none;
+  font-size: 24px;
+  transition: 0.36s ease;
+}
+
+.check.on{
+  color: #356afd;
+  content: "\e92b";
+}
+
+.check.on i::before{
+  content: "\e92b";
+}
+
+.close:hover,
+.close:focus{
+  color: #356afd;
+}
