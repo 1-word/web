@@ -58,7 +58,7 @@ const store = persist({
     }))
 
 const authStore = create(
-    process.env.NODE_ENV !== 'prod' ? devtools(store) : store
+    store
 )
 
 // const wordListStore = create(devtools(store))

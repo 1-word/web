@@ -63,7 +63,6 @@ async function connect(_method, _id, _data, _token){
         let token = uri !== CONNECT_MODE.LOGIN.URI? _token : ""
         let url = `${host}${uri}/${id}`
         if (_method.URI == CONNECT_MODE.SEARCH.URI) url = `${host}${uri}/${id}/${_data}`
-        console.log("[axiosUtil url]: "+ url);
 
         let res = await axios({
             method: method,
@@ -75,7 +74,6 @@ async function connect(_method, _id, _data, _token){
             }
         });
 
-        console.log(res);
         return res.data
 }
 

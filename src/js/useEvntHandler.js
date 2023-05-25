@@ -39,7 +39,6 @@ function useEvntHandler(e, modeType, data, func){
 
     const handlerMap = {
     async read(e, data, func){
-        console.log(user_id)
         const res = await executeSrvConnect(CONNECT_MODE.READ, user_id)
         if (!dataCheck(res)) return
         createWordList(res.list);
@@ -88,7 +87,7 @@ function useEvntHandler(e, modeType, data, func){
     async login(e, user){
         const res = await executeSrvConnect(CONNECT_MODE.LOGIN, '', user)
         if(res.code === 6006) {
-            setAlertState(alert, ALERT_TYPE.INFO, res.msg)
+            setAlertState(alert, ALERT_TYPE.WARNING, res.msg)
             clearToken()
             return
         }
@@ -114,8 +113,7 @@ function useEvntHandler(e, modeType, data, func){
         try {
             return await connect(connectMode, id, data, token.accessToken)
         } catch (error) {
-            console.log(error?.response?.data)
-            let msg = error?.response?.data || ""
+            let msg = error?.response?.data?.msg || "서버에 응답이 없거나, 오류가 발생하였습니다. 잠시 후 다시 접속해주시기 바랍니다."
             setAlertState(alert, ALERT_TYPE.ERROR, msg)
             clearToken()
             navigate("/")

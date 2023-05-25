@@ -59,7 +59,6 @@ const store = set => ({
     createWordList: (wordListRequest) => {set(() => ({
         wordList: wordListRequest
     }))
-    console.log("hello")
     },
 
     /**
@@ -114,7 +113,7 @@ const store = set => ({
 })
 
 const wordListStore = create(
-    process.env.NODE_ENV !== 'prod' ? devtools(store) : store
+    store
 )
 
 // const wordListStore = create(devtools(store))

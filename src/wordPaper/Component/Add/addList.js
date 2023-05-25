@@ -6,7 +6,6 @@ function AddList(props){
 
     // 버튼 이벤트 
     const handleOnClick = e => {
-        console.log("handleOnclick")
         let target_name = e.target.name;
         // 피연산자 앞에 + 연산자가 있으면 Number형으로 반환
         let target_id = +e.target.id;

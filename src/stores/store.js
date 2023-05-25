@@ -37,7 +37,7 @@ const useStore = set => ({
 })    
 
 const Store = create(
-    process.env.NODE_ENV !== 'prod' ? devtools(useStore) : useStore
+    useStore
 )
 
 export default Store
