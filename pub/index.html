@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    <link rel="stylesheet" href="./main.css">
+    <title>NAmeko</title>
+</head>
+<body>
+    <nav>
+        <h1><a href="#">단어장</a></h1>
+    </nav>
+    <div class="wrap">
+        <div class="search_wrap">
+            <div class="seacrch_cont">
+                <input type="text" class="s_text" placeholder="검색어를 입력해 주세요">
+                <input type="checkbox" id="s-icon" class="disN">
+                <label for="s-icon" class="search_icon"><i class="xi-search"></i></label>
+            </div>
+            <div class="s_pop">
+                <div class="s_pop_cont">
+                    <p>내가 찾은 단어</p>
+                    <ul>
+                        <li class="flex">
+                            <a href="#">
+                                <span>검색내용</span>
+                            </a>
+                            <button><i class="xi-close"></i></button>
+                        </li>
+                    </ul>
+                    <div>
+                        <span>전체삭제</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="word_tab_area flex">
+            <div class="active">전체</div>
+            <div>미암기</div>
+            <div>암기</div>
+        </div>
+        <div class="word_wrap">
+            <ul class="word_cont">
+                <li class="word">
+                    <div class="top_area flex">
+                        <span>단어이름</span>
+                        <buttton><i class="xi-headset"></i></buttton>
+                    </div>
+                    <div class="mid_area">
+                        <div class="mean_wrap">
+                            <p>단어뜻</p>
+                        </div>
+                        <div class="synonym_wrap flex">
+                            <span>유의어</span>
+                            <div class="synonym_cont flex">
+                                <p>유의어</p>
+                                <p>유의어2</p>
+                                <p>유의어3</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="foot_area flex">
+                        <div><span>현재날짜</span>저장</div>
+                        <div class="btn_area">
+                            <button class="check"><i class="xi-check-circle-o"></i></button>
+                            <button class="close"><i class="xi-close"></i></button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
