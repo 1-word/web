@@ -22,7 +22,6 @@ function WordPaper(){
    // 버튼 이벤트 
     const handleClick = mode => e => {
         const id = e.target.id;
-        console.log("[mode]: "+ mode+ "// [id]: ", e.target.id);
 
         switch (mode) {
             case MODE.UPDATE:

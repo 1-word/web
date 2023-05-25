@@ -8,7 +8,6 @@ function Login(){
     const onClickHandler = useEvntHandler()
 
     const handleClick = () => {
-        console.log(loginData)
         onClickHandler('', MODE.LOGIN, loginData)
     }
 

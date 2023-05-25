@@ -17,7 +17,6 @@ function App() {
   const {alert, modal, setAlert, setModal} = Store(state=>state)
 
   useEffect(() => {
-    console.log("App.js reRendring")
   }, [alert])
 
   const isMobile = useMediaQuery({query: "(max-width: 1080px)",});
