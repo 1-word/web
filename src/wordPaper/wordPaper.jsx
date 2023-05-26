@@ -15,13 +15,15 @@ function WordPaper(){
 
     const searchInput = useRef()
 
+    let headset_id = ""
+
     useEffect(() => {
         //onClickHandler('', MODE.READ, '')
     }, [update]);   //해당 state가 변경될 때 해당 로직 수행
 
    // 버튼 이벤트 
     const handleClick = mode => e => {
-        const id = e.target.id;
+        const id = e.currentTarget.id;
 
         switch (mode) {
             case MODE.UPDATE:
@@ -31,9 +33,19 @@ function WordPaper(){
                 onClickHandler('', MODE.DELETE, id)
                 break;
         
+            case MODE.AUDIO_PLAY:
+                const audioItem = document.getElementById('audio' + id)
+                const headset = document.getElementById('headset' + id)
+                onClickHandler(e, MODE.AUDIO_PLAY, audioItem)
+                headset.classList.add('on')
             default:
                 break;
         }
+    }
+
+    const audio_end = () => {
+        const headset = document.getElementById('headset' + headset_id)
+        headset.classList.remove('on')
     }
 
     // 팝업 이벤트
@@ -110,7 +122,10 @@ function WordPaper(){
                 <li className="word">
                     <div className="top_area flex">
                         <span>단어이름</span>
-                        <buttton><i className="xi-headset"></i></buttton>
+                        <buttton id={1} onClick={handleClick(MODE.AUDIO_PLAY)}>
+                            <i id={"headset"+1} className="xi-headset listen"></i>
+                            <audio id="audio1" src={process.env.PUBLIC_URL + '/pronu/あとうあ_1685105178825.mp3'} onEnded={audio_end}></audio>
+                        </buttton>
                     </div>
                     <div className="mid_area">
                         <div className="mean_wrap">

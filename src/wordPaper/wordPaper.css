@@ -230,6 +230,10 @@ nav{
   cursor: pointer;
 }
 
+.listen.on{
+  color: #356afd;
+}
+
 .mid_area{
   padding: 10px 0;
 }
