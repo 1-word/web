@@ -18,7 +18,8 @@ export const MODE = {
     PLUS_BTN: "plus_btn",
     MINUS_BTN: "minus_btn",
     SAVE_BTN: "save_btn",
-    ALERT: "alert"
+    ALERT: "alert",
+    AUDIO_PLAY: "audio_play"
 }
 
 /**
@@ -99,6 +100,9 @@ function useEvntHandler(e, modeType, data, func){
         saveToken(data, user.user_id)
         setAlertState(alert, ALERT_TYPE.SUCCESS, "로그인 성공")
         navigate("/word")
+    },
+    audio_play(e, audioRef){
+        audioRef.play()
     }
 }
 
