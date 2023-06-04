@@ -7,6 +7,10 @@ html body{
   font-family: 'NanumGothic';
 }
 
+body::-webkit-scrollbar{
+  width: 10px;
+}
+
 ul,ol,dl{
   list-style: none;
 }
@@ -159,8 +163,8 @@ nav{
 }
 
 .word_plus:disabled {
-  filter: saturate(0.2) opacity(0.8);
-  -webkit-filter: saturate(0.2) opacity(0.8);
+  filter: opacity(0.8);
+  -webkit-filter: opacity(0.8);
   cursor: not-allowed;
 }
 
@@ -270,6 +274,8 @@ nav{
   margin-right: 20px;
 }
 
+/*단어장 아랫부분*/
+
 .foot_area{
   justify-content: space-between;
 }
@@ -304,20 +310,114 @@ nav{
   color: #356afd;
 }
 
+.memo.on{
+  color: #356afd;
+}
+
+/*메모칸*/
+
+.memo_area{
+  width: 100%;
+  max-height: 0;
+  overflow: hidden;
+  transition: 0.4s ease;
+  margin-bottom: 10px;
+}
+
+.memo_area.on{
+  max-height: 200px;
+}
+
+.memo_text{
+  display: block;
+  width: 95%;
+  margin: 0 auto;
+  padding: 10px;
+  background: #b8d6ff57;
+  font-size: 13px;
+  color: #333;
+  line-height: 1.1;
+  height: 80px;
+  border: 1px solid #b8d6ff9c;
+  outline: 0;
+  transition: 0.4s all;
+  border-radius: 6px;
+  outline-color: #b8d6ff57;
+}
+
+.memo_text:focus-visible{
+  outline: 1px solid #b8d6ff9c;
+  background: #ffffff59;
+}
+
+.memo_text::-webkit-scrollbar {
+  width: 6px;
+}
+
+.memo_text::-webkit-scrollbar-thumb{
+  height: 30px; 
+  background: #81b5fd; 
+  
+  border-radius: 10px;
+}
+
+.memo_text::-webkit-scrollbar-track{
+  background: rgba(33, 122, 244, .1);
+}
+
+.memo_area .btn_area{
+  justify-content: end;
+  width: 95%;
+  margin: 10px auto;
+}
+
+.btn_area .cancle_memo,
+.btn_area .save_memo{
+  border: 1px solid #999;
+  border-radius: 6px;
+  padding: 8px 20px;
+  font-size: 16px;
+  transition: all 0.4s ease-in;
+}
+
+.btn_area .cancle_memo{
+  background: #fff;
+  color: #fd3582;
+  border-color: #fd3582;
+}
+
+.btn_area .cancle_memo:hover{
+  background: #fd3582;
+  color: #fff;
+}
+
+.btn_area .cancle_memo:focus,
+.btn_area .save_memo:focus{
+  transform: scale(0.95);
+}
+
+.btn_area .save_memo:hover{
+  background: #333;
+  color: #fff;
+}
+
 /* edit 모드 */
 
 .word.edit{
-  background: #faebd7;
+  background: #dde7f3;
 }
 
 .edit .mean_wrap{
   display: flex;
-  background: #ffe4c4;
+  background: #b8d6ff;
+  padding: 3px;
+  border-radius: 4px;;
 }
 
 .edit .top_area{
-  background: #ffe4c4;
-  padding: 10px;
+  background: #b8d6ff;
+  padding: 3px;
+  border-radius: 4px;
 }
 
 .edit input{
@@ -346,13 +446,18 @@ nav{
   float: left;
 }
 
+.edit .synonym_add{
+  margin: 10px 10px 0 0;
+  align-items: center;
+}
+
 .edit .synonym_cont input{
-  width: 22%;
+  width: 90%;
   height: 20px;
   font-size: 14px;
-  margin: 0 48px 15px 0;
   padding: 3px 0;
   text-indent: 15px;
+  margin-right: 15px;
 }
 
 .edit .synonym_cont input:nth-child(4n){
@@ -363,11 +468,19 @@ nav{
   opacity: 1;
 }
 
+.edit .synonym_add button{
+  background: none;
+  width: 10%;
+  height: 20px;
+  font-size: 20px;
+}
+
 .edit .top_area .headset{
   display: none;
 }
 
-.edit .synonym_plus_area{
+.edit .synonym_plus_cont{
+  width: 100%;
 }
 
 .edit .synonym_plus{

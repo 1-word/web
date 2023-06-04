@@ -114,7 +114,7 @@ function WordPaper(){
             <div>암기</div>
         </div>
         <div>
-            <button className="word_plus">추가<i className="xi-plus-circle"></i></button>
+            <button className="word_plus" onClick={handleModal}>추가<i className="xi-plus-circle"></i></button>
         </div>
         </div>
         <div className="word_wrap">
@@ -140,6 +140,13 @@ function WordPaper(){
                             </div>
                         </div>
                     </div>
+                    <div className="memo_area">
+                        <textarea className="memo_text" autoFocus maxLength={3000}/>
+                        <div className="btn_area flex">
+                            <button className="cancle_memo">취소</button>
+                            <button className="save_memo">저장</button>
+                        </div>
+                    </div>
                     <div className="foot_area flex">
                         <div><span>현재날짜</span>저장</div>
                         <div className="btn_area">
@@ -161,22 +168,29 @@ function WordPaper(){
                         <div className="synonym_wrap">
                             <span>유의어</span>
                             <div className="synonym_cont flex">
-                                <input defaultValue="유의어1"/>
-                                <input defaultValue="유의어2"/>
-                                <input/>
-                                <input/>
-                                <input/>
-                                <input/>
-                                <input/>
-                                <input/>
-                                <input/>
-                                <input/>
-                                <input/>
-                                <input/>
-                                <input/>
-                                <input/>
-                                <input/>
+                                <div className="synonym_add flex">
+                                    <input defaultValue="유의어1"/>
+                                    <button><i className="xi-minus-circle"></i></button>
+                                </div>
+                                <div className="synonym_add flex">
+                                    <input defaultValue="유의어1"/>
+                                    <button><i className="xi-minus-circle"></i></button>
+                                </div><div className="synonym_add flex">
+                                    <input defaultValue="유의어1"/>
+                                    <button><i className="xi-minus-circle"></i></button>
+                                </div><div className="synonym_add flex">
+                                    <input defaultValue="유의어1"/>
+                                    <button><i className="xi-minus-circle"></i></button>
+                                </div><div className="synonym_add flex">
+                                    <input defaultValue="유의어1"/>
+                                    <button><i className="xi-minus"></i></button>
+                                </div><div className="synonym_add flex">
+                                    <input defaultValue="유의어1"/>
+                                    <button><i className="xi-minus flex"></i></button>
+                                </div>
+                                <div className="flex synonym_plus_cont">
                                 <button className="synonym_plus"><i className="xi-plus-circle"></i></button>
+                                </div>
                             </div>
                         </div>
                     </div>

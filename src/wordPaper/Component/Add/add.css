@@ -1,28 +1,12 @@
-      html {
-        height: 100%;
-        width: 100%;
-      }
-
-      body {
-        font-family: 'Open Sans', serif;
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        width: 100%;
-        -webkit-font-smoothing: antialiased;
-        overflow: -moz-scrollbars-none;
-        -ms-overflow-style: none;
-      }
-
-      
 
   .add {
-  position: absolute;
-   background-color: rgba(0, 0, 0, 0.523123); 
+  position: fixed;
+  background-color: #0000004d; 
   width: 100%;
   height: 100%;
-  left: 0px;
-  top: 0px;
+  left: 0;
+  top: 0;
+  z-index: 99999;
 }
 
 .add .addframe {
@@ -31,8 +15,11 @@
   height: 642.00px;
   /* left: 663.00px; */
   left: 50%;
-  transform: translate(-50%, 0%);   /* 오브젝트 재배치 x,y (가운데 정렬)*/
-  top: 25%;
+  transform: translate(-50%, -50%);   /* 오브젝트 재배치 x,y (가운데 정렬)*/
+  top: 50%;
+  background: #fff;
+  border-radius: 30px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 /* 임의의 영역 생성 */
@@ -44,50 +31,24 @@
 
 /* 아래의 모든 코드는 영역::코드로 사용 */
 
-.squareframe::-webkit-scrollbar {
-    width: 10px;  /* 스크롤바의 너비 */
+.addgrid::-webkit-scrollbar {
+    width: 6px;  /* 스크롤바의 너비 */
 }
 
-.squareframe::-webkit-scrollbar-thumb {
-    height: 30%; /* 스크롤바의 길이 */
-    background: #217af4; /* 스크롤바의 색상 */
+.addgrid::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb {
+    height: 30px; /* 스크롤바의 길이 */
+    background: #81b5fd; /* 스크롤바의 색상 */
     
     border-radius: 10px;
 }
 
-.squareframe::-webkit-scrollbar-track {
+.addgrid::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track {
     background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
 }
 
-.add .addframe .squareframe {
-    position: absolute;
-    overflow: auto;
-    /* background-color: rgba(36, 36, 36, 0.0392156862745098); */
-    /* background-color: rgba(240, 240, 240, 100); */
-    background-color: rgba(250, 250, 250, 100);
-    border-bottom-color: rgba(112, 112, 112, 1);
-    border-bottom-style: none;
-    border-bottom-width: 1.00px;
-    border-left-color: rgba(112, 112, 112, 1);
-    border-left-style: none;
-    border-left-width: 1.00px;
-    border-right-color: rgba(112, 112, 112, 1);
-    border-right-style: none;
-    border-right-width: 1.00px;
-    border-top-color: rgba(112, 112, 112, 1);
-    border-top-style: none;
-    border-top-width: 1.00px;
-    border-top-left-radius: 37.00px;
-    border-top-right-radius: 37.00px;
-    border-bottom-left-radius: 37.00px;
-    border-bottom-right-radius: 37.00px;
-    box-shadow: none;
-    width: 594.00px;
-    height: 642.00px;
-    left: 0.00px;
-    top: 0.00px;
 
-}
 
 .delete {
   position: absolute;
@@ -97,6 +58,7 @@
   top: 18.00px;
   background:url(/public/img/delete_icon.png) no-repeat; 
    border: none;
+   cursor: pointer;
 }
 
 .delete:hover {
@@ -156,9 +118,8 @@
 
 .add .addframe .add7cea4238 {
   position: absolute;
-  width: 380.00px;
+  width: 100%;
   height: 435.00px;
-  left: 78.00px;
   top: 108.00px;
 }
 
@@ -209,96 +170,91 @@
 }
 
 .save_btn{
-  position: absolute;
-  width: 322.00px;
+  position: relative;
+  width: 50%;
+  margin: 0 auto;
   height: 60.00px;
-  left: 58.00px;
-  top: 388.00px;
-  background:url(/public/img/save_icon.png) no-repeat; 
+  top: 50px;
+  display: flex;
+  /* background:url(/public/img/save_icon.png) no-repeat;  */
   border: none;
+  text-align: center;
+  font-size: 28px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  color: #fff;
+  background-size: 200%;
+  background-image: linear-gradient(229deg, #5adaff 0, #5468ff 100%);
+  cursor: pointer;
+  transition: all 0.4s ease;
 }
 
+
+
 .save_btn:hover{
-  background:url(/public/img/save_icon_over.png) no-repeat; 
+  background-position: right center;
+  font-size: 26px;
 }
+
 
 .addGroup{
     position: relative;
-    width: 450px;
+    width: 100%;
     height: 50.00px;
     padding-bottom: 35px;
-    left: 30px;
     display: flex;
-    flex-direction: row;
+}
+
+.addGroup .plus_btn,
+.addGroup .minus_btn{
+  position: relative;
+  width: 56.00px;
+  height: 100%;
+  margin-left: 30px;
+  top: 0;
+  border: none;
+  cursor: pointer;
+  font-size: 30px;
+  color: #81b5fd;
+  background: none;
+  transition: 0.36s ease;
 }
 
 .addGroup .plus_btn{
-  position: relative;
-  width: 56.00px;
-  height: 56.00px;
-  left: 300px;
-  top: 1px;
-  background:url(/public/img/plus_icon.png) no-repeat;
-  border: none;
 }
 
-.addGroup .plus_btn:hover{
-    background:url(/public/img/plus_icon_over.png) no-repeat;
-  border: none;  
+.addGroup .plus_btn:hover,
+.addGroup .minus_btn:hover{
+  color: #69a6f7;  
 }
 
 .addGroup .minus_btn{
-    position: relative;
-  width: 56.00px;
-  height: 56.00px;
-  left: 300px;
-  top: 1px;
-  background:url(/public/img/minus_icon.png) no-repeat;
-  border: none;
-}
-
-.addGroup .minus_btn:hover{
-  background:url(/public/img/minus_icon_over.png) no-repeat;
-  border: none;  
 }
 
 .add .addframe .add7cea4238 .addgrid {
-  position: absolute;
-  /* width: 380.00px; */
-  overflow: auto;
-  width: 515.00px;
+  position: relative;
+  overflow-y: scroll;
+  width: 80%;
+  margin: 0 auto;
   height: 351.00px;
   /* height: 332.00px;*/
-  left: 0.00px;
-  top: 0.00px;
   display: flex;
   flex-direction:column;
 }
 
 .add .addframe .add7cea4238 .addgrid .x23876 {
-    position: absolute;
-    background-color: rgba(255, 255, 255, 1);
-    border-bottom-color: rgba(200, 200, 200, 1);
-    border-bottom-style: solid;
-    border-bottom-width: 1.00px;
-    border-left-color: rgba(200, 200, 200, 1);
-    border-left-style: solid;
-    border-left-width: 1.00px;
-    border-right-color: rgba(200, 200, 200, 1);
-    border-right-style: solid;
-    border-right-width: 1.00px;
-    border-top-color: rgba(200, 200, 200, 1);
-    border-top-style: solid;
-    border-top-width: 1.00px;
-    -webkit-filter: drop-shadow(0px 1px 6px rgba(0, 0, 0, 0.1607843137254902));
-    filter: drop-shadow(0px 1px 6px rgba(0, 0, 0, 0.1607843137254902));
-    width: 223.00px;
+    background-color: #e9e9e9;
+    border-radius: 5px;
+    border: 1px solid  rgba(200, 200, 200, 1);
+    width: 50%;
     height: 44.00px;
-    left: 150.00px;
+    left: 10px;
+    text-indent: 20px;
 }
 
 .add .addframe .add7cea4238 .addgrid .xa20b892b {
-  text-align: center;
+  text-align: start;
   font-size: 28.00px;
   font-style: normal;
   font-family: 'Noto Sans CJK KR', Arial;

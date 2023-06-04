@@ -37,7 +37,7 @@ function AddList(props){
             <div className="xa20b892b">{props.text}</div>
             <input className="x23876" name={props.name} id={props.id} value={props.value}type="text"onChange={handleOnchange}/>
             {props.name === WORD_KEY.SYNONYMS
-            ? <button className={props.btnname} name={props.btnname} id={props.id} value={props.value} onClick={handleOnClick} />
+            ? <button className={props.btncls} name={props.btnname} id={props.id} value={props.value} onClick={handleOnClick} />
             : null}
         </div>    
 }
