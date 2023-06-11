@@ -17,9 +17,10 @@ function WordPaper(){
 
     let headset_id = ""
 
+    let headset
+
     useEffect(() => {
        onClickHandler('', MODE.READ, '')
-       window.scrollTo({top:0})
     }, [update]);   //해당 state가 변경될 때 해당 로직 수행
 
    // 버튼 이벤트 
@@ -35,17 +36,21 @@ function WordPaper(){
                 break;
         
             case MODE.AUDIO_PLAY:
-                const audioItem = document.getElementById('audio' + id)
-                const headset = document.getElementById('headset' + id)
-                onClickHandler(e, MODE.AUDIO_PLAY, audioItem)
-                headset.classList.add('on')
+                //const audioItem = document.getElementById('audio' + id)
+                headset = document.getElementById('headset' + id)
+                const soundPath= headset.dataset.pronAudio ?? ""
+                if(soundPath !== ""){
+                    onClickHandler(e, MODE.AUDIO_PLAY, soundPath, audio_end)
+                    headset.classList.add('on')
+                }
             default:
                 break;
         }
     }
 
     const audio_end = () => {
-        const headset = document.getElementById('headset' + headset_id)
+        console.log("end")
+        //const headset = document.getElementById('headset' + headset_id)
         headset.classList.remove('on')
     }
 
@@ -62,36 +67,38 @@ function WordPaper(){
 
 
     const dataList = wordList.map((data, idx) => {
-    return  <li className="word" id={data?.word_id}>
-                    <div className="top_area flex">
-                        <span>{data?.word}</span>
-                        <buttton id={idx} onClick={handleClick(MODE.AUDIO_PLAY)}>
-                            <i id={"headset"+idx} className="xi-headset listen"></i>
-                            <audio id="audio1" src={process.env.PUBLIC_URL + '/pronu/あとうあ_1685105178825.mp3'} onEnded={audio_end}></audio>
-                        </buttton>
+    return  <div className="word" id={data?.word_id}>
+                <div className="top_area flex">
+                    <span>{data?.word}</span>
+                    <button id={idx} onClick={handleClick(MODE.AUDIO_PLAY)}>
+                        <i id={"headset"+idx} className="xi-headset listen" data-pron-audio={data?.soundPath}></i>
+                        {/* <audio id="audio1" src={process.env.PUBLIC_URL + '/pronu/あとうあ_1685105178825.mp3'} onEnded={audio_end}></audio> */}
+                    </button>
+                </div>
+                <div className="mid_area">
+                    <div className="mean_wrap">
+                        <p>{data?.mean}</p>
                     </div>
-                    <div className="mid_area">
-                        <div className="mean_wrap">
-                            <p>{data?.mean}</p>
-                        </div>
-                        <SynonsymsList synonyms={data?.synonyms}></SynonsymsList>
+                    <SynonsymsList synonyms={data?.synonyms}></SynonsymsList>
+                </div>
+                <div className="memo_area">
+                    <textarea className="memo_text" maxLength={3000} 
+                              defaultValue={data?.memo.replace(/\\n/g, '\n')}>                       
+                    </textarea>
+                    <div className="btn_area flex">
+                        <button className="cancle_memo">취소</button>
+                        <button className="save_memo">저장</button>
                     </div>
-                    <div className="memo_area">
-                        <textarea className="memo_text" autoFocus maxLength={3000}/>
-                        <div className="btn_area flex">
-                            <button className="cancle_memo">취소</button>
-                            <button className="save_memo">저장</button>
-                        </div>
-                    </div>
-                    <div className="foot_area flex">
-                    <div><span>현재날짜</span>저장</div>
+                </div>
+                <div className="foot_area flex">
+                    <div><span>{data?.update_time}</span></div>
                     <div className="btn_area">
                         <span className="check"><i className="xi-check-circle-o"></i></span>
                         <span className="memo"><i className="xi-comment-o"></i></span>
                         <span className="close"><i className="xi-close"></i></span>
                     </div>
                 </div>
-            </li>  
+            </div>  
 });
 
     return (
@@ -129,51 +136,14 @@ function WordPaper(){
         </div>
         </div>
         <div className="word_wrap">
-            <ul className="word_cont">
+            <div className="word_cont">
                 {dataList}
-                {/* <li className="word">
-                    <div className="top_area flex">
-                        <span>단어이름</span>
-                        <buttton id={1} onClick={handleClick(MODE.AUDIO_PLAY)}>
-                            <i id={"headset"+1} className="xi-headset listen"></i>
-                            <audio id="audio1" src={process.env.PUBLIC_URL + '/pronu/あとうあ_1685105178825.mp3'} onEnded={audio_end}></audio>
-                        </buttton>
-                    </div>
-                    <div className="mid_area">
-                        <div className="mean_wrap">
-                            <p>단어뜻</p>
-                        </div>
-                        <div className="synonym_wrap flex">
-                            <span>유의어</span>
-                            <div className="synonym_cont flex">
-                                <p>유의어</p>
-                                <p>유의어2</p>
-                                <p>유의어3</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="memo_area">
-                        <textarea className="memo_text" autoFocus maxLength={3000}/>
-                        <div className="btn_area flex">
-                            <button className="cancle_memo">취소</button>
-                            <button className="save_memo">저장</button>
-                        </div>
-                    </div>
-                    <div className="foot_area flex">
-                        <div><span>현재날짜</span>저장</div>
-                        <div className="btn_area">
-                            <button className="check"><i className="xi-check-circle-o"></i></button>
-                            <button className="memo"><i className="xi-comment-o"></i></button>
-                            <button className="close"><i className="xi-close"></i></button>
-                        </div>
-                    </div>
-                </li>    */}
-            </ul>
+            </div>
             <ul className="word_cont">
                 <li className="word edit">
                     <div className="top_area flex">
                         <input defaultValue="word" className="edit_input" />
-                        <buttton className="headset"><i className="xi-headset"></i></buttton>
+                        <button className="headset"><i className="xi-headset"></i></button>
                     </div>
                     <div className="mid_area">
                         <div className="mean_wrap">
@@ -219,7 +189,7 @@ function WordPaper(){
                 </li>
             </ul>
         </div>
-    </div>
+     </div>
     );
 }
 

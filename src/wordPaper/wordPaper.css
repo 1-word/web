@@ -280,7 +280,7 @@ nav{
   justify-content: space-between;
 }
 
-.btn_area button{
+.btn_area span{
   margin-left: 20px;
   cursor: pointer;
   background: none;

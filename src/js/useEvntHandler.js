@@ -99,8 +99,12 @@ function useEvntHandler(e, modeType, data, func){
         setAlertState(alert, ALERT_TYPE.SUCCESS, "로그인 성공")
         navigate("/word")
     },
-    audio_play(e, audioRef){
-        audioRef.play()
+    audio_play(e, soundPath, endFunc){
+        const audio = new Audio()
+        const soundUrl = process.env.PUBLIC_URL + '/pronu/' + soundPath + '.mp3'
+        audio.src = soundUrl
+        audio.onended= endFunc
+        audio.play()
     }
 }
 

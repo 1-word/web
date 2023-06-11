@@ -23,6 +23,8 @@ const store = set => ({
             "mean": "",
             "wread": "",
             "memo": "",
+            "soundPath": "",
+            "update_time": "",
             "synonyms": [
                 {
                     "synonym_id": 0,
