@@ -40,7 +40,7 @@ function useEvntHandler(e, modeType, data, func){
 
     const handlerMap = {
     async read(e, data, func){
-        const res = await executeSrvConnect(CONNECT_MODE.READ, user_id)
+        const res = await executeSrvConnect(CONNECT_MODE.READ)
         if (!dataCheck(res)) return
         createWordList(res.list);
         setAlertState(alert, ALERT_TYPE.SUCCESS, "성공적으로 데이터를 불러왔습니다.")
@@ -50,9 +50,7 @@ function useEvntHandler(e, modeType, data, func){
         return executeSrvConnect(CONNECT_MODE.SEARCH, MODE.SEARCH_ALL)
     },
     async search(e, data){
-        let searchText = data.current.value || ""
-        searchText !== "" ? searchText = searchText : searchText = MODE.SEARCH_ALL
-        const res = await executeSrvConnect(CONNECT_MODE.SEARCH, user_id, searchText)
+        const res = await executeSrvConnect(CONNECT_MODE.SEARCH, "", data)
         if (!dataCheck(res)) return
 
         let wordListrequest = res.list

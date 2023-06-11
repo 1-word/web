@@ -62,7 +62,7 @@ async function connect(_method, _id, _data, _token){
         let uri = _method.URI ?? ""
         let token = uri !== CONNECT_MODE.LOGIN.URI? _token : ""
         let url = `${host}${uri}/${id}`
-        if (_method.URI == CONNECT_MODE.SEARCH.URI) url = `${host}${uri}/${id}/${_data}`
+        if (_method.URI == CONNECT_MODE.SEARCH.URI) url = `${host}${uri}/${_data}`
 
         let res = await axios({
             method: method,
@@ -73,7 +73,7 @@ async function connect(_method, _id, _data, _token){
                 Authorization: `Bearer ${token}`
             }
         });
-
+        
         return res.data
 }
 
