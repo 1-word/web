@@ -40,7 +40,7 @@ function useEvntHandler(e, modeType, data, func){
 
     const handlerMap = {
     async read(e, data, func){
-        const res = await executeSrvConnect(CONNECT_MODE.READ, user_id)
+        const res = await executeSrvConnect(CONNECT_MODE.READ)
         if (!dataCheck(res)) return
         createWordList(res.list);
         setAlertState(alert, ALERT_TYPE.SUCCESS, "성공적으로 데이터를 불러왔습니다.")
@@ -50,9 +50,7 @@ function useEvntHandler(e, modeType, data, func){
         return executeSrvConnect(CONNECT_MODE.SEARCH, MODE.SEARCH_ALL)
     },
     async search(e, data){
-        let searchText = data.current.value || ""
-        searchText !== "" ? searchText = searchText : searchText = MODE.SEARCH_ALL
-        const res = await executeSrvConnect(CONNECT_MODE.SEARCH, user_id, searchText)
+        const res = await executeSrvConnect(CONNECT_MODE.SEARCH, "", data)
         if (!dataCheck(res)) return
 
         let wordListrequest = res.list
@@ -101,8 +99,19 @@ function useEvntHandler(e, modeType, data, func){
         setAlertState(alert, ALERT_TYPE.SUCCESS, "로그인 성공")
         navigate("/word")
     },
-    audio_play(e, audioRef){
-        audioRef.play()
+    audio_play(e, soundPath, endFunc){
+        const audio = new Audio()
+        const soundUrl = process.env.PUBLIC_URL + '/pronu/' + soundPath + '.mp3'
+        audio.src = soundUrl
+        audio.onended= endFunc
+        let playPromise = audio.play()
+        if (playPromise !== undefined){
+            playPromise.then(_ => {
+
+            }).catch(error => {
+                endFunc();
+            })
+        }
     }
 }
 

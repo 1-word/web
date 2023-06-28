@@ -7,6 +7,10 @@ html body{
   font-family: 'NanumGothic';
 }
 
+body::-webkit-scrollbar{
+  width: 10px;
+}
+
 ul,ol,dl{
   list-style: none;
 }
@@ -159,8 +163,8 @@ nav{
 }
 
 .word_plus:disabled {
-  filter: saturate(0.2) opacity(0.8);
-  -webkit-filter: saturate(0.2) opacity(0.8);
+  filter: opacity(0.8);
+  -webkit-filter: opacity(0.8);
   cursor: not-allowed;
 }
 
@@ -270,24 +274,20 @@ nav{
   margin-right: 20px;
 }
 
+/*단어장 아랫부분*/
+
 .foot_area{
   justify-content: space-between;
 }
 
-.btn_area button{
-  margin-left: 20px;
-  cursor: pointer;
-  background: none;
-  font-size: 24px;
-  transition: 0.36s ease;
-}
-
 .check,
+.memo,
 .close{
   cursor: pointer;
   background: none;
   font-size: 24px;
   transition: 0.36s ease;
+  margin-left: 20px;
 }
 
 .check.on{
@@ -300,24 +300,120 @@ nav{
 }
 
 .close:hover,
-.close:focus{
+.close:focus-visible{
   color: #356afd;
+}
+
+.memo.on{
+  color: #356afd;
+}
+
+/*메모칸*/
+
+.memo_area{
+  width: 100%;
+  max-height: 0;
+  overflow: hidden;
+  transition: 0.4s ease;
+  margin-bottom: 10px;
+}
+
+.memo_area.on{
+  max-height: 200px;
+}
+
+.memo_text{
+  display: block;
+  width: 95%;
+  margin: 0 auto;
+  padding: 10px;
+  background: #b8d6ff57;
+  font-size: 13px;
+  color: #333;
+  line-height: 1.1;
+  height: 80px;
+  border: 1px solid #b8d6ff9c;
+  outline: 0;
+  transition: 0.4s all;
+  border-radius: 6px;
+  outline-color: #b8d6ff57;
+}
+
+.memo_text:focus-visible{
+  outline: 1px solid #b8d6ff9c;
+  background: #ffffff59;
+}
+
+.memo_text::-webkit-scrollbar {
+  width: 6px;
+}
+
+.memo_text::-webkit-scrollbar-thumb{
+  height: 30px; 
+  background: #81b5fd; 
+  
+  border-radius: 10px;
+}
+
+.memo_text::-webkit-scrollbar-track{
+  background: rgba(33, 122, 244, .1);
+}
+
+.memo_area .btn_area{
+  justify-content: end;
+  width: 95%;
+  margin: 10px auto;
+}
+
+.btn_area .cancle_memo,
+.btn_area .save_memo{
+  border: 1px solid #999;
+  border-radius: 6px;
+  padding: 8px 20px;
+  font-size: 16px;
+  transition: all 0.4s ease-in;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.btn_area .cancle_memo{
+  background: #fff;
+  color: #fd3582;
+  border-color: #fd3582;
+}
+
+.btn_area .cancle_memo:hover{
+  background: #fd3582;
+  color: #fff;
+}
+
+.btn_area .cancle_memo:focus,
+.btn_area .save_memo:focus{
+  transform: scale(0.95);
+}
+
+.btn_area .save_memo:hover{
+  background: #333;
+  color: #fff;
 }
 
 /* edit 모드 */
 
 .word.edit{
-  background: #faebd7;
+  background: #dde7f3;
 }
 
 .edit .mean_wrap{
   display: flex;
-  background: #ffe4c4;
+  background: #b8d6ff;
+  padding: 3px;
+  border-radius: 4px;;
 }
 
 .edit .top_area{
-  background: #ffe4c4;
-  padding: 10px;
+  background: #b8d6ff;
+  padding: 3px;
+  border-radius: 4px;
 }
 
 .edit input{
@@ -343,40 +439,62 @@ nav{
 .edit .synonym_cont{
   flex-wrap: wrap;
   justify-content: flex-start;
-  float: left;
+}
+
+.edit .synonym_add{
+  margin: 10px 36px 10px 0;
+  align-items: center;
+}
+
+.edit .synonym_add:nth-child(5n){
+  margin-right: 0;
 }
 
 .edit .synonym_cont input{
-  width: 22%;
+  width: 170px;
   height: 20px;
   font-size: 14px;
-  margin: 0 48px 15px 0;
   padding: 3px 0;
   text-indent: 15px;
-}
-
-.edit .synonym_cont input:nth-child(4n){
-  margin-right: 0;
+  margin-right: 5px;
 }
 
 .edit input:focus{
   opacity: 1;
 }
 
+.edit .synonym_add button{
+  background: none;
+  height: 20px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.4s;
+  padding: 0 10px;
+}
+
+.edit .synonym_add button:hover,
+.edit .synonym_add button:focus-visible{
+  opacity: 0.5;
+}
+
 .edit .top_area .headset{
   display: none;
 }
 
-.edit .synonym_plus_area{
+.edit .synonym_plus{
+  font-size: 19px;
+  width: 170px;
+  height: 26px;
+  /* background: #81b5fd; */
+  background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: 0.4s;
+  line-height: 30px;
+  color: #fff;
 }
 
-.edit .synonym_plus{
-  font-size: 26px;
-  background: none;
-  width: 22%;
-  height: 26px;
-  background: #fff;
-  opacity: 0.6;
-  margin-bottom: 15px;
-  cursor: pointer;
+.edit .synonym_plus:hover{
+  opacity: 0.7;
 }
