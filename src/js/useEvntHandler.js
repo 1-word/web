@@ -104,7 +104,14 @@ function useEvntHandler(e, modeType, data, func){
         const soundUrl = process.env.PUBLIC_URL + '/pronu/' + soundPath + '.mp3'
         audio.src = soundUrl
         audio.onended= endFunc
-        audio.play()
+        let playPromise = audio.play()
+        if (playPromise !== undefined){
+            playPromise.then(_ => {
+
+            }).catch(error => {
+                endFunc();
+            })
+        }
     }
 }
 
