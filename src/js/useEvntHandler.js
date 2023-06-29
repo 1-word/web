@@ -19,7 +19,8 @@ export const MODE = {
     MINUS_BTN: "minus_btn",
     SAVE_BTN: "save_btn",
     ALERT: "alert",
-    AUDIO_PLAY: "audio_play"
+    AUDIO_PLAY: "audio_play",
+    MEMO_BTN: "memo_btn"
 }
 
 /**
@@ -99,17 +100,17 @@ function useEvntHandler(e, modeType, data, func){
         setAlertState(alert, ALERT_TYPE.SUCCESS, "로그인 성공")
         navigate("/word")
     },
-    audio_play(e, soundPath, endFunc){
+    audio_play(e, data, endFunc){
         const audio = new Audio()
-        const soundUrl = process.env.PUBLIC_URL + '/pronu/' + soundPath + '.mp3'
+        const soundUrl = process.env.PUBLIC_URL + '/pronu/' + data.sound_path + '.mp3'
         audio.src = soundUrl
-        audio.onended= endFunc
+        audio.onended= endFunc(data.id)
         let playPromise = audio.play()
         if (playPromise !== undefined){
             playPromise.then(_ => {
 
             }).catch(error => {
-                endFunc();
+                endFunc(data.id);
             })
         }
     }
