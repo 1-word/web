@@ -28,7 +28,7 @@ function WordPaper(){
     }, [update]);   //해당 state가 변경될 때 해당 로직 수행
 
    // 버튼 이벤트 
-    const handleClick = (mode, objId, detailMode) => e => {
+    const handleClick = (mode, objId, detailMode, wordId) => e => {
         const id = objId ?? e.currentTarget.id        
 
         switch (mode) {
@@ -55,7 +55,7 @@ function WordPaper(){
 
             case MODE.MEMO_BTN:         
                 let memo_input = memoRef.current[id]
-                let status = memo_input.status ?? 'on'
+                let status = memo_input?.status ?? 'on'
                 let memo_mode = detailMode ?? status
                 const memoBtnHandler = {
                     off(){
@@ -74,7 +74,10 @@ function WordPaper(){
                         memo_input.childNodes[0].value = memo_input.memo
                     },
                     save(){
-                        
+                        let data = wordList.filter(word => word.word_id === wordId)[0]
+                        data.memo = memo_input?.childNodes[0]?.value
+                        memo_input.memo = memo_input.childNodes[0].value  //텍스트 저장
+                        onClickHandler(e, MODE.UPDATE_MEMO, wordId, data) 
                     }
                 }
                 memoBtnHandler[memo_mode]()
@@ -121,7 +124,7 @@ function WordPaper(){
                     </textarea>
                     <div className="btn_area flex">
                         <button className="cancle_memo" onClick={handleClick(MODE.MEMO_BTN, idx, 'cancle')}>취소</button>
-                        <button className="save_memo">저장</button>
+                        <button className="save_memo" onClick={handleClick(MODE.MEMO_BTN, idx, 'save', data?.word_id)}>저장</button>
                     </div>
                 </div>
                 <div className="foot_area flex">

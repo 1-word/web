@@ -20,7 +20,8 @@ export const MODE = {
     SAVE_BTN: "save_btn",
     ALERT: "alert",
     AUDIO_PLAY: "audio_play",
-    MEMO_BTN: "memo_btn"
+    MEMO_BTN: "memo_btn",
+    UPDATE_MEMO: "updateMemo"
 }
 
 /**
@@ -67,15 +68,22 @@ function useEvntHandler(e, modeType, data, func){
         setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
         return res
     },
-    update(){
-        
+    async update(e, id){
+        let res = await executeSrvConnect(CONNECT_MODE.UPDATE, id)
+        setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
+        setAlertState(alert, ALERT_TYPE.SUCCESS, "성공적으로 데이터를 저장했습니다.")
     },
-    async save(e, data, func){
+    async updateMemo(e, id, data){
+        let res = await executeSrvConnect(CONNECT_MODE.UPDATE_MEMO, id, data)
+        setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
+        setAlertState(alert, ALERT_TYPE.SUCCESS, "성공적으로 데이터를 저장했습니다.")
+    },
+    async save(e, data, closePopup){
         data.user_id = user_id
         let res = await executeSrvConnect(CONNECT_MODE.SAVE, '', data)
         saveListClear()
         setUpdateFlag()
-        func()
+        closePopup()
         return res
     },
     open(){
@@ -130,7 +138,7 @@ function useEvntHandler(e, modeType, data, func){
             let msg = error?.response?.data?.msg || "서버에 응답이 없거나, 오류가 발생하였습니다. 잠시 후 다시 접속해주시기 바랍니다."
             setAlertState(alert, ALERT_TYPE.ERROR, msg)
             clearToken()
-            navigate("/")
+            //navigate("/")
             // setAlertState(alert, ALERT_TYPE.ERROR, error?.response?.data?.msg)
             throw new Error(error);
             //return -1
