@@ -271,6 +271,10 @@ nav{
   justify-content: space-between;
 }
 
+.top_area button{
+  background: none;
+}
+
 .top_area span,
 .top_area .xi-headset::before{
   font-size: 24px;
@@ -543,4 +547,25 @@ nav{
 
 .edit .synonym_plus:hover{
   opacity: 0.7;
+}
+
+/* 미디어쿼리 */
+
+@media (max-width: 1280px) {
+  .wrap {
+    width: 90%;
+  }
+
+}
+
+@media (max-width: 767px) {
+  .search_wrap{
+    width: 100%;
+  }
+  .search_icon{
+    font-size: 26px;
+  }
+  .s_text{
+    font-size: 18px;
+  }
 }
