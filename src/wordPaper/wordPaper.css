@@ -127,6 +127,52 @@ nav{
   background: #ccc;
 }
 
+/* 단어장 폴더 */
+.folder_wrap{}
+
+.folder_cont{
+  margin: 30px 0 0;
+  flex-wrap: wrap;
+}
+
+.folder_cont::-webkit-scrollbar{
+  
+}
+
+.folder_cont li{
+  margin: 0 0 15px 15px;
+  padding: 10px 13px;
+  font-size: 20px;
+  background: #356afd;
+  color: #fff;
+  border-radius: 18px;
+  max-width: 40px;
+  /* overflow: hidden;
+  white-space: nowrap;
+  text-overflow: clip;
+  letter-spacing: 200px; */
+  cursor: pointer;
+  transition: 0.2s all;
+  text-transform: uppercase;
+}
+
+.folder_cont li:nth-child(2n){
+  border: 1px solid #356afd;
+  color: #356afd;
+  background: #fff;
+}
+
+.folder_cont li.on{
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  max-width: 200px;
+}
+
+.folder_cont li:hover,
+.folder_cont li:focus-visible{
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  max-width: 200px;
+}
+
 /* 단어장 탑부분 */
 .word_top{
   justify-content: space-between;
@@ -223,6 +269,10 @@ nav{
 
 .top_area{
   justify-content: space-between;
+}
+
+.top_area button{
+  background: none;
 }
 
 .top_area span,
@@ -497,4 +547,25 @@ nav{
 
 .edit .synonym_plus:hover{
   opacity: 0.7;
+}
+
+/* 미디어쿼리 */
+
+@media (max-width: 1280px) {
+  .wrap {
+    width: 90%;
+  }
+
+}
+
+@media (max-width: 767px) {
+  .search_wrap{
+    width: 100%;
+  }
+  .search_icon{
+    font-size: 26px;
+  }
+  .s_text{
+    font-size: 18px;
+  }
 }

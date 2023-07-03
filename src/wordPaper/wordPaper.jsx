@@ -162,6 +162,12 @@ function WordPaper(){
                 </div>
             </div>
         </div>
+        <div className="folder_wrap">
+            <ul className="flex folder_cont">
+                <li>내</li>
+                <li>단어</li>
+            </ul>
+        </div>
         <div className="flex word_top">
         <div className="word_tab_area flex">
             <div className="active">전체</div>
