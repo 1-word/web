@@ -30,9 +30,9 @@
 .alert_box{
   position: fixed;
   z-index: 99;
-  animation-name: fadeUpDown;
+  /* animation-name: fadeUpDown; */
   animation: fadeUpDown 3s;
-  animation-fill-mode: forwards;
+  /* animation-fill-mode: forwards; */
   font-family: 'Noto Sans CJK KR', Arial;
   width: calc(100%)
 }
