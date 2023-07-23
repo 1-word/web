@@ -69,8 +69,8 @@ function useEvntHandler(e, modeType, data, func){
         setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
         return res
     },
-    async update(e, id){
-        let res = await executeSrvConnect(CONNECT_MODE.UPDATE, id)
+    async update(e, id, data){
+        let res = await executeSrvConnect(CONNECT_MODE.UPDATE, id, data)
         setAlertState(alert, ALERT_TYPE.INFO, "성공적으로 데이터를 저장했습니다.")
         setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
     },

@@ -82,7 +82,6 @@ function WordPaper(){
                 break
             
             case MODE.EDIT:
-                console.log("edit")
                 setEditMode({
                     word_id: wordId,
                     isEdit: true
@@ -108,13 +107,22 @@ function WordPaper(){
         onClickHandler('', MODE.SEARCH, searchText)
     }
 
+    const setEditExit = () => {
+        setEditMode({
+            word_id:-1,
+            isEdit: false
+        })
+    }
+
 
     const dataList = wordList.map((data, idx) => {
     return  <div className="word_cont">
         { edit_mode.isEdit && edit_mode.word_id === data.word_id?
-            <Edit word={data?.word} 
+            <Edit word_id={data?.word_id}
+                  word={data?.word} 
                   mean={data?.mean}
                   synonyms={data?.synonyms}
+                  setEditExit={setEditExit}
             ></Edit> :
             <div className="word" id={data?.word_id}>
                 <div className="top_area flex">
