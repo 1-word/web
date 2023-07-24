@@ -39,7 +39,7 @@ export const CONNECT_MODE = {
     },
     SAVE: {
         METHOD: "post",
-        URI: "word/save/all"
+        URI: "word/save"
     },
     UPDATE: {
         METHOD: "put",

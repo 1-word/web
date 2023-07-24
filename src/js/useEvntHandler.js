@@ -21,6 +21,7 @@ export const MODE = {
     ALERT: "alert",
     AUDIO_PLAY: "audio_play",
     MEMO_BTN: "memo_btn",
+    EDIT:"edit",
     UPDATE_MEMO: "updateMemo"
 }
 
@@ -45,7 +46,7 @@ function useEvntHandler(e, modeType, data, func){
         const res = await executeSrvConnect(CONNECT_MODE.READ)
         if (!dataCheck(res)) return
         createWordList(res.list);
-        setAlertState(alert, ALERT_TYPE.SUCCESS, "성공적으로 데이터를 불러왔습니다.")
+        //setAlertState(alert, ALERT_TYPE.SUCCESS, "성공적으로 데이터를 불러왔습니다.")
         return res
     },
     all(){
@@ -68,15 +69,15 @@ function useEvntHandler(e, modeType, data, func){
         setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
         return res
     },
-    async update(e, id){
-        let res = await executeSrvConnect(CONNECT_MODE.UPDATE, id)
+    async update(e, id, data){
+        let res = await executeSrvConnect(CONNECT_MODE.UPDATE, id, data)
+        setAlertState(alert, ALERT_TYPE.INFO, "성공적으로 데이터를 저장했습니다.")
         setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
-        setAlertState(alert, ALERT_TYPE.SUCCESS, "성공적으로 데이터를 저장했습니다.")
     },
     async updateMemo(e, id, data){
         let res = await executeSrvConnect(CONNECT_MODE.UPDATE_MEMO, id, data)
+        setAlertState(alert, ALERT_TYPE.INFO, "성공적으로 데이터를 저장했습니다.")
         setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
-        setAlertState(alert, ALERT_TYPE.SUCCESS, "성공적으로 데이터를 저장했습니다.")
     },
     async save(e, data, closePopup){
         data.user_id = user_id

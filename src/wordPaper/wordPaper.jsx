@@ -1,31 +1,29 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./wordPaper.css";
 import SynonsymsList from "./Component/synonymsList";
 import wordListStore from "../stores/wordListStore";
 import Store from "../stores/store";
 import useEvntHandler, { MODE } from "../js/useEvntHandler";
+import Edit from "./Component/Edit/edit";
 
 function WordPaper(){
     // Store 사용
     const {update, wordList} = wordListStore(state => state)
     const {setModal} = Store(state=>state)
-
     
     const onClickHandler = useEvntHandler()
-
     const searchInput = useRef()
-
     const memoRef = useRef([])
-
     const headsetRef = useRef([])
 
-    let headset_id = ""
-
-    let headset
+    const [edit_mode, setEditMode] = useState({
+        word_id:1,
+        isEdit: false
+    })
 
     useEffect(() => {
        onClickHandler('', MODE.READ, '')
-    }, [update]);   //해당 state가 변경될 때 해당 로직 수행
+    }, [update, edit_mode]);   //해당 state가 변경될 때 해당 로직 수행
 
    // 버튼 이벤트 
     const handleClick = (mode, objId, detailMode, wordId) => e => {
@@ -40,7 +38,6 @@ function WordPaper(){
                 break
         
             case MODE.AUDIO_PLAY:
-                //const audioItem = document.getElementById('audio' + id)
                 const headset = headsetRef?.current[id]
                 const sound_path = headset?.dataset?.pronAudio ?? ""
                 const audio_data = {
@@ -74,7 +71,7 @@ function WordPaper(){
                         memo_input.childNodes[0].value = memo_input.memo
                     },
                     save(){
-                        let data = wordList.filter(word => word.word_id === wordId)[0]
+                        let data = {};
                         data.memo = memo_input?.childNodes[0]?.value
                         memo_input.memo = memo_input.childNodes[0].value  //텍스트 저장
                         onClickHandler(e, MODE.UPDATE_MEMO, wordId, data) 
@@ -82,6 +79,13 @@ function WordPaper(){
                 }
                 memoBtnHandler[memo_mode]()
                 memo_input.status = status
+                break
+            
+            case MODE.EDIT:
+                setEditMode({
+                    word_id: wordId,
+                    isEdit: true
+                })
                 break
             default:
                 break
@@ -103,9 +107,24 @@ function WordPaper(){
         onClickHandler('', MODE.SEARCH, searchText)
     }
 
+    const setEditExit = () => {
+        setEditMode({
+            word_id:-1,
+            isEdit: false
+        })
+    }
+
 
     const dataList = wordList.map((data, idx) => {
-    return  <div className="word" id={data?.word_id}>
+    return  <div className="word_cont">
+        { edit_mode.isEdit && edit_mode.word_id === data.word_id?
+            <Edit word_id={data?.word_id}
+                  word={data?.word} 
+                  mean={data?.mean}
+                  synonyms={data?.synonyms}
+                  setEditExit={setEditExit}
+            ></Edit> :
+            <div className="word" id={data?.word_id}>
                 <div className="top_area flex">
                     <span>{data?.word}</span>
                     <button onClick={handleClick(MODE.AUDIO_PLAY, idx)}>
@@ -132,10 +151,12 @@ function WordPaper(){
                     <div className="btn_area">
                         <span className="check"><i className="xi-check-circle-o"></i></span>
                         <span className="memo"><i className="xi-comment-o" onClick={handleClick(MODE.MEMO_BTN, idx)}></i></span>
-                        <span className="close"><i className="xi-close"></i></span>
+                        <span className="close"><i className="xi-close" onClick={handleClick(MODE.EDIT, idx, '', data?.word_id)}></i></span>
                     </div>
                 </div>
-            </div>  
+            </div>
+        }
+        </div>
 });
 
     return (
@@ -179,58 +200,7 @@ function WordPaper(){
         </div>
         </div>
         <div className="word_wrap">
-            <div className="word_cont">
-                {dataList}
-            </div>
-            <ul className="word_cont">
-                <li className="word edit">
-                    <div className="top_area flex">
-                        <input defaultValue="word" className="edit_input" />
-                        <button className="headset"><i className="xi-headset"></i></button>
-                    </div>
-                    <div className="mid_area">
-                        <div className="mean_wrap">
-                            <input defaultValue="mean" className="edit_input"/>
-                        </div>
-                        <div className="synonym_wrap">
-                            <span>유의어</span>
-                            <div className="synonym_cont flex">
-                                <div className="synonym_add flex">
-                                    <input defaultValue="유의어1"/>
-                                    <button><i className="xi-minus-circle"></i></button>
-                                </div>
-                                <div className="synonym_add flex">
-                                    <input defaultValue="유의어1"/>
-                                    <button><i className="xi-minus-circle"></i></button>
-                                </div><div className="synonym_add flex">
-                                    <input defaultValue="유의어1"/>
-                                    <button><i className="xi-minus-circle"></i></button>
-                                </div><div className="synonym_add flex">
-                                    <input defaultValue="유의어1"/>
-                                    <button><i className="xi-minus-circle"></i></button>
-                                </div><div className="synonym_add flex">
-                                    <input defaultValue="유의어1"/>
-                                    <button><i className="xi-minus"></i></button>
-                                </div><div className="synonym_add flex">
-                                    <input defaultValue="유의어1"/>
-                                    <button><i className="xi-minus flex"></i></button>
-                                </div>
-                                <div className="flex synonym_plus_cont">
-                                <button className="synonym_plus"><i className="xi-plus-circle"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="foot_area flex">
-                        <div><span>현재날짜</span>저장</div>
-                        <div className="btn_area">
-                            <button className="check"><i className="xi-check-circle-o"></i></button>
-                            <button className="memo"><i className="xi-comment-o"></i></button>
-                            <button className="close"><i className="xi-close"></i></button>
-                        </div>
-                    </div>
-                </li>
-            </ul>
+            {dataList}
         </div>
      </div>
     );
