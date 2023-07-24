@@ -22,7 +22,11 @@ export const MODE = {
     AUDIO_PLAY: "audio_play",
     MEMO_BTN: "memo_btn",
     EDIT:"edit",
-    UPDATE_MEMO: "updateMemo"
+    UPDATE_MEMO: "updateMemo",
+    FOLDER_READ: "folderRead",
+    FOLDER_UPDATE: "folderUpdate",
+    FOLDER_SAVE: "folderSave",
+    FOLDER_DELETE: "folderDelete"
 }
 
 /**
@@ -36,18 +40,19 @@ export const MODE = {
  */
 function useEvntHandler(e, modeType, data, func){
     
-    const {update, wordList, createWordList, setUpdateFlag, saveListClear} = wordListStore(state => state)
-    const {modal, alert, setModal, setAlert} = Store(state=>state)
-    const {token, user_id, save, saveToken, clearToken} = authStore(state=>state)
-    const navigate = useNavigate()
+    const {update, wordList, createWordList, setUpdateFlag, saveListClear, setFolderList} = wordListStore(state => state);
+    const {modal, alert, setModal, setAlert} = Store(state=>state);
+    const {token, user_id, save, saveToken, clearToken} = authStore(state=>state);
+    const navigate = useNavigate();
 
     const handlerMap = {
-    async read(e, data, func){
-        const res = await executeSrvConnect(CONNECT_MODE.READ)
-        if (!dataCheck(res)) return
+    async read(e, id){
+        const read_id = id ?? "";
+        const res = await executeSrvConnect(CONNECT_MODE.READ, read_id);
+        if (!dataCheck(res)) return;
         createWordList(res.list);
         //setAlertState(alert, ALERT_TYPE.SUCCESS, "성공적으로 데이터를 불러왔습니다.")
-        return res
+        return res;
     },
     all(){
         return executeSrvConnect(CONNECT_MODE.SEARCH, MODE.SEARCH_ALL)
@@ -86,6 +91,22 @@ function useEvntHandler(e, modeType, data, func){
         setUpdateFlag()
         closePopup()
         return res
+    },
+    async folderRead(e){
+        const res = await executeSrvConnect(CONNECT_MODE.FOLDER_READ)
+        if (!dataCheck(res)) return
+        setFolderList(res.list);
+        //setAlertState(alert, ALERT_TYPE.SUCCESS, "성공적으로 데이터를 불러왔습니다.")
+        return res
+    },
+    async folderUpdate(){
+
+    },
+    async folderSave(){
+
+    },
+    async folderDelete(){
+
     },
     open(){
 
@@ -139,7 +160,7 @@ function useEvntHandler(e, modeType, data, func){
             let msg = error?.response?.data?.msg || "서버에 응답이 없거나, 오류가 발생하였습니다. 잠시 후 다시 접속해주시기 바랍니다."
             setAlertState(alert, ALERT_TYPE.ERROR, msg)
             clearToken()
-            //navigate("/")
+            navigate("/")
             // setAlertState(alert, ALERT_TYPE.ERROR, error?.response?.data?.msg)
             throw new Error(error);
             //return -1

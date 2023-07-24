@@ -52,25 +52,36 @@ export const CONNECT_MODE = {
     LOGIN: {
         METHOD: "post",
         URI: "api/login"
-    }
+    },
+    FOLDER_READ:{
+        METHOD: "get",
+        URI: "word/folder"
+    },
+    FOLDER_UPDATE:{
+        METHOD: "put",
+        URI: "word/folder"
+    },
+    FOLDER_SAVE:{
+        METHOD: "post",
+        URI: "word/folder"
+    },
+    FOLDER_DELETE:{
+        METHOD: "delete",
+        URI: "word/folder"
+    },
 }
 
 async function connect(_method, _id, _data, _token){
-        var response = [];
-
-        //개발
-        let dev = "http://localhost:8088/"
-        //운영
-        //let prod = "http://144.24.78.52:8088/";
-        let prod = "http://app:8088/"
-        let host = process.env.REACT_APP_HOST;
+        const host = process.env.REACT_APP_HOST;
         
-        let method = _method.METHOD
-        let id = _id ?? ""
-        let uri = _method.URI ?? ""
-        let token = uri !== CONNECT_MODE.LOGIN.URI? _token : ""
-        let url = `${host}${uri}/${id}`
-        if (_method.URI == CONNECT_MODE.SEARCH.URI) url = `${host}${uri}/${_data}`
+        const method = _method.METHOD;
+        const id = _id ?? "";
+        const uri = _method.URI ?? "";
+        const token = uri !== CONNECT_MODE.LOGIN.URI? _token : "";
+        let url = `${host}${uri}/${id}`;
+        if (_method.URI == CONNECT_MODE.SEARCH.URI) url = `${host}${uri}/${_data}`;
+
+        console.log(url);
 
         let res = await axios({
             method: method,
@@ -82,7 +93,7 @@ async function connect(_method, _id, _data, _token){
             }
         });
         
-        return res.data
+        return res.data;
 }
 
 export default connect;
