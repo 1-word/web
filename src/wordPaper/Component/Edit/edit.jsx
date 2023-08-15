@@ -38,8 +38,6 @@ function Edit(props){
             synonyms: [...synonymList]
         }
 
-        console.log(saveList);
-
         onClickHandler('', MODE.UPDATE, props.word_id, saveList);
         props.setEditExit();
     }

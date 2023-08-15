@@ -46,106 +46,105 @@ function useEvntHandler(e, modeType, data, func){
     const navigate = useNavigate();
 
     const handlerMap = {
-    async read(e, id){
-        const read_id = id ?? "";
-        const res = await executeSrvConnect(CONNECT_MODE.READ, read_id);
-        if (!dataCheck(res)) return;
-        createWordList(res.list);
-        //setAlertState(alert, ALERT_TYPE.SUCCESS, "성공적으로 데이터를 불러왔습니다.")
-        return res;
-    },
-    all(){
-        return executeSrvConnect(CONNECT_MODE.SEARCH, MODE.SEARCH_ALL)
-    },
-    async search(e, data){
-        const res = await executeSrvConnect(CONNECT_MODE.SEARCH, "", data)
-        if (!dataCheck(res)) return
+        async read(e, id){
+            const read_id = id ?? "";
+            const res = await executeSrvConnect(CONNECT_MODE.READ, read_id);
+            if (!dataCheck(res)) return;
+            createWordList(res.list);
+            //setAlertState(alert, ALERT_TYPE.SUCCESS, "성공적으로 데이터를 불러왔습니다.")
+            return res;
+        },
+        all(){
+            return executeSrvConnect(CONNECT_MODE.SEARCH, MODE.SEARCH_ALL)
+        },
+        async search(e, data){
+            const res = await executeSrvConnect(CONNECT_MODE.SEARCH, "", data)
+            if (!dataCheck(res)) return
 
-        let wordListrequest = res.list
-        // 검색한 단어가 한개이면 배열이 아니므로 배열로 만들어줌
-        if(Array.isArray(wordListrequest)) return createWordList(wordListrequest)
-        let arr = []
-        arr.push(wordListrequest)
-        createWordList(arr)
-        return arr
-    },
-    async delete(e, id){
-        let res = await executeSrvConnect(CONNECT_MODE.DELETE, id)
-        setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
-        return res
-    },
-    async update(e, id, data){
-        let res = await executeSrvConnect(CONNECT_MODE.UPDATE, id, data)
-        setAlertState(alert, ALERT_TYPE.INFO, "성공적으로 데이터를 저장했습니다.")
-        setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
-    },
-    async updateMemo(e, id, data){
-        let res = await executeSrvConnect(CONNECT_MODE.UPDATE_MEMO, id, data)
-        setAlertState(alert, ALERT_TYPE.INFO, "성공적으로 데이터를 저장했습니다.")
-        setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
-    },
-    async save(e, data, closePopup){
-        data.user_id = user_id
-        let res = await executeSrvConnect(CONNECT_MODE.SAVE, '', data)
-        saveListClear()
-        setUpdateFlag()
-        closePopup()
-        return res
-    },
-    async folderRead(e){
-        const res = await executeSrvConnect(CONNECT_MODE.FOLDER_READ)
-        if (!dataCheck(res)) return
-        setFolderList(res.list);
-        //setAlertState(alert, ALERT_TYPE.SUCCESS, "성공적으로 데이터를 불러왔습니다.")
-        return res
-    },
-    async folderUpdate(){
+            let wordListrequest = res.list
+            // 검색한 단어가 한개이면 배열이 아니므로 배열로 만들어줌
+            if(Array.isArray(wordListrequest)) return createWordList(wordListrequest)
+            let arr = []
+            arr.push(wordListrequest)
+            createWordList(arr)
+            return arr
+        },
+        async delete(e, id){
+            let res = await executeSrvConnect(CONNECT_MODE.DELETE, id)
+            setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
+            return res
+        },
+        async update(e, id, data){
+            let res = await executeSrvConnect(CONNECT_MODE.UPDATE, id, data)
+            setAlertState(alert, ALERT_TYPE.INFO, "성공적으로 데이터를 저장했습니다.")
+            setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
+        },
+        async updateMemo(e, id, data){
+            let res = await executeSrvConnect(CONNECT_MODE.UPDATE_MEMO, id, data)
+            setAlertState(alert, ALERT_TYPE.INFO, "성공적으로 데이터를 저장했습니다.")
+            setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
+        },
+        async save(e, data, closePopup){
+            data.user_id = user_id
+            let res = await executeSrvConnect(CONNECT_MODE.SAVE, '', data)
+            saveListClear()
+            setUpdateFlag()
+            closePopup()
+            return res
+        },
+        async folderRead(e){
+            const res = await executeSrvConnect(CONNECT_MODE.FOLDER_READ)
+            if (!dataCheck(res)) return
+            setFolderList(res.list);
+            //setAlertState(alert, ALERT_TYPE.SUCCESS, "성공적으로 데이터를 불러왔습니다.")
+            return res
+        },
+        async folderUpdate(){
 
-    },
-    async folderSave(){
+        },
+        async folderSave(){
 
-    },
-    async folderDelete(){
+        },
+        async folderDelete(){
 
-    },
-    open(){
+        },
+        open(){
 
-    },
-    close(){
+        },
+        close(){
 
-    },
-    async login(e, user){
-        debugger;
-        const res = await executeSrvConnect(CONNECT_MODE.LOGIN, '', user)
-        if(res.code === 6006) {
-            setAlertState(alert, ALERT_TYPE.WARNING, res.msg)
-            clearToken()
-            return
-        }
-        save(res)
-        let data = {
-            "refreshToken": res.data.refreshToken,
-            "accessToken": res.data.accessToken
-        }
-        saveToken(data, user.user_id)
-        setAlertState(alert, ALERT_TYPE.SUCCESS, "로그인 성공")
-        navigate("/word")
-    },
-    audio_play(e, data, endFunc){
-        const audio = new Audio()
-        const soundUrl = process.env.PUBLIC_URL + '/pronu/' + data.sound_path + '.mp3'
-        audio.src = soundUrl
-        audio.onended= endFunc(data.id)
-        let playPromise = audio.play()
-        if (playPromise !== undefined){
-            playPromise.then(_ => {
+        },
+        async login(e, user){
+            const res = await executeSrvConnect(CONNECT_MODE.LOGIN, '', user)
+            if(res.code === 6006) {
+                setAlertState(alert, ALERT_TYPE.WARNING, res.msg)
+                clearToken()
+                return
+            }
+            save(res)
+            let data = {
+                "refreshToken": res.data.refreshToken,
+                "accessToken": res.data.accessToken
+            }
+            saveToken(data, user.user_id)
+            setAlertState(alert, ALERT_TYPE.SUCCESS, "로그인 성공")
+            navigate("/word")
+        },
+        audio_play(e, data, endFunc){
+            const audio = new Audio()
+            const soundUrl = process.env.PUBLIC_URL + '/pronu/' + data.sound_path + '.mp3'
+            audio.src = soundUrl
+            audio.onended= endFunc(data.id)
+            let playPromise = audio.play()
+            if (playPromise !== undefined){
+                playPromise.then(_ => {
 
-            }).catch(error => {
-                endFunc(data.id);
-            })
+                }).catch(error => {
+                    endFunc(data.id);
+                })
+            }
         }
     }
-}
 
     /**
      * 
