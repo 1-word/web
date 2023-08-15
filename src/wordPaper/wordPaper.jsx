@@ -8,7 +8,7 @@ import Edit from "./Component/Edit/edit";
 
 function WordPaper(){
     // Store 사용
-    const {update, wordList} = wordListStore(state => state)
+    const {update, wordList, folderList} = wordListStore(state => state)
     const {setModal} = Store(state=>state)
     
     const onClickHandler = useEvntHandler()
@@ -16,13 +16,18 @@ function WordPaper(){
     const memoRef = useRef([])
     const headsetRef = useRef([])
 
+    const [clickedFolder, setClickedfolder] = useState(0)
+
     const [edit_mode, setEditMode] = useState({
         word_id:1,
         isEdit: false
     })
 
     useEffect(() => {
-       onClickHandler('', MODE.READ, '')
+       if (!edit_mode.isEdit){
+        onClickHandler('', MODE.FOLDER_READ, '')
+        onClickHandler('', MODE.READ, '')
+       }
     }, [update, edit_mode]);   //해당 state가 변경될 때 해당 로직 수행
 
    // 버튼 이벤트 
@@ -185,8 +190,18 @@ function WordPaper(){
         </div>
         <div className="folder_wrap">
             <ul className="flex folder_cont">
-                <li>내</li>
-                <li>단어</li>
+                <li id="allFolder" onClick={()=>{
+                    setClickedfolder(0);
+                    onClickHandler('', MODE.READ);
+                }}>전체</li>
+            {
+                folderList.map(item => 
+                    <li onClick={()=>{
+                        setClickedfolder(item.folder_id);
+                        onClickHandler('', MODE.READ, item.folder_id);
+                    }}>{item.folder_name.slice(0,2)}</li>
+                )
+            }
             </ul>
         </div>
         <div className="flex word_top">

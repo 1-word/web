@@ -50,6 +50,13 @@ const store = set => ({
             "memo": ""
         }]
     },
+    folderList: [
+        {
+            "folder_id" : 0,
+            "folder_name": "",
+            "memo": ""
+        }
+    ],
     update: false,
     /**
      * @param {*} wordList (Object) 전체 word데이터 리스트
@@ -111,6 +118,10 @@ const store = set => ({
 
     setUpdateFlag: () => set((state) => ({
         update: !state.update
+    })),
+
+    setFolderList: (folderListRequest) => set(state => ({
+        folderList: folderListRequest
     }))
 })
 
