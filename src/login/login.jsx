@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 function Login(){
     const [loginData, setLoginData] = useState({user_id: '', password: ''});
 
-    const onClickHandler = useEvntHandler()
+    const onClickHandler = useEvntHandler();
 
     const handleClick = () => {
-        onClickHandler('', MODE.LOGIN, loginData)
+        onClickHandler('', MODE.LOGIN, loginData);
     }
 
     const onKeyDown = (e) => {
@@ -19,11 +19,11 @@ function Login(){
     }
 
     const setLoginInput = e => {
-        const { value, name } = e.target
+        const { value, name } = e.target;
         setLoginData({
             ...loginData,
             [name]: value
-        })
+        });
     }
 
     return (
@@ -43,7 +43,7 @@ function Login(){
                     <button className="btn-login" onClick={handleClick}>Login</button>
                     </div>
                 <div className="login-join-wrap">
-                    <p>아직 회원가입을 하지 않으셨나요? <Link to='/join'>회원가입</Link></p>
+                    <p>아직 회원가입을 하지 않으셨나요? <Link to='/signup'>회원가입</Link></p>
                 </div>
                 </div>
             </div>
