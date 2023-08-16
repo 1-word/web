@@ -3,7 +3,8 @@ import Store, {ALERT_TYPE} from "../stores/store"
 import wordListStore from "../stores/wordListStore"
 import authStore from "../stores/authStore"
 import {useEffect, useState} from "react"
-import { useNavigate } from "react-router"
+import { useNavigate, useLocation } from "react-router"
+import App from "../App"
 
 export const MODE = {
     READ: "read",
@@ -13,6 +14,7 @@ export const MODE = {
     UPDATE: "update",
     SAVE: "save",
     LOGIN: "login",
+    SIGNUP: "signup",
     OPEN: "open",
     CLOSE: "close",
     PLUS_BTN: "plus_btn",
@@ -44,6 +46,8 @@ function useEvntHandler(e, modeType, data, func){
     const {modal, alert, setModal, setAlert} = Store(state=>state);
     const {token, user_id, save, saveToken, clearToken} = authStore(state=>state);
     const navigate = useNavigate();
+    const location = useLocation();
+    const app = process.env.REACT_APP_ENV;
 
     const handlerMap = {
         async read(e, id){
@@ -55,49 +59,49 @@ function useEvntHandler(e, modeType, data, func){
             return res;
         },
         all(){
-            return executeSrvConnect(CONNECT_MODE.SEARCH, MODE.SEARCH_ALL)
+            return executeSrvConnect(CONNECT_MODE.SEARCH, MODE.SEARCH_ALL);
         },
         async search(e, data){
-            const res = await executeSrvConnect(CONNECT_MODE.SEARCH, "", data)
-            if (!dataCheck(res)) return
+            const res = await executeSrvConnect(CONNECT_MODE.SEARCH, "", data);
+            if (!dataCheck(res)) return;
 
-            let wordListrequest = res.list
+            let wordListrequest = res.list;
             // 검색한 단어가 한개이면 배열이 아니므로 배열로 만들어줌
-            if(Array.isArray(wordListrequest)) return createWordList(wordListrequest)
-            let arr = []
-            arr.push(wordListrequest)
-            createWordList(arr)
-            return arr
+            if(Array.isArray(wordListrequest)) return createWordList(wordListrequest);
+            let arr = [];
+            arr.push(wordListrequest);
+            createWordList(arr);
+            return arr;
         },
         async delete(e, id){
-            let res = await executeSrvConnect(CONNECT_MODE.DELETE, id)
+            let res = await executeSrvConnect(CONNECT_MODE.DELETE, id);
             setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
-            return res
+            return res;
         },
         async update(e, id, data){
-            let res = await executeSrvConnect(CONNECT_MODE.UPDATE, id, data)
-            setAlertState(alert, ALERT_TYPE.INFO, "성공적으로 데이터를 저장했습니다.")
+            let res = await executeSrvConnect(CONNECT_MODE.UPDATE, id, data);
+            setAlertState(alert, ALERT_TYPE.INFO, "성공적으로 데이터를 저장했습니다.");
             setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
         },
         async updateMemo(e, id, data){
-            let res = await executeSrvConnect(CONNECT_MODE.UPDATE_MEMO, id, data)
-            setAlertState(alert, ALERT_TYPE.INFO, "성공적으로 데이터를 저장했습니다.")
+            let res = await executeSrvConnect(CONNECT_MODE.UPDATE_MEMO, id, data);
+            setAlertState(alert, ALERT_TYPE.INFO, "성공적으로 데이터를 저장했습니다.");
             setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
         },
         async save(e, data, closePopup){
-            data.user_id = user_id
-            let res = await executeSrvConnect(CONNECT_MODE.SAVE, '', data)
-            saveListClear()
-            setUpdateFlag()
-            closePopup()
-            return res
+            data.user_id = user_id;
+            let res = await executeSrvConnect(CONNECT_MODE.SAVE, '', data);
+            saveListClear();
+            setUpdateFlag();
+            closePopup();
+            return res;
         },
         async folderRead(e){
-            const res = await executeSrvConnect(CONNECT_MODE.FOLDER_READ)
-            if (!dataCheck(res)) return
+            const res = await executeSrvConnect(CONNECT_MODE.FOLDER_READ);
+            if (!dataCheck(res)) return;
             setFolderList(res.list);
             //setAlertState(alert, ALERT_TYPE.SUCCESS, "성공적으로 데이터를 불러왔습니다.")
-            return res
+            return res;
         },
         async folderUpdate(){
 
@@ -115,27 +119,33 @@ function useEvntHandler(e, modeType, data, func){
 
         },
         async login(e, user){
-            const res = await executeSrvConnect(CONNECT_MODE.LOGIN, '', user)
+            const res = await executeSrvConnect(CONNECT_MODE.LOGIN, '', user);
             if(res.code === 6006) {
-                setAlertState(alert, ALERT_TYPE.WARNING, res.msg)
-                clearToken()
-                return
+                setAlertState(alert, ALERT_TYPE.WARNING, res.msg);
+                clearToken();
+                return;
             }
-            save(res)
+            save(res);
             let data = {
                 "refreshToken": res.data.refreshToken,
                 "accessToken": res.data.accessToken
-            }
-            saveToken(data, user.user_id)
-            setAlertState(alert, ALERT_TYPE.SUCCESS, "로그인 성공")
-            navigate("/word")
+            };
+            saveToken(data, user.user_id);
+            setAlertState(alert, ALERT_TYPE.SUCCESS, "로그인 성공");
+            navigate("/word");
+        },
+        async signup(e, user){
+            console.log(app);
+            const res = await executeSrvConnect(CONNECT_MODE.SIGNUP, '', user);
+            setAlertState(alert, ALERT_TYPE.SUCCESS, "회원가입이 완료되었습니다.");
+            navigate("/");
         },
         audio_play(e, data, endFunc){
-            const audio = new Audio()
-            const soundUrl = process.env.PUBLIC_URL + '/pronu/' + data.sound_path + '.mp3'
-            audio.src = soundUrl
-            audio.onended= endFunc(data.id)
-            let playPromise = audio.play()
+            const audio = new Audio();
+            const soundUrl = process.env.PUBLIC_URL + '/pronu/' + data.sound_path + '.mp3';
+            audio.src = soundUrl;
+            audio.onended= endFunc(data.id);
+            let playPromise = audio.play();
             if (playPromise !== undefined){
                 playPromise.then(_ => {
 
@@ -155,14 +165,18 @@ function useEvntHandler(e, modeType, data, func){
      */
     const executeSrvConnect = async function(connectMode, id, data){
         try {
-            return await connect(connectMode, id, data, token.accessToken)
+            return await connect(connectMode, id, data, token.accessToken);
         } catch (error) {
             let msg = error?.response?.data?.msg || "서버에 응답이 없거나, 오류가 발생하였습니다. 잠시 후 다시 접속해주시기 바랍니다."
-            setAlertState(alert, ALERT_TYPE.ERROR, msg)
-            clearToken()
-            navigate("/")
+            setAlertState(alert, ALERT_TYPE.ERROR, msg);
+            clearToken();
+
+            if (location.pathname !== "/signup" && app !== "dev"){
+                navigate("/");
+            }
+            
             // setAlertState(alert, ALERT_TYPE.ERROR, error?.response?.data?.msg)
-            throw new Error(error);
+            throw new Error("error");
             //return -1
         }
     }
@@ -175,10 +189,10 @@ function useEvntHandler(e, modeType, data, func){
      * @Description 특정 상황에 알맞는 알림 메시지를 작성한다.
      */
     const setAlertState = (obj, type, message) => {
-        obj.show = true
-        obj.type = type
-        obj.message = message
-        setAlert(obj)
+        obj.show = true;
+        obj.type = type;
+        obj.message = message;
+        setAlert(obj);
     }
 
     /**
@@ -187,13 +201,13 @@ function useEvntHandler(e, modeType, data, func){
      * @Description data가 null인지 체크한다.
      */
     const dataCheck = data => {
-        if (typeof data === "undefined" || data === -1 || data === "") return false
-        return true
+        if (typeof data === "undefined" || data === -1 || data === "") return false;
+        return true;
     }
 
     const dataAdd = (data, addData) => {
-        const result = {addData, ...data}
-        return result
+        const result = {addData, ...data};
+        return result;
     }
 
     /**
@@ -206,13 +220,13 @@ function useEvntHandler(e, modeType, data, func){
      * @Description 실제 실행되는 함수 (반환되는 함수)
      */
     const executeCommFunc = (e, modeType, data, func) => {
-        return handlerMap[modeType](e, data, func)
+        return handlerMap[modeType](e, data, func);
     }
 
     /**
      * useEvntHandler 실행
      */
-    return executeCommFunc
+    return executeCommFunc;
 }
 
 export default useEvntHandler

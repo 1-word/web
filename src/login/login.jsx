@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 function Login(){
     const [loginData, setLoginData] = useState({user_id: '', password: ''});
 
-    const onClickHandler = useEvntHandler()
+    const onClickHandler = useEvntHandler();
 
     const handleClick = () => {
-        onClickHandler('', MODE.LOGIN, loginData)
+        onClickHandler('', MODE.LOGIN, loginData);
     }
 
     const onKeyDown = (e) => {
@@ -19,11 +19,11 @@ function Login(){
     }
 
     const setLoginInput = e => {
-        const { value, name } = e.target
+        const { value, name } = e.target;
         setLoginData({
             ...loginData,
             [name]: value
-        })
+        });
     }
 
     return (
@@ -32,22 +32,23 @@ function Login(){
                 <div className="login-area">
                     <legend>Login</legend>
                     <div className="login-input-area">
-                        <input id="username" name="user_id" type="text" spellCheck placeholder="UserID" onChange={setLoginInput} onKeyDown={onKeyDown} />
-                        <label htmlFor="">UserID</label>
+                        <input id="user_id" name="user_id" type="text" spellCheck placeholder="UserID" onChange={setLoginInput} onKeyDown={onKeyDown} />
+                        <label htmlFor="user_id">UserID</label>
                     </div>
                     <div className="login-input-area">
                         <input id="password" type="password" name="password" spellCheck placeholder="Password" onChange={setLoginInput} onKeyDown={onKeyDown}/>
-                        <label htmlFor="">Password</label>
+                        <label htmlFor="password">Password</label>
                     </div>
                     <div className="login-btn-wrap">
                     <button className="btn-login" onClick={handleClick}>Login</button>
                     </div>
                 <div className="login-join-wrap">
-                    <p>아직 회원가입을 하지 않으셨나요? <Link to='/join'>회원가입</Link></p>
+                    <p>아직 회원가입을 하지 않으셨나요? <Link to='/signup'>회원가입</Link></p>
                 </div>
                 </div>
             </div>
         </div>
+        
     );
 }
 

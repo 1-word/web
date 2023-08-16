@@ -51,7 +51,11 @@ export const CONNECT_MODE = {
     },
     LOGIN: {
         METHOD: "post",
-        URI: "api/login"
+        URI: "login"
+    },
+    SIGNUP: {
+        METHOD: "post",
+        URI: "signup"
     },
     FOLDER_READ:{
         METHOD: "get",
@@ -80,8 +84,6 @@ async function connect(_method, _id, _data, _token){
         const token = uri !== CONNECT_MODE.LOGIN.URI? _token : "";
         let url = `${host}${uri}/${id}`;
         if (_method.URI == CONNECT_MODE.SEARCH.URI) url = `${host}${uri}/${_data}`;
-
-        console.log(url);
 
         let res = await axios({
             method: method,
