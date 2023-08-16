@@ -147,6 +147,7 @@ function WordPaper(){
                     <div className="foot_area flex">
                         <div><span>{data?.update_time}</span></div>
                         <div className="btn_area">
+                            <span className="edit"><i className="xi-pen-o" onClick={handleEditClick(data?.word_id)}></i></span>
                             <span className="close"><i className="xi-close" onClick={handleEditClick(data?.word_id)}></i></span>
                             <span className="check"><i className="xi-check-circle-o"></i></span>
                             <span className="memo"><i className="xi-comment-o" onClick={handleMemoClick(idx)}></i></span>
