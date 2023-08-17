@@ -142,7 +142,7 @@ nav{
 .folder_cont li{
   margin: 0 0 15px 15px;
   padding: 10px 13px;
-  font-size: 20px;
+  font-size: 18px;
   background: #356afd;
   color: #fff;
   border-radius: 18px;
@@ -256,14 +256,14 @@ nav{
 }
 
 .word{
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   padding: 15px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   border-radius: 4px;
 
 }
 
-.word:last-child{
+.word:last-of-type{
   margin: 0;
 }
 
@@ -330,6 +330,7 @@ nav{
   justify-content: space-between;
 }
 
+.edit,
 .check,
 .memo,
 .close{
