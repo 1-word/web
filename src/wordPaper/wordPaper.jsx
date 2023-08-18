@@ -205,8 +205,9 @@ function WordPaper(){
             <div>미암기</div>
             <div>암기</div>
         </div>
-        <div>
+        <div className="word_plus_wrap">
             <button className="word_plus" onClick={handleModal}>추가<i className="xi-plus-circle"></i></button>
+            <button className="word_plus_mobile" onClick={handleModal}><i className="xi-plus"></i></button>
         </div>
         </div>
         <div className="word_wrap">
