@@ -9,13 +9,15 @@ import Add from './wordPaper/Component/Add/add';
 import Store from './stores/store';
 import { useEffect } from 'react';
 import { PersistGate } from 'zustand-persist'
+import Popup from './wordPaper/Component/popup';
+
 
 function App() {
 
-  const {alert, modal, setModal} = Store(state=>state)
+  //const {alert, modal, setModal} = Store(state=>state)
 
-  useEffect(() => {
-  }, [alert])
+  // useEffect(() => {
+  // }, [alert])
 
   function Router(){
     return (
@@ -29,12 +31,7 @@ function App() {
   return (<PersistGate>
             <div>
               <Router/>
-              {alert.show && <ModalPortal id="alert">
-                <Alert type={alert.type} message={alert.message}></Alert>
-              </ModalPortal>}
-              {modal && <ModalPortal id="modal">
-                <Add closePopup={() => setModal(false)}></Add>
-              </ModalPortal>}
+              <Popup></Popup>
             </div>
         </PersistGate>
   );

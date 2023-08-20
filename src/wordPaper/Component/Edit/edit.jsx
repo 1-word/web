@@ -74,8 +74,8 @@ function Edit(props){
                         <div></div>
                         <div className="btn_area">
                             <button className="check" onClick={handleClickSave}><i className="xi-check-circle-o"></i></button>
-                            <button className="memo"><i className="xi-comment-o"></i></button>
-                            <button className="close"><i className="xi-close"></i></button>
+                            {/* <button className="memo"><i className="xi-comment-o"></i></button> */}
+                            <button className="close" onClick={props.setEditExit}><i className="xi-close"></i></button>
                         </div>
                     </div>
                 </div>
