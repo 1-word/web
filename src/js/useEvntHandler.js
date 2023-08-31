@@ -43,7 +43,7 @@ export const MODE = {
 function useEvntHandler(e, modeType, data, func){
     
     const {update, wordList, createWordList, setUpdateFlag, saveListClear, setFolderList} = wordListStore(state => state);
-    const {modal, alert, setModal, setAlert} = Store(state=>state);
+    const {alert, setLoading, setAlert} = Store(state=>state);
     const {token, user_id, save, saveToken, clearToken} = authStore(state=>state);
     const navigate = useNavigate();
     const location = useLocation();
@@ -62,7 +62,7 @@ function useEvntHandler(e, modeType, data, func){
             return executeSrvConnect(CONNECT_MODE.SEARCH, MODE.SEARCH_ALL);
         },
         async search(e, data){
-            const res = await executeSrvConnect(CONNECT_MODE.SEARCH, "", data);
+            const res = await executeSrvConnect(CONNECT_MODE.SEARCH, "", data, false);
             if (!dataCheck(res)) return;
 
             let wordListrequest = res.list;
@@ -163,7 +163,8 @@ function useEvntHandler(e, modeType, data, func){
      * @param {*} data 데이터
      * @returns 
      */
-    const executeSrvConnect = async function(connectMode, id, data){
+    const executeSrvConnect = async function(connectMode, id, data, isloading){
+        if ((isloading ?? true)) setLoading(true);
         try {
             return await connect(connectMode, id, data, token.accessToken);
         } catch (error) {
@@ -178,6 +179,9 @@ function useEvntHandler(e, modeType, data, func){
             // setAlertState(alert, ALERT_TYPE.ERROR, error?.response?.data?.msg)
             throw new Error("error");
             //return -1
+        }
+        finally{
+            setLoading(false);
         }
     }
 

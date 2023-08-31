@@ -24,7 +24,7 @@ function FolderList(){
                     }}>전체</li>
                 {
                     folderList.map(item => 
-                        <li onClick={()=>{
+                        <li key={item.folder_id} onClick={()=>{
                             setClickedfolder(item.folder_id);
                             onClickHandler('', MODE.READ, item.folder_id);
                         }}>{item.folder_name.slice(0,2)}</li>

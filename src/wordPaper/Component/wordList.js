@@ -102,7 +102,10 @@ function WordList(props){
                 ></Edit> :
                 <div className="word" id={data?.word_id}>
                     <div className="top_area flex">
-                        <span>{data?.word}</span>
+                        <div className="top_word_wrap">
+                            <span>{data?.word}</span>
+                            <span className="read">[{data?.wread}]</span>
+                        </div>
                         <button onClick={handleAudioClick(idx)}>
                             <i ref={el => headsetRef.current[idx] = el} className="xi-headset listen" data-pron-audio={data?.soundPath}></i>
                         </button>

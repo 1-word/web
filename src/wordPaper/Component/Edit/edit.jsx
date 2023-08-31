@@ -6,7 +6,8 @@ function Edit(props){
     const [synonymList, setSynonymList] = useState(props.synonyms);
     const [editWordList, setEditWordList] = useState({
         word: props.word,
-        mean: props.mean
+        mean: props.mean,
+        wread: props.wread
     });
     const onClickHandler = useEvntHandler()
 
@@ -32,6 +33,13 @@ function Edit(props){
         }));
     }
 
+    const handleChangeWread = () => e => {
+        setEditWordList(preList => ({
+            ...preList,
+            wread: e.target.value
+        }));
+    }
+
     const handleClickSave = () => {
         const saveList = {
             ...editWordList,
@@ -45,10 +53,11 @@ function Edit(props){
     return <div className="word_cont">
                 <div className="word edit" ref={edit_cont}>
                     <div className="top_area flex">
-                        <div>{props.word}</div>
+                        <span>{props?.word}</span>
                         <button className="headset"><i className="xi-headset"></i></button>
                     </div>
                     <div className="mid_area">
+                    <input defaultValue={editWordList.wread} onChange={handleChangeWread()} className="edit_input"/>
                         <div className="mean_wrap">
                             <input defaultValue={editWordList.mean} onChange={handleChangeMean()} className="edit_input"/>
                         </div>

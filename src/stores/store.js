@@ -4,7 +4,7 @@ import { devtools } from 'zustand/middleware'
 /**
  * @Description 전체 store 상태 관리
  * @Author 정현경
- * @LastEdit 20230112
+ * @LastEdit 20230831 로딩 상태 추가
  */
 
 export const ALERT_TYPE = {
@@ -24,6 +24,7 @@ const useStore = set => ({
         type: ALERT_TYPE.SUCCESS,
         message: "성공",
     },
+    loading: false,
     setModal: (flag) => {
         set((state) => ({
             modal: flag
@@ -32,6 +33,11 @@ const useStore = set => ({
     setAlert: (alertRequest) => {
         set((state) => ({
             alert: alertRequest
+        }))
+    },
+    setLoading: (flag) => {
+        set((state) => ({
+            loading : flag
         }))
     }
 })    

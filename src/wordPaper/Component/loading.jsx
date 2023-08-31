@@ -1,6 +1,6 @@
-import './css/load.css'
+import './load.css'
 
-function Loader (){
+function Loading (){
 
     return(
         <aside className="loader-wrap">
@@ -14,4 +14,4 @@ function Loader (){
     );
 }
 
-export default Loader;
+export default Loading;
