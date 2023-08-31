@@ -32,7 +32,7 @@
 /* 아래의 모든 코드는 영역::코드로 사용 */
 
 .addgrid::-webkit-scrollbar {
-    width: 6px;  /* 스크롤바의 너비 */
+    width: 2px;  /* 스크롤바의 너비 */
 }
 
 .addgrid::-webkit-scrollbar-thumb,
@@ -147,7 +147,7 @@ body::-webkit-scrollbar-track {
 
 .add .addframe .add7cea4238 .addgrid {
   position: relative;
-  overflow-y: scroll;
+  overflow-y: auto;
   width: 80%;
   margin: 0 auto;
   height: 351.00px;
@@ -177,17 +177,25 @@ body::-webkit-scrollbar-track {
 }
 
 @media (max-width: 767px) {
+  .word_top{
+    margin: 0;
+  }
   .add .addframe{
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     border-radius: 0;
   }
   .delete{
     left: initial;
     right: 3%;
+    top: 70px;
+    z-index: 1;
+  }
+  .add .addframe .add7cea4238{
+    top: 170px;
   }
   .add .addframe .add7cea4238 .addgrid .xa20b892b{
-    font-size: 20px;
+    font-size: 16px;
   }
   .add .addframe .add7cea4238 .addgrid .x23876{
     height: 30px;
