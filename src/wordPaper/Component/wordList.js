@@ -91,7 +91,30 @@ function WordList(props){
         headsetRef?.current[id]?.classList?.remove('on');
     }
 
-    const dataList = wordList.map((data, idx) => {
+    const wordList1 = [{
+        "word_id": 0,
+        "word": "단어단어단어단어단어단어단어단어단어단어단어단어단어단어단어단어단어단어단어",
+        "mean": "22",
+        "wread": "바름",
+        "memo": "44",
+        "soundPath": "",
+        "update_time": "",
+        "synonyms": [
+            {
+                "synonym_id": 0,
+                "synonym": "2",
+                "memo": "3"
+            },
+            {
+                "synonym_id": 0,
+                "synonym": "2",
+                "memo": "3"
+            }
+        ]
+    }
+]
+
+    const dataList = wordList1.map((data, idx) => {
         return  <div className="word_cont" key={data?.word_id}>
             { edit_mode.isEdit && edit_mode.word_id === data.word_id?
                 <Edit word_id={data?.word_id}
@@ -102,7 +125,10 @@ function WordList(props){
                 ></Edit> :
                 <div className="word" id={data?.word_id}>
                     <div className="top_area flex">
+                        <div className="top_word_wrap">
                         <span>{data?.word}</span>
+                        <span className="read">[{data?.wread}]</span>
+                        </div>
                         <button onClick={handleAudioClick(idx)}>
                             <i ref={el => headsetRef.current[idx] = el} className="xi-headset listen" data-pron-audio={data?.soundPath}></i>
                         </button>
@@ -125,7 +151,7 @@ function WordList(props){
                     <div className="foot_area flex">
                         <div><span>{data?.update_time}</span></div>
                         <div className="btn_area">
-                            <span className="edit"><i className="xi-pen-o" onClick={handleEditClick(data?.word_id)}></i></span>
+                            <span className="pen"><i className="xi-pen-o" onClick={handleEditClick(data?.word_id)}></i></span>
                             <span className="check"><i className="xi-check-circle-o"></i></span>
                             <span className="memo"><i className="xi-comment-o" onClick={handleMemoClick(idx)}></i></span>
                             <span className="close"><i className="xi-close" onClick={handleDeleteClick(data?.word_id)}></i></span>
