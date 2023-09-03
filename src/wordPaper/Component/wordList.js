@@ -114,7 +114,7 @@ function WordList(props){
     }
 ]
 
-    const dataList = wordList1.map((data, idx) => {
+    const dataList = wordList.map((data, idx) => {
         return  <div className="word_cont" key={data?.word_id}>
             { edit_mode.isEdit && edit_mode.word_id === data.word_id?
                 <Edit word_id={data?.word_id}
@@ -126,13 +126,8 @@ function WordList(props){
                 <div className="word" id={data?.word_id}>
                     <div className="top_area flex">
                         <div className="top_word_wrap">
-<<<<<<< HEAD
                             <span>{data?.word}</span>
                             <span className="read">[{data?.wread}]</span>
-=======
-                        <span>{data?.word}</span>
-                        <span className="read">[{data?.wread}]</span>
->>>>>>> d2dc4db724b48e4a4c4b5aa1678dfea7c9d81dd4
                         </div>
                         <button onClick={handleAudioClick(idx)}>
                             <i ref={el => headsetRef.current[idx] = el} className="xi-headset listen" data-pron-audio={data?.soundPath}></i>

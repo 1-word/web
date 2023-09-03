@@ -34,24 +34,23 @@
 }
 
 .alert-cont .box{
-    padding: 1.5rem 3.81rem;
+    padding: 2rem 3.81rem;
 }
 
 
 .alert-area{
     display: flex;
     gap: 3.75rem;
+    margin: 2rem 0 2.56rem 0;
 }
 
 .alert-img-area{
     width: 3.125rem;
     height: 3.125rem;
-    background: url(trash.svg) center/contain no-repeat;
-    margin-top: 2rem;
+    background: url(/public/img/trash.svg) center/contain no-repeat;
 }
 
 .alert-txt-area{
-    margin-bottom: 2.56rem;
 }
 
 .alert-txt-area h2{

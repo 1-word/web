@@ -3,9 +3,10 @@ import Alert from "./Alert/alert";
 import Add from "./Add/add";
 import Store from "../../stores/store";
 import Loading from "./loading";
+import Confirm from "./confirm";
 
 function Popup(){
-    const {alert, modal, loading, setModal} = Store(state=>state)
+    const {alert, modal, loading, confirm, setModal, setConfirm} = Store(state=>state)
     return (
         <>
         {alert.show && <ModalPortal id="alert">
@@ -16,6 +17,9 @@ function Popup(){
         </ModalPortal>}
         {modal && <ModalPortal id="modal">
         <Add closePopup={() => setModal(false)}></Add>
+        </ModalPortal>}
+        {confirm.show && <ModalPortal id="modal">
+        <Confirm></Confirm>
         </ModalPortal>}
         </>
     );

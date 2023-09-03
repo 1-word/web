@@ -25,6 +25,16 @@ const useStore = set => ({
         message: "성공",
     },
     loading: false,
+    confirm: {
+        title: "확인",
+        content: "정말 삭제하시겠습니까?",
+        show: false,
+        executionFunction: function(){
+
+        },
+        closeFunction: function(){
+        }
+    },
     setModal: (flag) => {
         set((state) => ({
             modal: flag
@@ -38,6 +48,17 @@ const useStore = set => ({
     setLoading: (flag) => {
         set((state) => ({
             loading : flag
+        }))
+    },
+    setConfirm: ({title, content, show, executionFunction, closeFunction}) => {
+        set((state) => ({
+            confirm : {
+                title: title,
+                content: content,
+                show: show,
+                executionFunction: executionFunction,
+                closeFunction: closeFunction
+            }
         }))
     }
 })    

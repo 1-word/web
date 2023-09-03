@@ -43,7 +43,7 @@ export const MODE = {
 function useEvntHandler(e, modeType, data, func){
     
     const {update, wordList, createWordList, setUpdateFlag, saveListClear, setFolderList} = wordListStore(state => state);
-    const {alert, setLoading, setAlert} = Store(state=>state);
+    const {alert, confirm,setLoading, setAlert, setConfirm} = Store(state=>state);
     const {token, user_id, save, saveToken, clearToken} = authStore(state=>state);
     const navigate = useNavigate();
     const location = useLocation();
@@ -74,9 +74,23 @@ function useEvntHandler(e, modeType, data, func){
             return arr;
         },
         async delete(e, id){
-            let res = await executeSrvConnect(CONNECT_MODE.DELETE, id);
-            setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
-            return res;
+            setConfirm({
+                title: "잠깐만요!",
+                content: "정말 삭제하시겠습니까?",
+                show: true,
+                executionFunction: async function(){
+                    await executeSrvConnect(CONNECT_MODE.DELETE, id);
+                    setConfirm({show: false});
+                    setAlertState(alert, ALERT_TYPE.INFO, "성공적으로 데이터를 삭제했습니다.");
+                    setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
+                },
+                closeFunction: function(){
+                    setConfirm({show: false});
+                }
+            });
+            // let res = await executeSrvConnect(CONNECT_MODE.DELETE, id);
+            // setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
+            // return res;
         },
         async update(e, id, data){
             let res = await executeSrvConnect(CONNECT_MODE.UPDATE, id, data);
