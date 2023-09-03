@@ -30,7 +30,7 @@ function Login(){
         <div className="login-wrap">        
             <div className="login-cont">
                 <div className="login-area">
-                    <legend>Login</legend>
+                    <h2>Login</h2>
                     <div className="login-input-area">
                         <input id="user_id" name="user_id" type="text" spellCheck placeholder="UserID" onChange={setLoginInput} onKeyDown={onKeyDown} />
                         <label htmlFor="user_id">UserID</label>

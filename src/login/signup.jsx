@@ -30,7 +30,7 @@ function Signup(){
         <div className="login-wrap">
             <div className="login-cont">
                 <div className="login-area">
-                    <legend>Join</legend>
+                    <h2>Join</h2>
                     <div className="login-input-area">
                         <input id="user_id" name="user_id" type="text" spellCheck placeholder="UserID" onChange={setSignupInput} onKeyDown={onKeyDown} />
                         <label htmlFor="UserID">UserID</label>
