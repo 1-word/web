@@ -83,7 +83,7 @@ async function connect(_method, _id, _data, _token){
         const uri = _method.URI ?? "";
         const token = uri !== CONNECT_MODE.LOGIN.URI? _token : "";
         let url = `${host}${uri}/${id}`;
-        if (_method.URI == CONNECT_MODE.SEARCH.URI) url = `${host}${uri}/${_data}`;
+        if (_method.URI === CONNECT_MODE.SEARCH.URI) url = `${host}${uri}/${_data}`;
 
         let res = await axios({
             method: method,
