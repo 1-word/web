@@ -1,0 +1,154 @@
+.color-wrap{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    color: #202020;
+    z-index: 9998;
+}
+
+.color-cont{
+    width: 360px;
+    height: 100%;
+    background: rgba(218, 225, 246, 0.38);
+    backdrop-filter: blur(10px);
+}
+
+.color-area{
+    width: 80%;
+    margin: 0 auto;
+}
+
+.color-area .title-area{
+    padding: 1.5rem 0 0.5rem 0;
+}
+
+.color-area .title-area h2{
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.color-area .preview-area{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 0.5rem 0;
+}
+
+.color-area .preview-area .preview{
+    display: inline-flex;
+    height: 2.125rem;
+    padding: 0.875rem 0.75rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.625rem;
+    flex-shrink: 0;
+    border-radius: 1.25rem;
+    background: #7CE0B0;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.color-area .preview-area .preview h3{
+    font-size: 0.75rem;
+    font-weight: 400;
+}
+
+.color-area .name-area{}
+
+.color-area .name-area span{
+    font-size: 0.6875rem;
+    font-weight: 400;
+}
+
+.color-area .title{
+    margin-bottom: 0.69rem;
+}
+
+.color-area .title h3{
+    font-size: 0.875rem;
+    font-weight: 400;
+}
+
+.color-area .name-area .name-input{
+    display: inline-flex;
+    width: 100%;
+    height: 35px;
+    padding: 0.5625rem 1.4375rem;
+    margin-bottom: 1.38rem;
+    align-items: center;
+    gap: 0.625rem;
+    border-radius: 1.25rem;
+    background: #FFF;
+    box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+    transition: box-shadow 0.23s ease;
+}
+
+.color-area .name-area .name-input:focus-within{
+    box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;
+}
+
+.color-area .name-area .name-input input{
+    width: 100%;
+    font-size: 0.875rem;
+    border: 0;
+    outline: 0;
+}
+
+.color-area .pick-area{}
+
+.color-area .pick-area .wrap
+{
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1.25rem;
+    background: #FFF;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.color-area .pick-area .wrap .area{
+    display: flex;
+    width: 16.125rem;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.color-area .pick-area .wrap .color{
+    width: 1.875rem;
+    height: 1.875rem;
+    flex-shrink: 0;
+    border-radius: 0.625rem;
+    box-sizing: border-box;
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
+    background: var(--color);
+    transition: border 0.23s ease;
+    text-indent: -1000000px;
+}
+
+.color-area .pick-area .wrap .color:last-child{
+    background: linear-gradient(180deg, #FA8787 0%, rgba(250, 134, 136, 0.99) 0.01%, rgba(250, 180, 129, 0.95) 16.15%, rgba(250, 238, 129, 0.95) 32.81%, rgba(180, 251, 155, 0.71) 50%, rgba(169, 179, 204, 0.58) 65.1%, rgba(200, 141, 245, 0.58) 82.29%, rgba(255, 0, 229, 0.00) 100%);
+
+}
+
+.color-area .pick-area .wrap .color:focus,
+.color-area .pick-area .wrap .color:hover{
+    border: 1px solid #989393;
+}
+
+@media screen and (max-width:359px) {
+    .color-cont{
+        width: 100%;
+    }
+}
+
+@media screen and (min-width:1024px) {
+    .color-area .title h3{
+        font-size: 1rem;
+    }
+}
