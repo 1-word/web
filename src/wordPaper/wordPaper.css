@@ -8,9 +8,21 @@
   src: url(/public/PretendardJP-Medium.woff);
 }
 
+.btn{
+  display: flex;
+  width: 3.875rem;
+  height: 1.625rem;
+  padding: 0.6875rem 6.375rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+  border-radius: 1.875rem;
+}
+
 
 html body{
   font-family: 'PretendardJP';
+  color: #202020;
 }
 
 body::-webkit-scrollbar{
@@ -23,7 +35,7 @@ ul,ol,dl{
 
 a{
   text-decoration: none;
-  color: #333;
+  color: #202020;
 }
 
 button{
@@ -56,6 +68,7 @@ nav{
   margin: 0 auto;
   padding: 80px 0 0;
   position: relative;
+  z-index: 100;
 }
 
 .seacrch_cont{
@@ -212,9 +225,11 @@ nav{
   align-items: center;
   justify-content: center;
   font-size: 14px;
-  background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+  /* background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%); */
   border-radius: 20px;
   color: #fff;
+  background: #a6b1ff;
+  box-shadow: 0 0 0.25rem #5468ff;
   cursor: pointer;
   font-weight: bold;
   padding: 6px 20px;
@@ -230,7 +245,8 @@ nav{
 .word_plus:not(:disabled):hover ,
 .word_plus:not(:disabled):focus {
   outline: 0;
-  box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem #5adaff, .125rem .125rem 1rem #5468ff;
+  /* box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem #5adaff, .125rem .125rem 1rem #5468ff; */
+  box-shadow: 0 0 0.25rem #5468ff, -0.125rem -0.125rem 1rem #bac9f6, 0.125rem 0.125rem 1rem #81b5fd;
 }
 
 .word_plus:disabled {
@@ -249,7 +265,7 @@ nav{
   visibility: hidden;
   opacity: 0;
   transition: all 3s ease-in;
-  background: #5468ff;
+  background: #BAC9F6;
   color: #fff;
   font-size: 1.3em;
   border-radius: 50%;
@@ -265,7 +281,7 @@ nav{
   transform: translate(-50%,-50%);
   width: 120%;
   height: 120%;
-  background: #81b5fd56;
+  background: #bac9f698;
   border-radius: 50%;
   z-index: -1;
   animation: bloom 1s 3s linear alternate infinite;
@@ -273,7 +289,7 @@ nav{
 
 @keyframes bloom {
   100%{
-    background: #81b5fdb0;
+    background: #bac9f698;
     width: 130%;
     height: 130%;
   }
@@ -291,28 +307,30 @@ nav{
 /*단어장 탭부분*/
 
 .word_tab_area{
+  gap: 11px;
 }
 
 .word_tab_area div{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.4375rem;
+  padding: 0.5rem 0;
   cursor: pointer;
-  padding: 15px 0;
-  margin: 0 20px;
   position: relative;
+  background: #bac9f687;
+  border-radius: 20px;
+  transition: background 0.2s ease;
 }
 
 .word_tab_area div.active{
   font-weight: bold;
+  background: #fff;
+  box-shadow: 0 0 0.25rem #5468ff;
+  box-sizing: border-box;
 }
 
-.word_tab_area div.active::before{
-  content: "";
-  display: block;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 4px;
-  background-color: #356afd;
-}
+
 
 /*단어장 내용부분*/
 
@@ -325,11 +343,11 @@ nav{
 }
 
 .word{
-  margin-bottom: 20px;
-  padding: 15px;
+  margin-bottom: 1.625rem;
+  padding: 1.25rem;
   box-shadow: -1px 1px 8px rgba(0,0,0,.1);
-  border-radius: 4px;
-  background: #f9f9f9;
+  border-radius: 0.5rem;
+  background: rgba(218, 225, 246, 0.38);
 }
 
 .top_area{
@@ -372,13 +390,14 @@ nav{
 }
 
 .mean_wrap{
-  padding:  15px;
-  background: #e9e9e9;
-  border-radius: 6px;
+  padding:  11px 20px;
+  border-radius: 1.25rem;
+  background: #BAC9F6;
+  color: #fff;
 }
 
 .synonym_wrap{
-  padding: 15px;
+  padding: 15px 0;
 }
 
 .synonym_wrap span{
@@ -386,10 +405,8 @@ nav{
   width: 60px;
   padding: 5px 7px;
   margin-right: 15px;
-  background: #368aff;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
-  color: #fff;
-  border-radius: 30px;
+  border-radius: 1.875rem;
+  background: #CBD8FF;
   text-align: center;
   vertical-align: middle;
 }
@@ -457,20 +474,22 @@ nav{
   width: 95%;
   margin: 0 auto;
   padding: 10px;
-  background: #b8d6ff57;
   font-size: 13px;
   color: #333;
   line-height: 1.1;
+  border-radius: 0.625rem;
+  border: 1px solid #BAC9F6;
+  background: rgba(218, 225, 246, 0.38);
   height: 80px;
-  border: 1px solid #b8d6ff9c;
   outline: 0;
-  transition: 0.4s all;
+  transition: 0.4s background;
   border-radius: 6px;
-  outline-color: #b8d6ff57;
+  outline-color: #BAC9F6;
+  box-sizing: border-box;
 }
 
 .memo_text:focus-visible{
-  outline: 1px solid #b8d6ff9c;
+  outline: 1px solid #BAC9F6;
   background: #ffffff59;
 }
 
@@ -492,29 +511,65 @@ nav{
 .memo_area .btn_area{
   justify-content: end;
   width: 95%;
-  margin: 10px auto;
+  margin: 11px auto;
+  gap: 1rem;
+  padding: 0 1rem;
+  box-sizing: border-box;
 }
 
 .btn_area .cancle_memo,
 .btn_area .save_memo{
-  border: 1px solid #999;
-  border-radius: 6px;
-  padding: 8px 20px;
-  font-size: 16px;
-  transition: all 0.4s ease-in;
-  margin-left: 15px;
+  position: relative;
+  display: flex;
+  width: 6.4375rem;
+  padding: 0.5rem 0;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+  border-radius: 1.875rem;
   cursor: pointer;
+  background: #BAC9F6;
+  color: #fff;
+  z-index: 1;
+  transition: color 0.26s linear;
 }
 
 .btn_area .cancle_memo{
-  background: #fff;
-  color: #fd3582;
-  border-color: #fd3582;
+  color: #BAC9F6;
+  border: 1px solid #BAC9F6;
+  background: #FFF;
 }
 
-.btn_area .cancle_memo:hover{
-  background: #fd3582;
-  color: #fff;
+.btn_area .cancle_memo::after,
+.btn_area .save_memo::after{
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background: #BAC9F6;
+  transition: clip-path 0.26s linear;
+  clip-path: inset(5% 50% 15% 50%);
+  z-index: -1;
+}
+
+.btn_area .save_memo::after{
+  background: #fff;
+}
+
+.btn_area .cancle_memo:hover,
+.btn_area .cancle_memo:focus{
+color: #fff;
+}
+
+.btn_area .cancle_memo:hover::after,
+.btn_area .save_memo:hover::after,
+.btn_area .cancle_memo:focus::after,
+.btn_area .save_memo:focus::after{
+  clip-path: inset(0 0 0 0);
 }
 
 .btn_area .cancle_memo:focus,
@@ -522,9 +577,10 @@ nav{
   transform: scale(0.95);
 }
 
-.btn_area .save_memo:hover{
-  background: #333;
-  color: #fff;
+.btn_area .save_memo:hover,
+.btn_area .save_memo:focus{
+  color: #BAC9F6;
+  border: 1px solid #BAC9F6;
 }
 
 /* edit 모드 */
@@ -535,15 +591,21 @@ nav{
 
 .edit .mean_wrap{
   display: flex;
-  background: #b8d6ff;
-  padding: 3px;
-  border-radius: 4px;;
+  flex-direction: column;
+  gap: 11px;
+  padding: 0;
+  background: none;
 }
 
 .edit .top_area{
-  background: #b8d6ff;
-  padding: 3px;
-  border-radius: 4px;
+  background: #BAC9F6;
+  padding: 10px;
+  border-radius: 1.875rem;
+}
+
+.edit .top_area span{
+  font-size: 1.25rem;
+  margin-left: 10px;
 }
 
 .edit input{
@@ -554,6 +616,9 @@ nav{
   width: 100%;
   height: 100%;
   border-radius: 4px;
+  box-sizing: border-box;
+  border-radius: 1.875rem;
+  font-size: 1rem;
 }
 
 .edit .synonym_wrap::after{
@@ -568,12 +633,14 @@ nav{
 }
 
 .edit .synonym_cont{
-  flex-wrap: wrap;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  justify-items: center;
+  gap: 1rem;
 }
 
 .edit .synonym_add{
-  margin: 10px 36px 10px 0;
+  /* margin: 10px 36px 10px 0; */
   align-items: center;
 }
 
@@ -583,8 +650,8 @@ nav{
 
 .edit .synonym_cont input{
   width: 170px;
-  height: 20px;
-  font-size: 14px;
+  height: 24px;
+  font-size: 0.875rem;
   padding: 3px 0;
   text-indent: 15px;
   margin-right: 5px;
@@ -614,10 +681,10 @@ nav{
 
 .edit .synonym_plus{
   font-size: 19px;
-  width: 170px;
+  width: 215px;
   height: 26px;
-  /* background: #81b5fd; */
-  background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+  background: #BAC9F6;
+  /* background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%); */
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
   cursor: pointer;
   border-radius: 4px;
@@ -626,7 +693,9 @@ nav{
   color: #fff;
 }
 
-.edit .synonym_plus:hover{
+.edit .synonym_plus:hover,
+.edit .synonym_plus:focus
+{
   opacity: 0.7;
 }
 
@@ -646,7 +715,9 @@ nav{
   html body{
     font-size: 14px;
   }
-
+  .search_wrap{
+    z-index: 100;
+  }
   .search_icon{
     font-size: 26px;
   }
@@ -659,10 +730,19 @@ nav{
     opacity: 0;
     visibility: hidden;
   }
+  .folder_wrap{
+    display: none;
+  }
+  .word_tab_area{
+    margin-top: 5rem;
+  }
   .word_plus_mobile{
     display: block;
     visibility: visible;
     opacity: 1;
+  }
+  .word_wrap{
+    /* margin: 110px 0; */
   }
   .top_area{
     gap: 0.1rem;
@@ -676,5 +756,33 @@ nav{
   }
   .folder_cont li{
     font-size: 14px;
+  }
+  .top_area span, .top_area .xi-headset::before{
+    font-size: 20px;
+  }
+  .pen, .check, .memo, .close{
+    font-size: 20px;
+  }
+  .btn_area .cancle_memo, .btn_area .save_memo{
+    width: 3.875rem;
+  height: 1.625rem;
+  }
+  .memo_text{
+    width: 100%;
+  }
+  .memo_area .btn_area{
+    padding: 0;
+  }
+  .top_area span{
+    font-size: 1.25rem;
+  }
+  .search_wrap{
+    position: fixed;
+    width: 90%;
+    padding: 0;
+    backdrop-filter: blur(10px);
+  }
+  .seacrch_cont{
+    background: none;
   }
 }
