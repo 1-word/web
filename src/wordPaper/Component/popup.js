@@ -4,9 +4,10 @@ import Add from "./Add/add";
 import Store from "../../stores/store";
 import Loading from "./loading";
 import Confirm from "./confirm";
+import Colorpick from "./colorpick";
 
 function Popup(){
-    const {alert, modal, loading, confirm, setModal, setConfirm} = Store(state=>state)
+    const {alert, modal, loading, confirm, colorPick, setModal} = Store(state=>state)
     return (
         <>
         {alert.show && <ModalPortal id="alert">
@@ -21,6 +22,9 @@ function Popup(){
         {confirm.show && <ModalPortal id="modal">
         <Confirm></Confirm>
         </ModalPortal>}
+        {/* {colorPick && <ModalPortal id="modal">
+        <Colorpick></Colorpick>
+        </ModalPortal>} */}
         </>
     );
 }

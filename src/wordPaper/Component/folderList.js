@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from "react";
-import useEvntHandler, {MODE} from "../js/useEvntHandler";
-import wordListStore from "../stores/wordListStore";
+import useEvntHandler, {MODE} from "../../js/useEvntHandler";
+import wordListStore from "../../stores/wordListStore";
+import Store from "../../stores/store";
 
 
 
 function FolderList(){
     const {update, folderList} = wordListStore(state => state);
+    const {colorPick, setColorPickModal} = Store(state => state);
 
     const onClickHandler = useEvntHandler();
 
@@ -15,6 +17,9 @@ function FolderList(){
         onClickHandler('', MODE.FOLDER_READ, '');
     }, []); 
 
+    const handleFolderOpenModal = () => e => {
+        setColorPickModal(true);
+    }
 
     return (<div className="folder_wrap">
                 <ul className="flex folder_cont">
@@ -30,7 +35,7 @@ function FolderList(){
                         }}>{item.folder_name.slice(0,2)}</li>
                     )
                 }
-                    <li className="xi-plus"></li>
+                    <li className="xi-plus" onClick={handleFolderOpenModal()}></li>
                 </ul>
             </div>
     );

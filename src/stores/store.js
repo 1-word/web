@@ -35,6 +35,7 @@ const useStore = set => ({
         closeFunction: function(){
         }
     },
+    colorPick: false,
     setModal: (flag) => {
         set((state) => ({
             modal: flag
@@ -59,6 +60,11 @@ const useStore = set => ({
                 executionFunction: executionFunction,
                 closeFunction: closeFunction
             }
+        }))
+    },
+    setColorPickModal: (flag) => {
+        set((state) => ({
+            colorPick: flag
         }))
     }
 })    

@@ -46,7 +46,7 @@
     gap: 0.625rem;
     flex-shrink: 0;
     border-radius: 1.25rem;
-    background: #7CE0B0;
+    background: var(--color);
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
 }
 

@@ -4,12 +4,13 @@ import WordList from "./Component/wordList";
 import wordListStore from "../stores/wordListStore";
 import Store from "../stores/store";
 import useEvntHandler, { MODE } from "../js/useEvntHandler";
-import FolderList from "./folderList";
+import FolderList from "./Component/folderList";
+import Colorpick from "./Component/colorpick";
 
 function WordPaper(){
     // Store 사용
     const {update, folderList} = wordListStore(state => state);
-    const {setModal} = Store(state=>state);
+    const {colorPick, setModal} = Store(state=>state);
     
     const onClickHandler = useEvntHandler();
     const searchInput = useRef();
@@ -33,6 +34,7 @@ function WordPaper(){
 
     return (
     <div className="wrap">
+        {colorPick && <Colorpick></Colorpick>}
         <div className="search_wrap">
             <div className="seacrch_cont">
                 <input ref={searchInput} onChange={handleSearchClick} type="text" className="s_text" placeholder="검색어를 입력해 주세요"/>
