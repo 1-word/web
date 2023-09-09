@@ -38,7 +38,9 @@ function Add(props){
                             <AddList name="wread" text="발음" value={saveList.wread} ></AddList>
                             {synonymInputList}
                         </div>
+                        <div className="btn-area">
                         <button className="save_btn" name="save_btn" onClick={handleClick}>저장</button>                   
+                        </div>
                     </div>
                 </div>
             </div>

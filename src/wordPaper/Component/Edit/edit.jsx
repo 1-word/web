@@ -57,8 +57,8 @@ function Edit(props){
                         <button className="headset"><i className="xi-headset"></i></button>
                     </div>
                     <div className="mid_area">
-                    <input defaultValue={editWordList.wread} onChange={handleChangeWread()} className="edit_input"/>
                         <div className="mean_wrap">
+                            <input defaultValue={editWordList.wread} onChange={handleChangeWread()} className="edit_input"/>
                             <input defaultValue={editWordList.mean} onChange={handleChangeMean()} className="edit_input"/>
                         </div>
                         <div className="synonym_wrap">
