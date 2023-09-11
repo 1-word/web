@@ -8,6 +8,10 @@
   src: url(/public/PretendardJP-Medium.woff);
 }
 
+button{
+  font-family: 'PretendardJP', sans-serif;
+}
+
 .btn{
   display: flex;
   width: 3.875rem;
@@ -17,6 +21,8 @@
   align-items: center;
   gap: 0.625rem;
   border-radius: 1.875rem;
+  font-family: 'PretendardJP', sans-serif;
+  cursor: pointer;
 }
 
 
@@ -112,54 +118,6 @@ nav{
   font-size: 40px;
   color: #356afd;
   background: none;
-}
-
-.s_pop{
-  position: absolute;
-  width: 100%;
-  overflow: hidden;
-  transition: 0.36s ease;
-  height: 100%;
-  border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-  background: #fff;
-  z-index: 10;
-}
-
-/* .s_pop.on{
-  height: 100%;
-} */
-
-.s_pop_cont{
-  padding: 20px;
-
-}
-
-.s_pop p{
-  padding: 6px 0;
-  border-bottom: 1px solid #999;
-}
-
-.s_pop ul li{
-  padding: 10px 0;
-  justify-content: space-between;
-}
-
-.s_pop ul li a{
-  display: block;
-  width: 100%;
-}
-
-.s_pop ul li button{
-  padding: 6px;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: 0.36s ease;
-}
-
-.s_pop ul li button:hover,
-.s_pop ul li button:focus{
-  background: #ccc;
 }
 
 /* 단어장 폴더 */
@@ -362,10 +320,6 @@ nav{
   background: none;
 }
 
-.top_area span{
-  font-weight: bold;
-}
-
 .top_area .read{
   font-weight: 400;
   font-size: 1rem;
@@ -529,13 +483,12 @@ nav{
   border-radius: 1.875rem;
   cursor: pointer;
   background: #BAC9F6;
-  color: #fff;
+  color: #202020;
   z-index: 1;
   transition: color 0.26s linear;
 }
 
 .btn_area .cancle_memo{
-  color: #BAC9F6;
   border: 1px solid #BAC9F6;
   background: #FFF;
 }
@@ -550,19 +503,14 @@ nav{
   width: 100%;
   height: 100%;
   border-radius: 20px;
-  background: #BAC9F6;
-  transition: clip-path 0.26s linear;
+  background: #dde7f3;
+  transition: clip-path 0.1s linear;
   clip-path: inset(5% 50% 15% 50%);
   z-index: -1;
 }
 
 .btn_area .save_memo::after{
   background: #fff;
-}
-
-.btn_area .cancle_memo:hover,
-.btn_area .cancle_memo:focus{
-color: #fff;
 }
 
 .btn_area .cancle_memo:hover::after,

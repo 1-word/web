@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import "./add.css";
 import AddList from "./addList";
 import wordListStore, { WORD_KEY } from "../../../stores/wordListStore";
@@ -8,6 +8,8 @@ function Add(props){
 
     const {update, saveList, setUpdateFlag, saveListClear} = wordListStore(state => state);
     const onClickHandler = useEvntHandler()
+
+    const addframeRef = useRef();
 
     const handleClick = (e) => {
         let target_name = e.target.name;
@@ -28,9 +30,14 @@ function Add(props){
         />
     ));
 
-    return  <div className="add">        
-                <div className="addframe">            
-                    <button className="delete" onClick={props.closePopup}> </button>
+    const handleElementClick = () => e => {
+        if (addframeRef.current && !addframeRef.current.contains(e.target)) 
+            props.closePopup();        
+    }
+
+    return  <div className="add" onClick={handleElementClick()}>
+                <div ref={addframeRef} className="addframe">            
+                    <button className="delete" onClick={props.closePopup}><i className="xi-close"></i> </button>
                     <div className="add7cea4238">                
                         <div className="addgrid">          
                             <AddList name="word" text="단어" value={saveList.word} ></AddList>          

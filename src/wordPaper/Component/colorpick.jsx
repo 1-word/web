@@ -99,6 +99,10 @@ function Colorpick(){
                         </div>
                     </div>
                 </div>
+                <div className='btn-area flex'>
+                    <button className='btn'>취소</button>
+                    <button className='btn'>확인</button>
+                </div>
             </div>
         </div>
     </aside>

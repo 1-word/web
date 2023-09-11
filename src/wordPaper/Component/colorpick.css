@@ -101,7 +101,9 @@
 
 .color-area .pick-area .wrap
 {
+    width: 100%;
     padding: 0.5rem 0;
+    margin-bottom: 1.38rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -139,6 +141,46 @@
 .color-area .pick-area .wrap .color:focus,
 .color-area .pick-area .wrap .color:hover{
     border: 1px solid #989393;
+}
+
+.color-area .btn-area{
+    margin-top: 2.38rem;
+    gap: 1.38rem;
+    justify-content: center;
+}
+
+.color-area .btn-area .btn{
+    position: relative;
+    width: 6.4375rem;
+    padding: 1rem 0;
+    background: #fff;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+    z-index: 1;
+    font-size: 1rem;
+}
+
+.color-area .btn-area .btn:nth-child(2){
+    background: #bac9f6;
+}
+
+.color-area .btn-area .btn::after{
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    background: #dde7f3;
+    transition: clip-path 0.1s linear;
+    clip-path: inset(5% 50% 15% 50%);
+    z-index: -1;
+}
+
+.color-area .btn-area .btn:hover::after,
+.color-area .btn-area .btn:focus::after{
+    clip-path: inset(0 0 0 0);
 }
 
 @media screen and (max-width:359px) {
