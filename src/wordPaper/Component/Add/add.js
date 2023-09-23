@@ -2,19 +2,29 @@ import React from "react";
 import "./add.css";
 import AddList from "./addList";
 import wordListStore, { WORD_KEY } from "../../../stores/wordListStore";
+import Store from "../../../stores/store";
 import useEvntHandler, { MODE } from "../../../js/useEvntHandler";
 
 function Add(props){
 
-    const {update, saveList, setUpdateFlag, saveListClear} = wordListStore(state => state);
-    const onClickHandler = useEvntHandler()
+    const {saveList, saveWordList} = wordListStore(state => state);
+    const {clickedFolder} = Store(state=> state);
+    const onClickHandler = useEvntHandler();
 
     const handleClick = (e) => {
         let target_name = e.target.name;
         let target_id = e.target.id;
+        let resultList = {};
+
+        if (clickedFolder !== -1){
+            resultList = {
+                ...saveList,
+                folder_id: clickedFolder
+            };
+        }
         //저장 버튼 클릭시
         if(target_name === MODE.SAVE_BTN)
-            onClickHandler(e, MODE.SAVE, saveList, props.closePopup)
+            onClickHandler(e, MODE.SAVE, resultList, props.closePopup);
     }
 
     const synonymInputList = saveList.synonyms.map((data, idx) => (

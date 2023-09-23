@@ -459,15 +459,16 @@ nav{
 
 .memo_area{
   width: 100%;
-  max-height: 200px;
+  /* max-height: 200px; */
+  max-height: 0;
   overflow: hidden;
   transition: 0.4s ease;
   margin-bottom: 10px;
 }
 
-/* .memo_area.on{
+ .memo_area.on{
   max-height: 200px;
-} */
+} 
 
 .memo_text{
   display: block;

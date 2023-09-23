@@ -24,6 +24,7 @@ const store = set => ({
             "wread": "",
             "memo": "",
             "soundPath": "",
+            "memorization": "",
             "update_time": "",
             "synonyms": [
                 {
@@ -48,15 +49,24 @@ const store = set => ({
         "synonyms": [{
             "synonym": "",
             "memo": ""
-        }]
+        }],
+        "folder_id": "",
     },
     folderList: [
         {
             "folder_id" : 0,
             "folder_name": "",
+            "background": "",
+            "color": "",
             "memo": ""
         }
     ],
+    memoStatus: {
+        0: {
+            "status": "OFF",
+            "memo": ""
+        }
+    },
     update: false,
     /**
      * @param {*} wordList (Object) 전체 word데이터 리스트
@@ -113,7 +123,8 @@ const store = set => ({
             "synonyms": [{
                 "synonym": "",
                 "memo": ""
-            }]
+            }],
+            "folder_id": ""
     }})),
 
     setUpdateFlag: () => set((state) => ({
@@ -122,13 +133,24 @@ const store = set => ({
 
     setFolderList: (folderListRequest) => set(state => ({
         folderList: folderListRequest
-    }))
+    })),
+
+    setMemoStatus: ({id, status, memo}) => set(state => ({
+        memoStatus: {
+            ...state.memoStatus,
+            [id]: {
+                "status": status,
+                "memo": memo
+            }
+        }
+    })),
+
+    setMemoStatusInit: () => set(() => ({
+        memoStatus: {}
+    })),
 })
 
-const wordListStore = create(
-    store
-)
-
-// const wordListStore = create(devtools(store))
+const wordListStore = create(store);
+// const wordListStore = create(devtools(store));
 
 export default wordListStore

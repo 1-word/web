@@ -28,7 +28,8 @@ export const MODE = {
     FOLDER_READ: "folderRead",
     FOLDER_UPDATE: "folderUpdate",
     FOLDER_SAVE: "folderSave",
-    FOLDER_DELETE: "folderDelete"
+    FOLDER_DELETE: "folderDelete",
+    MEMORIZATION: "memorization"
 }
 
 /**
@@ -102,6 +103,11 @@ function useEvntHandler(e, modeType, data, func){
             setAlertState(alert, ALERT_TYPE.INFO, "성공적으로 데이터를 저장했습니다.");
             setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
         },
+        async memorization(e, id, data){
+            let res = await executeSrvConnect(CONNECT_MODE.MEMORIZATION, id, data);
+            setAlertState(alert, ALERT_TYPE.INFO, "성공적으로 데이터를 저장했습니다.");
+            setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
+        },
         async save(e, data, closePopup){
             data.user_id = user_id;
             let res = await executeSrvConnect(CONNECT_MODE.SAVE, '', data);
@@ -149,7 +155,6 @@ function useEvntHandler(e, modeType, data, func){
             navigate("/word");
         },
         async signup(e, user){
-            console.log(app);
             const res = await executeSrvConnect(CONNECT_MODE.SIGNUP, '', user);
             setAlertState(alert, ALERT_TYPE.SUCCESS, "회원가입이 완료되었습니다.");
             navigate("/");

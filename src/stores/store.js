@@ -16,6 +16,12 @@ export const ALERT_TYPE = {
     INFO: "info"
 }
 
+export const MEMORIZATION_TYPE = {
+    ALL: "all",
+    MEMORIZATION: "memorization",
+    MEMORIZATION_PERIOD: "memorizationPeriod"
+}
+
 const useStore = set => ({
     modal: false,
     // alert: false,
@@ -36,20 +42,22 @@ const useStore = set => ({
         }
     },
     colorPick: false,
+    memorization: MEMORIZATION_TYPE.ALL,
+    clickedFolder: -1,
     setModal: (flag) => {
         set((state) => ({
             modal: flag
-        }))
+        }));
     },
     setAlert: (alertRequest) => {
         set((state) => ({
             alert: alertRequest
-        }))
+        }));
     },
     setLoading: (flag) => {
         set((state) => ({
             loading : flag
-        }))
+        }));
     },
     setConfirm: ({title, content, show, executionFunction, closeFunction}) => {
         set((state) => ({
@@ -60,17 +68,27 @@ const useStore = set => ({
                 executionFunction: executionFunction,
                 closeFunction: closeFunction
             }
-        }))
+        }));
     },
     setColorPickModal: (flag) => {
         set((state) => ({
             colorPick: flag
-        }))
+        }));
+    },
+    setMemorization: (memorizationType) => {
+        set(() => ({
+            memorization: memorizationType
+        }));
+    },
+    setClickedfolder: (folder_id) => {
+        set(()=> ({
+            clickedFolder: folder_id
+        }));
     }
 })    
 
 const Store = create(
     useStore
-)
+);
 
 export default Store
