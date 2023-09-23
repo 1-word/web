@@ -10,7 +10,7 @@
 }
 
 .folder-wrap{
-    z-index: 500;
+    z-index: 101;
 }
 
 .color-cont,
@@ -267,6 +267,17 @@
 @media screen and (max-width:359px) {
     .color-cont{
         width: 100%;
+    }
+    .folder-cont{
+        width: 100%;
+    }
+    .folder-area .name-area{
+        max-height: 300px;
+        overflow: auto;
+    }
+    .folder-area .btn-area .btn{
+        padding: 0.5625rem 4.4375rem;
+        
     }
 }
 

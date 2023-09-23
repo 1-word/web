@@ -126,6 +126,7 @@ function WordList(props){
                 <div className="word" id={data?.word_id}>
                     <div className="top_area flex">
                         <div className="top_word_wrap">
+                        <span className="check icon"><i className="xi-check-circle-o"></i></span>
                             <span>{data?.word}</span>
                             <span className="read">[{data?.wread}]</span>
                         </div>
@@ -151,12 +152,38 @@ function WordList(props){
                     <div className="foot_area flex">
                         <div><span>{data?.update_time}</span></div>
                         <div className="btn_area">
-                            <span className="pen"><i className="xi-pen-o" onClick={handleEditClick(data?.word_id)}></i></span>
-                            <span className="check"><i className="xi-check-circle-o"></i></span>
-                            <span className="memo"><i className="xi-comment-o" onClick={handleMemoClick(idx)}></i></span>
-                            <span className="close"><i className="xi-close" onClick={handleDeleteClick(data?.word_id)}></i></span>
+                            <span className="folder icon"><i className="xi-folder-o"></i></span>
+                            <span className="pen icon"><i className="xi-pen-o" onClick={handleEditClick(data?.word_id)}></i></span>
+                            <span className="memo icon"><i className="xi-comment-o" onClick={handleMemoClick(idx)}></i></span>
+                            <span className="close icon"><i className="xi-close" onClick={handleDeleteClick(data?.word_id)}></i></span>
                         </div>
                     </div>
+                    {/* modal */}
+                    <aside class="folder-wrap">
+                        <div class="folder-cont">
+                            <div class="folder-area">
+                                <div class="title-area flex on">
+                                    <h2>폴더 이동하기</h2>
+                                    <span>
+                                        <i class="xi-close"></i>
+                                    </span>
+                                </div>
+                                <div class="name-area">
+                                    <div class="name-title title flex">
+                                        <span class="folder-color"></span>
+                                        <h3>이름</h3>
+                                    </div>
+                                    <div class="name-title title flex">
+                                        <span class="folder-color"></span>
+                                        <h3>이름</h3>
+                                    </div>
+                                </div>
+                                <div class="btn-area">
+                                    <button class="btn">이동하기</button>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
                 </div>
             }
             </div>
