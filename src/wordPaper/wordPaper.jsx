@@ -40,26 +40,11 @@ function WordPaper(){
                 <input ref={searchInput} onChange={handleSearchClick} type="text" className="s_text" placeholder="검색어를 입력해 주세요"/>
                 <button className="search_icon" onClick={handleSearchClick}><i className="xi-search"></i></button>
             </div>
-            <div className="s_pop">
-                <div className="s_pop_cont">
-                    <p>내가 찾은 단어</p>
-                    <ul>
-                        <li className="flex">
-                            <a href="#">
-                                <span>검색내용</span>
-                            </a>
-                            <button><i className="xi-close"></i></button>
-                        </li>
-                    </ul>
-                    <div>
-                        <span>전체삭제</span>
-                    </div>
-                </div>
-            </div>
         </div>
         <FolderList></FolderList>
         <div className="flex word_top">
         <div className="word_tab_area flex">
+            <div className="folder active">내 폴더</div>
             <div className="active">전체</div>
             <div>미암기</div>
             <div>암기</div>

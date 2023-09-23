@@ -9,6 +9,16 @@
   z-index: 1000;
 }
 
+.add-click-area{
+  position: absolute;
+  width: calc(100% - 360px);
+  height: 100%;
+  top: 0;
+  right: 0;
+  background: #33333338;
+  backdrop-filter: blur(10px);
+}
+
 .add .addframe {
   position: relative;
   width: 360px;
@@ -48,18 +58,21 @@ body::-webkit-scrollbar-track {
 
 .delete {
   position: absolute;
-  width: 40.00px;
-  height: 40.00px;
   left: 85%;
   top: 18.00px;
-  background:url(/public/img/delete_icon.png) no-repeat;
-  transition: all 2s;
+  font-size: 30px;
+  color: #333;
+  background: none;
+  /* background:url(/public/img/delete_icon.png) no-repeat; */
+  transition: color 0.2s ease;
    border: none;
    cursor: pointer;
 }
 
-.delete:hover {
-  background:url(/public/img/delete_icon_over.png) no-repeat; 
+.delete:hover,
+.delete:focus{
+  color: #666;
+  /* content: "\e924"; */
 }
 
 .add .addframe .add7cea4238 {
