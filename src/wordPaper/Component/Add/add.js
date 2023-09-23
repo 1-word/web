@@ -18,6 +18,7 @@ function Add(props){
         let target_id = e.target.id;
         let resultList = {};
 
+        resultList = saveList;
         if (clickedFolder !== -1){
             resultList = {
                 ...saveList,

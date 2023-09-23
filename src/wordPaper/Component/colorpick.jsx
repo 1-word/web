@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import useEvntHandler, {MODE} from "../../js/useEvntHandler";
+import Store from '../../stores/store';
 import './colorpick.css'
 
 function Colorpick(){
@@ -7,6 +8,8 @@ function Colorpick(){
         color: "#202020",
         background: "#fff"
     });
+
+    const {setColorPickModal} = Store(state=>state);
 
     const folderNameInput = useRef();
 
@@ -113,7 +116,7 @@ function Colorpick(){
                     </div>
                 </div>
                 <div className='btn-area flex'>
-                    <button className='btn'>취소</button>
+                    <button className='btn' onClick={e=> setColorPickModal(false)}>취소</button>
                     <button className='btn' onClick={handleConfirmClick()}>확인</button>
                 </div>
             </div>
