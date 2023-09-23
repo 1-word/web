@@ -1,11 +1,16 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import useEvntHandler, {MODE} from "../../js/useEvntHandler";
 import './colorpick.css'
 
 function Colorpick(){
     const [pickColor, setPickColor] = useState({
-        fontColor: "#202020",
-        folderColor: "#fff"
+        color: "#202020",
+        background: "#fff"
     });
+
+    const folderNameInput = useRef();
+
+    const onClickHandler = useEvntHandler();
 
     // KEY값 중복 없이 입력
     const FOLDER_COLOR = {
@@ -45,6 +50,14 @@ function Colorpick(){
 	    return "#" + Math.floor(Math.random() * 16777215).toString(16);
     }
 
+    const handleConfirmClick = () => e => {
+        const folderData = {
+            ...pickColor,
+            folder_name: folderNameInput.current.value
+        }
+        onClickHandler(e, MODE.FOLDER_SAVE, folderData);
+    }
+
     // 컬러 KEY값 추출
     const foler_color_list = Object.keys(FOLDER_COLOR);
     const font_color_list = Object.keys(FONT_COLOR);
@@ -57,8 +70,8 @@ function Colorpick(){
                     <h2>새 폴더</h2>
                 </div>
                 <div class="preview-area">
-                    <div class="preview" style={{'--color': pickColor?.folderColor}}>
-                        <h3 style={{'color': pickColor?.fontColor}}>미리보기</h3>
+                    <div class="preview" style={{'--color': pickColor?.background}}>
+                        <h3 style={{'color': pickColor?.color}}>미리보기</h3>
                     </div>
                 </div>
                 <div class="name-area">
@@ -66,7 +79,7 @@ function Colorpick(){
                         <h3>이름<span>(10글자 이내로 적어주세요)</span></h3>
                     </div>
                     <div class="name-input">
-                        <input type="text" maxlength="10"/>
+                        <input ref={folderNameInput} type="text" maxlength="10"/>
                     </div>
                 </div>
                 <div class="pick-area">
@@ -78,7 +91,7 @@ function Colorpick(){
                             { 
                                 foler_color_list.map(key => 
                                     <span className="color" style={{ '--color': FOLDER_COLOR[key] }} 
-                                    onClick={handleColorClick("folderColor", FOLDER_COLOR[key])}></span>
+                                    onClick={handleColorClick("background", FOLDER_COLOR[key])}></span>
                                 )
                             }
                         </div>
@@ -93,11 +106,15 @@ function Colorpick(){
                             { 
                                 font_color_list.map(key => 
                                     <span className="color" style={{ '--color': FONT_COLOR[key] }} 
-                                    onClick={handleColorClick("fontColor", FONT_COLOR[key])}></span>
+                                    onClick={handleColorClick("color", FONT_COLOR[key])}></span>
                                 )
                             }
                         </div>
                     </div>
+                </div>
+                <div className='btn-area flex'>
+                    <button className='btn'>취소</button>
+                    <button className='btn' onClick={handleConfirmClick()}>확인</button>
                 </div>
             </div>
         </div>

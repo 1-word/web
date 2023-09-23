@@ -19,7 +19,8 @@ function FolderList(){
         setColorPickModal(true);
     }
 
-    return (<div className="folder_wrap">
+    return (
+            <div className="folder_wrap">
                 <ul className="flex folder_cont">
                     <li id="allFolder" onClick={()=>{
                         setClickedfolder(-1);
@@ -39,7 +40,7 @@ function FolderList(){
                     <li className="xi-plus" onClick={handleFolderOpenModal()}></li>
                 </ul>
             </div>
-    );
+        );
 }
 
 export default FolderList;

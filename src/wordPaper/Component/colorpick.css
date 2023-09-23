@@ -1,4 +1,5 @@
-.color-wrap{
+.color-wrap,
+.folder-wrap{
     position: fixed;
     width: 100%;
     height: 100%;
@@ -8,25 +9,72 @@
     z-index: 9998;
 }
 
-.color-cont{
+.folder-wrap{
+    z-index: 500;
+}
+
+.color-cont,
+.folder-cont{
     width: 360px;
     height: 100%;
     background: rgba(218, 225, 246, 0.38);
     backdrop-filter: blur(10px);
 }
 
-.color-area{
+.color-area,
+.folder-area{
     width: 80%;
     margin: 0 auto;
 }
 
-.color-area .title-area{
+.color-area .title-area,
+.folder-area .title-area{
     padding: 1.5rem 0 0.5rem 0;
 }
 
-.color-area .title-area h2{
+.folder-area .title-area{
+    justify-content: space-between;
+}
+
+.color-area .title-area h2,
+.folder-area .title-area{
     font-size: 1rem;
     font-weight: 500;
+}
+
+.folder-area .title-area span{
+    font-size: 1.625rem;
+    cursor: pointer;
+}
+
+.folder-wrap .title .flex{
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.folder-wrap .folder-color{
+    display: flex;
+    width: 2.1875rem;
+    height: 2.1875rem;
+    align-items: center;
+    gap: 0.625rem;
+    flex-shrink: 0;
+    border-radius: 0.625rem;
+    background: #FFF;
+    box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.folder-wrap .name-title:hover h3,
+.folder-wrap .name-title:focus h3,
+.folder-area .title span i:hover,
+.folder-area .title span i:focus{
+    color: #946CF4;
+}
+
+.folder-wrap .name-title{
+    cursor: pointer;
+    align-items: center;
+    gap: 1.25rem;
 }
 
 .color-area .preview-area{
@@ -57,16 +105,32 @@
 
 .color-area .name-area{}
 
+.folder-area .name-area{
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.folder-wrap .name-title{
+    align-items: center;
+    gap: 1.25rem;
+    cursor: pointer;
+}
+
 .color-area .name-area span{
     font-size: 0.6875rem;
     font-weight: 400;
 }
 
-.color-area .title{
+.color-area .title,
+.folder-area .title{
     margin-bottom: 0.69rem;
 }
 
-.color-area .title h3{
+.color-area .title h3,
+.folder-area .title h3
+{
     font-size: 0.875rem;
     font-weight: 400;
 }
@@ -101,7 +165,9 @@
 
 .color-area .pick-area .wrap
 {
+    width: 100%;
     padding: 0.5rem 0;
+    margin-bottom: 1.38rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -139,6 +205,63 @@
 .color-area .pick-area .wrap .color:focus,
 .color-area .pick-area .wrap .color:hover{
     border: 1px solid #989393;
+}
+
+.color-area .btn-area{
+    margin-top: 2.38rem;
+    gap: 1.38rem;
+    justify-content: center;
+}
+
+.folder-area .btn-area{
+    display: flex;
+    justify-content: center;
+    margin-top: 4rem;
+}
+
+.color-area .btn-area .btn,
+.folder-area .btn-area .btn{
+    position: relative;
+    width: 6.4375rem;
+    padding: 1rem 0;
+    background: #fff;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+    z-index: 1;
+    font-size: 1rem;
+}
+
+.folder-area .btn-area .btn{
+    display: inline-flex;
+    padding: 1rem 6.375rem;
+    text-wrap: nowrap;
+
+}
+
+.color-area .btn-area .btn:nth-child(2){
+    background: #F7F5FC;
+}
+
+.color-area .btn-area .btn::after,
+.folder-area .btn-area .btn::after{
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    background: #F7F5FC;
+    transition: clip-path 0.1s linear;
+    clip-path: inset(5% 50% 15% 50%);
+    z-index: -1;
+}
+
+.color-area .btn-area .btn:hover::after,
+.color-area .btn-area .btn:focus::after,
+.folder-area .btn-area .btn:hover::after,
+.folder-area .btn-area .btn:focus::after{
+    clip-path: inset(0 0 0 0);
 }
 
 @media screen and (max-width:359px) {

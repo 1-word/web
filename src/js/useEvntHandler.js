@@ -44,7 +44,7 @@ export const MODE = {
 function useEvntHandler(e, modeType, data, func){
     
     const {update, wordList, createWordList, setUpdateFlag, saveListClear, setFolderList} = wordListStore(state => state);
-    const {alert, confirm,setLoading, setAlert, setConfirm} = Store(state=>state);
+    const {alert, confirm,setLoading, setAlert, setConfirm, setColorPickModal} = Store(state=>state);
     const {token, user_id, save, saveToken, clearToken} = authStore(state=>state);
     const navigate = useNavigate();
     const location = useLocation();
@@ -126,8 +126,12 @@ function useEvntHandler(e, modeType, data, func){
         async folderUpdate(){
 
         },
-        async folderSave(){
-
+        async folderSave(e, data){
+            let res = await executeSrvConnect(CONNECT_MODE.FOLDER_SAVE, '', data);
+            setAlertState(alert, ALERT_TYPE.INFO, "성공적으로 데이터를 저장했습니다.");
+            setColorPickModal(false);
+            this.folderRead();
+            setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
         },
         async folderDelete(){
 
