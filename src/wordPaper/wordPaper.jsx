@@ -44,6 +44,7 @@ function WordPaper(){
         <FolderList></FolderList>
         <div className="flex word_top">
         <div className="word_tab_area flex">
+            <div className="folder active">내 폴더</div>
             <div className="active">전체</div>
             <div>미암기</div>
             <div>암기</div>

@@ -136,23 +136,19 @@ nav{
   margin: 0 0 15px 15px;
   padding: 10px 13px;
   font-size: 18px;
-  background: #5468ff;
-  color: #fff;
+  background: #f7f5fc;
+  color: #946CF4;
   border-radius: 18px;
   max-width: 40px;
-  /* overflow: hidden;
-  white-space: nowrap;
-  text-overflow: clip;
-  letter-spacing: 200px; */
   cursor: pointer;
   transition: 0.2s all;
   text-transform: uppercase;
 }
 
 .folder_cont li:nth-child(2n){
-  border: 1px solid #356afd;
-  color: #356afd;
-  background: #fff;
+  border: 1px solid #946CF4;
+  color: #f7f5fc;
+  background: #946CF4;
 }
 
 .folder_cont li.on{
@@ -185,9 +181,9 @@ nav{
   font-size: 14px;
   /* background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%); */
   border-radius: 20px;
-  color: #fff;
-  background: #a6b1ff;
-  box-shadow: 0 0 0.25rem #5468ff;
+  color: #946CF4;
+  background: #f7f5fc;
+  box-shadow: -1px 1px 8px rgba(0,0,0,.1);
   cursor: pointer;
   font-weight: bold;
   padding: 6px 20px;
@@ -204,7 +200,7 @@ nav{
 .word_plus:not(:disabled):focus {
   outline: 0;
   /* box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem #5adaff, .125rem .125rem 1rem #5468ff; */
-  box-shadow: 0 0 0.25rem #5468ff, -0.125rem -0.125rem 1rem #bac9f6, 0.125rem 0.125rem 1rem #81b5fd;
+  box-shadow: 0 0 0.25rem #946CF4, -0.125rem -0.125rem 1rem #bac9f6, 0.125rem 0.125rem 1rem #81b5fd;
 }
 
 .word_plus:disabled {
@@ -276,7 +272,7 @@ nav{
   padding: 0.5rem 0;
   cursor: pointer;
   position: relative;
-  background: #bac9f687;
+  background: #f7f5fc;
   border-radius: 20px;
   transition: background 0.2s ease;
 }
@@ -284,7 +280,7 @@ nav{
 .word_tab_area div.active{
   font-weight: bold;
   background: #fff;
-  box-shadow: 0 0 0.25rem #5468ff;
+  box-shadow: 0 0 0.25rem #946CF4;
   box-sizing: border-box;
 }
 
@@ -305,7 +301,7 @@ nav{
   padding: 1.25rem;
   box-shadow: -1px 1px 8px rgba(0,0,0,.1);
   border-radius: 0.5rem;
-  background: rgba(218, 225, 246, 0.38);
+  background: #f7f5fc;
 }
 
 .top_area{
@@ -344,10 +340,10 @@ nav{
 }
 
 .mean_wrap{
-  padding:  11px 20px;
-  border-radius: 1.25rem;
-  background: #BAC9F6;
-  color: #fff;
+  padding:  11px 2px;
+  /* border-radius: 1.25rem;
+  background: #BAC9F6; */
+  color: #946CF4;
 }
 
 .synonym_wrap{
@@ -433,7 +429,7 @@ nav{
   line-height: 1.1;
   border-radius: 0.625rem;
   border: 1px solid #BAC9F6;
-  background: rgba(218, 225, 246, 0.38);
+  background: #fff;
   height: 80px;
   outline: 0;
   transition: 0.4s background;
@@ -443,7 +439,7 @@ nav{
 }
 
 .memo_text:focus-visible{
-  outline: 1px solid #BAC9F6;
+  /* outline: 1px solid #BAC9F6; */
   background: #ffffff59;
 }
 
