@@ -11,8 +11,8 @@ function SynonsymsList(props){
         <div className="synonym_wrap flex">
             <span>유의어</span>
             <div className="synonym_cont flex">
-                {props.synonyms.map(_synonym => 
-                    <p>{_synonym.synonym}</p>
+                {props.synonyms.map((_synonym, idx) => 
+                    <p key={'sl'+idx+_synonym?.synonym_id}>{_synonym.synonym}</p>
                 )}
             </div>
         </div>

@@ -312,6 +312,11 @@ nav{
   word-break: break-all;
 }
 
+.top_word_wrap .icon{
+  margin: 0;
+  margin-right: 11px;
+}
+
 .top_area button{
   background: none;
 }
@@ -376,10 +381,7 @@ nav{
   justify-content: space-between;
 }
 
-.pen,
-.check,
-.memo,
-.close{
+.icon{
   cursor: pointer;
   background: none;
   font-size: 24px;
@@ -388,12 +390,16 @@ nav{
   transition: color 0.3s ease;
 }
 
-.pen:hover, .pen:focus, .check:hover, .check:focus, .memo:hover, .memo:focus, .close:hover, .close:focus{
-  color: #5468ff;
+.icon:hover,
+.icon:focus{
+  color: #946CF4;
+}
+
+.icon.on{
+  color: #946CF4;
 }
 
 .check.on{
-  color: #5468ff;
   content: "\e92b";
 }
 
@@ -401,23 +407,22 @@ nav{
   content: "\e92b";
 }
 
-.memo.on{
-  color: #5468ff;
-}
+
 
 /*메모칸*/
 
 .memo_area{
   width: 100%;
-  max-height: 200px;
+  /* max-height: 200px; */
+  max-height: 0;
   overflow: hidden;
   transition: 0.4s ease;
   margin-bottom: 10px;
 }
 
-/* .memo_area.on{
+ .memo_area.on{
   max-height: 200px;
-} */
+} 
 
 .memo_text{
   display: block;
