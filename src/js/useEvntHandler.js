@@ -29,7 +29,8 @@ export const MODE = {
     FOLDER_UPDATE: "folderUpdate",
     FOLDER_SAVE: "folderSave",
     FOLDER_DELETE: "folderDelete",
-    MEMORIZATION: "memorization"
+    MEMORIZATION: "memorization",
+    WORD_FOLDER_UPDATE: "wordFolderUpdate"
 }
 
 /**
@@ -43,8 +44,8 @@ export const MODE = {
  */
 function useEvntHandler(e, modeType, data, func){
     
-    const {update, wordList, createWordList, setUpdateFlag, saveListClear, setFolderList} = wordListStore(state => state);
-    const {alert, confirm,setLoading, setAlert, setConfirm, setColorPickModal} = Store(state=>state);
+    const {createWordList, setUpdateFlag, saveListClear, setFolderList} = wordListStore(state => state);
+    const {alert, setLoading, setAlert, setConfirm, setColorPickModal} = Store(state=>state);
     const {token, user_id, save, saveToken, clearToken} = authStore(state=>state);
     const navigate = useNavigate();
     const location = useLocation();
@@ -55,7 +56,9 @@ function useEvntHandler(e, modeType, data, func){
             const read_id = id ?? "";
             const res = await executeSrvConnect(CONNECT_MODE.READ, read_id);
             if (!dataCheck(res)) return;
-            createWordList(res.list);
+            createWordList(res.datas.word);
+            //폴더 정보 가져오기
+            this.folderRead(res.datas.folder);
             //setAlertState(alert, ALERT_TYPE.SUCCESS, "성공적으로 데이터를 불러왔습니다.")
             return res;
         },
@@ -89,9 +92,6 @@ function useEvntHandler(e, modeType, data, func){
                     setConfirm({show: false});
                 }
             });
-            // let res = await executeSrvConnect(CONNECT_MODE.DELETE, id);
-            // setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
-            // return res;
         },
         async update(e, id, data){
             let res = await executeSrvConnect(CONNECT_MODE.UPDATE, id, data);
@@ -116,21 +116,23 @@ function useEvntHandler(e, modeType, data, func){
             closePopup();
             return res;
         },
-        async folderRead(e){
-            const res = await executeSrvConnect(CONNECT_MODE.FOLDER_READ);
-            if (!dataCheck(res)) return;
-            setFolderList(res.list);
-            //setAlertState(alert, ALERT_TYPE.SUCCESS, "성공적으로 데이터를 불러왔습니다.")
-            return res;
+        folderRead(data){
+            setFolderList(data);
         },
-        async folderUpdate(){
-
+        async folderUpdate(e, data){
+            let res = await executeSrvConnect(CONNECT_MODE.FOLDER_UPDATE, data.folder_id, data);
+            setAlertState(alert, ALERT_TYPE.INFO, "성공적으로 데이터를 저장했습니다.");
+            setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
         },
         async folderSave(e, data){
             let res = await executeSrvConnect(CONNECT_MODE.FOLDER_SAVE, '', data);
             setAlertState(alert, ALERT_TYPE.INFO, "성공적으로 데이터를 저장했습니다.");
             setColorPickModal(false);
-            this.folderRead();
+            setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
+        },
+        async wordFolderUpdate(e, id, data){
+            let res = await executeSrvConnect(CONNECT_MODE.WORD_FOLDER_UPDATE, id, data);
+            setAlertState(alert, ALERT_TYPE.INFO, "성공적으로 데이터를 저장했습니다.");
             setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
         },
         async folderDelete(){

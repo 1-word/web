@@ -62,7 +62,7 @@ export const CONNECT_MODE = {
         URI: "word/folder"
     },
     FOLDER_UPDATE:{
-        METHOD: "put",
+        METHOD: "PUT",
         URI: "word/folder"
     },
     FOLDER_SAVE:{
@@ -76,6 +76,10 @@ export const CONNECT_MODE = {
     MEMORIZATION: {
         METHOD: "PUT",
         URI: "word/update/memorization"   
+    },
+    WORD_FOLDER_UPDATE:{
+        METHOD: "PUT",
+        URI: "word/update/wordFolder"   
     }
 }
 

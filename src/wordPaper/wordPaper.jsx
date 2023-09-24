@@ -6,20 +6,14 @@ import Store, {MEMORIZATION_TYPE} from "../stores/store";
 import useEvntHandler, { MODE } from "../js/useEvntHandler";
 import FolderList from "./Component/folderList";
 import Colorpick from "./Component/colorpick";
+import FolderCog from "./Component/folderCog";
 
 function WordPaper(){
     // Store 사용
-    const {update, folderList} = wordListStore(state => state);
-    const {colorPick, memorization, setModal, setMemorization} = Store(state=>state);
+    const {colorPickPop, memorization, setModal, setMemorization, folderCog} = Store(state=>state);
     
     const onClickHandler = useEvntHandler();
-    const searchInput = useRef();
-    // useEffect(() => {
-    //     onClickHandler('', MODE.FOLDER_READ, '');
-    // }, [update]);   //해당 state가 변경될 때 해당 로직 수행
-    
-    // Folder
-    const [clickedFolder, setClickedfolder] = useState(0);
+    const searchInput = useRef();    
 
     // 팝업 이벤트
     const handleModal = e => {
@@ -38,7 +32,8 @@ function WordPaper(){
 
     return (
     <div className="wrap">
-        {colorPick && <Colorpick></Colorpick>}
+        {folderCog.show && <FolderCog></FolderCog>}
+        {colorPickPop.modal.show && <Colorpick></Colorpick>}
         <div className="search_wrap">
             <div className="seacrch_cont">
                 <input ref={searchInput} onChange={handleSearchClick} type="text" className="s_text" placeholder="검색어를 입력해 주세요"/>

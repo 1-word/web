@@ -1,27 +1,29 @@
 import React, {useEffect, useState} from "react";
 import useEvntHandler, {MODE} from "../../js/useEvntHandler";
 import wordListStore from "../../stores/wordListStore";
-import Store from "../../stores/store";
-
-
+import Store, { COMM_MODE } from "../../stores/store";
 
 function FolderList(){
     const {folderList, setMemoStatusInit} = wordListStore(state => state);
-    const {setColorPickModal, setClickedfolder} = Store(state => state);
+    const {setColorPickModal, setClickedfolder, setFolderCog, setColorPickPop} = Store(state => state);
 
     const onClickHandler = useEvntHandler();
 
     useEffect(() => {
-        onClickHandler('', MODE.FOLDER_READ, '');
     }, []); 
 
     const handleFolderOpenModal = () => e => {
-        setColorPickModal(true);
+        setColorPickPop({show:true});
     }
 
     return (
             <div className="folder_wrap">
                 <ul className="flex folder_cont">
+                    <li onClick={()=> setFolderCog({mode:COMM_MODE.EDIT, show:true})}>
+                        <span>
+                            <i className="xi-cog"></i>
+                        </span>
+                    </li>
                     <li id="allFolder" onClick={()=>{
                         setClickedfolder(-1);
                         onClickHandler('', MODE.READ);
@@ -41,6 +43,6 @@ function FolderList(){
                 </ul>
             </div>
         );
-}
+    }
 
 export default FolderList;

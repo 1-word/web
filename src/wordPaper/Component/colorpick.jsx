@@ -1,15 +1,16 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import useEvntHandler, {MODE} from "../../js/useEvntHandler";
-import Store from '../../stores/store';
+import Store, {COMM_MODE} from '../../stores/store';
 import './colorpick.css'
 
 function Colorpick(){
-    const [pickColor, setPickColor] = useState({
-        color: "#202020",
-        background: "#fff"
-    });
+    const {colorPickPop, setColorPickPop} = Store(state=>state);
 
-    const {setColorPickModal} = Store(state=>state);
+    const [pickColor, setPickColor] = useState({});
+
+    useEffect(() => {
+        setPickColor(colorPickPop.folderData);
+    }, []);
 
     const folderNameInput = useRef();
 
@@ -58,6 +59,11 @@ function Colorpick(){
             ...pickColor,
             folder_name: folderNameInput.current.value
         }
+
+        if (colorPickPop.modal.mode === COMM_MODE.EDIT){
+            onClickHandler(e, MODE.FOLDER_UPDATE, folderData);    
+            return;
+        }
         onClickHandler(e, MODE.FOLDER_SAVE, folderData);
     }
 
@@ -82,7 +88,7 @@ function Colorpick(){
                         <h3>이름<span>(10글자 이내로 적어주세요)</span></h3>
                     </div>
                     <div class="name-input">
-                        <input ref={folderNameInput} type="text" maxlength="10"/>
+                        <input ref={folderNameInput} type="text" maxlength="10" defaultValue={pickColor?.folder_name}/>
                     </div>
                 </div>
                 <div class="pick-area">
@@ -93,7 +99,7 @@ function Colorpick(){
                         <div class="area">
                             { 
                                 foler_color_list.map(key => 
-                                    <span className="color" style={{ '--color': FOLDER_COLOR[key] }} 
+                                    <span className={FOLDER_COLOR[key] === pickColor.background ? "color on" : "color"} style={{ '--color': FOLDER_COLOR[key] }} 
                                     onClick={handleColorClick("background", FOLDER_COLOR[key])}></span>
                                 )
                             }
@@ -108,7 +114,7 @@ function Colorpick(){
                         <div class="area">
                             { 
                                 font_color_list.map(key => 
-                                    <span className="color" style={{ '--color': FONT_COLOR[key] }} 
+                                    <span className={FONT_COLOR[key] === pickColor.color ? "color on" : "color"} style={{ '--color': FONT_COLOR[key] }} 
                                     onClick={handleColorClick("color", FONT_COLOR[key])}></span>
                                 )
                             }
@@ -116,7 +122,7 @@ function Colorpick(){
                     </div>
                 </div>
                 <div className='btn-area flex'>
-                    <button className='btn' onClick={e=> setColorPickModal(false)}>취소</button>
+                    <button className='btn' onClick={()=> setColorPickPop({show:false})}>취소</button>
                     <button className='btn' onClick={handleConfirmClick()}>확인</button>
                 </div>
             </div>

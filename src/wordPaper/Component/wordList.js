@@ -3,10 +3,13 @@ import useEvntHandler, { MODE } from "../../js/useEvntHandler";
 import SynonsymsList from "./synonymsList";
 import Edit from "./Edit/edit";
 import wordListStore from "../../stores/wordListStore";
+import Store, {COMM_MODE} from "../../stores/store";
 
 function WordList(props){
 
     const {update, wordList, memoStatus, setMemoStatus} = wordListStore(state => state);
+
+    const {setFolderCog} = Store(state=>state);
 
     const onClickHandler = useEvntHandler();
     const memoRef = useRef([]);
@@ -102,9 +105,18 @@ function WordList(props){
         headsetRef?.current[id]?.classList?.remove('on');
     }
 
-    const handleCheckClick = (wordId, status) => e => {
+    const handleCheckClick = (word_id, status) => e => {
         let result = status === "Y" ? "N" : "Y";
-        onClickHandler(e, MODE.MEMORIZATION, wordId, {memorization: result});
+        onClickHandler(e, MODE.MEMORIZATION, word_id, {memorization: result});
+    }
+
+    const handleFolderClick = (word_id) => e => {
+        setFolderCog({
+            word_id: word_id,
+            mode: COMM_MODE.MOVE,
+            show: true
+        })
+        // onClickHandler(e, MODE.MEMORIZATION, wordId, {memorization: result});
     }
 
     const wordList1 = [{
@@ -139,7 +151,7 @@ function WordList(props){
     }
 
     const dataList = resultList.map((data, idx) => {
-        return  <div className="word_cont" key={data?.word_id}>
+        return  <div className="word_cont" key={'wl'+data?.word_id}>
             { edit_mode.isEdit && edit_mode.word_id === data.word_id?
                 <Edit word_id={data?.word_id}
                     word={data?.word} 
@@ -150,6 +162,9 @@ function WordList(props){
                 <div className="word" id={data?.word_id}>
                     <div className="top_area flex">
                         <div className="top_word_wrap">
+                        <span className={data?.memorization === "Y"? "check on icon" : "check icon"} onClick={handleCheckClick(data?.word_id, data?.memorization)}>
+                            <i className="xi-check-circle-o"></i>
+                        </span>
                             <span>{data?.word}</span>
                             <span className="read">[{data?.wread}]</span>
                         </div>
@@ -178,12 +193,10 @@ function WordList(props){
                     <div className="foot_area flex">
                         <div><span>{data?.update_time}</span></div>
                         <div className="btn_area">
-                            <span className="pen"><i className="xi-pen-o" onClick={handleEditClick(data?.word_id)}></i></span>
-                            <span className={data?.memorization === "Y"? "check on" : "check"}>
-                                <i className="xi-check-circle-o" onClick={handleCheckClick(data?.word_id, data?.memorization)}></i>
-                            </span>
-                            <span className={memoStatus[idx]?.status === "ON" ? "memo on" : "memo"}><i className="xi-comment-o" onClick={handleMemoClick(idx)}></i></span>
-                            <span className="close"><i className="xi-close" onClick={handleDeleteClick(data?.word_id)}></i></span>
+                            <span className="folder icon"><i className="xi-folder-o" onClick={handleFolderClick(data?.word_id)}></i></span>
+                            <span className="pen icon"><i className="xi-pen-o" onClick={handleEditClick(data?.word_id)}></i></span>
+                            <span className={memoStatus[idx]?.status === "ON" ? "memo on icon" : "memo icon"}><i className="xi-comment-o" onClick={handleMemoClick(idx)}></i></span>
+                            <span className="close icon"><i className="xi-close" onClick={handleDeleteClick(data?.word_id)}></i></span>
                         </div>
                     </div>
                 </div>
