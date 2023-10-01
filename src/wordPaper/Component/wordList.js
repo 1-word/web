@@ -151,7 +151,10 @@ function WordList(props){
     }
 
     const dataList = resultList.map((data, idx) => {
-        return  <div className="word_cont" key={'wl'+data?.word_id}>
+        return <div className="word_cont" key={'wl'+data?.word_id}>
+            {data?.folder?.folder_name ?? "" !== "" ?
+            <div className="book-clip" style={{background: data?.folder?.background, color: data?.folder?.color}}>{data?.folder?.folder_name.slice(0,4) ?? ""}</div>
+            :<></>}
             { edit_mode.isEdit && edit_mode.word_id === data.word_id?
                 <Edit word_id={data?.word_id}
                     word={data?.word} 
@@ -191,7 +194,7 @@ function WordList(props){
                     </div>
                     {/* 메모 끝 */}
                     <div className="foot_area flex">
-                        <div><span>{data?.update_time}</span></div>
+                        <div><span>{data?.create_time}</span></div>
                         <div className="btn_area">
                             <span className="folder icon"><i className="xi-folder-o" onClick={handleFolderClick(data?.word_id)}></i></span>
                             <span className="pen icon"><i className="xi-pen-o" onClick={handleEditClick(data?.word_id)}></i></span>

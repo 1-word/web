@@ -20,18 +20,15 @@ function Add(props){
         let resultList = {};
 
         resultList = saveList;
-        console.log(textTypeCheck(saveList.word));
+
+        let folder_id = clickedFolder === -1 ? "" : clickedFolder;
+
         resultList = {
             ...saveList,
+            folder_id: folder_id,
             type: textTypeCheck(saveList.word)
         }
-
-        if (clickedFolder !== -1){
-            resultList = {
-                ...saveList,
-                folder_id: clickedFolder,
-            };
-        }
+        
         //저장 버튼 클릭시
         if(target_name === MODE.SAVE_BTN)
             onClickHandler(e, MODE.SAVE, resultList, props.closePopup);
