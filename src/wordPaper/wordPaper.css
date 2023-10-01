@@ -86,7 +86,7 @@ nav{
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   border-radius: 30px;
   background-image: linear-gradient(#fff, #fff), 
-  linear-gradient(to right, #81b5fd 0%,  #5468ff 100%);
+  linear-gradient(to right, #81b5fd 0%, #946cf4 100%);
   background-origin: border-box;
   background-clip: content-box, border-box;
 }
@@ -324,6 +324,51 @@ nav{
   box-shadow: -1px 1px 8px rgba(0,0,0,.1);
   border-radius: 0.5rem;
   background: #f7f5fc;
+}
+
+/* 영어 단어 컴포넌트 */
+
+.word.word-e .mid_area .mean_wrap{
+  gap: 0.5625rem;
+}
+
+.word-e .synonym_wrap{
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.word-e .synonym_cont{
+  justify-content: flex-start;
+  gap: 0.69rem;
+}
+
+.word-e .synonym-area{
+  display: flex;
+  gap: 0.69rem;
+}
+
+.word-e .e-vn{
+  gap: 0.1875rem;
+}
+
+.word .synonym_wrap span{
+  margin: 0;
+}
+
+.word-e .e-vn span{
+  width: auto;
+  margin: 0;
+  background: none;
+}
+
+.word-e .e-vn span:last-child{
+  color: #999;
+}
+
+/* 영어 에딧 컴포넌트 */
+
+.e-edit.edit .synonym_wrap .e-vn span{
+  width: 40%;
 }
 
 .top_area{
