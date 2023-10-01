@@ -19,6 +19,7 @@ export const WORD_KEY = {
 const store = set => ({
     wordList: [{
             "word_id": 0,
+            "type": "",
             "word": "",
             "mean": "",
             "wread": "",
@@ -46,6 +47,7 @@ const store = set => ({
         "mean": "",
         "wread": "",
         "memo": "",
+        "memorization": "N",
         "synonyms": [{
             "synonym": "",
             "memo": ""
@@ -120,6 +122,7 @@ const store = set => ({
             "mean": "",
             "wread": "",
             "memo": "",
+            "memorization": "N",
             "synonyms": [{
                 "synonym": "",
                 "memo": ""

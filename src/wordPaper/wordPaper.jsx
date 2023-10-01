@@ -55,7 +55,6 @@ function WordPaper(){
         </div>
         </div>
         <div className="word_wrap">
-            {/* {dataList} */}
             <WordList memorization={memorization} memorization_type={MEMORIZATION_TYPE}></WordList>
         </div>
      </div>
