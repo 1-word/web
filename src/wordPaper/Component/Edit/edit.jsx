@@ -58,7 +58,11 @@ function Edit(props){
                     </div>
                     <div className="mid_area">
                         <div className="mean_wrap">
+                            <span>발음</span>
                             <input defaultValue={editWordList.wread} onChange={handleChangeWread()} className="edit_input"/>
+                        </div>
+                        <div className="mean_wrap">
+                            <span>뜻</span>
                             <input defaultValue={editWordList.mean} onChange={handleChangeMean()} className="edit_input"/>
                         </div>
                         <div className="synonym_wrap">
@@ -69,12 +73,12 @@ function Edit(props){
                                         <div className="synonym_add flex" key={idx}>                                    
                                             <input value={_synonym.synonym} 
                                                     onChange={changeSynonym(idx)}/>
-                                            <button onClick={minusSynonym(idx)}><i className="xi-minus-circle"></i></button>
+                                            <button onClick={minusSynonym(idx)}><i className="xi-close"></i></button>
                                         </div>       
                                     )
                                 }
                                 <div className="flex synonym_plus_cont">
-                                <button className="synonym_plus" onClick={addSynonym}><i className="xi-plus-circle"></i></button>
+                                <button className="synonym_plus" onClick={addSynonym}><i className="xi-plus"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -82,7 +86,7 @@ function Edit(props){
                     <div className="foot_area flex">
                         <div></div>
                         <div className="btn_area">
-                            <button className="check icon" onClick={handleClickSave}><i className="xi-check-circle-o"></i></button>
+                            <button className="check icon" onClick={handleClickSave}><i className="xi-check"></i></button>
                             {/* <button className="memo"><i className="xi-comment-o"></i></button> */}
                             <button className="close icon" onClick={props.setEditExit}><i className="xi-close"></i></button>
                         </div>

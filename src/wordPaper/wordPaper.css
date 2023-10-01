@@ -170,7 +170,12 @@ nav{
 .word_top{
   justify-content: space-between;
   align-items: center;
-  margin: 30px 0 0;
+  padding: 30px 0 0;
+}
+
+.word_plus_wrap{
+  position: relative;
+  border-radius: 20px;
 }
 
 .word_plus{
@@ -196,11 +201,13 @@ nav{
   touch-action: manipulation;
 }
 
+.word_plus
+
 .word_plus:not(:disabled):hover ,
 .word_plus:not(:disabled):focus {
   outline: 0;
   /* box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem #5adaff, .125rem .125rem 1rem #5468ff; */
-  box-shadow: 0 0 0.25rem #946CF4, -0.125rem -0.125rem 1rem #bac9f6, 0.125rem 0.125rem 1rem #81b5fd;
+  box-shadow: 0 0 0.25rem #946CF4, -0.125rem -0.125rem 1rem #bac9f6, 0.125rem 0.125rem 1rem #946CF4;
 }
 
 .word_plus:disabled {
@@ -289,8 +296,23 @@ nav{
 /*단어장 내용부분*/
 
 .word_wrap{
+  position: relative;
   width: 100%;
   margin: 30px auto;
+}
+
+.book-clip{
+  position: absolute;
+  top: -10px;
+  left: 8px;
+  width: 60px;
+  height: 21px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  background: #03CDBF;
+  border-radius: 6px 6px 0 0;
 }
 
 .word_cont{
@@ -535,26 +557,29 @@ nav{
 /* edit 모드 */
 
 .word.edit{
-  background: #dde7f3;
+  /* background: #dde7f3; */
+  background: #edf5ff;
 }
 
 .edit .mean_wrap{
   display: flex;
   flex-direction: column;
-  gap: 11px;
+  gap: 8px;
+  margin-bottom: 10px;
   padding: 0;
   background: none;
+  color: #202020;
 }
 
 .edit .top_area{
-  background: #BAC9F6;
-  padding: 10px;
+  padding-bottom: 10px;
   border-radius: 1.875rem;
+  color: #946CF4;
 }
 
 .edit .top_area span{
   font-size: 1.25rem;
-  margin-left: 10px;
+  /* margin-left: 10px; */
 }
 
 .edit input{
@@ -568,6 +593,7 @@ nav{
   box-sizing: border-box;
   border-radius: 1.875rem;
   font-size: 1rem;
+  box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .edit .synonym_wrap::after{
@@ -584,11 +610,12 @@ nav{
 .edit .synonym_cont{
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  justify-items: center;
+  justify-items: start;
   gap: 1rem;
 }
 
 .edit .synonym_add{
+  width: 100%;
   /* margin: 10px 36px 10px 0; */
   align-items: center;
 }
@@ -598,12 +625,14 @@ nav{
 }
 
 .edit .synonym_cont input{
-  width: 170px;
+  /* width: 170px; */
+  width: 80%;
   height: 24px;
   font-size: 0.875rem;
   padding: 3px 0;
   text-indent: 15px;
   margin-right: 5px;
+  box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .edit input:focus{
@@ -611,12 +640,13 @@ nav{
 }
 
 .edit .synonym_add button{
+  width: 20%;
   background: none;
   height: 20px;
   font-size: 20px;
   cursor: pointer;
   transition: 0.4s;
-  padding: 0 10px;
+  /* padding: 0 10px; */
 }
 
 .edit .synonym_add button:hover,
@@ -628,15 +658,19 @@ nav{
   display: none;
 }
 
+.edit .synonym_plus_cont{
+  width: 80%;
+}
+
 .edit .synonym_plus{
-  font-size: 19px;
-  width: 215px;
+  width: 100%;
   height: 26px;
+  font-size: 19px;
   background: #BAC9F6;
   /* background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%); */
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 20px;
   transition: 0.4s;
   line-height: 30px;
   color: #fff;
@@ -648,6 +682,10 @@ nav{
   opacity: 0.7;
 }
 
+.edit .check{
+  color: #03CDBF;
+}
+
 /* 미디어쿼리 */
 
 @media (max-width: 1280px) {
@@ -657,7 +695,9 @@ nav{
   .search_wrap{
     width: 100%;
   }
-
+  .edit .synonym_cont{
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @media (max-width: 767px) {
@@ -727,11 +767,27 @@ nav{
   }
   .search_wrap{
     position: fixed;
+    top: 25px;
     width: 90%;
     padding: 0;
     backdrop-filter: blur(10px);
   }
   .seacrch_cont{
     background: none;
+  }
+  .edit .synonym_cont{
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .edit .synonym_add{
+    gap: 10px;
+  }
+  .edit .synonym_cont input{
+    width: 95%;
+  }
+  .edit .synonym_add button{
+    width: 8%;
+  }
+  .edit .synonym_plus_cont{
+    width: 100%;
   }
 }

@@ -166,7 +166,7 @@ function WordList(props){
                             <i className="xi-check-circle-o"></i>
                         </span>
                             <span>{data?.word}</span>
-                            <span className="read">[{data?.wread}]</span>
+                            <span className="read">{data?.wread !== ""? "["+data?.wread+"]" : ""}</span>
                         </div>
                         <button onClick={handleAudioClick(idx)}>
                             <i ref={el => headsetRef.current[idx] = el} className="xi-headset listen" data-pron-audio={data?.soundPath}></i>
