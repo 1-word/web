@@ -154,7 +154,7 @@ box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
   border: none;
   cursor: pointer;
   font-size: 30px;
-  color: #81b5fd;
+  color: #946cf4;
   background: none;
   transition: 0.36s ease;
 }
@@ -164,7 +164,7 @@ box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
 
 .addGroup .plus_btn:hover,
 .addGroup .minus_btn:hover{
-  color: #69a6f7;  
+  color: #a885f8;  
 }
 
 .addGroup .minus_btn{

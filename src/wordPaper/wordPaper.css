@@ -145,24 +145,18 @@ nav{
   text-transform: uppercase;
 }
 
-.folder_cont li:nth-child(2n){
-  border: 1px solid #946CF4;
-  color: #f7f5fc;
-  background: #946CF4;
-}
-
 .folder_cont li.on{
   background: #fff;
-  color: #5468ff;
-  box-shadow: #5468ff 0px 3px 8px;
+  color: #946CF4;
+  box-shadow: #946CF4 0px 3px 8px;
   max-width: 200px;
 }
 
 .folder_cont li:hover,
 .folder_cont li:focus-visible{
   background: #fff;
-  color: #5468ff;
-  box-shadow: #5468ff 0px 3px 8px;
+  color: #946CF4;
+  box-shadow: #946CF4 0px 3px 8px;
   max-width: 200px;
 }
 
@@ -226,11 +220,12 @@ nav{
   visibility: hidden;
   opacity: 0;
   transition: all 3s ease-in;
-  background: #BAC9F6;
-  color: #fff;
+  background: #f7f5fc;
+  color: #946CF4;
   font-size: 1.3em;
   border-radius: 50%;
   z-index: 10;
+  overflow: hidden;
 }
 
 .word_plus_mobile::before{
@@ -239,10 +234,10 @@ nav{
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
-  width: 120%;
-  height: 120%;
-  background: #bac9f698;
+  transform: translate(-50%,-50%) scale(0.8);
+  width: 100%;
+  height: 100%;
+  background: #f0eafd;
   border-radius: 50%;
   z-index: -1;
   animation: bloom 1s 3s linear alternate infinite;
@@ -250,9 +245,7 @@ nav{
 
 @keyframes bloom {
   100%{
-    background: #bac9f698;
-    width: 130%;
-    height: 130%;
+    transform: translate(-50%,-50%) scale(1.4);
   }
 }
 
@@ -369,6 +362,8 @@ nav{
 
 .e-edit.edit .synonym_wrap .e-vn span{
   width: 40%;
+  margin: 0;
+  display: flex;
 }
 
 .top_area{
@@ -649,7 +644,7 @@ nav{
 
 .edit .synonym_wrap span{
   margin-bottom: 15px;
-  font-size: 1rem;
+  /* font-size: 1rem; */
 }
 
 .edit .synonym_cont{
@@ -765,10 +760,10 @@ nav{
     visibility: hidden;
   }
   .folder_wrap{
-    display: none;
+    /* display: none; */
+    padding-top: 5rem;
   }
   .word_tab_area{
-    margin-top: 5rem;
   }
   .word_plus_mobile{
     display: block;
@@ -788,8 +783,31 @@ nav{
     margin-right: 8px;
     padding: 5px 2px;
   }
+  .folder_cont{
+    width: 100%;
+    overflow-x: scroll;
+    display: grid;
+    /* grid-auto-columns: minmax(50, auto); */
+    grid-template-columns: repeat(20,1fr);
+    gap: 15px;
+  }
+  .folder_cont::-webkit-scrollbar{
+    display: none;
+  }
+
   .folder_cont li{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    max-width: 50px;
     font-size: 14px;
+    margin: 7px 3px;
+  }
+
+  .folder_cont li:first-of-type{
+    width: 20px;
+    max-width: 20px;
   }
   .top_area span, .top_area .xi-headset::before{
     font-size: 20px;
@@ -834,5 +852,19 @@ nav{
   }
   .edit .synonym_plus_cont{
     width: 100%;
+  }
+  .word-e .synonym_cont{
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .word-e .synonym_wrap .synonym-area> span{
+    background: none;
+    color: #a782fd;
+  }
+  .word-e .e-vn{
+    width: 100%;
+  }
+  .e-edit.edit .synonym_cont input{
+    margin: 0;
   }
 }

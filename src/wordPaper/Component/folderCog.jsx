@@ -41,7 +41,7 @@ function FolderCog(){
                             <div key={'fl'+item.folder_id} class="name-title title flex" onClick={handleFolderNameClick(item.folder_id)}>
                                 <span class="folder-color" style={{background: item.background}}></span>
                                 <h3>{item.folder_name}</h3>
-
+                                <div className='icon-area flex'>
                                 { folderCog.mode === COMM_MODE.EDIT &&
                                     <span class="cog">
                                         <i class="xi-cog" onClick={()=> setColorPickPop({
@@ -54,6 +54,10 @@ function FolderCog(){
                                         })}></i>
                                     </span>
                                 }
+                                    <span>
+                                        <i className='xi-close'></i>
+                                    </span>
+                                </div>
                             </div>
                         )
                     }
