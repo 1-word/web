@@ -22,8 +22,6 @@ function FolderCog(){
 
 
     const handleFolderMoveClick = () => e => {
-        console.log(clickedFolderId);
-        console.log(folderCog.word_id);
         onClickHandler(e, MODE.WORD_FOLDER_UPDATE, folderCog.word_id, clickedFolderId);
     }
 

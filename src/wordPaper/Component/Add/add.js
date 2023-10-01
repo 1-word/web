@@ -4,6 +4,7 @@ import AddList from "./addList";
 import wordListStore, { WORD_KEY } from "../../../stores/wordListStore";
 import Store from "../../../stores/store";
 import useEvntHandler, { MODE } from "../../../js/useEvntHandler";
+import { textTypeCheck } from "../../../util/textTypeCheck";
 
 function Add(props){
 
@@ -19,10 +20,16 @@ function Add(props){
         let resultList = {};
 
         resultList = saveList;
+        console.log(textTypeCheck(saveList.word));
+        resultList = {
+            ...saveList,
+            type: textTypeCheck(saveList.word)
+        }
+
         if (clickedFolder !== -1){
             resultList = {
                 ...saveList,
-                folder_id: clickedFolder
+                folder_id: clickedFolder,
             };
         }
         //저장 버튼 클릭시
