@@ -8,50 +8,46 @@ function FolderCog(){
     const {setFolderCog, setColorPickPop, folderCog} = Store(state => state);
     const {folderList} = wordListStore(state => state);
 
-    const [clickedFolderId, setClickedFolderId] = useState({
-        folder_id: -1
-    });
-
     const onClickHandler = useEvntHandler();
 
     const handleFolderNameClick = (folder_id) => e => {
-        setClickedFolderId({
-            folder_id: folder_id
+        if (folderCog.mode === COMM_MODE.MOVE){
+            onClickHandler(e, MODE.WORD_FOLDER_UPDATE, folderCog.word_id, {folder_id: folder_id});
+            setFolderCog({show:false});
+        }
+    }
+
+    const handleFolderEditClick = (item) => e => {
+        setColorPickPop({
+            folder_id: item.folder_id,
+            folder_name: item.folder_name,
+            color: item.color,
+            background: item.background,
+            mode: COMM_MODE.EDIT,
+            show: true
         });
     }
 
-
-    const handleFolderMoveClick = () => e => {
-        onClickHandler(e, MODE.WORD_FOLDER_UPDATE, folderCog.word_id, clickedFolderId);
-    }
-
     return(
-        <aside class="folder-wrap">
-        <div class="folder-cont">
-            <div class="folder-area">
-                <div class="title-area flex">
+        <aside className="folder-wrap">
+        <div className="folder-cont">
+            <div className="folder-area">
+                <div className="title-area flex">
                     <h2>폴더</h2>
                     <span onClick={setFolderCog}>
-                        <i class="xi-close"></i>
+                        <i className="xi-close"></i>
                     </span>
                 </div>
-                <div class="name-area">
+                <div className="name-area">
                     {
                         folderList.map((item, idx) => 
-                            <div key={'fl'+item.folder_id} class="name-title title flex" onClick={handleFolderNameClick(item.folder_id)}>
-                                <span class="folder-color" style={{background: item.background}}></span>
+                            <div key={'fl'+item.folder_id} className="name-title title flex" onClick={handleFolderNameClick(item.folder_id)}>
+                                <span className="folder-color" style={{background: item.background}}></span>
                                 <h3>{item.folder_name}</h3>
                                 <div className='icon-area flex'>
                                 { folderCog.mode === COMM_MODE.EDIT &&
-                                    <span class="cog">
-                                        <i class="xi-cog" onClick={()=> setColorPickPop({
-                                        folder_id: item.folder_id,
-                                        folder_name: item.folder_name,
-                                        color: item.color,
-                                        background: item.background,
-                                        mode: COMM_MODE.EDIT,
-                                        show: true
-                                        })}></i>
+                                    <span className="cog">
+                                        <i className="xi-cog" onClick={handleFolderEditClick(item)}></i>
                                     </span>
                                 }
                                     <span>
@@ -62,11 +58,6 @@ function FolderCog(){
                         )
                     }
                 </div>
-                { folderCog.mode === COMM_MODE.MOVE &&
-                    <div class="btn-area">
-                        <button class="btn" onClick={handleFolderMoveClick()}>이동하기</button>
-                    </div>
-                }
             </div>
         </div>
     </aside>
