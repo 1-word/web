@@ -110,7 +110,7 @@ function useEvntHandler(e, modeType, data, func){
         },
         async save(e, data, closePopup){
             data.user_id = user_id;
-            let res = await executeSrvConnect(CONNECT_MODE.SAVE, '', data);
+            let res = await executeSrvConnect(CONNECT_MODE.SAVE, data.type, data);
             saveListClear();
             setUpdateFlag();
             closePopup();
