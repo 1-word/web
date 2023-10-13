@@ -34,7 +34,7 @@ function WordPaper(){
     return (
     <div className="wrap">
         {folderCog.show && 
-        <div className="modal-wrap">
+        <div className="modal-cont">
         <FolderCog></FolderCog></div>}
         {colorPickPop.modal.show && <Colorpick></Colorpick>}
         <header className="flex">

@@ -1,25 +1,6 @@
 
-.folder-wrap{
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    color: #202020;
-    z-index: 9998;
-}
-
-.folder-wrap{
-    z-index: 101;
-}
 
 
-.folder-cont{
-    width: 360px;
-    height: 100%;
-    background: rgba(218, 225, 246, 0.38);
-    backdrop-filter: blur(10px);
-}
 
 
 .folder-area{
