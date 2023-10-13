@@ -1,4 +1,4 @@
-.color-wrap,
+
 .folder-wrap{
     position: fixed;
     width: 100%;
@@ -13,7 +13,7 @@
     z-index: 101;
 }
 
-.color-cont,
+
 .folder-cont{
     width: 360px;
     height: 100%;
@@ -21,30 +21,19 @@
     backdrop-filter: blur(10px);
 }
 
-.color-area,
+
 .folder-area{
     width: 80%;
     margin: 0 auto;
 }
 
-.color-area .title-area,
+
 .folder-area .title-area{
     padding: 1.5rem 0 0.5rem 0;
 }
 
 .folder-area .title-area{
     justify-content: space-between;
-}
-
-.color-area .title-area h2,
-.folder-area .title-area{
-    font-size: 1rem;
-    font-weight: 500;
-}
-
-.folder-area .title-area span{
-    font-size: 1.625rem;
-    cursor: pointer;
 }
 
 .folder-wrap .title .flex{
@@ -112,6 +101,10 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
+}
+
+.folder-area .name-area::-webkit-scrollbar{
+    display: none;
 }
 
 .folder-wrap .name-title{

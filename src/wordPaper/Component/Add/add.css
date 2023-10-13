@@ -9,21 +9,10 @@
   z-index: 1000;
 }
 
-.add-click-area{
-  position: absolute;
-  width: calc(100% - 360px);
-  height: 100%;
-  top: 0;
-  right: 0;
-  background: #33333338;
-  backdrop-filter: blur(10px);
-}
-
-.add .addframe {
+.add .add-wrap {
   position: relative;
   width: 360px;
   height: 100%;
-  /* left: 663.00px; */
   background: rgba(218, 225, 246, 0.38);
   backdrop-filter: blur(10px);
 }
@@ -37,11 +26,12 @@
 
 /* 아래의 모든 코드는 영역::코드로 사용 */
 
-.addgrid::-webkit-scrollbar {
+.add-word-cont::-webkit-scrollbar {
+    display: none;
     width: 2px;  /* 스크롤바의 너비 */
 }
 
-.addgrid::-webkit-scrollbar-thumb,
+.add-word-cont::-webkit-scrollbar-thumb,
 body::-webkit-scrollbar-thumb {
     height: 30px; /* 스크롤바의 길이 */
     background: #81b5fd; /* 스크롤바의 색상 */
@@ -49,17 +39,28 @@ body::-webkit-scrollbar-thumb {
     border-radius: 10px;
 }
 
-.addgrid::-webkit-scrollbar-track,
+.add-word-cont::-webkit-scrollbar-track,
 body::-webkit-scrollbar-track {
     background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+}
+
+.add .add-wrap .add-cont {
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.add .add-title{
+  padding: 2rem 0;
+  justify-content: space-between;
 }
 
 
 
 .delete {
-  position: absolute;
+  /* position: absolute;
   left: 85%;
-  top: 18.00px;
+  top: 18.00px; */
   font-size: 30px;
   color: #333;
   background: none;
@@ -75,14 +76,7 @@ body::-webkit-scrollbar-track {
   /* content: "\e924"; */
 }
 
-.add .addframe .add7cea4238 {
-  position: relative;
-  width: 100%;
-  /* height: 435.00px; */
-  top: 108.00px;
-}
-
-.add .addframe .add7cea4238 .save {
+.add .add-wrap .add-cont .save {
   position: absolute;
   width: 322.00px;
   height: 47.00px;
@@ -133,23 +127,20 @@ box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 
-.addGroup{
-    position: relative;
-    width: 100%;
-    height: 50.00px;
-    padding-bottom: 35px;
+.add .add-wrap .add-cont .add-word-area{
     display: flex;
     flex-direction: column;
+    gap: 0.69rem;
 }
 
-.addGroup .input-area{
+.add-word-area .input-area{
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.addGroup .plus_btn,
-.addGroup .minus_btn{
+.add-word-area .plus_btn,
+.add-word-area .minus_btn{
   margin-right: 4px;
   border: none;
   cursor: pointer;
@@ -159,29 +150,29 @@ box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
   transition: 0.36s ease;
 }
 
-.addGroup .plus_btn{
+.add-word-area .plus_btn{
 }
 
-.addGroup .plus_btn:hover,
-.addGroup .minus_btn:hover{
+.add-word-area .plus_btn:hover,
+.add-word-area .minus_btn:hover{
   color: #a885f8;  
 }
 
-.addGroup .minus_btn{
+.add-word-area .minus_btn{
 }
 
-.add .addframe .add7cea4238 .addgrid {
+.add .add-wrap .add-cont .add-word-cont {
   position: relative;
   overflow-y: auto;
-  width: 80%;
   margin: 0 auto;
+  padding-bottom: 1.2rem;
   max-height: 60vh;
-  /* height: 332.00px;*/
   display: flex;
   flex-direction:column;
+  gap: 2rem;
 }
 
-.add .addframe .add7cea4238 .addgrid .x23876 {
+.add .add-wrap .add-cont .add-word-cont input {
     width: 98%;
     background-color: #fff;
     border-radius: 20px;
@@ -192,24 +183,36 @@ box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
     font-size: 1rem;
 }
 
-.add .addframe .add7cea4238 .addgrid .x23876[name="synonyms"]{
+.add.add-e .add-wrap .add-cont .add-word-cont .add-v h3,
+.add.add-e .add-wrap .add-cont .add-word-cont .add-n h3{
+  padding: 1rem 0;
+}
+
+.add.add-e .add-wrap .add-cont .add-word-cont .add-v,
+.add.add-e .add-wrap .add-cont .add-word-cont .add-n
+{
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.add .add-wrap .add-cont .add-word-cont input[name="synonyms"]{
   width: 90%;
 }
 
-.add .addframe .add7cea4238 .addgrid .xa20b892b {
+.add .add-wrap .add-cont .add-word-cont .add-label {
   font-size: 1rem;
-  margin-bottom: 0.69rem;
 }
 
 @media (max-width: 767px) {
 
-  .add .addframe{
+  .add .add-wrap{
     width: 100%;
   }
-  .add .addframe .add7cea4238 .addgrid .x23876{
+  .add .add-wrap .add-cont .add-word-cont input{
     font-size: 0.875rem;
   }
-  .add .addframe .add7cea4238 .addgrid{
+  .add .add-wrap .add-cont .add-word-cont{
     height: 351px;
   }
 }

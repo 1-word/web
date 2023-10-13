@@ -50,22 +50,56 @@ function Add(props){
             props.closePopup();        
     }
 
-    return  <div className="add" onClick={handleElementClick()}>
-                <div ref={addframeRef} className="addframe">            
-                    <button className="delete" onClick={props.closePopup}><i className="xi-close"></i> </button>
-                    <div className="add7cea4238">                
-                        <div className="addgrid">          
-                            <AddList name="word" text="단어" value={saveList.word} ></AddList>          
-                            <AddList name="mean" text="뜻" value={saveList.mean} ></AddList>
-                            <AddList name="wread" text="발음" value={saveList.wread} ></AddList>
-                            {synonymInputList}
-                        </div>
-                        <div className="btn-area">
-                        <button className="save_btn" name="save_btn" onClick={handleClick}>저장</button>                   
-                        </div>
-                    </div>
+    // 영어 add
+    return  <div className="add add-e" onClick={handleElementClick()}>
+    <div ref={addframeRef} className="add-wrap">
+        <div className="add-cont">                
+            <div className="add-title flex">
+                <h2 className="lang-title">영어</h2>
+                <button className="delete" onClick={props.closePopup}><i className="xi-close"></i> </button>
+            </div>     
+            <div className="add-word-cont">          
+                <AddList name="word" text="단어" value={saveList.word} ></AddList>          
+                {synonymInputList}
+                <AddList name="wread" text="발음" value={saveList.wread} ></AddList>
+                <div className="add-v">
+                    <h3>동사</h3>
+                <AddList name="mean" text="과거" value={saveList.mean} ></AddList>
+                <AddList name="mean" text="과거분사" value={saveList.mean} ></AddList>
+                <AddList name="mean" text="현재분사" value={saveList.mean} ></AddList>
+                <AddList name="mean" text="3인칭 단수" value={saveList.mean} ></AddList>
+                </div>
+                <div className="add-n">
+                    <h3>명사</h3>
+                <AddList name="mean" text="복수" value={saveList.mean} ></AddList>
                 </div>
             </div>
+            <div className="btn-area">
+            <button className="save_btn" name="save_btn" onClick={handleClick}>저장</button>                   
+            </div>
+        </div>
+    </div>
+</div>
+
+    // return  <div className="add" onClick={handleElementClick()}>
+    //             <div ref={addframeRef} className="addframe">
+    //                 <div className="add-lang flex">
+    //                     <h2 className="lang-title">일본어</h2>
+    //                     <button className="delete" onClick={props.closePopup}><i className="xi-close"></i> </button>
+    //                 </div>        
+    //                 <div className="add7cea4238">                
+    //                     <div className="addgrid">          
+    //                         <AddList name="word" text="단어" value={saveList.word} ></AddList>          
+    //                         <AddList name="mean" text="뜻" value={saveList.mean} ></AddList>
+    //                         <AddList name="wread" text="발음" value={saveList.wread} ></AddList>
+    //                         {synonymInputList}
+    //                     </div>
+    //                     <div className="btn-area">
+    //                     <button className="save_btn" name="save_btn" onClick={handleClick}>저장</button>                   
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //         </div>
 }
 
 export default Add;

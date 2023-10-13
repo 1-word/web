@@ -29,12 +29,12 @@ function FolderCog(){
     }
 
     return(
-        <aside className="folder-wrap">
-        <div className="folder-cont">
-            <div className="folder-area">
-                <div className="title-area flex">
+        <aside className="add folder-wrap">
+        <div className="add-wrap folder-cont">
+            <div className=" add-cont folder-area">
+                <div className="add-title title-area flex">
                     <h2>폴더</h2>
-                    <span onClick={setFolderCog}>
+                    <span className='delete' onClick={setFolderCog}>
                         <i className="xi-close"></i>
                     </span>
                 </div>

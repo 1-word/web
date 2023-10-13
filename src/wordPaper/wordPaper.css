@@ -67,6 +67,16 @@ nav{
   margin: 0 auto;
 }
 
+.modal-wrap{
+  width: 0;
+  overflow: hidden;
+  transition: 0.26s ease;
+}
+
+.modal-wrap .on{
+  width: 360px;
+}
+
 /* tooltip */
 
 [data-tooltip]{

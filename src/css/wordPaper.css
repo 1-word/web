@@ -65,6 +65,17 @@ nav {
   margin: 0 auto;
 }
 
+.modal-wrap{
+  width: 0;
+  overflow: hidden;
+  transition: 0.26s ease;
+}
+
+.modal-wrap.on{
+  width: 360px;
+}
+
+
 /* tooltip */
 [data-tooltip] {
   position: absolute;
@@ -164,10 +175,14 @@ header nav ul > li:hover .depth {
 }
 
 .search_wrap {
+  position: sticky;
+  top: 3%;
+  left: 0;
   width: 50%;
   margin: 0 auto;
-  position: relative;
   z-index: 100;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
 .seacrch_cont {
@@ -856,12 +871,8 @@ header nav ul > li:hover .depth {
     font-size: 1.25rem;
   }
   .search_wrap {
-    position: fixed;
-    top: 25px;
     width: 90%;
     padding: 0;
-    -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
   }
   .seacrch_cont {
     background: none;

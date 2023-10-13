@@ -33,7 +33,9 @@ function WordPaper(){
 
     return (
     <div className="wrap">
-        {folderCog.show && <FolderCog></FolderCog>}
+        {folderCog.show && 
+        <div className="modal-wrap">
+        <FolderCog></FolderCog></div>}
         {colorPickPop.modal.show && <Colorpick></Colorpick>}
         <header className="flex">
             <h1><a href="#">wordbook<img src={process.env.PUBLIC_URL + '/img/logo.svg'} alt="logo Image" /></a></h1>
