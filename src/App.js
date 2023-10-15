@@ -2,9 +2,9 @@ import {Routes, Route} from 'react-router-dom'
 import { PersistGate } from 'zustand-persist'
 import '@scss/_style';
 import Word from '@/pages/word/Word';
-import Login from '@/pages/login/login';
-import Signup from '@/pages/login/signup';
-import Popup from '@/components/modal/Popup';
+import Login from '@/pages/login/Login';
+import Signup from '@/pages/login/Signup';
+import Popup from '@components/modal/Popup';
 
 
 function App() {

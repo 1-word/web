@@ -40,7 +40,7 @@ export const MODE = {
  * @returns modeType명의 함수 결과
  * @Description api()를 
  */
-function api(e, modeType, data, func){
+function useEvntHandler(e, modeType, data, func){
     
     const {createWordList, setUpdateFlag, saveListClear, setFolderList} = wordListStore(state => state);
     const {alert, setLoading, setAlert, setConfirm, setColorPickModal} = Store(state=>state);
@@ -256,4 +256,4 @@ function api(e, modeType, data, func){
     return executeCommFunc;
 }
 
-export default api
+export default useEvntHandler
