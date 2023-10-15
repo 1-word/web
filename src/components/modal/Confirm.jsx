@@ -1,5 +1,4 @@
-import Store from '../../stores/store';
-import './confirm.css'
+import Store from '@/store/store';
 
 function Confirm(){
     const {confirm} = Store(state=>state);

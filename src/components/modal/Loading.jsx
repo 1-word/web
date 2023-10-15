@@ -1,5 +1,3 @@
-import './load.css'
-
 function Loading (){
 
     return(

@@ -1,0 +1,290 @@
+.folder-area {
+    width: 80%;
+    margin: 0 auto;
+  
+    .title-area {
+      padding: 1.5rem 0 0.5rem 0;
+      justify-content: space-between;
+    }
+  }
+  
+  .folder-wrap {
+    .title .flex {
+      align-items: center;
+      gap: 1.25rem;
+    }
+  
+    .folder-color {
+      display: flex;
+      width: 2.1875rem;
+      height: 2.1875rem;
+      align-items: center;
+      gap: 0.625rem;
+      flex-shrink: 0;
+      border-radius: 0.625rem;
+      background: #FFF;
+      box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.25);
+    }
+  
+    .name-title {
+      &:hover h3, &:focus h3 {
+        color: #946CF4;
+      }
+    }
+  }
+  
+  .folder-area .title span i {
+    &:hover, &:focus {
+      color: #946CF4;
+    }
+  }
+  
+  .folder-wrap .name-title {
+    cursor: pointer;
+    align-items: center;
+    gap: 1.25rem;
+  }
+  
+  .color-area {
+    .preview-area {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin: 0.5rem 0;
+  
+      .preview {
+        display: inline-flex;
+        height: 2.125rem;
+        padding: 0.875rem 0.75rem;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.625rem;
+        flex-shrink: 0;
+        border-radius: 1.25rem;
+        background: var(--color);
+        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  
+        h3 {
+          font-size: 0.75rem;
+          font-weight: 400;
+        }
+      }
+    }
+  
+    .name-area {}
+  }
+  
+  .folder-area .name-area {
+    max-height: 400px;
+    overflow-y: scroll;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  
+  .folder-wrap .name-title {
+    align-items: center;
+    gap: 1.25rem;
+    cursor: pointer;
+  }
+  
+  .color-area {
+    .name-area span {
+      font-size: 0.6875rem;
+      font-weight: 400;
+    }
+  
+    .title {
+      margin-bottom: 0.69rem;
+    }
+  }
+  
+  .folder-area .title {
+    margin-bottom: 0.69rem;
+  }
+  
+  .color-area .title h3, .folder-area .title h3 {
+    font-size: 0.875rem;
+    font-weight: 400;
+  }
+  
+  .color-area {
+    .name-area .name-input {
+      display: inline-flex;
+      width: 100%;
+      height: 35px;
+      padding: 0.5625rem 1.4375rem;
+      margin-bottom: 1.38rem;
+      align-items: center;
+      gap: 0.625rem;
+      border-radius: 1.25rem;
+      background: #FFF;
+      box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.25);
+      box-sizing: border-box;
+      transition: box-shadow 0.23s ease;
+  
+      &:focus-within {
+        box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;
+      }
+  
+      input {
+        width: 100%;
+        font-size: 0.875rem;
+        border: 0;
+        outline: 0;
+      }
+    }
+  
+    .pick-area .wrap {
+      width: 100%;
+      padding: 0.5rem 0;
+      margin-bottom: 1.38rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 1.25rem;
+      background: #FFF;
+      box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  
+      .area {
+        display: flex;
+        width: 16.125rem;
+        align-items: flex-start;
+        align-content: flex-start;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+  
+      .color {
+        width: 1.875rem;
+        height: 1.875rem;
+        flex-shrink: 0;
+        border-radius: 0.625rem;
+        box-sizing: border-box;
+        box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
+        background: var(--color);
+        transition: border 0.23s ease;
+        text-indent: -1000000px;
+  
+        &:last-child {
+          background: linear-gradient(180deg, #FA8787 0%, rgba(250, 134, 136, 0.99) 0.01%, rgba(250, 180, 129, 0.95) 16.15%, rgba(250, 238, 129, 0.95) 32.81%, rgba(180, 251, 155, 0.71) 50%, rgba(169, 179, 204, 0.58) 65.1%, rgba(200, 141, 245, 0.58) 82.29%, rgba(255, 0, 229, 0) 100%);
+        }
+  
+        &:focus, &:hover {
+          border: 1px solid #989393;
+        }
+      }
+    }
+  
+    .btn-area {
+      margin-top: 2.38rem;
+      gap: 1.38rem;
+      justify-content: center;
+    }
+  }
+  
+  .folder-area .btn-area {
+    display: flex;
+    justify-content: center;
+    margin-top: 4rem;
+  }
+  
+  .color-area .btn-area .btn {
+    position: relative;
+    width: 6.4375rem;
+    padding: 1rem 0;
+    background: #fff;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+    z-index: 1;
+    font-size: 1rem;
+  }
+  
+  .folder-area .btn-area .btn {
+    position: relative;
+    width: 6.4375rem;
+    padding: 1rem 0;
+    background: #fff;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+    z-index: 1;
+    font-size: 1rem;
+    display: inline-flex;
+    padding: 1rem 6.375rem;
+    text-wrap: nowrap;
+  }
+  
+  .color-area .btn-area .btn {
+    &:nth-child(2) {
+      background: #F7F5FC;
+    }
+  
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      background: #F7F5FC;
+      transition: clip-path 0.1s linear;
+      clip-path: inset(5% 50% 15% 50%);
+      z-index: -1;
+    }
+  }
+  
+  .folder-area .btn-area .btn::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    background: #F7F5FC;
+    transition: clip-path 0.1s linear;
+    clip-path: inset(5% 50% 15% 50%);
+    z-index: -1;
+  }
+  
+  .color-area .btn-area .btn {
+    &:hover::after, &:focus::after {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+  
+  .folder-area .btn-area .btn {
+    &:hover::after, &:focus::after {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+  
+  @media screen and (max-width: 359px) {
+    .color-cont, .folder-cont {
+      width: 100%;
+    }
+  
+    .folder-area {
+      .name-area {
+        max-height: 300px;
+        overflow: auto;
+      }
+  
+      .btn-area .btn {
+        padding: 0.5625rem 4.4375rem;
+      }
+    }
+  }
+  
+  @media screen and (min-width: 1024px) {
+    .color-area .title h3 {
+      font-size: 1rem;
+    }
+  }  

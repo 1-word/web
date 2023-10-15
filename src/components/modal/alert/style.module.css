@@ -1,0 +1,128 @@
+/*.alert-box {
+  background-color: skyblue;
+  padding: 20px;
+  color: white;
+  border-radius: 5px;
+  display: block;
+} */
+
+@keyframes fadeUpDown {
+    0%{
+      opacity:0;
+      transform: translate3d(0, -100%, 0);
+    }
+    40%{
+      opacity: 1;
+      transform: translateZ(0);
+    }
+    80% {
+      opacity: 1;
+      transform: translateZ(0);
+    }
+    100% {
+      opacity: 0;        
+      transform: translate3d(0, -100%, 0);
+    }
+  }
+  
+  @keyframes fadeUp {
+    0%{
+      opacity: 0;
+      transform: translateY(0);
+    }
+    50%{
+      opacity: 1;
+    }
+    100%{
+      transform: translateY(-20%);
+    }
+  }
+  
+  /* The alert message box */
+  
+  .alert_box{
+    position: fixed;
+    z-index: 9999;
+    /* animation-name: fadeUpDown; */
+    animation: fadeUpDown 3s;
+    /* animation-fill-mode: forwards; */
+    width: calc(100%)
+  }
+  
+  .alert {
+    position: relative;
+    padding: 1rem 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+  }
+  .error {
+    color: #842029;
+    background-color: #f8d7da;
+    border-color: #f5c2c7;
+  }
+  
+  .success {
+    color: #0f5132;
+    background-color: #d1e7dd;
+    border-color: #badbcc;
+  }
+  
+  .warning {
+    color: #664d03;
+    background-color: #fff3cd;
+    border-color: #ffecb5;
+  }
+  .primary {
+    color: #084298;
+    background-color: #cfe2ff;
+    border-color: #b6d4fe;
+  }
+  
+  .secondary {
+    color: #41464b;
+    background-color: #e2e3e5;
+    border-color: #d3d6d8;
+  }
+  
+  .info {
+    color: #055160;
+    background-color: #cff4fc;
+    border-color: #b6effb;
+  }
+  /* The close button */
+  .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 3s;
+  }
+  
+  /* When moving the mouse over the close button */
+  .closebtn:hover {
+    color: black;
+  }
+  .hide {
+    display: none;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .alert_box{
+      bottom: 5%;
+      animation: fadeUp 3s ease-out alternate;
+    }
+    .alert{
+      width: 80%;
+      margin: 0 auto;
+      border-radius: 1.875rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: row-reverse;
+  
+    }
+  }

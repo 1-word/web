@@ -1,7 +1,7 @@
 import style from "./style.module.css"
 import css from "classnames";
 import React, { useEffect, useState, useRef } from "react";
-import Store from "../../../stores/store";
+import Store from "@/store/store";
 
 export default function Alert({ children, type, message }) {
   const {alert, setAlert} = Store(state=>state);
@@ -11,6 +11,7 @@ export default function Alert({ children, type, message }) {
   //alert 창 timer 설정
   //timer 변경 시 style.module.css의 .alert_box animation 변경
   useEffect(() => {
+    console.log(style.alert_box)
     let timer = setTimeout(() => {
       setAlertShow(false)
     }, time);

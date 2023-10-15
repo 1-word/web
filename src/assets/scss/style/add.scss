@@ -1,0 +1,236 @@
+.add {
+    /* position: fixed; */
+    /* background-color: #0000004d;  */
+    /* width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1000; */
+  
+    .add-wrap {
+      position: relative;
+      width: 360px;
+      height: 100%;
+    }
+  }
+  
+  /* 임의의 영역 생성 */
+  
+  .scrollBar {
+    width: 200px;
+    height: 60vh;
+    overflow-y: scroll;
+  }
+  
+  /* 아래의 모든 코드는 영역::코드로 사용 */
+  
+  .add-word-cont {
+    &::-webkit-scrollbar {
+      display: none;
+      width: 2px;
+  
+      /* 스크롤바의 너비 */
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      height: 30px;
+  
+      /* 스크롤바의 길이 */
+      background: #81b5fd;
+  
+      /* 스크롤바의 색상 */
+  
+      border-radius: 10px;
+    }
+  }
+  
+  body::-webkit-scrollbar-thumb {
+    height: 30px;
+  
+    /* 스크롤바의 길이 */
+    background: #81b5fd;
+  
+    /* 스크롤바의 색상 */
+  
+    border-radius: 10px;
+  }
+  
+  .add-word-cont::-webkit-scrollbar-track, body::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, 0.1);
+  
+    /*스크롤바 뒷 배경 색상*/
+  }
+  
+  .add {
+    .add-wrap .add-cont {
+      position: relative;
+      width: 80%;
+      margin: 0 auto;
+    }
+  
+    .add-title {
+      padding: 2rem 0;
+      justify-content: space-between;
+    }
+  }
+  
+  .delete {
+    /* position: absolute;
+    left: 85%;
+    top: 18.00px; */
+    font-size: 30px;
+    color: #333;
+    background: none;
+  
+    /* background:url(/public/img/delete_icon.png) no-repeat; */
+    transition: color 0.2s ease;
+    border: none;
+    cursor: pointer;
+  
+    &:hover, &:focus {
+      color: #666;
+  
+      /* content: "\e924"; */
+    }
+  }
+  
+  .add {
+    .add-wrap .add-cont .save {
+      position: absolute;
+      width: 322.00px;
+      height: 47.00px;
+      left: 58.00px;
+      top: 388.00px;
+    }
+  
+    .btn-area {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2.25rem;
+    }
+  }
+  
+  .save_btn {
+    /* position: relative;
+    width: 50%;
+    margin: 0 auto;
+    height: 60.00px;
+    top: 50px;
+    display: flex;
+    border: none;
+    text-align: center;
+    font-size: 28px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    color: #fff;
+    background-size: 200%;
+    background-image: linear-gradient(229deg, #5adaff 0, #5468ff 100%);
+    cursor: pointer;
+    transition: all 0.4s ease; */
+    display: inline-flex;
+    padding: 0.6875rem 6.375rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.625rem;
+    border-radius: 1.875rem;
+    background: #FFF;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  
+    &:hover {
+      background-position: right center;
+  
+      /* font-size: 26px; */
+    }
+  }
+  
+  .add .add-wrap .add-cont .add-word-area {
+    display: flex;
+    flex-direction: column;
+    gap: 0.69rem;
+  }
+  
+  .add-word-area {
+    .input-area {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+  
+    .plus_btn, .minus_btn {
+      margin-right: 4px;
+      border: none;
+      cursor: pointer;
+      font-size: 30px;
+      color: #946cf4;
+      background: none;
+      transition: 0.36s ease;
+    }
+  
+    .plus_btn:hover, .minus_btn:hover {
+      color: #a885f8;
+    }
+  }
+  
+  .add {
+    .add-wrap .add-cont .add-word-cont {
+      position: relative;
+      overflow-y: auto;
+      margin: 0 auto;
+      padding-bottom: 1.2rem;
+      max-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+  
+      input {
+        width: 98%;
+        background-color: #fff;
+        border-radius: 20px;
+  
+        /* border: 1px solid  rgba(200, 200, 200, 1); */
+        box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.25);
+        text-indent: 20px;
+        box-sizing: border-box;
+        font-size: 1rem;
+      }
+    }
+  
+    &.add-e .add-wrap .add-cont .add-word-cont {
+      .add-v h3, .add-n h3 {
+        padding: 1rem 0;
+      }
+  
+      .add-v, .add-n {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+    }
+  
+    .add-wrap .add-cont .add-word-cont {
+      input[name="synonyms"] {
+        width: 90%;
+      }
+  
+      .add-label {
+        font-size: 1rem;
+      }
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .add .add-wrap {
+      width: 100%;
+  
+      .add-cont .add-word-cont {
+        input {
+          font-size: 0.875rem;
+        }
+  
+        height: 351px;
+      }
+    }
+  }
+  

@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import "./login.css";
-import useEvntHandler, { MODE } from "../js/useEvntHandler";
+import api, { MODE } from "@/services/api";
 import { Link } from "react-router-dom";
 
 function Signup(){
     const [signupData, setSignupData] = useState({user_id: '', password: '', username: ''});
 
-    const onClickHandler = useEvntHandler();
+    const onClickHandler = api();
 
     const handleClick = () => {
         onClickHandler('', MODE.SIGNUP, signupData);
