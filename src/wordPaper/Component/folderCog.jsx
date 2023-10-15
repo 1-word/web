@@ -29,12 +29,12 @@ function FolderCog(){
     }
 
     return(
-        <aside className="folder-wrap">
-        <div className="folder-cont">
-            <div className="folder-area">
-                <div className="title-area flex">
+        <aside className="add folder-wrap">
+        <div className="add-wrap folder-cont">
+            <div className=" add-cont folder-area">
+                <div className="add-title title-area flex">
                     <h2>폴더</h2>
-                    <span onClick={setFolderCog}>
+                    <span className='delete' onClick={setFolderCog}>
                         <i className="xi-close"></i>
                     </span>
                 </div>
@@ -44,12 +44,16 @@ function FolderCog(){
                             <div key={'fl'+item.folder_id} className="name-title title flex" onClick={handleFolderNameClick(item.folder_id)}>
                                 <span className="folder-color" style={{background: item.background}}></span>
                                 <h3>{item.folder_name}</h3>
-
+                                <div className='icon-area flex'>
                                 { folderCog.mode === COMM_MODE.EDIT &&
                                     <span className="cog">
                                         <i className="xi-cog" onClick={handleFolderEditClick(item)}></i>
                                     </span>
                                 }
+                                    <span>
+                                        <i className='xi-close'></i>
+                                    </span>
+                                </div>
                             </div>
                         )
                     }

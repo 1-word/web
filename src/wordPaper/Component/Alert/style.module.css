@@ -42,7 +42,7 @@
 
 .alert_box{
   position: fixed;
-  z-index: 1200;
+  z-index: 9999;
   /* animation-name: fadeUpDown; */
   animation: fadeUpDown 3s;
   /* animation-fill-mode: forwards; */
@@ -112,7 +112,7 @@
 
 @media screen and (max-width: 768px) {
   .alert_box{
-    bottom: 3%;
+    bottom: 5%;
     animation: fadeUp 3s ease-out alternate;
   }
   .alert{

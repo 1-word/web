@@ -72,11 +72,12 @@ function Colorpick(){
     const font_color_list = Object.keys(FONT_COLOR);
 
     return(
-        <aside class="color-wrap">
-        <div class="color-cont">
-            <div class="color-area">
-                <div class="title-area">
-                    <h2>새 폴더</h2>
+        <aside class="add color-wrap">
+        <div class="add-wrap color-cont ">
+            <div class="add-cont color-area">
+                <div class="add-title title-area flex">
+                    <h2>내 폴더</h2>
+                    <button className="delete"><i className="xi-close"></i> </button>
                 </div>
                 <div class="preview-area">
                     <div class="preview" style={{'--color': pickColor?.background}}>
