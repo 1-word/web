@@ -8,19 +8,19 @@ import axios from "axios";
 */
 
 /*
-    읽기API 호출 ex) {project_url}:{port}/read
+    읽기api 호출 ex) {project_url}:{port}/read
     const result = await connect("get", "read", "");
 
-    수정API 호출
+    수정api 호출
 
 
-    삭제API 호출 ex) {project_url}:{port}/remove/1
+    삭제api 호출 ex) {project_url}:{port}/remove/1
     connect("delete", "remove", e.target.id)
 
-    검색API 호출 ex) {project_url}:{port}/search/1
+    검색api 호출 ex) {project_url}:{port}/search/1
     connect("get", "search", searchText)
 
-    저장API 호출
+    저장api 호출
     connect("POST", "save", "", wordData)
 */
 
@@ -62,7 +62,7 @@ export const CONNECT_MODE = {
         URI: "word/folder"
     },
     FOLDER_UPDATE:{
-        METHOD: "PUT",
+        METHOD: "put",
         URI: "word/folder"
     },
     FOLDER_SAVE:{
@@ -73,14 +73,6 @@ export const CONNECT_MODE = {
         METHOD: "delete",
         URI: "word/folder"
     },
-    MEMORIZATION: {
-        METHOD: "PUT",
-        URI: "word/update/memorization"   
-    },
-    WORD_FOLDER_UPDATE:{
-        METHOD: "PUT",
-        URI: "word/update/wordFolder"   
-    }
 }
 
 async function connect(_method, _id, _data, _token){
