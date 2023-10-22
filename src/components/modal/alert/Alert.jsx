@@ -1,22 +1,23 @@
 import style from "./style.module.css"
 import css from "classnames";
 import React, { useEffect, useState, useRef } from "react";
-import Store from "@/store/store";
+import ModalStore from "@/store/modal";
 
-export default function Alert({ children, type, message }) {
-  const {alert, setAlert} = Store(state=>state);
+export default function Alert({ children, msgType, message }) {
+  const {alert, setAlert} = ModalStore(state=>state);
   const alertBox = useRef();
   const time = 3000;
 
   //alert 창 timer 설정
   //timer 변경 시 style.module.css의 .alert_box animation 변경
   useEffect(() => {
-    console.log(style.alert_box)
-    let timer = setTimeout(() => {
-      setAlertShow(false)
-    }, time);
-    return ()=>{ clearTimeout(timer) }
-  }, []);
+    if (!children){
+      let timer = setTimeout(() => {
+        setAlert({show:false});
+      }, time);
+      return ()=>{ clearTimeout(timer) }
+    }
+  }, [alert]);
 
   const renderElAlert = function () {
     return React.cloneElement(children);
@@ -24,22 +25,22 @@ export default function Alert({ children, type, message }) {
 
   const handleClose = (e) => {
     e.preventDefault();
-    setAlertShow(false)
+    setAlert({show:false});
   };
 
-  function setAlertShow(flag){
-    alert.show = flag
-    setAlert(alert)
-  }
 
   return (
-  <div className={style.alert_box} ref={alertBox}>
-    <div className={css(style.alert, style[type], !alert.show && style.hide)}>
-      <span className={style.closebtn} onClick={handleClose}>
-        &times;
-      </span>
-    {children ? renderElAlert() : message}
-    </div>
-  </div>
+    <>
+      { children? renderElAlert() :
+        <div className={style.alert_box} ref={alertBox}>
+          <div className={css(style.alert, style[msgType], !alert.show && style.hide)}>
+            <span className={style.closebtn} onClick={handleClose}>
+              &times;
+            </span>
+            {message}     
+          </div>
+        </div>
+      }
+    </>
   );
 }

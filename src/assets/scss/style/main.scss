@@ -74,25 +74,7 @@ nav {
   z-index: 999;
 }
 
-.modal-cont {
-  position: fixed;
 
-  /* background-color: #0000004d;  */
-  /* width: 100%; */
-  height: 100%;
-  left: 0;
-  top: 0;
-  z-index: 1000;
-  width: 0;
-  overflow: hidden;
-  transition: 0.26s ease;
-  background: rgba(218, 225, 246, 0.38);
-  backdrop-filter: blur(10px);
-
-  &.on {
-    width: 360px;
-  }
-}
 
 /* tooltip */
 

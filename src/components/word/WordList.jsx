@@ -4,12 +4,15 @@ import SynonsymsList from "@components/word/SynonymsList";
 import Edit from "@components/word/edit/Edit";
 import wordListStore from "@/store/wordListStore";
 import Store, {COMM_MODE} from "@/store/store";
+import { useModal, useAlert } from "@/hook/_hooks";
+import FolderCog from "@components/word/folder/FolderCog";
+import Confirm from "../modal/Confirm";
 
 function WordList(props){
 
     const {update, wordList, memoStatus, setMemoStatus} = wordListStore(state => state);
-
-    const {setFolderCog} = Store(state=>state);
+    const [openModal] = useModal("move");
+    const [addAlert] = useAlert();
 
     const onClickHandler = api();
     const memoRef = useRef([]);
@@ -53,7 +56,15 @@ function WordList(props){
     }
 
     const handleDeleteClick = (id) => e => {
-        onClickHandler('', MODE.DELETE, id);
+        addAlert({
+            type: "confirm",
+            title: "잠깐만요!",
+            content: "정말 삭제하시겠습니까?",
+            component: <Confirm></Confirm>,
+            executionFunction: async function(){
+                onClickHandler('', MODE.DELETE, id);
+            }
+        })
     }
 
     const handleMemoClick = (id, mode, wordId) => e => {
@@ -111,11 +122,11 @@ function WordList(props){
     }
 
     const handleFolderClick = (word_id) => e => {
-        setFolderCog({
+        const config = {
             word_id: word_id,
-            mode: COMM_MODE.MOVE,
-            show: true
-        })
+            mode: COMM_MODE.MOVE
+        }
+        openModal(<FolderCog folderCog={config}></FolderCog>)
         // onClickHandler(e, MODE.MEMORIZATION, wordId, {memorization: result});
     }
 

@@ -5,13 +5,12 @@ import Store from "@/store/store";
 import api, { MODE } from "@/services/api";
 import { textTypeCheck } from "@/util/textTypeCheck";
 
-function Add(props){
+function Add({children, props}){
+    console.log(children, props);
 
     const {saveList, saveWordList} = wordListStore(state => state);
     const {clickedFolder} = Store(state=> state);
     const onClickHandler = api();
-
-    const addframeRef = useRef();
 
     const handleClick = (e) => {
         let target_name = e.target.name;
@@ -30,7 +29,7 @@ function Add(props){
         
         //저장 버튼 클릭시
         if(target_name === MODE.SAVE_BTN)
-            onClickHandler(e, MODE.SAVE, resultList, props.closePopup);
+            onClickHandler(e, MODE.SAVE, resultList);
     }
 
     const synonymInputList = saveList.synonyms.map((data, idx) => (
@@ -44,41 +43,31 @@ function Add(props){
         />
     ));
 
-    const handleElementClick = () => e => {
-        if (addframeRef.current && !addframeRef.current.contains(e.target)) 
-            props.closePopup();        
-    }
-
     // 영어 add
-    return  <div className="add add-e" onClick={handleElementClick()}>
-    <div ref={addframeRef} className="add-wrap">
-        <div className="add-cont">                
-            <div className="add-title flex">
-                <h2 className="lang-title">영어</h2>
-                <button className="delete" onClick={props.closePopup}><i className="xi-close"></i> </button>
-            </div>     
-            <div className="add-word-cont">          
-                <AddList name="word" text="단어" value={saveList.word} ></AddList>          
-                {synonymInputList}
-                <AddList name="wread" text="발음" value={saveList.wread} ></AddList>
-                <div className="add-v">
-                    <h3>동사</h3>
-                <AddList name="mean" text="과거" value={saveList.mean} ></AddList>
-                <AddList name="mean" text="과거분사" value={saveList.mean} ></AddList>
-                <AddList name="mean" text="현재분사" value={saveList.mean} ></AddList>
-                <AddList name="mean" text="3인칭 단수" value={saveList.mean} ></AddList>
+    return  <div className="add-cont">                
+                <div className="add-title flex">
+                    <h2 className="lang-title">영어</h2>
+                </div>     
+                <div className="add-word-cont">          
+                    <AddList name="word" text="단어" value={saveList.word} ></AddList>          
+                    {synonymInputList}
+                    <AddList name="wread" text="발음" value={saveList.wread} ></AddList>
+                    <div className="add-v">
+                        <h3>동사</h3>
+                    <AddList name="mean" text="과거" value={saveList.mean} ></AddList>
+                    <AddList name="mean" text="과거분사" value={saveList.mean} ></AddList>
+                    <AddList name="mean" text="현재분사" value={saveList.mean} ></AddList>
+                    <AddList name="mean" text="3인칭 단수" value={saveList.mean} ></AddList>
+                    </div>
+                    <div className="add-n">
+                        <h3>명사</h3>
+                    <AddList name="mean" text="복수" value={saveList.mean} ></AddList>
+                    </div>
                 </div>
-                <div className="add-n">
-                    <h3>명사</h3>
-                <AddList name="mean" text="복수" value={saveList.mean} ></AddList>
+                <div className="btn-area">
+                    <button className="save_btn" name="save_btn" onClick={handleClick}>저장</button>                   
                 </div>
             </div>
-            <div className="btn-area">
-            <button className="save_btn" name="save_btn" onClick={handleClick}>저장</button>                   
-            </div>
-        </div>
-    </div>
-</div>
 
     // return  <div className="add" onClick={handleElementClick()}>
     //             <div ref={addframeRef} className="addframe">

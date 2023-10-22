@@ -6,17 +6,22 @@ import api, { MODE } from "@/services/api";
 import FolderList from "@components/word/folder/FolderList";
 import Colorpick from "@components/word/folder/Colorpick";
 import FolderCog from "@components/word/folder/FolderCog";
+import Add from "@/components/modal/add/Add";
+import { useModal } from "@/hook/_hooks";
 
 function Word(){
     // Store 사용
-    const {colorPickPop, memorization, setModal, setMemorization, folderCog} = Store(state=>state);
+    const {memorization, setMemorization} = Store(state=>state);
+
+    // Modal Test
+    const [ openModal ] = useModal("add");
     
     const onClickHandler = api();
     const searchInput = useRef();    
 
     // 팝업 이벤트
     const handleModal = e => {
-        setModal(true);
+        openModal(<Add></Add>);
     }
 
     const handleSearchClick = e => {
@@ -31,10 +36,6 @@ function Word(){
 
     return (
     <div className="wrap">
-        {folderCog.show && 
-        <div className="modal-cont">
-        <FolderCog></FolderCog></div>}
-        {colorPickPop.modal.show && <Colorpick></Colorpick>}
         <header className="flex">
             <h1><a href="#">wordbook<img src={LOGO_SVG} alt="logo Image" /></a></h1>
             <nav>

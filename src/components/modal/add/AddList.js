@@ -5,7 +5,7 @@ function AddList(props){
     const {saveList, saveWordList} = wordListStore(state => state);
 
     // 버튼 이벤트 
-    const handleOnClick = e => {
+    const handleClick = e => {
         let target_name = e.target.name;
         // 피연산자 앞에 + 연산자가 있으면 Number형으로 반환
         let target_id = +e.target.id;
@@ -38,7 +38,7 @@ function AddList(props){
             <div className="input-area">
             <input name={props.name} id={props.id} value={props.value}type="text"onChange={handleOnchange}/>
             {props.name === WORD_KEY.SYNONYMS
-            ? <button className={props.btncls} name={props.btnname} id={props.id} value={props.value} onClick={handleOnClick} />
+            ? <button className={props.btncls} name={props.btnname} id={props.id} value={props.value} onClick={handleClick} />
             : null}
             </div>
         </div>    

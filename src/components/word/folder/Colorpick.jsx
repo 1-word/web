@@ -2,13 +2,12 @@ import { useState, useRef, useEffect } from 'react';
 import api, {MODE} from "@/services/api";
 import Store, {COMM_MODE} from '@/store/store';
 
-function Colorpick(){
-    const {colorPickPop, setColorPickPop} = Store(state=>state);
-
+function Colorpick({colorPickPop}){
     const [pickColor, setPickColor] = useState({});
 
     useEffect(() => {
-        setPickColor(colorPickPop.folderData);
+        if (colorPickPop)
+            setPickColor(colorPickPop);
     }, []);
 
     const folderNameInput = useRef();
@@ -59,7 +58,7 @@ function Colorpick(){
             folder_name: folderNameInput.current.value
         }
 
-        if (colorPickPop.modal.mode === COMM_MODE.EDIT){
+        if (colorPickPop?.mode === COMM_MODE.EDIT){
             onClickHandler(e, MODE.FOLDER_UPDATE, folderData);    
             return;
         }
@@ -71,63 +70,57 @@ function Colorpick(){
     const font_color_list = Object.keys(FONT_COLOR);
 
     return(
-        <aside class="add color-wrap">
-        <div class="add-wrap color-cont ">
-            <div class="add-cont color-area">
-                <div class="add-title title-area flex">
-                    <h2>내 폴더</h2>
-                    <button className="delete"><i className="xi-close"></i> </button>
-                </div>
-                <div class="preview-area">
-                    <div class="preview" style={{'--color': pickColor?.background}}>
-                        <h3 style={{'color': pickColor?.color}}>미리보기</h3>
-                    </div>
-                </div>
-                <div class="name-area">
-                    <div class="name-title title">
-                        <h3>이름<span>(10글자 이내로 적어주세요)</span></h3>
-                    </div>
-                    <div class="name-input">
-                        <input ref={folderNameInput} type="text" maxlength="10" defaultValue={pickColor?.folder_name}/>
-                    </div>
-                </div>
-                <div class="pick-area">
-                    <div class="pick-title title">
-                        <h3>폴더 색</h3>
-                    </div>
-                    <div class="wrap">
-                        <div class="area">
-                            { 
-                                foler_color_list.map(key => 
-                                    <span className={FOLDER_COLOR[key] === pickColor.background ? "color on" : "color"} style={{ '--color': FOLDER_COLOR[key] }} 
-                                    onClick={handleColorClick("background", FOLDER_COLOR[key])}></span>
-                                )
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div class="pick-area">
-                    <div class="pick-title title">
-                        <h3>글자 색</h3>
-                    </div>
-                    <div class="wrap">
-                        <div class="area">
-                            { 
-                                font_color_list.map(key => 
-                                    <span className={FONT_COLOR[key] === pickColor.color ? "color on" : "color"} style={{ '--color': FONT_COLOR[key] }} 
-                                    onClick={handleColorClick("color", FONT_COLOR[key])}></span>
-                                )
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div className='btn-area flex'>
-                    <button className='btn' onClick={()=> setColorPickPop({show:false})}>취소</button>
-                    <button className='btn' onClick={handleConfirmClick()}>확인</button>
+        <div className="add-cont color-area">
+            <div className="add-title title-area flex">
+                <h2>내 폴더</h2>
+            </div>
+            <div className="preview-area">
+                <div className="preview" style={{'--color': pickColor?.background}}>
+                    <h3 style={{'color': pickColor?.color}}>미리보기</h3>
                 </div>
             </div>
+            <div className="name-area">
+                <div className="name-title title">
+                    <h3>이름<span>(10글자 이내로 적어주세요)</span></h3>
+                </div>
+                <div className="name-input">
+                    <input ref={folderNameInput} type="text" maxLength="10" defaultValue={pickColor?.folder_name}/>
+                </div>
+            </div>
+            <div className="pick-area">
+                <div className="pick-title title">
+                    <h3>폴더 색</h3>
+                </div>
+                <div className="wrap">
+                    <div className="area">
+                        { 
+                            foler_color_list.map((key, idx) => 
+                                <span key={`fcl${idx}`} className={FOLDER_COLOR[key] === pickColor.background ? "color on" : "color"} style={{ '--color': FOLDER_COLOR[key] }} 
+                                onClick={handleColorClick("background", FOLDER_COLOR[key])}></span>
+                            )
+                        }
+                    </div>
+                </div>
+            </div>
+            <div className="pick-area">
+                <div className="pick-title title">
+                    <h3>글자 색</h3>
+                </div>
+                <div className="wrap">
+                    <div className="area">
+                        { 
+                            font_color_list.map((key, idx) => 
+                                <span key={`fcl${idx}`} className={FONT_COLOR[key] === pickColor.color ? "color on" : "color"} style={{ '--color': FONT_COLOR[key] }} 
+                                onClick={handleColorClick("color", FONT_COLOR[key])}></span>
+                            )
+                        }
+                    </div>
+                </div>
+            </div>
+            <div className='btn-area flex'>
+                <button className='btn' onClick={handleConfirmClick()}>확인</button>
+            </div>
         </div>
-    </aside>
     )
 }
 

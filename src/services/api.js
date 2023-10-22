@@ -1,8 +1,8 @@
 import connect, {CONNECT_MODE} from "@/util/axiosUtil"
-import Store, {ALERT_TYPE} from "@/store/store"
 import wordListStore from "@/store/wordListStore"
 import authStore from "@/store/authStore"
 import { useNavigate, useLocation } from "react-router"
+import ModalStore, {ALERT_TYPE} from "@/store/modal"
 
 export const MODE = {
     READ: "read",
@@ -43,8 +43,8 @@ export const MODE = {
 function useEvntHandler(e, modeType, data, func){
     
     const {createWordList, setUpdateFlag, saveListClear, setFolderList} = wordListStore(state => state);
-    const {alert, setLoading, setAlert, setConfirm, setColorPickModal} = Store(state=>state);
-    const {token, user_id, save, saveToken, clearToken} = authStore(state=>state);
+    const {setLoading, setAlert} = ModalStore();
+    const {token, save, saveToken, clearToken} = authStore(state=>state);
     const navigate = useNavigate();
     const location = useLocation();
     const app = process.env.REACT_APP_ENV;
@@ -52,19 +52,18 @@ function useEvntHandler(e, modeType, data, func){
     const handlerMap = {
         async read(e, id){
             const read_id = id ?? "";
-            const res = await executeSrvConnect(CONNECT_MODE.READ, read_id);
+            const res = await executeSrvConnect(CONNECT_MODE.READ, read_id, '', {isUpdate: false, returnMsg: false});
             if (!dataCheck(res)) return;
             createWordList(res.datas.word);
             //폴더 정보 가져오기
             this.folderRead(res.datas.folder);
-            //setAlertState(alert, ALERT_TYPE.SUCCESS, "성공적으로 데이터를 불러왔습니다.")
             return res;
         },
         all(){
             return executeSrvConnect(CONNECT_MODE.SEARCH, MODE.SEARCH_ALL);
         },
         async search(e, data){
-            const res = await executeSrvConnect(CONNECT_MODE.SEARCH, "", data, false);
+            const res = await executeSrvConnect(CONNECT_MODE.SEARCH, '', data, {isLoading: false, returnMsg: false});
             if (!dataCheck(res)) return;
 
             let wordListrequest = res.list;
@@ -76,65 +75,36 @@ function useEvntHandler(e, modeType, data, func){
             return arr;
         },
         async delete(e, id){
-            setConfirm({
-                title: "잠깐만요!",
-                content: "정말 삭제하시겠습니까?",
-                show: true,
-                executionFunction: async function(){
-                    await executeSrvConnect(CONNECT_MODE.DELETE, id);
-                    setConfirm({show: false});
-                    setAlertState(alert, ALERT_TYPE.INFO, "성공적으로 데이터를 삭제했습니다.");
-                    setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
-                },
-                closeFunction: function(){
-                    setConfirm({show: false});
-                }
-            });
+            await executeSrvConnect(CONNECT_MODE.DELETE, id, { isUpdate: false });
         },
         async update(e, id, data){
-            let res = await executeSrvConnect(CONNECT_MODE.UPDATE, id, data);
-            setAlertState(alert, ALERT_TYPE.INFO, "성공적으로 데이터를 저장했습니다.");
-            setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
+            return await executeSrvConnect(CONNECT_MODE.UPDATE, id, data);
         },
         async updateMemo(e, id, data){
-            let res = await executeSrvConnect(CONNECT_MODE.UPDATE_MEMO, id, data);
-            setAlertState(alert, ALERT_TYPE.INFO, "성공적으로 데이터를 저장했습니다.");
-            setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
+            return await executeSrvConnect(CONNECT_MODE.UPDATE_MEMO, id, data);
         },
         async memorization(e, id, data){
-            let res = await executeSrvConnect(CONNECT_MODE.MEMORIZATION, id, data);
-            setAlertState(alert, ALERT_TYPE.INFO, "성공적으로 데이터를 저장했습니다.");
-            setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
+            return await executeSrvConnect(CONNECT_MODE.MEMORIZATION, id, data);
         },
-        async save(e, data, closePopup){
-            data.user_id = user_id;
+        async save(e, data){
             let res = await executeSrvConnect(CONNECT_MODE.SAVE, data.type, data);
             saveListClear();
-            setUpdateFlag();
-            closePopup();
             return res;
         },
         folderRead(data){
             setFolderList(data);
         },
         async folderUpdate(e, data){
-            let res = await executeSrvConnect(CONNECT_MODE.FOLDER_UPDATE, data.folder_id, data);
-            setAlertState(alert, ALERT_TYPE.INFO, "성공적으로 데이터를 저장했습니다.");
-            setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
+            return await executeSrvConnect(CONNECT_MODE.FOLDER_UPDATE, data.folder_id, data);
         },
         async folderSave(e, data){
-            let res = await executeSrvConnect(CONNECT_MODE.FOLDER_SAVE, '', data);
-            setAlertState(alert, ALERT_TYPE.INFO, "성공적으로 데이터를 저장했습니다.");
-            setColorPickModal(false);
-            setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
+            return await executeSrvConnect(CONNECT_MODE.FOLDER_SAVE, '', data);
         },
         async wordFolderUpdate(e, id, data){
-            let res = await executeSrvConnect(CONNECT_MODE.WORD_FOLDER_UPDATE, id, data);
-            setAlertState(alert, ALERT_TYPE.INFO, "성공적으로 데이터를 저장했습니다.");
-            setUpdateFlag();    //update state변경, 변경 시 useEffect() 실행
+            return await executeSrvConnect(CONNECT_MODE.WORD_FOLDER_UPDATE, id, data);
         },
-        async folderDelete(){
-
+        async folderDelete(e, id){
+            return await executeSrvConnect(CONNECT_MODE.FOLDER_DELETE, id, '', {msgType: ALERT_TYPE.PRIMARY});
         },
         open(){
 
@@ -143,9 +113,10 @@ function useEvntHandler(e, modeType, data, func){
 
         },
         async login(e, user){
-            const res = await executeSrvConnect(CONNECT_MODE.LOGIN, '', user);
+            const res = await executeSrvConnect(CONNECT_MODE.LOGIN, '', user, { moveUrl: "/word", isUpdate: false });
+
             if(res.code === 6006) {
-                setAlertState(alert, ALERT_TYPE.WARNING, res.msg);
+                // setAlert(getAlertData(ALERT_TYPE.SUCCESS, res.msg));
                 clearToken();
                 return;
             }
@@ -155,13 +126,11 @@ function useEvntHandler(e, modeType, data, func){
                 "accessToken": res.data.accessToken
             };
             saveToken(data, user.user_id);
-            setAlertState(alert, ALERT_TYPE.SUCCESS, "로그인 성공");
-            navigate("/word");
+            setAlert(getAlertData(ALERT_TYPE.SUCCESS, "로그인 성공"));
         },
         async signup(e, user){
-            const res = await executeSrvConnect(CONNECT_MODE.SIGNUP, '', user);
-            setAlertState(alert, ALERT_TYPE.SUCCESS, "회원가입이 완료되었습니다.");
-            navigate("/");
+            const res = await executeSrvConnect(CONNECT_MODE.SIGNUP, '', user, { returnMsg: false, moveUrl: "/", isUpdate: false });
+            setAlert(getAlertData(ALERT_TYPE.SUCCESS, "회원가입이 완료되었습니다."));
         },
         audio_play(e, data, endFunc){
             const audio = new Audio();
@@ -171,10 +140,8 @@ function useEvntHandler(e, modeType, data, func){
             let playPromise = audio.play();
             if (playPromise !== undefined){
                 playPromise.then(_ => {
-
-                }).catch(error => {
-                    endFunc(data.id);
-                })
+                    
+                }).finally(()=>endFunc(data.id))
             }
         }
     }
@@ -184,27 +151,27 @@ function useEvntHandler(e, modeType, data, func){
      * @param {STRING} connectMode CONNECT_MODE(axiosUtil)
      * @param {NUMBER} id key값
      * @param {*} data 데이터
+     * @param {*} {isLoading, isUpdate, msgType, returnMsg=true, moveUrl}
      * @returns 
      */
-    const executeSrvConnect = async function(connectMode, id, data, isloading){
-        if ((isloading ?? true)) setLoading(true);
+    const executeSrvConnect = async function(connectMode, id, data, obj){
+        if ((obj?.isLoading ?? true)) setLoading(true);
         try {
-            return await connect(connectMode, id, data, token.accessToken);
-        } catch (error) {
-            let msg = error?.response?.data?.msg || "서버에 응답이 없거나, 오류가 발생하였습니다. 잠시 후 다시 접속해주시기 바랍니다."
-            setAlertState(alert, ALERT_TYPE.ERROR, msg);
-            clearToken();
-
-            if (location.pathname !== "/signup" && app !== "dev"){
-                navigate("/");
+            let res = await connect(connectMode, id, data, token.accessToken);
+            if ((obj?.returnMsg ?? true) && typeof obj?.returnMsg === 'undefined') setAlert(getAlertData(obj?.msgType, res.msg ?? obj?.returnMsg));
+            if (res.success === true){
+                if (obj?.moveUrl) navigate(obj?.moveUrl);
             }
-            
-            // setAlertState(alert, ALERT_TYPE.ERROR, error?.response?.data?.msg)
+            return res;
+        } catch (error) {
+            let msg = error?.response?.data?.msg || "서버에 응답이 없거나, 오류가 발생하였습니다. 잠시 후 다시 시도해주시기 바랍니다."
+            setAlert(getAlertData(ALERT_TYPE.ERROR, msg));
             throw new Error("error");
-            //return -1
         }
         finally{
             setLoading(false);
+            //update state변경, 변경 시 useEffect() 실행, 기본값은 항상 업데이트
+            if (obj?.isUpdate ?? true) setUpdateFlag();
         }
     }
 
@@ -215,12 +182,15 @@ function useEvntHandler(e, modeType, data, func){
      * @returns alert object
      * @Description 특정 상황에 알맞는 알림 메시지를 작성한다.
      */
-    const setAlertState = (obj, type, message) => {
-        obj.show = true;
-        obj.type = type;
-        obj.message = message;
-        setAlert(obj);
+    const getAlertData = (msgType, message) => {
+        return {
+            type: ALERT_TYPE.MSG,
+            msgType: msgType ?? ALERT_TYPE.SUCCESS,
+            message: message ?? "성공적으로 데이터를 저장했습니다.",
+            show: true,            
+        }
     }
+
 
     /**
      * @param {*} data 체크할 data

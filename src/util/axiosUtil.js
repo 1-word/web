@@ -73,6 +73,14 @@ export const CONNECT_MODE = {
         METHOD: "delete",
         URI: "word/folder"
     },
+    MEMORIZATION: {
+        METHOD: "put",
+        URI: "word/update/memorization"   
+    },
+    WORD_FOLDER_UPDATE:{
+        METHOD: "put",
+        URI: "word/update/wordFolder"   
+    }
 }
 
 async function connect(_method, _id, _data, _token){

@@ -5,6 +5,7 @@ import Word from '@/pages/word/Word';
 import Login from '@/pages/login/Login';
 import Signup from '@/pages/login/Signup';
 import Popup from '@components/modal/Popup';
+import Modals from './components/Modals';
 
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
   return (<PersistGate>
             <div>
               <Router/>
-              <Popup></Popup>
+              <Modals></Modals>
             </div>
         </PersistGate>
   );
