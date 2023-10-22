@@ -4,10 +4,14 @@ import SynonsymsList from "@components/word/SynonymsList";
 import Edit from "@components/word/edit/Edit";
 import wordListStore from "@/store/wordListStore";
 import Store, {COMM_MODE} from "@/store/store";
+import { useModal } from "@/hook/_hooks";
+import FolderCog from "@components/word/folder/FolderCog";
 
 function WordList(props){
 
     const {update, wordList, memoStatus, setMemoStatus} = wordListStore(state => state);
+
+    const [openModal] = useModal("move");
 
     const {setFolderCog} = Store(state=>state);
 
@@ -111,11 +115,11 @@ function WordList(props){
     }
 
     const handleFolderClick = (word_id) => e => {
-        setFolderCog({
+        const config = {
             word_id: word_id,
-            mode: COMM_MODE.MOVE,
-            show: true
-        })
+            mode: COMM_MODE.MOVE
+        }
+        openModal(<FolderCog folderCog={config}></FolderCog>)
         // onClickHandler(e, MODE.MEMORIZATION, wordId, {memorization: result});
     }
 

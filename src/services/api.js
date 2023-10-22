@@ -193,11 +193,11 @@ function useEvntHandler(e, modeType, data, func){
         } catch (error) {
             let msg = error?.response?.data?.msg || "서버에 응답이 없거나, 오류가 발생하였습니다. 잠시 후 다시 접속해주시기 바랍니다."
             setAlertState(alert, ALERT_TYPE.ERROR, msg);
-            clearToken();
+            // clearToken();
 
-            if (location.pathname !== "/signup" && app !== "dev"){
-                navigate("/");
-            }
+            // if (location.pathname !== "/signup" && app !== "dev"){
+            //     navigate("/");
+            // }
             
             // setAlertState(alert, ALERT_TYPE.ERROR, error?.response?.data?.msg)
             throw new Error("error");

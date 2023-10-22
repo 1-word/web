@@ -55,7 +55,6 @@ function Add(props){
         <div className="add-cont">                
             <div className="add-title flex">
                 <h2 className="lang-title">영어</h2>
-                <button className="delete" onClick={props.closePopup}><i className="xi-close"></i> </button>
             </div>     
             <div className="add-word-cont">          
                 <AddList name="word" text="단어" value={saveList.word} ></AddList>          

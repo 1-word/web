@@ -73,6 +73,10 @@ export const CONNECT_MODE = {
         METHOD: "delete",
         URI: "word/folder"
     },
+    WORD_FOLDER_UPDATE:{
+        METHOD: "PUT",
+        URI: "word/update/wordFolder"   
+    }
 }
 
 async function connect(_method, _id, _data, _token){
