@@ -34,7 +34,7 @@ function Add({children, props}){
 
     const synonymInputList = saveList.synonyms.map((data, idx) => (
         <AddList key={idx}
-            btncls = {idx===0? "plus_btn xi-plus-circle" : "minus_btn xi-minus-circle"}
+            btncls = {idx===0? "plus_btn xi-plus" : "minus_btn xi-minus"}
             btnname = {idx===0? "plus_btn" : "minus_btn"}
             name= {WORD_KEY.SYNONYMS}
             text= {idx===0? "유의어" : ""} 
@@ -46,22 +46,53 @@ function Add({children, props}){
     // 영어 add
     return  <div className="add-cont">                
                 <div className="add-title flex">
-                    <h2 className="lang-title">영어</h2>
+                    <h2 className="lang-title">단어 추가</h2>
                 </div>     
-                <div className="add-word-cont">          
+                <div className="add-word-cont">
+                    <div className="add-main">
                     <AddList name="word" text="단어" value={saveList.word} ></AddList>          
-                    {synonymInputList}
+                    <AddList name="mean" text="뜻" value={saveList.mean} ></AddList>
                     <AddList name="wread" text="발음" value={saveList.wread} ></AddList>
-                    <div className="add-v">
-                        <h3>동사</h3>
-                    <AddList name="mean" text="과거" value={saveList.mean} ></AddList>
-                    <AddList name="mean" text="과거분사" value={saveList.mean} ></AddList>
-                    <AddList name="mean" text="현재분사" value={saveList.mean} ></AddList>
-                    <AddList name="mean" text="3인칭 단수" value={saveList.mean} ></AddList>
+                    </div>       
+                    <div className="add-sub">
+                    <div className="add-title flex">
+                        <h2 className="lang-title">세부사항 추가</h2>
                     </div>
-                    <div className="add-n">
-                        <h3>명사</h3>
-                    <AddList name="mean" text="복수" value={saveList.mean} ></AddList>
+                        <div>
+                            <div className="sub-1">
+                            <h3 className="sub-title flex">대분류 <i className="xi-cog"></i></h3>
+                            <div className="box">
+                                <div className="on">11</div>
+                                <div>111111111111</div>
+                                <div>11</div>
+                                <div>11</div>
+                                <div>11</div>
+                                <div>11</div>
+                                <div className="sub-add"><i className="xi-plus"></i></div>
+                            </div>
+                            </div>
+                            <div className="sub-2">
+                            <h3 className="sub-title flex">중분류(선택)<i className="xi-cog"></i></h3>
+                            <div className="box">
+                                <div className="on">11</div>
+                                <div>11</div>
+                                <div>11</div>
+                                <div>11</div>
+                                <div>11</div>
+                                <div>11</div>
+                                <div className="sub-add"><i className="xi-plus"></i></div>
+                            </div>
+                            </div>
+                            <div className="sub-3 flex">
+                                <div className="box flex">
+                                    <div>유의어</div>
+                                    <span>삭제</span>
+                                </div>
+                            </div>
+                            <div className="sub-4">
+                            {synonymInputList}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="btn-area">
