@@ -18,7 +18,8 @@
     }
   
     .modal-wrap {
-      position: absolute;
+      position: fixed;
+      inset: 0;
       width: 0;
       height: 100%;
       box-sizing: border-box;
@@ -26,6 +27,7 @@
       backdrop-filter: blur(10px);
       z-index: 1000;
       overflow: hidden;
+      overflow-y: auto;
       animation: slide 0.15s 25ms linear forwards;
       // animation: slide 3s 25ms linear forwards;
       padding-top: 2rem;
@@ -64,6 +66,7 @@
         }
       }
       .modal-cont{
+        min-width: 300px;
         width: 80%;
         margin: 0 auto;
       }
@@ -83,26 +86,11 @@
       align-items: center;
       justify-content: center;
       margin-top: 2.25rem;
-    }
-    // 영어
-    .add-e .add-word-cont {
-      .add-v h3, .add-n h3 {
-        padding: 1rem 0;
-      }
-  
-      .add-v, .add-n {
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-      }
+      padding-bottom: 60px;
     }
 
     .add-word-cont {
-      position: relative;
-      overflow-y: auto;
-      margin: 0 auto;
       padding-bottom: 1.2rem;
-      max-height: 60vh;
       display: flex;
       flex-direction: column;
       gap: 2rem;
@@ -190,7 +178,6 @@
       }
   
       input {
-        width: 98%;
         background-color: #fff;
         border-radius: 20px;
   
@@ -242,53 +229,22 @@
     }
     }
   
-  
-  /* 임의의 영역 생성 */
-  
-  .scrollBar {
-    width: 200px;
-    height: 60vh;
-    overflow-y: scroll;
-  }
-  
   /* 아래의 모든 코드는 영역::코드로 사용 */
   
-  .add-word-cont {
+  .modal-wrap {
     &::-webkit-scrollbar {
-      display: none;
-      width: 2px;
-  
-      /* 스크롤바의 너비 */
+      width: 4px;
+      background: $main-bg-color;
     }
   
     &::-webkit-scrollbar-thumb {
-      height: 30px;
-  
-      /* 스크롤바의 길이 */
-      background: #81b5fd;
-  
-      /* 스크롤바의 색상 */
-  
-      border-radius: 10px;
+      min-height: 30px;
+      background: $default-ddd;
+
     }
   }
   
-  body::-webkit-scrollbar-thumb {
-    height: 30px;
-  
-    /* 스크롤바의 길이 */
-    background: #81b5fd;
-  
-    /* 스크롤바의 색상 */
-  
-    border-radius: 10px;
-  }
-  
-  .add-word-cont::-webkit-scrollbar-track, body::-webkit-scrollbar-track {
-    background: rgba(33, 122, 244, 0.1);
-  
-    /*스크롤바 뒷 배경 색상*/
-  }
+
   
   .delete {
     /* position: absolute;
@@ -311,20 +267,7 @@
   }
   
   .save_btn {
-    display: inline-flex;
-    padding: 0.6875rem 6.375rem;
-    justify-content: center;
-    align-items: center;
-    gap: 0.625rem;
-    border-radius: 1.875rem;
-    background: #FFF;
-    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
-    transition: 0.4s ease;
-    &:hover {
-      background-position: right center;
-  
-      /* font-size: 26px; */
-    }
+    @include main-btn();
   }
 
   @media (max-width: 767px) {

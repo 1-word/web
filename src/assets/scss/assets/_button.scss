@@ -1,0 +1,69 @@
+@import "@scss/assets/color.scss";
+
+@mixin main-btn {
+    position: relative;
+    width: 100%;
+    display: flex;
+    padding: 11px 0;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    cursor: pointer;
+    background: $default-fff;
+    z-index: 1;
+    transition: color 0.26s linear;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+    &:hover, &:focus {
+        color: $main-accent-color;
+    }
+
+    &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 20px;
+        background: $main-bg-color;
+        transition: -webkit-clip-path 0.1s linear;
+        transition: clip-path 0.1s linear;
+        transition: clip-path 0.1s linear, -webkit-clip-path 0.1s linear;
+        -webkit-clip-path: inset(5% 50% 15% 50%);
+        clip-path: inset(5% 50% 15% 50%);
+        z-index: -1;
+    }
+    &:hover::after{
+        -webkit-clip-path: inset(0 0 0 0);
+        clip-path: inset(0 0 0 0);
+    }
+}
+@mixin btn{
+    width: 100%;
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.4s ease;
+}
+@mixin btn-fill {
+    @include btn;
+    background: $main-accent-color;
+    color: $main-bg-color;
+    &:hover,&:focus{
+        background: $main-hover-color;
+    }
+}
+@mixin btn-light {
+    @include btn;
+    background: $default-fff;
+    color: $main-accent-color;
+    border: 1px solid $main-accent-color;
+    &:hover,&:focus{
+        background: $sub-hover-color;
+    }
+}

@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import "@scss/assets/color.scss";
 
 * {
   margin: 0;
@@ -17,11 +18,10 @@ button {
 .btn {
   display: flex;
   width: 3.875rem;
-  height: 1.625rem;
+  height: 34px;
   padding: 0.6875rem 6.375rem;
   justify-content: center;
   align-items: center;
-  gap: 0.625rem;
   border-radius: 1.875rem;
   font-family: "PretendardJP", sans-serif;
   cursor: pointer;
@@ -29,11 +29,20 @@ button {
 
 html body {
   font-family: "PretendardJP";
-  color: #202020;
+  color: $main-text-color;
 }
 
-body::-webkit-scrollbar {
-  width: 10px;
+body{
+  &::-webkit-scrollbar {
+    width: 16px;
+    background: $main-bg-color;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    min-height: 30px;
+    background: $default-ddd;
+
+  }
 }
 
 ul, ol, dl {
@@ -101,8 +110,8 @@ nav {
     top: -20px;
     padding: 5px 10px;
     border-radius: 5px;
-    color: #333;
-    background: #BAC9F6;
+    color: $default-fff;
+    background: $main-text-color;
     box-shadow: 0 3px 8px rgba(165, 165, 165, 0.5);
   }
 
@@ -112,7 +121,7 @@ nav {
     top: 2px;
     left: 33%;
     border-right: 5px solid transparent;
-    border-top: 5px solid #BAC9F6;
+    border-top: 5px solid $main-text-color;
     z-index: -1;
   }
 
@@ -244,11 +253,15 @@ header {
 }
 
 .search_icon {
-  margin-top: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   font-size: 40px;
-  color: #356afd;
-  background: none;
+  background: linear-gradient(to right, #81b5fd 0%, #946cf4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  white-space: nowrap;
 }
 
 /* 단어장 폴더 */
@@ -530,7 +543,7 @@ header {
 }
 
 .listen.on {
-  color: #356afd;
+  color: $main-accent-color;
 }
 
 .mid_area {
@@ -555,7 +568,7 @@ header {
     padding: 5px 7px;
     margin-right: 15px;
     border-radius: 1.875rem;
-    background: #CBD8FF;
+    background: $sub-hover-color;
     text-align: center;
     vertical-align: middle;
   }
@@ -615,128 +628,57 @@ header {
 
 .memo_text {
   display: block;
-  width: 95%;
+  width: 100%;
   margin: 0 auto;
-  padding: 10px;
-  font-size: 13px;
-  color: #333;
+  padding: 15px;
+  font-size: 15px;
   line-height: 1.1;
   border-radius: 0.625rem;
-  border: 1px solid #BAC9F6;
-  background: #fff;
-  height: 80px;
+  border: 1px solid $sub-text-color;
+  background: rgba(255, 255, 255, 0.3490196078);
+  height: 100px;
   outline: 0;
   transition: 0.4s background;
-  border-radius: 6px;
-  outline-color: #BAC9F6;
   box-sizing: border-box;
+  resize: none;
+  font-family: "PretendardJP";
+  overflow-y: auto;
+  appearance: none;
 
   &:focus-visible {
-    /* outline: 1px solid #BAC9F6; */
-    background: rgba(255, 255, 255, 0.3490196078);
+    border-color: $default-999;
+    background: $default-fff;
   }
 
   &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    height: 30px;
-    background: #81b5fd;
-    border-radius: 10px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: rgba(33, 122, 244, 0.1);
+    display: none;
   }
 }
 
 .memo_area .btn_area {
   justify-content: end;
-  width: 95%;
   margin: 11px auto;
   gap: 1rem;
   padding: 0 1rem;
   box-sizing: border-box;
 }
 
+@import "@scss/assets/button.scss";
+
 .btn_area {
   .cancle_memo, .save_memo {
-    position: relative;
-    display: flex;
-    width: 6.4375rem;
-    padding: 0.5rem 0;
-    justify-content: center;
-    align-items: center;
-    gap: 0.625rem;
-    border-radius: 1.875rem;
-    cursor: pointer;
-    background: #BAC9F6;
-    color: #202020;
-    z-index: 1;
-    transition: color 0.26s linear;
+    @include btn-fill();
+    max-width: 100px;
+    height: 38px
   }
 
   .cancle_memo {
-    border: 1px solid #BAC9F6;
-    background: #FFF;
-
-    &::after {
-      content: "";
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border-radius: 20px;
-      background: #dde7f3;
-      transition: -webkit-clip-path 0.1s linear;
-      transition: clip-path 0.1s linear;
-      transition: clip-path 0.1s linear, -webkit-clip-path 0.1s linear;
-      -webkit-clip-path: inset(5% 50% 15% 50%);
-      clip-path: inset(5% 50% 15% 50%);
-      z-index: -1;
-    }
+    @include btn-light();
   }
 
-  .save_memo::after {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 20px;
-    background: #dde7f3;
-    transition: -webkit-clip-path 0.1s linear;
-    transition: clip-path 0.1s linear;
-    transition: clip-path 0.1s linear, -webkit-clip-path 0.1s linear;
-    -webkit-clip-path: inset(5% 50% 15% 50%);
-    clip-path: inset(5% 50% 15% 50%);
-    z-index: -1;
-    background: #fff;
-  }
-
-  .cancle_memo:hover::after, .save_memo:hover::after, .cancle_memo:focus::after, .save_memo:focus::after {
-    -webkit-clip-path: inset(0 0 0 0);
-    clip-path: inset(0 0 0 0);
-  }
-
-  .cancle_memo:focus {
-    transform: scale(0.95);
-  }
 
   .save_memo {
-    &:focus {
-      transform: scale(0.95);
-    }
 
-    &:hover, &:focus {
-      color: #BAC9F6;
-      border: 1px solid #BAC9F6;
-    }
   }
 }
 
