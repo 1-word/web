@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import ModalStore, { ALERT_TYPE } from "@/store/modal";
 
 export function useInput(initivalValue, submitAction){
@@ -36,6 +36,13 @@ export function useInput(initivalValue, submitAction){
     return [ inputValue, handleChange, handleSubmit, handleOnKeyDown ];
 }
 
+/**
+ * 
+ * @param {string} id 모달 아이디 부여(중복 허용X)
+ * @param {*} openAction 
+ * @param {*} closeAction 
+ * @returns 
+ */
 export function useModal(id, openAction, closeAction){
 
     const { openedModals, addModal, deleteModal } = ModalStore(openedModals => openedModals);
@@ -151,4 +158,42 @@ export function useFetch(baseUrl, initType){
     // }).catch(error=>{
     //     throw new Error(error);
     // });
+}
+
+/**
+ * 무한 스크롤을 위한 옵저버 생성
+ */
+export function useObserver(){
+    const [page, setPage] = useState(-1);
+    //중복실행방지(불필요 랜더링을 막기 위한 Ref Hook 사용)
+    const preventRef = useRef(false);
+    // const obsRef = useRef(null);    //옵저버 Element
+    const endRef = useRef(false); //모든 글 로드 확인
+
+    const obsHandler = (entries => {
+        const target = entries[0];
+        //옵저버 중복 실행 방지
+        // isIntersecting: 화면에 감지된 경우
+        if(!endRef.current && target.isIntersecting && !preventRef.current){
+            preventRef.current = true;
+            setPage(prev => prev+1);    //페이지 값 증가
+        }
+    })
+
+    const obsInitialization = (obsRef) => {
+        const observer = new IntersectionObserver(obsHandler, {threshold : 0.5});
+        if(obsRef.current) 
+            observer.observe(obsRef.current);
+        return () => {observer.disconnect();}
+    }
+
+    const isEnd = (flag) => {
+        endRef.current = flag;
+    }
+
+    const preventDisable = () => {
+        preventRef.current = false;
+    }
+
+    return [page, obsInitialization, isEnd, preventDisable];
 }

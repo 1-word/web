@@ -35,19 +35,19 @@ export const CONNECT_MODE = {
     },
     DELETE: {
         METHOD: "delete",
-        URI: "word/remove"
+        URI: "word"
     },
     SAVE: {
         METHOD: "post",
-        URI: "word/save"
+        URI: "word"
     },
     UPDATE: {
         METHOD: "put",
-        URI: "word/update/all"
+        URI: "word/all"
     },
     UPDATE_MEMO: {
         METHOD: "put",
-        URI: "word/update/memo"
+        URI: "word/memo"
     },
     LOGIN: {
         METHOD: "post",
@@ -75,14 +75,21 @@ export const CONNECT_MODE = {
     },
     MEMORIZATION: {
         METHOD: "put",
-        URI: "word/update/memorization"   
+        URI: "word/memorization"   
     },
     WORD_FOLDER_UPDATE:{
         METHOD: "put",
-        URI: "word/update/wordFolder"   
+        URI: "word/wordFolder"   
     }
 }
-
+/**
+ * 
+ * @param {*} _method get | post | put | delete
+ * @param {*} _id 
+ * @param {*} _data 
+ * @param {*} _token 
+ * @returns 
+ */
 async function connect(_method, _id, _data, _token){
         const host = process.env.REACT_APP_HOST;
         

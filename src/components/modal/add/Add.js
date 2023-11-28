@@ -99,26 +99,6 @@ function Add({children, props}){
                     <button className="save_btn" name="save_btn" onClick={handleClick}>저장</button>                   
                 </div>
             </div>
-
-    // return  <div className="add" onClick={handleElementClick()}>
-    //             <div ref={addframeRef} className="addframe">
-    //                 <div className="add-lang flex">
-    //                     <h2 className="lang-title">일본어</h2>
-    //                     <button className="delete" onClick={props.closePopup}><i className="xi-close"></i> </button>
-    //                 </div>        
-    //                 <div className="add7cea4238">                
-    //                     <div className="addgrid">          
-    //                         <AddList name="word" text="단어" value={saveList.word} ></AddList>          
-    //                         <AddList name="mean" text="뜻" value={saveList.mean} ></AddList>
-    //                         <AddList name="wread" text="발음" value={saveList.wread} ></AddList>
-    //                         {synonymInputList}
-    //                     </div>
-    //                     <div className="btn-area">
-    //                     <button className="save_btn" name="save_btn" onClick={handleClick}>저장</button>                   
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         </div>
 }
 
 export default Add;

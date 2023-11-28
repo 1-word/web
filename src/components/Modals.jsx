@@ -5,6 +5,7 @@ import Loading from "./modal/Loading";
 import React, { useEffect, useRef } from "react";
 import Confirm from "./modal/Confirm";
 import Alert from "./modal/alert/Alert";
+import Add from "@/components/modal/add/Add";
 
 function Modals(){
     const { openedModals, deleteModal, alert, setAlert, loading } = ModalStore(modal => modal);
@@ -16,7 +17,7 @@ function Modals(){
     }, )
     
     const handleClick = (idx) => e =>{
-        console.log(idx);
+        // console.log(idx);
         deleteModal(idx);
     }
 
@@ -46,7 +47,7 @@ function Modals(){
                     </Alert>
                 </ModalPortal>
             }
-            {/* modal 열렸을 때 모달 뒤 요소들 클릭 못하게 막음 */}
+            {/* modal 열렸을 때 모달 뒤 요소들 클릭 못하게 막고 modal외 다른 요소 클릭했을 때 닫음 */}
             {
                 openedModals.length > 0 && <ModalPortal id="modal-fix">
                     <div className="modal-fix" onClick={closeModal}></div>
@@ -67,6 +68,7 @@ function Modals(){
                                     <button className="delete" onClick={closeModal}><i className="xi-close"></i></button>
                                 </div>
                                 {Modals[Object.keys(Modals)[0]]}
+                                
                             </div>
                         </div>
                     )

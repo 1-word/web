@@ -4,14 +4,16 @@ import WordList from "@components/word/WordList";
 import Store, {MEMORIZATION_TYPE} from "@/store/store";
 import api, { MODE } from "@/services/api";
 import FolderList from "@components/word/folder/FolderList";
-import Colorpick from "@components/word/folder/Colorpick";
-import FolderCog from "@components/word/folder/FolderCog";
 import Add from "@/components/modal/add/Add";
 import { useModal } from "@/hook/_hooks";
+import wordListStore from "@/store/wordListStore";
 
 function Word(){
     // Store 사용
     const {memorization, setMemorization} = Store(state=>state);
+    const {setMode, preWordList, setPreWordList, createWordList} = wordListStore(state=>state);
+
+    const searchFirst = useRef(true);
 
     // Modal Test
     const [ openModal ] = useModal("add");
@@ -26,7 +28,19 @@ function Word(){
 
     const handleSearchClick = e => {
         let searchText = searchInput.current.value || "";
-        searchText !== "" ? searchText = searchText : searchText = MODE.SEARCH_ALL;
+        // 검색어가 없는 경우 이전에 불러온 정보 불러오기
+        if (searchText === ""){
+            setMode('read');
+            createWordList(preWordList);
+            searchFirst.current = true;
+            return;
+        }
+        // 처음 검색하는 경우 이전에 검색했던 데이터를 저장함
+        setMode('search');
+        if (searchFirst.current){
+            searchFirst.current = false;
+            setPreWordList();
+        }
         onClickHandler('', MODE.SEARCH, searchText);
     }
 

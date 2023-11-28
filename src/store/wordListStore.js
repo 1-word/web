@@ -18,29 +18,51 @@ export const WORD_KEY = {
 
 const store = set => ({
     wordList: [{
-            "word_id": 0,
-            "type": "",
-            "word": "",
-            "mean": "",
-            "wread": "",
-            "memo": "",
-            "soundPath": "",
-            "memorization": "",
-            "update_time": "",
-            "synonyms": [
-                {
-                    "synonym_id": 0,
-                    "synonym": "",
-                    "memo": ""
-                },
-                {
-                    "synonym_id": 0,
-                    "synonym": "",
-                    "memo": ""
-                }
-            ]
-        }
-    ],
+        "word_id": 0,
+        "type": "",
+        "word": "",
+        "mean": "",
+        "read": "",
+        "memo": "",
+        "soundPath": "",
+        "memorization": "",
+        "update_time": "",
+        "details": [
+            {
+                "detail_id": 0,
+                "title_id": 0,
+                "title_name": "",
+                "content": "",
+                "memo": "",
+                "subs": [{
+                    "detail_sub_id": 0,
+                    "title_id": 0,
+                    "title_name": "",
+                    "content": "",
+                    "memo": "" 
+                }]
+            }
+        ]
+    }],
+    /**
+     * 검색 모드일 때 임시로 단어 저장, 조회 모드로 변경되면 해당 리스트로 변경
+     */
+    preWordList: {},
+    setPreWordList: () => set((state) => ({
+        preWordList: state.wordList
+    })),
+    /**
+     * 페이징 처리를 위한 변수 선언
+     */
+    page: {
+        current: 0,
+        next: 0,
+        hasNext: true,
+        lastWid: -1
+    },
+    setPage: (page) => set((state) => ({
+        page: page
+    })),
     saveList: {
         "user_id": "",
         "word": "",
@@ -70,6 +92,15 @@ const store = set => ({
         }
     },
     update: false,
+    mode: "read",
+    /**
+     * 단어 조회, 검색 모드 설정
+     * read: 조회
+     * search: 검색
+     */
+    setMode: (mode) => set(()=> ({
+        mode: mode
+    })),
     /**
      * @param {*} wordList (Object) 전체 word데이터 리스트
      * @returns 
@@ -81,6 +112,10 @@ const store = set => ({
         wordList: wordListRequest
     }))
     },
+
+    addWordList: (wordListRequest) => set((pre) => ({
+        wordList: [...pre.wordList, ...wordListRequest]
+    })),
 
     /**
      * @param {*} wordId(int) 컴포넌트 Key 값 

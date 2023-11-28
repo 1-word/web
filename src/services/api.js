@@ -42,28 +42,36 @@ export const MODE = {
  */
 function useEvntHandler(e, modeType, data, func){
     
-    const {createWordList, setUpdateFlag, saveListClear, setFolderList} = wordListStore(state => state);
+    const {createWordList, addWordList,setUpdateFlag, saveListClear, setFolderList, setPage} = wordListStore(state => state);
     const {setLoading, setAlert} = ModalStore();
-    const {token, save, saveToken, clearToken} = authStore(state=>state);
+    const {token, saveToken, clearToken} = authStore(state=>state);
     const navigate = useNavigate();
     const location = useLocation();
     const app = process.env.REACT_APP_ENV;
 
     const handlerMap = {
-        async read(e, id){
+        async read(e, id, param){
             const read_id = id ?? "";
-            const res = await executeSrvConnect(CONNECT_MODE.READ, read_id, '', {isUpdate: false, returnMsg: false});
+            const read_param = param ?? "";
+            const res = await executeSrvConnect(CONNECT_MODE.READ, read_id + read_param, '', {isUpdate: false, returnMsg: false});
             if (!dataCheck(res)) return;
-            createWordList(res.datas.word);
+            
+            // 처음 데이터 가져올 때 확인 해야함
+            if (res.datas.page.current === 0){
+                createWordList(res.datas.word);
+                this.folderRead(res.datas.folder);
+            }else{
+                addWordList(res.datas.word);
+            }
+            setPage(res.datas.page);
             //폴더 정보 가져오기
-            this.folderRead(res.datas.folder);
-            return res;
+            return res.datas;
         },
         all(){
             return executeSrvConnect(CONNECT_MODE.SEARCH, MODE.SEARCH_ALL);
         },
         async search(e, data){
-            const res = await executeSrvConnect(CONNECT_MODE.SEARCH, '', data, {isLoading: false, returnMsg: false});
+            const res = await executeSrvConnect(CONNECT_MODE.SEARCH, '', data, {isLoading: false, returnMsg: false, isUpdate: false});
             if (!dataCheck(res)) return;
 
             let wordListrequest = res.list;
@@ -120,12 +128,12 @@ function useEvntHandler(e, modeType, data, func){
                 clearToken();
                 return;
             }
-            save(res);
             let data = {
                 "refreshToken": res.data.refreshToken,
                 "accessToken": res.data.accessToken
             };
             saveToken(data, user.user_id);
+            setUpdateFlag();
             setAlert(getAlertData(ALERT_TYPE.SUCCESS, "로그인 성공"));
         },
         async signup(e, user){
@@ -198,7 +206,8 @@ function useEvntHandler(e, modeType, data, func){
      * @Description data가 null인지 체크한다.
      */
     const dataCheck = data => {
-        if (typeof data === "undefined" || data === -1 || data === "") return false;
+        if (typeof data === "undefined" || data === -1 || data === "") 
+            return false;
         return true;
     }
 
