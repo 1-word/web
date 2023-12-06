@@ -8,19 +8,20 @@ import { useModal, useAlert } from "@/hook/_hooks";
 import FolderCog from "@components/word/folder/FolderCog";
 import Confirm from "../modal/Confirm";
 import { useObserver } from "@/hook/_hooks";
+import { dataCheck } from "@/util/utils";
 
 function WordList(props){
 
-    const {page, update, wordList, memoStatus, setMemoStatus, mode} = wordListStore(state => state);
+    const {page, update, wordList, memoStatus, setMemoStatus, mode, setPageObsActivate} = wordListStore(state => state);
     const [openModal] = useModal("move");
     const [addAlert] = useAlert();
 
     const obsRef = useRef();
 
     const onClickHandler = api();
-    const [obsPage, obsInit, isEnd, preventDisable] = useObserver();
     const memoRef = useRef([]);
     const headsetRef = useRef([]);
+    const [obsPage, obsInit, endUpdate, preventDisable] = useObserver();
 
     let resultList = [];
 
@@ -31,28 +32,26 @@ function WordList(props){
 
     useEffect(() => {
         obsInit(obsRef);
+        setPageObsActivate(preventDisable);
     }, []);
 
     useEffect(()=> {
-        if (!edit_mode.isEdit && update ){
-            // onClickHandler('', MODE.READ, '');
-            callReadAPI('update');
-        }
-    },[update]);
-
-    useEffect(()=> {
-        if (!edit_mode.isEdit && obsPage > -1 
-            && mode === 'read' && page.hasNext){
-            const param = `?page=${page.next}&last_wid=${page.lastWid}`;
-            callReadAPI('page', param);
-        }
-    },[obsPage]);
-
-    const callReadAPI = async (a, param) => {
-        console.log(`callReadAPI / ${a} / ${param}`);
-        await onClickHandler('', MODE.READ, '', param);
-        //옵저빙 가능하도록 수정
         preventDisable();
+        console.log(`obsPage: ${obsPage}`)
+        if (obsPage > -1)
+            callReadAPI();
+    },[obsPage]);
+    
+
+    const callReadAPI = async () => {
+        endUpdate(false);
+        if (!page.hasNext) {
+            endUpdate(true);
+            return;
+        }
+        await onClickHandler('', MODE.READ, '');
+        //옵저빙 가능하도록 수정
+        // preventDisable();
     }
 
     // Edit mode
@@ -180,7 +179,7 @@ function WordList(props){
                             <i className="xi-check-circle-o"></i>
                         </span>
                             <span>{data?.word}</span>
-                            <span className="read">{data?.wread ?? "" !== "" ? "["+data?.wread+"]" : ""}</span>
+                            <span className="read">{data?.read ?? "" !== "" ? "["+data?.read+"]" : ""}</span>
                         </div>
                         <button onClick={handleAudioClick(idx)}>
                             <i ref={el => headsetRef.current[idx] = el} className="xi-headset listen" data-pron-audio={data?.soundPath}></i>
@@ -190,13 +189,14 @@ function WordList(props){
                         <div className="mean_wrap">
                             <p>{data?.mean}</p>
                         </div>
+                        {/* 단어 상세정보 */}
                         <SynonsymsList cls={data?.details}></SynonsymsList>
                     </div>
                     {/* 메모 */}
                     <div ref={el => memoRef.current[idx] = el} 
                     className={memoStatus[idx]?.status === "ON" ? "memo_area on" : "memo_area"}>
                         <textarea className="memo_text" maxLength={3000} 
-                                defaultValue={data?.memo.replace(/\\n/g, '\n')}>                       
+                                defaultValue={dataCheck(data?.memo)? data?.memo.replace(/\\n/g, '\n') : ""}>                       
                         </textarea>
                         <div className="btn_area flex">
                             <button className="cancle_memo" onClick={handleMemoClick(idx, 'CANCLE')}>취소</button>
@@ -205,7 +205,7 @@ function WordList(props){
                     </div>
                     {/* 메모 끝 */}
                     <div className="foot_area flex">
-                        <div><span>{data?.update_time}</span></div>
+                        <div><span>업데이트 날짜: {data?.update_time}</span></div>
                         <div className="btn_area">
                             <span className="folder icon"><i className="xi-folder-o" onClick={handleFolderClick(data?.word_id)}></i></span>
                             <span className="pen icon"><i className="xi-pen-o" onClick={handleEditClick(data?.word_id)}></i></span>

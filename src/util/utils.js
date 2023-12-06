@@ -1,10 +1,15 @@
-const TEXT_TYPE = {
-    KO: "KO",
-    EN: "EN",
-    JP: "JP"
-}
 
+/**
+ * 입력한 문자열이 무슨 언어인지 확인한다.
+ * @param {*} text 타입 체크할 문자열
+ * @returns KO | EN | JP
+ */
 export function textTypeCheck(text){
+    const TEXT_TYPE = {
+        KO: "KO",
+        EN: "EN",
+        JP: "JP"
+    }
     const kor = "";
     const kor_regex = /[가-힇ㄱ-ㅎㅏ-ㅣ]/g;
     const eng_regex = /[a-zA-Z]/g;
@@ -25,4 +30,15 @@ export function textTypeCheck(text){
     }
 
     return TEXT_TYPE.JP
+}
+
+/**
+ * str이 null인지 확인한다.
+ * @param {*} str 
+ * @returns true | false
+ */
+export function dataCheck(str){
+    if (typeof str === "undefined" || str === -1 || str === "") 
+        return false;
+    return true;
 }

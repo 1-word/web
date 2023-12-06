@@ -1,5 +1,6 @@
 import connect, {CONNECT_MODE} from "@/util/axiosUtil"
-import wordListStore from "@/store/wordListStore"
+import { dataCheck  } from "@/util/utils"
+import wordListStore, {WORD_MODE} from "@/store/wordListStore"
 import authStore from "@/store/authStore"
 import { useNavigate, useLocation } from "react-router"
 import ModalStore, {ALERT_TYPE} from "@/store/modal"
@@ -8,6 +9,7 @@ export const MODE = {
     READ: "read",
     SEARCH_ALL: "all",
     SEARCH: "search",
+    PAGE: "page",
     DELETE: "delete",
     UPDATE: "update",
     SAVE: "save",
@@ -32,17 +34,16 @@ export const MODE = {
 }
 
 /**
- * 
+ * 실제로 실행되는 함수
  * @param {*} e 이벤트가 일어난 객체
  * @param {*} modeType 함수명
  * @param {*} data 데이터
  * @param {*} func 실행시킬 함수
  * @returns modeType명의 함수 결과
- * @Description api()를 
  */
 function useEvntHandler(e, modeType, data, func){
     
-    const {createWordList, addWordList,setUpdateFlag, saveListClear, setFolderList, setPage} = wordListStore(state => state);
+    const {createWordList, addWordList,setUpdateFlag, saveListClear, setFolderList, setPage, updateWordList, updateMemo, deleteWordList, page, mode, setMode} = wordListStore(state => state);
     const {setLoading, setAlert} = ModalStore();
     const {token, saveToken, clearToken} = authStore(state=>state);
     const navigate = useNavigate();
@@ -51,8 +52,13 @@ function useEvntHandler(e, modeType, data, func){
 
     const handlerMap = {
         async read(e, id, param){
+            setMode(WORD_MODE.READ);
             const read_id = id ?? "";
-            const read_param = param ?? "";
+            let read_param = "";
+            if (mode === WORD_MODE.READ && page.hasNext){
+                read_param = `?page=${page.next}&last_wid=${page.lastWid}`;
+            }
+            console.log(`read / ${read_param}`);
             const res = await executeSrvConnect(CONNECT_MODE.READ, read_id + read_param, '', {isUpdate: false, returnMsg: false});
             if (!dataCheck(res)) return;
             
@@ -64,37 +70,58 @@ function useEvntHandler(e, modeType, data, func){
                 addWordList(res.datas.word);
             }
             setPage(res.datas.page);
-            //폴더 정보 가져오기
             return res.datas;
         },
         all(){
             return executeSrvConnect(CONNECT_MODE.SEARCH, MODE.SEARCH_ALL);
         },
         async search(e, data){
+            setMode(WORD_MODE.SEARCH);
             const res = await executeSrvConnect(CONNECT_MODE.SEARCH, '', data, {isLoading: false, returnMsg: false, isUpdate: false});
-            if (!dataCheck(res)) return;
+            const wordListrequest = res.datas.word;
 
-            let wordListrequest = res.list;
+            setPage(res.datas.page);
+            if(Array.isArray(wordListrequest)) {
+                return createWordList(wordListrequest);
+            }
             // 검색한 단어가 한개이면 배열이 아니므로 배열로 만들어줌
-            if(Array.isArray(wordListrequest)) return createWordList(wordListrequest);
-            let arr = [];
-            arr.push(wordListrequest);
+            let arr = [wordListrequest];
             createWordList(arr);
+            
             return arr;
         },
+        async page(e, mode, {id, data, func}){
+            let read_param = "";
+            if (page.hasNext){
+                read_param = `?page=${page.next}&last_wid=${page.lastWid}`;
+            }
+            console.log(`${mode} / ${read_param}`);
+            const res = await executeSrvConnect(mode, '', data + read_param, {isLoading: false, returnMsg: false, isUpdate: false});
+            
+
+        },
         async delete(e, id){
-            await executeSrvConnect(CONNECT_MODE.DELETE, id, { isUpdate: false });
+            const res = await executeSrvConnect(CONNECT_MODE.DELETE, id, { isUpdate: false });
+            deleteWordList(res.data);
+            setUpdateFlag();
         },
         async update(e, id, data){
-            return await executeSrvConnect(CONNECT_MODE.UPDATE, id, data);
+            setMode(WORD_MODE.UPDATE);
+            const res = await executeSrvConnect(CONNECT_MODE.UPDATE, id, data, { isUpdate: false });
+            updateWordList(res.data.word_id, res.data);
         },
         async updateMemo(e, id, data){
-            return await executeSrvConnect(CONNECT_MODE.UPDATE_MEMO, id, data);
+            setMode(WORD_MODE.UPDATE);
+            const res = await executeSrvConnect(CONNECT_MODE.UPDATE_MEMO, id, data);
+            updateWordList(res.data.word_id, res.data);
         },
         async memorization(e, id, data){
-            return await executeSrvConnect(CONNECT_MODE.MEMORIZATION, id, data);
+            setMode(WORD_MODE.UPDATE);
+            const res = await executeSrvConnect(CONNECT_MODE.MEMORIZATION, id, data);
+            updateWordList(res.data.word_id, res.data);
         },
         async save(e, data){
+            setMode(WORD_MODE.UPDATE);
             let res = await executeSrvConnect(CONNECT_MODE.SAVE, data.type, data);
             saveListClear();
             return res;
@@ -124,16 +151,15 @@ function useEvntHandler(e, modeType, data, func){
             const res = await executeSrvConnect(CONNECT_MODE.LOGIN, '', user, { moveUrl: "/word", isUpdate: false });
 
             if(res.code === 6006) {
-                // setAlert(getAlertData(ALERT_TYPE.SUCCESS, res.msg));
                 clearToken();
                 return;
             }
-            let data = {
+            const data = {
                 "refreshToken": res.data.refreshToken,
                 "accessToken": res.data.accessToken
             };
             saveToken(data, user.user_id);
-            setUpdateFlag();
+            // setUpdateFlag();
             setAlert(getAlertData(ALERT_TYPE.SUCCESS, "로그인 성공"));
         },
         async signup(e, user){
@@ -155,12 +181,17 @@ function useEvntHandler(e, modeType, data, func){
     }
 
     /**
-     * 
+     * 서버 요청 전, 후처리
      * @param {STRING} connectMode CONNECT_MODE(axiosUtil)
      * @param {NUMBER} id key값
      * @param {*} data 데이터
-     * @param {*} {isLoading, isUpdate, msgType, returnMsg=true, moveUrl}
-     * @returns 
+     * @param {*} obj {isLoading, isUpdate=true, msgType, returnMsg=true, moveUrl}
+     * @returns 서버에서 응답한 데이터
+     * @description obj 객체
+     * * isLoading: 로딩 여부 true | false
+     * * isUpdate: 컴포넌트 업데이트 여부 true(기본값) | false
+     * * returnMsg: 서버에서 리턴하는 메시지를 띄울 것인지 true(기본값) | false
+     * * moveUrl: URL 이동 여부 true | false
      */
     const executeSrvConnect = async function(connectMode, id, data, obj){
         if ((obj?.isLoading ?? true)) setLoading(true);
@@ -169,6 +200,9 @@ function useEvntHandler(e, modeType, data, func){
             if ((obj?.returnMsg ?? true) && typeof obj?.returnMsg === 'undefined') setAlert(getAlertData(obj?.msgType, res.msg ?? obj?.returnMsg));
             if (res.success === true){
                 if (obj?.moveUrl) navigate(obj?.moveUrl);
+            }
+            if (res.code === 6004){
+                navigate("/");
             }
             return res;
         } catch (error) {
@@ -199,31 +233,18 @@ function useEvntHandler(e, modeType, data, func){
         }
     }
 
-
-    /**
-     * @param {*} data 체크할 data
-     * @returns true, false값
-     * @Description data가 null인지 체크한다.
-     */
-    const dataCheck = data => {
-        if (typeof data === "undefined" || data === -1 || data === "") 
-            return false;
-        return true;
-    }
-
     const dataAdd = (data, addData) => {
         const result = {addData, ...data};
         return result;
     }
 
     /**
-     * 
+     * modeType명의 함수를 실행한다.
      * @param {*} e 이벤트가 일어난 객체
      * @param {*} modeType 함수명
      * @param {*} data 데이터
      * @param {*} func 실행시킬 함수
      * @returns modeType명의 함수 결과
-     * @Description 실제 실행되는 함수 (반환되는 함수)
      */
     const executeCommFunc = (e, modeType, data, func) => {
         return handlerMap[modeType](e, data, func);

@@ -6,12 +6,12 @@ import api, { MODE } from "@/services/api";
 import FolderList from "@components/word/folder/FolderList";
 import Add from "@/components/modal/add/Add";
 import { useModal } from "@/hook/_hooks";
-import wordListStore from "@/store/wordListStore";
+import wordListStore, { WORD_MODE } from "@/store/wordListStore";
 
 function Word(){
     // Store 사용
     const {memorization, setMemorization} = Store(state=>state);
-    const {setMode, preWordList, setPreWordList, createWordList} = wordListStore(state=>state);
+    const {setMode, preWordList, setPreWordList, createWordList, prePage, setPage, page} = wordListStore(state=>state);
 
     const searchFirst = useRef(true);
 
@@ -30,17 +30,19 @@ function Word(){
         let searchText = searchInput.current.value || "";
         // 검색어가 없는 경우 이전에 불러온 정보 불러오기
         if (searchText === ""){
-            setMode('read');
+            setPage(prePage);
+            page.obsActivate();
+            setMode(WORD_MODE.READ);
             createWordList(preWordList);
             searchFirst.current = true;
             return;
         }
         // 처음 검색하는 경우 이전에 검색했던 데이터를 저장함
-        setMode('search');
         if (searchFirst.current){
             searchFirst.current = false;
             setPreWordList();
         }
+
         onClickHandler('', MODE.SEARCH, searchText);
     }
 
@@ -73,6 +75,7 @@ function Word(){
         <nav className="lan">
             <ul className="flex">
                 <li>언어 설정</li>
+                
                 <li className="">전체</li>
                 <li className="active">영어</li>
                 <li>일본어</li>

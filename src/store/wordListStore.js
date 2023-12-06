@@ -9,6 +9,12 @@ export const WORD_KEY = {
     SYNONYM: "synonym"
 }
 
+export const WORD_MODE = {
+    READ: "read",
+    SEARCH: "search",
+    UPDATE: "update"
+}
+
 /**
  * @Description WordList 상태 관리
  * @Author 정현경
@@ -30,14 +36,18 @@ const store = set => ({
         "details": [
             {
                 "detail_id": 0,
-                "title_id": 0,
-                "title_name": "",
+                "title": {
+                    "title_id": 0,
+                    "title_name": "",
+                },
                 "content": "",
                 "memo": "",
                 "subs": [{
                     "detail_sub_id": 0,
-                    "title_id": 0,
-                    "title_name": "",
+                    "title": {
+                        "title_id": 0,
+                        "title_name": "",
+                    },
                     "content": "",
                     "memo": "" 
                 }]
@@ -48,8 +58,15 @@ const store = set => ({
      * 검색 모드일 때 임시로 단어 저장, 조회 모드로 변경되면 해당 리스트로 변경
      */
     preWordList: {},
+    prePage : {},
     setPreWordList: () => set((state) => ({
-        preWordList: state.wordList
+        page:{
+            ...state.page,
+            lastWid: -1,
+            next: 0,
+        },
+        preWordList: state.wordList,
+        prePage: state.page
     })),
     /**
      * 페이징 처리를 위한 변수 선언
@@ -58,10 +75,14 @@ const store = set => ({
         current: 0,
         next: 0,
         hasNext: true,
-        lastWid: -1
+        lastWid: -1,
+        obsActivate: () => {}
     },
-    setPage: (page) => set((state) => ({
+    setPage: (page) => set(() => ({
         page: page
+    })),
+    setPageObsActivate: (func) => set(() => ({
+        obsActivate: func
     })),
     saveList: {
         "user_id": "",
@@ -94,9 +115,10 @@ const store = set => ({
     update: false,
     mode: "read",
     /**
-     * 단어 조회, 검색 모드 설정
+     * 단어 조회, 검색, 수정 모드 설정
      * read: 조회
-     * search: 검색
+     * search: 검색, 
+     * update: 수정, 조회API 호출X
      */
     setMode: (mode) => set(()=> ({
         mode: mode
@@ -118,11 +140,9 @@ const store = set => ({
     })),
 
     /**
-     * @param {*} wordId(int) 컴포넌트 Key 값 
-     * @param {*} updateList(Object) 수정할 전체 word데이터 리스트
-     * @returns 
-     * @Description 수정 데이터 업데이트
-     * @LastEdit 20230112
+     * 수정 데이터 업데이트
+     * @param {int} wordId 컴포넌트 Key 값 
+     * @param {object} wordListRequest updateList() 수정할 전체 word데이터 리스트
      */
 
     updateWordList: (wordId, wordListRequest) => set(state => ({
@@ -136,10 +156,8 @@ const store = set => ({
     })),
 
     /**
-     * @param {*} wordId(int) 컴포넌트 Key 값 
-     * @returns 
-     * @Description 삭제 데이터 업데이트
-     * @LastEdit 20230112
+     * 삭제 데이터 업데이트
+     * @param {int} wordId(int) 컴포넌트 Key 값  
      */
 
     deleteWordList: (wordId) => set (state => ({

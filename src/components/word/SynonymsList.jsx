@@ -5,28 +5,25 @@ import React from 'react';
  * details에 content가 있으면 subs는 확인하지 않는다
  * details에 content가 없으면 subs까지 확인
  * data: "details": [
-                    {
-                        "detail_id": 428,
-                        "title_id": 1,
-                        "title_name": "유의어",
-                        "content": "123",
-                        "memo": "123",
-                        "subs": [
-                            {
-                                "detail_sub_id": 439,
-                                "title_name": "3인칭 동사",
-                                "content": "123",
-                                "memo": "123"
-                            },
-                            {
-                                "detail_sub_id": 440,
-                                "title_name": "3인칭 동사",
-                                "content": "321",
-                                "memo": "321"
-                            }
-                        ]
-                    }
-                ] 
+            {
+                "detail_id": 0,
+                "title": {
+                    "title_id": 0,
+                    "title_name": "",
+                },
+                "content": "",
+                "memo": "",
+                "subs": [{
+                    "detail_sub_id": 0,
+                    "title": {
+                        "title_id": 0,
+                        "title_name": "",
+                    },
+                    "content": "",
+                    "memo": "" 
+                }]
+            }
+        ]
  */
     
 // title_id가 같으면, 같은 줄에 있어야 함??
@@ -39,9 +36,19 @@ function SynonsymsList({cls}){
             {/* asdf */}
             {/* 상세정보 대분류 */}
             {cls.map((cl, idx) => 
-                <React.Fragment key={'clt'+cl?.detail_id}>
-                <span>{cl.title_name}</span>
-                <p key={'sl'+idx+cl?.detail_id}>{cl.content}</p>
+                <React.Fragment key={'m'+cl?.detail_id}>
+                <span>{cl?.title.title_name}</span>
+                {cl?.content !== ""?
+                    <p>{cl?.content}</p>
+                    :
+                    // 상세정보 소분류
+                    cl.subs.map((sub) => 
+                        <React.Fragment key={'s'+sub?.detail_sub_id}>
+                            <span>{sub?.title.title_name}</span>
+                            <p>{sub?.content}</p>
+                        </React.Fragment>
+                    )
+                }
                 </React.Fragment>
             )}
         </div>

@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import ModalStore, { ALERT_TYPE } from "@/store/modal";
 
 export function useInput(initivalValue, submitAction){
@@ -169,31 +169,56 @@ export function useObserver(){
     const preventRef = useRef(false);
     // const obsRef = useRef(null);    //옵저버 Element
     const endRef = useRef(false); //모든 글 로드 확인
+    let observer = null;
 
+    /**
+     * 옵저버 이벤트 등록 및 제거 처리
+     */
+    useEffect(()=> {
+        console.log('obs start')
+        observer = new IntersectionObserver(obsHandler, {threshold : 0.5});
+        return () => {console.log('obs disconnect'); observer.disconnect();}
+    }, []);
+
+    /**
+     * 옵저버 이벤트가 발생될 때 실행되는 함수 (useEffect에서 등록)
+     * @param {*} entries 옵저버에 등록된 컴포넌트
+     */
     const obsHandler = (entries => {
         const target = entries[0];
         //옵저버 중복 실행 방지
         // isIntersecting: 화면에 감지된 경우
         if(!endRef.current && target.isIntersecting && !preventRef.current){
             preventRef.current = true;
+            console.log(`hooks prevent: ${preventRef.current}`)
             setPage(prev => prev+1);    //페이지 값 증가
         }
     })
 
+    /**
+     * 옵저버에 옵저빙할 컴포넌트 등록
+     * @param {*} obsRef 옵저빙할 컴포넌트
+     */
     const obsInitialization = (obsRef) => {
-        const observer = new IntersectionObserver(obsHandler, {threshold : 0.5});
         if(obsRef.current) 
             observer.observe(obsRef.current);
-        return () => {observer.disconnect();}
     }
 
-    const isEnd = (flag) => {
-        endRef.current = flag;
+    /**
+     * 마지막 페이지인지 확인하는 변수 업데이트
+     * @param {*} status true | false
+     */
+    const endUpdate = (status) => {
+        endRef.current = status;
+        console.log(`endRef: ${endRef.current}`)
     }
 
+    /**
+     * 옵저버 중복 실행 방지를 위해 데이터가 정상적으로 불러와지면 옵저빙 가능하도록 수정
+     */
     const preventDisable = () => {
         preventRef.current = false;
     }
 
-    return [page, obsInitialization, isEnd, preventDisable];
+    return [page, obsInitialization, endUpdate, preventDisable];
 }
