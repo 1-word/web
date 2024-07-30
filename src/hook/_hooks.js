@@ -175,9 +175,10 @@ export function useObserver(){
      * 옵저버 이벤트 등록 및 제거 처리
      */
     useEffect(()=> {
-        console.log('obs start')
         observer = new IntersectionObserver(obsHandler, {threshold : 0.5});
-        return () => {console.log('obs disconnect'); observer.disconnect();}
+        return () => {
+            observer.disconnect();
+        }
     }, []);
 
     /**
@@ -188,9 +189,9 @@ export function useObserver(){
         const target = entries[0];
         //옵저버 중복 실행 방지
         // isIntersecting: 화면에 감지된 경우
+        console.log(`hooks prevent: ${preventRef.current} / endRef: ${endRef.current}`);
         if(!endRef.current && target.isIntersecting && !preventRef.current){
             preventRef.current = true;
-            console.log(`hooks prevent: ${preventRef.current}`)
             setPage(prev => prev+1);    //페이지 값 증가
         }
     })
@@ -210,7 +211,7 @@ export function useObserver(){
      */
     const endUpdate = (status) => {
         endRef.current = status;
-        console.log(`endRef: ${endRef.current}`)
+        // console.log(`endRef: ${endRef.current}`)
     }
 
     /**

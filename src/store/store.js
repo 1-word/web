@@ -7,11 +7,6 @@ import { devtools } from 'zustand/middleware'
  * @LastEdit 20230831 로딩 상태 추가
  */
 
-export const MEMORIZATION_TYPE = {
-    ALL: "all",
-    MEMORIZATION: "memorization",
-    MEMORIZATION_PERIOD: "memorizationPeriod"
-}
 
 export const COMM_MODE = {
     EDIT: 0,
@@ -20,12 +15,6 @@ export const COMM_MODE = {
 }
 
 const useStore = set => ({
-    memorization: MEMORIZATION_TYPE.ALL,
-    setMemorization: (memorizationType) => {
-        set(() => ({
-            memorization: memorizationType
-        }));
-    },
     clickedFolder: -1,
     setClickedfolder: (folder_id) => {
         set(()=> ({

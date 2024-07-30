@@ -12,7 +12,7 @@ import { dataCheck } from "@/util/utils";
 
 function WordList(props){
 
-    const {page, update, wordList, memoStatus, setMemoStatus, mode, setPageObsActivate} = wordListStore(state => state);
+    const {page, update, wordList, memoStatus, setMemoStatus, mode, setPageObsActivate, searchText} = wordListStore(state => state);
     const [openModal] = useModal("move");
     const [addAlert] = useAlert();
 
@@ -32,27 +32,20 @@ function WordList(props){
 
     useEffect(() => {
         obsInit(obsRef);
-        setPageObsActivate(preventDisable);
+        setPageObsActivate({obsActivate: preventDisable, obsEndUpdate: endUpdate});
     }, []);
 
     useEffect(()=> {
-        preventDisable();
-        console.log(`obsPage: ${obsPage}`)
+        // console.log(`obsPage: ${obsPage}`)
         if (obsPage > -1)
             callReadAPI();
-    },[obsPage]);
+    },[obsPage, update]);
     
-
     const callReadAPI = async () => {
-        endUpdate(false);
-        if (!page.hasNext) {
-            endUpdate(true);
-            return;
-        }
-        await onClickHandler('', MODE.READ, '');
-        //옵저빙 가능하도록 수정
-        // preventDisable();
+        // console.log(`WordList mode: ${mode} / hasNext? ${page.hasNext}`);
+        await onClickHandler('', MODE.PAGE, mode, {data: searchText !== ""? searchText : ""});
     }
+
 
     // Edit mode
     // Edit 모드 종료
@@ -150,17 +143,8 @@ function WordList(props){
         openModal(<FolderCog folderCog={config}></FolderCog>)
         // onClickHandler(e, MODE.MEMORIZATION, wordId, {memorization: result});
     }
-
-    resultList = wordList;
-    if (props.memorization === props.memorization_type.MEMORIZATION){
-        resultList = wordList.filter(data => data?.memorization === "Y");
-    }
-
-    if (props.memorization === props.memorization_type.MEMORIZATION_PERIOD){
-        resultList = wordList.filter(data => data?.memorization === "N");
-    }
-
-    const dataList = resultList.map((data, idx) => {
+    
+    const dataList = wordList.map((data, idx) => {
         return <div className="word_cont" key={'wl'+data?.word_id}>
             {data?.folder?.folder_name ?? "" !== "" ?
             <div className="book-clip" style={{background: data?.folder?.background, color: data?.folder?.color}}>{data?.folder?.folder_name.slice(0,4) ?? ""}</div>
@@ -222,7 +206,8 @@ function WordList(props){
     return (
         <>
         {dataList}
-        <div ref={obsRef} style={{height:"100px"}}>hello</div>
+        {/* 해당 컴포넌트가 보이면 데이터 가져온다 */}
+        <div ref={obsRef} style={{height:"100px"}}></div>
         </>
     );
 }

@@ -10,9 +10,9 @@ export const WORD_KEY = {
 }
 
 export const WORD_MODE = {
-    READ: "read",
-    SEARCH: "search",
-    UPDATE: "update"
+    READ: "READ",
+    SEARCH: "SEARCH",
+    UPDATE: "UPDATE"
 }
 
 /**
@@ -76,13 +76,18 @@ const store = set => ({
         next: 0,
         hasNext: true,
         lastWid: -1,
-        obsActivate: () => {}
+        obsActivate: () => {},
+        obsEndUpdate: () => {}
     },
-    setPage: (page) => set(() => ({
-        page: page
+    setPage: (page) => set((state) => ({
+        page: {...state.page, ...page}
     })),
-    setPageObsActivate: (func) => set(() => ({
-        obsActivate: func
+    setPageObsActivate: ({obsActivate: activateFunc, obsEndUpdate: endUpdateFunc}) => set((state) => ({
+        page: {
+            ...state.page,
+            obsActivate: activateFunc,
+            obsEndUpdate: endUpdateFunc
+        }
     })),
     saveList: {
         "user_id": "",
@@ -112,13 +117,28 @@ const store = set => ({
             "memo": ""
         }
     },
+    searchText: "",
+    setSearchText: (text) => set(()=> ({
+        searchText: text
+    })),
+    searchItem: {
+        text: "",
+        memorization: "",
+        language: ""
+    },
+    setSearchItem: (item) => set((state) => ({
+        searchItem: {
+            ...state.searchItem,
+            ...item
+        }
+    })),
     update: false,
-    mode: "read",
+    mode: "READ",
     /**
      * 단어 조회, 검색, 수정 모드 설정
-     * read: 조회
-     * search: 검색, 
-     * update: 수정, 조회API 호출X
+     * READ: 조회
+     * SEARCH: 검색, 
+     * UPDATE: 수정, 조회API 호출X
      */
     setMode: (mode) => set(()=> ({
         mode: mode

@@ -33,12 +33,14 @@ export function textTypeCheck(text){
 }
 
 /**
- * str이 null인지 확인한다.
- * @param {*} str 
+ * data가 null인지 확인한다.
+ * @param {*} 체크할 데이터 
  * @returns true | false
  */
-export function dataCheck(str){
-    if (typeof str === "undefined" || str === -1 || str === "") 
+export function dataCheck(data){
+    if (typeof data === "undefined" || data === -1 || data === "") 
         return false;
+    if (Array.isArray(data))
+        return true;
     return true;
 }
