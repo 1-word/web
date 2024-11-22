@@ -1,0 +1,23 @@
+.lan {
+  display: flex;
+  margin-top: 1rem;
+  ul {
+    gap: 1rem;
+    li {
+      padding: 10px 13px;
+      background: $main-bg-color;
+      color: $main-accent-color;
+      border-radius: 18px;
+			cursor: pointer;
+      &:first-child {
+        margin-right: 1rem;
+        background: none;
+        color: #333;
+      }
+
+      &.active {
+        box-shadow: 0 0 0.25rem $main-accent-color;
+      }
+    }
+  }
+}

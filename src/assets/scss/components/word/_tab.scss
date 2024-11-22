@@ -1,0 +1,22 @@
+.word_tab {
+	padding: $main-p;
+  margin: 24px 0 0;
+  gap: 12px;
+  > li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.4375rem;
+    padding: 0.5rem 0;
+    cursor: pointer;
+    background: $main-bg-color;
+    border-radius: $main-br;
+    transition: background 0.2s ease;
+		// 탭 활성화 스타일
+    &.active {
+      font-weight: bold;
+      background: $default-fff;
+      box-shadow: 0 0 0.25rem $main-accent-color;
+    }
+  }
+}

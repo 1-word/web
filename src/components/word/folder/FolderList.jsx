@@ -31,12 +31,19 @@ function FolderList(){
 
     return (
             <div className="folder_wrap">
-                <ul className="flex folder_cont">
-                    <li onClick={handleConfigClick}>
-                        <span>
-                            <i className="xi-cog"></i>
-                        </span>
-                    </li>
+								{/* 미니헤더 컴포넌트 */}
+								<header className="mini flex">
+									<button className="back xi-angle-left"></button>
+									<h2 className="title">내 단어장</h2>
+									<button className="close xi-close"></button>
+								</header>
+								{/* 미니헤더 컴포넌트 */}
+								<div className="folder_cont">
+								<div className="folder_top flex">
+                    <button onClick={handleConfigClick}>단어장 관리</button>
+										<button className="folder_plus" onClick={handleAddClick}>새 단어장 만들기<i className="xi-plus"></i></button>
+								</div>
+                <ul className="folder_lists flex">
                     <li id="allFolder" onClick={()=>{
                         setClickedfolder(-1);
                         onClickHandler('', MODE.READ);
@@ -52,8 +59,9 @@ function FolderList(){
                         >{item.folder_name.slice(0,2)}</li>
                     )
                 }
-                    <li className="xi-plus" onClick={handleAddClick}></li>
+                    
                 </ul>
+								</div>
             </div>
         );
     }

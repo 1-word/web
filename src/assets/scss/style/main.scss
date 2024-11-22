@@ -1,30 +1,32 @@
 @charset "UTF-8";
-@import "@scss/assets/color.scss";
+@import "@scss/components/word/search_bar";
+@import "@scss/components/word/langselect";
+@import "@scss/components/word/folderlist";
+@import "@scss/components/word/colorpick";
+@import "@scss/components/word/new";
+@import "@scss/components/word/list";
+@import "@scss/components/word/tab";
+
+
 
 * {
   margin: 0;
   padding: 0;
+	box-sizing: border-box;
+	// 전체 스크롤바 디자인
+	&::-webkit-scrollbar {
+    width: 6px;
+    background: $main-bg-color;
+  }
+  &::-webkit-scrollbar-thumb {
+    min-height: 30px;
+    background: $default-ddd;
+  }
 }
 
 @font-face {
   font-family: "PretendardJP";
   src: url(/assets/fonts/PretendardJP-Medium.woff);
-}
-
-button {
-  font-family: "PretendardJP", sans-serif;
-}
-
-.btn {
-  display: flex;
-  width: 3.875rem;
-  height: 34px;
-  padding: 0.6875rem 6.375rem;
-  justify-content: center;
-  align-items: center;
-  border-radius: 1.875rem;
-  font-family: "PretendardJP", sans-serif;
-  cursor: pointer;
 }
 
 html body {
@@ -33,30 +35,27 @@ html body {
 }
 
 body{
+	font-size: 16px;
+	background: $default-fff;
   &::-webkit-scrollbar {
-    width: 16px;
-    background: $main-bg-color;
+    width: 8px;
   }
-
-  &::-webkit-scrollbar-thumb {
-    min-height: 30px;
-    background: $default-ddd;
-
+	&::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #81b5fd 0%, $main-accent-color 100%);
   }
+	@include deviceSmall(){
+		font-size: 14px;
+		&::-webkit-scrollbar {
+			display: none;
+		}
+	}
 }
 
-ul, ol, dl {
-  list-style: none;
-}
-
-a {
-  text-decoration: none;
-  color: #202020;
-}
-
-button {
-  border: none;
-  outline: none;
+html,body, body > #root,
+#root > div{
+	width: 100%;
+	height: 100%;
+	min-height: 100vh;
 }
 
 .disN {
@@ -72,8 +71,15 @@ nav {
 }
 
 .wrap {
-  width: 1280px;
+	width: 100%;
+  max-width: $device_small;
   margin: 0 auto;
+	border-left: 1px solid $default-ddd;
+	border-right: 1px solid $default-ddd;
+	background-color: $default-fff;
+	@include deviceSmall(){
+		border: 0;
+	}
 }
 
 .modal-fix {
@@ -83,419 +89,176 @@ nav {
   z-index: 999;
 }
 
-
-
-/* tooltip */
-
-[data-tooltip] {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-
-  &:before, &:after {
-    visibility: hidden;
-    opacity: 0;
-    position: absolute;
-    left: 20%;
-    transform: translateX(-50%);
-    white-space: nowrap;
-    transition: all 0.2s ease;
-    font-size: 11px;
-  }
-
-  &:before {
-    content: attr(data-tooltip);
-    height: 13px;
-    position: absolute;
-    top: -20px;
-    padding: 5px 10px;
-    border-radius: 5px;
-    color: $default-fff;
-    background: $main-text-color;
-    box-shadow: 0 3px 8px rgba(165, 165, 165, 0.5);
-  }
-
-  &:after {
-    content: "";
-    border-left: 5px solid transparent;
-    top: 2px;
-    left: 33%;
-    border-right: 5px solid transparent;
-    border-top: 5px solid $main-text-color;
-    z-index: -1;
-  }
-
-  &:not([data-tooltip=""]):hover {
-    &:before {
-      visibility: inherit;
-      opacity: 1;
-      top: -35px;
-    }
-
-    &:after {
-      visibility: visible;
-      opacity: 1;
-      top: -12px;
-    }
-  }
+// 메인 인덱스
+.vb_canvas_wrap{
+	overflow: hidden;
 }
 
-/* header */
-
-header {
-  padding: 2rem 0;
-  gap: 5rem;
-  align-items: center;
-  justify-content: space-between;
-
-  h1 a {
-    font-size: 0;
-  }
-
-  nav {
-    font-size: 1.2rem;
-
-    ul {
-      gap: 2rem;
-
-      li {
-        position: relative;
-        transition: 0.26s ease;
-      }
-
-      > li {
-        > a:hover {
-          color: #946CF4;
-        }
-
-        &:hover .depth {
-          height: 100px;
-        }
-      }
-    }
-  }
+.vb_main{
+	&_wrap{
+		margin-top: 10px;
+		display: flex;
+		flex-direction: column;
+		gap: 70px;
+	}
+	&_cont{
+		padding: 0 14px;
+		display: flex;
+		flex-direction: column;
+		gap: 32px;
+		&.left{
+			align-items: flex-end;
+			text-align: end;
+		}
+		&.center{
+			align-items: center;
+			text-align: center;
+		}
+	}
+	&_title{
+		font-size: 1.5em;
+		line-height: 1.2em;
+		font-weight: bold;
+	}
+	&_contents{
+		font-size: 1em;
+		line-height: 1.2em;
+	}
+	&_introduce_grid{
+		width: 100%;
+		display: grid;
+		grid-template-columns: repeat(3,1fr);
+		grid-auto-rows: minmax(150px,1fr);
+		gap: 30px;
+		@include deviceSmall(){
+			grid-template-columns: repeat(2,1fr);
+		}
+		li{
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 10px;
+			padding: 14px;
+			background-color: $main-bg-color;
+			border-radius: $sub-br;
+		}
+		&_num{
+			font-size: 2em;
+			color: $main-accent-color;
+		}
+		&_title{
+			font-size: 1em;
+			line-height: 1.2em;
+		}
+	}
 }
+// 메인 인덱스
 
-/* 언어 설정 */
-
-.lan {
-  display: flex;
-
-  /* justify-content: center; */
-  margin-top: 1rem;
-
-  ul {
-    gap: 1rem;
-
-    li {
-      padding: 10px 13px;
-      background: #f7f5fc;
-      color: #946CF4;
-      border-radius: 18px;
-
-      &:first-child {
-        margin-right: 1rem;
-        background: none;
-        color: #333;
-      }
-
-      &.active {
-        box-shadow: 0 0 0.25rem #946CF4;
-      }
-    }
-  }
+// 마이 단어장 폴더
+.my_word{
+	&_wrap{
+		margin: 24px 0;
+		padding: $main-p;
+	}
+	&_list{
+		font-size: 12px;
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		li{
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 12px;
+			background-color: $main-bg-color;
+			border-radius: $sub-br;
+			// 화살표
+			&::after{
+				content: url("/assets/images/next.svg");
+			}
+		}
+	}
 }
-
-.search_wrap {
-  position: sticky;
-  top: 3%;
-  left: 0;
-  width: 50%;
-  margin: 0 auto;
-  z-index: 100;
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+// 마이 유저
+.my_user{
+	margin: 14px 0;
+	display: flex;
+	align-items: center;
+	font-size: 18px;
+	&_img{
+		flex: 48px 0 0;
+		width: 48px;
+		height: 48px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		overflow: hidden;
+	}
 }
-
-.seacrch_cont {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid transparent;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-  border-radius: 30px;
-  background-image: linear-gradient(#fff, #fff), linear-gradient(to right, #81b5fd 0%, #946cf4 100%);
-  background-origin: border-box;
-  background-clip: content-box, border-box;
-}
-
-/* 검색 로고 달아놨던 것 */
-/* .seacrch_cont::before{
-  content: "";
-  position: absolute;
-  top: -15px;
-  left: 0;
-  width: 30px;
-  height: 30px;
-  background: url(@images/logo.svg);
-  background-size: cover;
-} */
-
-.s_text {
-  padding: 10px 15px;
-  border: 0;
-  width: 80%;
-
-  &:focus-visible {
-    outline: 0;
-  }
-}
-
-.search_icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 40px;
-  background: linear-gradient(to right, #81b5fd 0%, #946cf4 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  white-space: nowrap;
-}
-
-/* 단어장 폴더 */
-
-.folder_wrap {
-  display: flex;
-  justify-content: center;
-}
-
-.folder_cont {
-  margin: 30px 0 0;
-  flex-wrap: wrap;
-
-  li {
-    margin: 0 0 15px 15px;
-    padding: 10px 13px;
-    font-size: 18px;
-    background: #f7f5fc;
-    color: #946CF4;
-    border-radius: 18px;
-    max-width: 40px;
-    cursor: pointer;
-    transition: 0.2s all;
-    text-transform: uppercase;
-
-    &.on, &:hover, &:focus-visible {
-      background: #fff;
-      color: #946CF4;
-      box-shadow: #946CF4 0px 3px 8px;
-      max-width: 200px;
-    }
-  }
-}
-
-/* 단어장 탑부분 */
-
-.word_top {
-  justify-content: space-between;
-  align-items: center;
-  padding: 30px 0 0;
-}
-
-.word_plus_wrap {
-  position: relative;
-  border-radius: 20px;
-}
-
-.word_plus {
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-
-  /* background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%); */
-  border-radius: 20px;
-  color: #946CF4;
-  background: #f7f5fc;
-  box-shadow: -1px 1px 8px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  font-weight: bold;
-  padding: 6px 20px;
-  transition: box-shadow 0.2s ease-in-out;
-  box-sizing: border-box;
-  border: 0;
-  font-size: 16px;
-  -moz-user-select: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-
-  .word_plus:not(:disabled):hover, &:not(:disabled):focus {
-    outline: 0;
-
-    /* box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem #5adaff, .125rem .125rem 1rem #5468ff; */
-    box-shadow: 0 0 0.25rem #946CF4, -0.125rem -0.125rem 1rem #bac9f6, 0.125rem 0.125rem 1rem #946CF4;
-  }
-
-  &:disabled {
-    filter: opacity(0.8);
-    -webkit-filter: opacity(0.8);
-    cursor: not-allowed;
-  }
-}
-
-.word_plus_mobile {
-  position: fixed;
-  bottom: 5%;
-  right: 2%;
-  width: 40px;
-  height: 40px;
-  display: none;
-  visibility: hidden;
-  opacity: 0;
-  transition: all 3s ease-in;
-  background: #f7f5fc;
-  color: #946CF4;
-  font-size: 1.3em;
-  border-radius: 50%;
-  z-index: 10;
-  overflow: hidden;
-
-  &::before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.8);
-    width: 100%;
-    height: 100%;
-    background: #f0eafd;
-    border-radius: 50%;
-    z-index: -1;
-    animation: bloom 1s 3s linear alternate infinite;
-  }
-
-  i.xi-plus {
-    font-weight: 600;
-  }
-}
-
-@keyframes bloom {
-  100% {
-    transform: translate(-50%, -50%) scale(1.4);
-  }
-}
-
-.word_plus i {
-  font-size: 30px;
-  padding-right: 10px;
-}
-
-/*단어장 탭부분*/
-
-.word_tab_area {
-  gap: 11px;
-
-  div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 3.4375rem;
-    padding: 0.5rem 0;
-    cursor: pointer;
-    position: relative;
-    background: #f7f5fc;
-    border-radius: 20px;
-    transition: background 0.2s ease;
-
-    &.active {
-      font-weight: bold;
-      background: #fff;
-      box-shadow: 0 0 0.25rem #946CF4;
-      box-sizing: border-box;
-    }
-  }
-}
+// 마이 단어장 폴더
 
 /*단어장 내용부분*/
 
-.word_wrap {
-  position: relative;
-  width: 100%;
-  margin: 30px auto;
-}
+/* 단어 형태사 컴포넌트 */
 
-.book-clip {
-  position: absolute;
-  top: -10px;
-  left: 8px;
-  width: 60px;
-  height: 21px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
-  background: #03CDBF;
-  border-radius: 6px 6px 0 0;
-  z-index: 1;
-}
+.word_type{
+	&_wrap{
+		margin-top: 16px;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+	&_title{
+		flex-shrink: 0;
+    padding: 5px 7px;
+		font-size: 0.825em;
+    border-radius: $main-br;
+    background: $sub-hover-color;
+		@include deviceSmall(){
+			align-self: flex-start;
+		}
+	}
+	&_list{
+    gap: 0.69rem;
+		align-items: center;
 
-.word_cont {
-  position: relative;
-}
-
-.word {
-  margin-bottom: 1.625rem;
-  padding: 1.25rem;
-  box-shadow: -1px 1px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 0.5rem;
-  background: #f7f5fc;
-
-  &.word-e .mid_area .mean_wrap {
-    gap: 0.5625rem;
-  }
-}
-
-/* 영어 단어 컴포넌트 */
-
-.word-e {
-  .synonym_wrap {
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .synonym_cont {
+	}
+	&_cont{
+		align-items: center;
     justify-content: flex-start;
     gap: 0.69rem;
-  }
+		li{
+			display: flex;
+			gap: 8px;
+		}
+		&_title{
+			color: $sub-text-color;
+		}
+		@include deviceSmall(){
+			flex-wrap: wrap;
+		}
+	}
+}
 
-  .synonym-area {
-    display: flex;
-    gap: 0.69rem;
-  }
+// 영단어 컴포넌트
 
+.word-e {
+	// 분사
   .e-vn {
+		flex-wrap: wrap;
     gap: 0.1875rem;
+		span{
+			width: auto;
+			margin: 0;
+			background: none;
+			&:last-child {
+				color: #999;
+			}
+		}
   }
 }
 
-.word .synonym_wrap span {
-  margin: 0;
-}
-
-.word-e .e-vn span {
-  width: auto;
-  margin: 0;
-  background: none;
-
-  &:last-child {
-    color: #999;
-  }
-}
 
 /* 영어 에딧 컴포넌트 */
 
@@ -505,315 +268,224 @@ header {
   display: flex;
 }
 
+// 상단
 .top_area {
-  justify-content: space-between;
-}
+	justify-content: space-between;
 
-.top_word_wrap {
-  word-break: break-all;
-
-  .icon {
-    margin: 0;
-    margin-right: 11px;
+	// 전체폰트사이즈
+	span {
+    font-size: 24px;
   }
-}
-
-.top_area {
-  button {
-    background: none;
-  }
-
+	// 발음
   .read {
     font-weight: 400;
     font-size: 1rem;
     margin-left: 0.25rem;
   }
-
-  span {
-    font-size: 24px;
+	// 체크아이콘
+	.check {
+    margin: 0;
+    margin-right: 11px;
+		&.on{
+			content: "\e92b";
+			i::before {
+				content: "\e92b";
+			}
+		}
   }
 
   .xi-headset {
     cursor: pointer;
-
     &::before {
       font-size: 24px;
     }
+		&.on{
+			color: $main-accent-color;
+		}
   }
 }
-
+// 중복되면 지움
 .listen.on {
   color: $main-accent-color;
 }
 
+// 상단 단어랩(안튀게)
+.top_word_wrap {
+  word-break: break-all;
+}
+
+// 중간(뜻)
 .mid_area {
-  padding: 10px 0;
+	margin-top: 12px;
 }
 
 .mean_wrap {
-  padding: 11px 2px;
-
-  /* border-radius: 1.25rem;
-  background: #BAC9F6; */
-  color: #946CF4;
+  color: $main-accent-color;
 }
 
-.synonym_wrap {
-  padding: 15px 0;
-  gap: 11px;
+//// 중간(뜻)
 
-  span {
-    display: block;
-    width: 60px;
-    padding: 5px 7px;
-    margin-right: 15px;
-    border-radius: 1.875rem;
-    background: $sub-hover-color;
-    text-align: center;
-    vertical-align: middle;
-  }
+// 유의어
+
+.synonym_wrap {
+	margin-top: 16px;
+  gap: 11px;
 }
 
 .synonym_cont {
   align-items: center;
   justify-content: center;
-
-  p {
-    margin-right: 20px;
-  }
+	gap: 20px;
 }
+
+//// 유의어
 
 /*단어장 아랫부분*/
 
 .foot_area {
+	margin-top: 16px;
   justify-content: space-between;
+	.icon {
+		cursor: pointer;
+		font-size: 1.5em;
+		transition: 0.36s ease;
+		margin-left: 1em;
+		transition: color 0.3s ease;
+		&:first-child{
+			margin-left: 0;
+		}
+		&:hover, &:focus, &.on {
+			color: $main-accent-color;
+		}
+	}
 }
 
-.icon {
-  cursor: pointer;
-  background: none;
-  font-size: 24px;
-  transition: 0.36s ease;
-  margin-left: 20px;
-  transition: color 0.3s ease;
-
-  &:hover, &:focus, &.on {
-    color: #946CF4;
-  }
-}
-
-.check.on {
-  content: "\e92b";
-
-  i::before {
-    content: "\e92b";
-  }
-}
 
 /*메모칸*/
-
-.memo_area {
-  width: 100%;
-
-  /* max-height: 200px; */
-  max-height: 0;
-  overflow: hidden;
-  transition: 0.4s ease;
-  margin-bottom: 10px;
-
-  &.on {
-    max-height: 200px;
-  }
-}
-
-.memo_text {
-  display: block;
-  width: 100%;
-  margin: 0 auto;
-  padding: 15px;
-  font-size: 15px;
-  line-height: 1.1;
-  border-radius: 0.625rem;
-  border: 1px solid $sub-text-color;
-  background: rgba(255, 255, 255, 0.3490196078);
-  height: 100px;
-  outline: 0;
-  transition: 0.4s background;
-  box-sizing: border-box;
-  resize: none;
-  font-family: "PretendardJP";
-  overflow-y: auto;
-  appearance: none;
-
-  &:focus-visible {
-    border-color: $default-999;
-    background: $default-fff;
-  }
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
+.memo{
+	&_area {
+		width: 100%;
+		max-height: 0;
+		overflow: hidden;
+		transition: 0.4s ease;
+		margin-bottom: 10px;
+		&.on {
+			margin-top: 24px;
+			max-height: 200px;
+		}
+	}
 }
 
 .memo_area .btn_area {
   justify-content: end;
-  margin: 11px auto;
+  margin: 16px auto;
   gap: 1rem;
-  padding: 0 1rem;
-  box-sizing: border-box;
+	button{
+		max-width: 100px;
+		@include deviceSmall(){
+			max-width: 62px;
+		}
+	}
 }
 
-@import "@scss/assets/button.scss";
-
-.btn_area {
-  .cancle_memo, .save_memo {
-    @include btn-fill();
-    max-width: 100px;
-    height: 38px
-  }
-
-  .cancle_memo {
-    @include btn-light();
-  }
-
-
-  .save_memo {
-
-  }
+// 더하기 나오는 컴포넌트
+.add{
+	&_wrap{
+		span {
+			display: block;
+			margin-bottom: 8px;
+			margin-left: 8px;
+			padding: 0;
+			background: 0;
+			font-size: 0.825em;
+			color: $default-666;
+			font-weight: 300;
+		}
+	}
+	&_cont{
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		justify-items: stretch;
+		gap: 1rem;
+		row-gap: 10px;
+		@include deviceSmall(){
+			grid-template-columns: repeat(1, 1fr);
+			column-gap: 0;
+		}
+	}
+	&_list{
+		width: 100%;
+		align-items: center;
+		// 삭제버튼
+		button{
+			margin-left: -28px;
+			height: 1em;
+			font-size: 1em;
+			transition: 0.4s;
+			&:hover, &:focus-visible {
+				opacity: 0.5;
+			}
+		}
+	}
+	&_plus{
+		width: 100%;
+		height: 36px;
+		line-height: 36px;
+		font-size: 20px;
+		background: #BAC9F6;
+		cursor: pointer;
+		border-radius: $sub-br;
+		transition: 0.4s;
+		color: #fff;
+		&:hover, &:focus {
+			opacity: 0.7;
+		}
+	}
 }
+// 더하기 나오는 컴포넌트
 
 /* edit 모드 */
 
-.word.edit {
-  /* background: #dde7f3; */
-  background: #edf5ff;
-}
-
 .edit {
-  .mean_wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 10px;
-    padding: 0;
-    background: none;
-    color: #202020;
-  }
-
+	&.word{
+		background: $sub-bg-color;
+	}
+	// 단어
   .top_area {
-    padding-bottom: 10px;
-    border-radius: 1.875rem;
-    color: #946CF4;
-
+    color: $main-accent-color;
+		margin-bottom: 24px;
+		// 탑에리어에서 헤드셋 삭제
+		.headset{
+			display: none;
+		}
     span {
-      font-size: 1.25rem;
-
-      /* margin-left: 10px; */
+      font-size: 1.5em;
+			font-weight: 600;
     }
   }
 
-  input {
-    background: #fff;
-    opacity: 0.6;
-    transition: 0.3s ease-in;
-    padding: 3px 15px;
-    width: 100%;
-    height: 100%;
-    border-radius: 4px;
-    box-sizing: border-box;
-    border-radius: 1.875rem;
-    font-size: 1rem;
-    box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.25);
-  }
-
-  .synonym_wrap {
-    &::after {
-      content: "";
-      display: block;
-      clear: both;
-    }
-
-    span {
-      margin-bottom: 15px;
-
-      /* font-size: 1rem; */
-    }
-  }
-
-  .synonym_cont {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    justify-items: start;
-    gap: 1rem;
-  }
-
-  .synonym_add {
-    width: 100%;
-
-    /* margin: 10px 36px 10px 0; */
-    align-items: center;
-
-    &:nth-child(5n) {
-      margin-right: 0;
-    }
-  }
-
-  .synonym_cont input {
-    /* width: 170px; */
-    width: 80%;
-    height: 24px;
-    font-size: 0.875rem;
-    padding: 3px 0;
-    text-indent: 15px;
-    margin-right: 5px;
-    box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.25);
-  }
-
-  input:focus {
-    opacity: 1;
-  }
-
-  .synonym_add button {
-    width: 20%;
-    background: none;
-    height: 20px;
-    font-size: 20px;
-    cursor: pointer;
-    transition: 0.4s;
-
-    /* padding: 0 10px; */
-
-    &:hover, &:focus-visible {
-      opacity: 0.5;
-    }
-  }
-
-  .top_area .headset {
-    display: none;
-  }
-
-  .synonym_plus_cont {
-    width: 80%;
-  }
-
-  .synonym_plus {
-    width: 100%;
-    height: 26px;
-    font-size: 19px;
-    background: #BAC9F6;
-
-    /* background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%); */
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-    cursor: pointer;
-    border-radius: 20px;
-    transition: 0.4s;
-    line-height: 30px;
-    color: #fff;
-
-    &:hover, &:focus {
-      opacity: 0.7;
-    }
-  }
+	// 단어 형태 박스
+	.word_type_wrap{
+		flex-direction: row;
+		align-items: center;
+		>span{
+			flex: 60px 0 0;
+		}
+		>div{
+			flex: 1;
+		}
+	}
+	&_foot{
+		margin-top: 24px;
+		justify-content: flex-end;
+		gap: 1rem;
+		button{
+			max-width: 100px;
+			@include deviceSmall(){
+				max-width: 62px;
+			}
+		}
+	}
 
   .check {
     color: #03CDBF;
@@ -824,181 +496,11 @@ header {
   }
 }
 
-/* 미디어쿼리 */
-@media (max-width: 1280px) {
-  .wrap {
-    width: 90%;
-  }
-
-  .search_wrap {
-    width: 100%;
-  }
-
-  .edit .synonym_cont {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 767px) {
-  html body {
-    font-size: 14px;
-  }
-
-  .search_wrap {
-    z-index: 100;
-  }
-
-  .search_icon {
-    font-size: 26px;
-  }
-
-  .s_text {
-    font-size: 14px;
-    padding: 5px 15px;
-  }
-
-  .word_plus_wrap .word_plus {
-    display: none;
-    opacity: 0;
-    visibility: hidden;
-  }
-
-  .folder_wrap {
-    /* display: none; */
-    padding-top: 5rem;
-  }
-
-  .word_plus_mobile {
-    display: block;
-    visibility: visible;
-    opacity: 1;
-  }
-
-  .word_wrap {
-    /* margin: 110px 0; */
-  }
-
-  .top_area {
-    gap: 0.1rem;
-  }
-
-  .synonym_wrap {
-    padding: 15px 0;
-
-    span {
-      margin-right: 8px;
-      padding: 5px 2px;
-    }
-  }
-
-  .folder_cont {
-    width: 100%;
-    overflow-x: scroll;
-    display: grid;
-
-    /* grid-auto-columns: minmax(50, auto); */
-    grid-template-columns: repeat(20, 1fr);
-    gap: 15px;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
-    li {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 50px;
-      max-width: 50px;
-      font-size: 14px;
-      margin: 7px 3px;
-
-      &:first-of-type {
-        width: 20px;
-        max-width: 20px;
-      }
-    }
-  }
-
-  .top_area {
-    span, .xi-headset::before {
-      font-size: 20px;
-    }
-  }
-
-  .pen, .check, .memo, .close {
-    font-size: 20px;
-  }
-
-  .btn_area {
-    .cancle_memo, .save_memo {
-      width: 3.875rem;
-      height: 1.625rem;
-    }
-  }
-
-  .memo_text {
-    width: 100%;
-  }
-
-  .memo_area .btn_area {
-    padding: 0;
-  }
-
-  .top_area span {
-    font-size: 1.25rem;
-  }
-
-  .search_wrap {
-    width: 90%;
-    padding: 0;
-  }
-
-  .seacrch_cont {
-    background: none;
-  }
-
-  .edit {
-    .synonym_cont {
-      grid-template-columns: repeat(1, 1fr);
-    }
-
-    .synonym_add {
-      gap: 10px;
-    }
-
-    .synonym_cont input {
-      width: 95%;
-    }
-
-    .synonym_add button {
-      width: 8%;
-    }
-
-    .synonym_plus_cont {
-      width: 100%;
-    }
-  }
-
-  .word-e {
-    .synonym_cont {
-      width: 100%;
-      flex-wrap: wrap;
-    }
-
-    .synonym_wrap .synonym-area > span {
-      background: none;
-      color: #a782fd;
-    }
-
-    .e-vn {
-      width: 100%;
-    }
-  }
-
-  .e-edit.edit .synonym_cont input {
-    margin: 0;
-  }
+.e.edit, .e-edit{
+	// 영어
+	.e-vn{
+		align-items: center;
+	}
 }
 
 /*# sourceMappingURL=wordPaper.css.map */

@@ -9,7 +9,7 @@ import React from 'react';
 function SynonsymsList(props){    
     return (
         <div className="synonym_wrap flex">
-            <span>유의어</span>
+            <span className='word_type_title'>유의어</span>
             <div className="synonym_cont flex">
                 {props.synonyms.map((_synonym, idx) => 
                     <p key={'sl'+idx+_synonym?.synonym_id}>{_synonym.synonym}</p>

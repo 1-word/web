@@ -1,0 +1,125 @@
+
+    .top-wrap{
+      &.on{
+        .modal-wrap{
+          opacity: 1;
+          visibility: visible;  
+        }
+      }
+    }
+  
+    .modal-wrap {
+      position: fixed;
+      
+			left: calc(50% - 300px);
+      width: 600px;
+			height: 100%;
+      box-sizing: border-box;
+      background: #f8f8f8a9;
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      overflow: hidden;
+      animation: slide 0.15s 25ms linear forwards;
+      // animation: slide 3s 25ms linear forwards;
+      visibility: hidden;
+      transition: 0.15s linear;
+      opacity: 0;
+      &.on{
+        @keyframes slide {
+          0%{
+						transform: translateX(-50%);
+          }
+          100%{
+						transform: translateX(0);
+          }
+        }
+      }
+      &.off{
+        //!! animation의 delay변경 시 Modals.jsx의 setTimeout도 동일한 시간으로 변경 필요함 !!
+        animation: slide-off 0.15s 25ms linear forwards;
+        @keyframes slide-off {
+          0%{
+            transform: translateX(0);
+          }
+          100%{
+						transform: translateX(-50%);
+          }
+        }
+      }
+			@include deviceSmall(){
+				inset: 0;
+				width: 100%;
+			}
+      .modal-cont{
+				height: 100%;
+				padding: $main-p;
+				margin-top: 16px;
+      }
+
+			.modal-area{
+				padding-bottom: 16px;
+			}
+
+			.modal-scroll{
+				max-height: 76dvh;
+				overflow-y: auto;
+				padding-bottom: 64px;
+			}
+
+			.modal-btn-wrap{
+				position: fixed;
+				bottom: 0;
+				width: 100%;
+				left: 0;
+				padding: 16px;
+			}
+
+      .title{
+        font-size: 1.2rem;
+        font-weight: 500;
+      }
+			.btn-area {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2.25rem;
+      padding-bottom: 60px;
+    }
+    }
+  
+  /* 아래의 모든 코드는 영역::코드로 사용 */
+  
+  .modal-wrap {
+    &::-webkit-scrollbar {
+      width: 4px;
+      background: $main-bg-color;
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      min-height: 30px;
+      background: $default-ddd;
+
+    }
+  }
+  
+
+  
+  .delete {
+    /* position: absolute;
+    left: 85%;
+    top: 18.00px; */
+    font-size: 30px;
+    color: #333;
+    background: none;
+  
+    /* background:url(/public/img/delete_icon.png) no-repeat; */
+    transition: color 0.2s ease;
+    border: none;
+    cursor: pointer;
+  
+    &:hover, &:focus {
+      color: #666;
+  
+      /* content: "\e924"; */
+    }
+  }

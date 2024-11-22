@@ -70,28 +70,25 @@ function Colorpick({colorPickPop}){
     const font_color_list = Object.keys(FONT_COLOR);
 
     return(
-        <div className="add-cont color-area">
-            <div className="add-title title-area flex">
-                <h2>내 폴더</h2>
-            </div>
-            <div className="preview-area">
+        <div className="add-cont color-cont">
+            <div className="color-preview-area">
                 <div className="preview" style={{'--color': pickColor?.background}}>
                     <h3 style={{'color': pickColor?.color}}>미리보기</h3>
                 </div>
             </div>
-            <div className="name-area">
-                <div className="name-title title">
+            <div className="color-list">
+                <div className="color-title">
                     <h3>이름<span>(10글자 이내로 적어주세요)</span></h3>
                 </div>
-                <div className="name-input">
+                <div>
                     <input ref={folderNameInput} type="text" maxLength="10" defaultValue={pickColor?.folder_name}/>
                 </div>
             </div>
-            <div className="pick-area">
-                <div className="pick-title title">
+            <div className="color-pick-area color-list">
+                <div className="color-title">
                     <h3>폴더 색</h3>
                 </div>
-                <div className="wrap">
+                <div className="color-pick">
                     <div className="area">
                         { 
                             foler_color_list.map((key, idx) => 
@@ -102,11 +99,11 @@ function Colorpick({colorPickPop}){
                     </div>
                 </div>
             </div>
-            <div className="pick-area">
-                <div className="pick-title title">
+            <div className="color-pick-area color-list">
+                <div className="color-title">
                     <h3>글자 색</h3>
                 </div>
-                <div className="wrap">
+                <div className="color-pick">
                     <div className="area">
                         { 
                             font_color_list.map((key, idx) => 
@@ -118,7 +115,7 @@ function Colorpick({colorPickPop}){
                 </div>
             </div>
             <div className='btn-area flex'>
-                <button className='btn' onClick={handleConfirmClick()}>확인</button>
+                <button className='btn-fill sizeL' onClick={handleConfirmClick()}>확인</button>
             </div>
         </div>
     )

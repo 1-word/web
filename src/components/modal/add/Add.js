@@ -1,18 +1,21 @@
 import React, { useRef } from "react";
 import AddList from "./AddList";
+import HeaderMini from "@components/layout/header_mini";
 import wordListStore, { WORD_KEY } from "@/store/wordListStore";
 import Store from "@/store/store";
 import api, { MODE } from "@/services/api";
 import { textTypeCheck } from "@/util/textTypeCheck";
 
-function Add({children, props}){
-    console.log(children, props);
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+
+function Add({handleClick, idx}){
 
     const {saveList, saveWordList} = wordListStore(state => state);
     const {clickedFolder} = Store(state=> state);
     const onClickHandler = api();
 
-    const handleClick = (e) => {
+    const handleSaveClick = (e) => {
         let target_name = e.target.name;
         let target_id = e.target.id;
         let resultList = {};
@@ -34,8 +37,8 @@ function Add({children, props}){
 
     const synonymInputList = saveList.synonyms.map((data, idx) => (
         <AddList key={idx}
-            btncls = {idx===0? "plus_btn xi-plus" : "minus_btn xi-minus"}
-            btnname = {idx===0? "plus_btn" : "minus_btn"}
+            btncls = {idx===0? "add_plus xi-plus" : "add_minus xi-close"}
+            btnname = {idx===0? "add_plus" : "minus_btn"}
             name= {WORD_KEY.SYNONYMS}
             text= {idx===0? "유의어" : ""} 
             id = {idx}
@@ -44,81 +47,66 @@ function Add({children, props}){
     ));
 
     // 영어 add
-    return  <div className="add-cont">                
-                <div className="add-title flex">
-                    <h2 className="lang-title">단어 추가</h2>
-                </div>     
-                <div className="add-word-cont">
-                    <div className="add-main">
-                    <AddList name="word" text="단어" value={saveList.word} ></AddList>          
-                    <AddList name="mean" text="뜻" value={saveList.mean} ></AddList>
-                    <AddList name="wread" text="발음" value={saveList.wread} ></AddList>
-                    </div>       
-                    <div className="add-sub">
-                    <div className="add-title flex">
-                        <h2 className="lang-title">세부사항 추가</h2>
-                    </div>
-                        <div>
-                            <div className="sub-1">
-                            <h3 className="sub-title flex">대분류 <i className="xi-cog"></i></h3>
-                            <div className="box">
-                                <div className="on">11</div>
-                                <div>111111111111</div>
-                                <div>11</div>
-                                <div>11</div>
-                                <div>11</div>
-                                <div>11</div>
-                                <div className="sub-add"><i className="xi-plus"></i></div>
-                            </div>
-                            </div>
-                            <div className="sub-2">
-                            <h3 className="sub-title flex">중분류(선택)<i className="xi-cog"></i></h3>
-                            <div className="box">
-                                <div className="on">11</div>
-                                <div>11</div>
-                                <div>11</div>
-                                <div>11</div>
-                                <div>11</div>
-                                <div>11</div>
-                                <div className="sub-add"><i className="xi-plus"></i></div>
-                            </div>
-                            </div>
-                            <div className="sub-3 flex">
-                                <div className="box flex">
-                                    <div>유의어</div>
-                                    <span>삭제</span>
-                                </div>
-                            </div>
-                            <div className="sub-4">
-                            {synonymInputList}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="btn-area">
-                    <button className="save_btn" name="save_btn" onClick={handleClick}>저장</button>                   
-                </div>
-            </div>
-
-    // return  <div className="add" onClick={handleElementClick()}>
-    //             <div ref={addframeRef} className="addframe">
-    //                 <div className="add-lang flex">
-    //                     <h2 className="lang-title">일본어</h2>
-    //                     <button className="delete" onClick={props.closePopup}><i className="xi-close"></i> </button>
-    //                 </div>        
-    //                 <div className="add7cea4238">                
-    //                     <div className="addgrid">          
-    //                         <AddList name="word" text="단어" value={saveList.word} ></AddList>          
-    //                         <AddList name="mean" text="뜻" value={saveList.mean} ></AddList>
-    //                         <AddList name="wread" text="발음" value={saveList.wread} ></AddList>
-    //                         {synonymInputList}
-    //                     </div>
-    //                     <div className="btn-area">
-    //                     <button className="save_btn" name="save_btn" onClick={handleClick}>저장</button>                   
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         </div>
+    return(
+		<div className="modal-wrap">
+			<HeaderMini handleClick={handleClick(idx)}></HeaderMini>
+			<div className="modal-cont">
+				<div className="new_cont modal-area">
+					<div className="new_word-cont modal-scroll">
+							<div className="new_main">
+							<AddList name="word" text="단어" value={saveList.word} ></AddList>          
+							<AddList name="mean" text="뜻" value={saveList.mean} ></AddList>
+							<AddList name="wread" text="발음" value={saveList.wread} ></AddList>
+							</div>
+							<div className="new_sub_cont">
+								<h2 className="new_sub_title btn-light">세부사항 추가를 원하신다면 눌러주세요</h2>
+								{synonymInputList}
+								{/* 바텀 시트 on 켜지면 스타일 입힘 */}
+								<div className="bottom_sheet">
+									<div className="bottom_sheet_wrap">
+									{/* 드래그된 값에 맞춰 바텀 시트가 내려감 && 밑으로 스와이프하면 시트가 바로 내려감 */}
+									<div className="bottom_sheet_dragable"></div>
+									<h2>타이틀 영역</h2>
+									{/* 내용영역(바뀌는 영역) */}
+									<div className="bottom_sheet_cont">
+										{/* 단어그룹 추가 스와이핑 컨텐츠 */}
+										<div className="vb-vertical-wrap">
+										<Swiper
+											direction={'vertical'}
+											// grid={{
+											// 	rows: 3,
+											// }}
+											centeredSlides={true}
+											loop={true}
+											// modules={[Grid]}
+											className="add_mygroup-swiper vb-vertical-swiper"
+										>
+											<SwiperSlide className="add_mygroup-slide vb-vertical-slide">Slide 1</SwiperSlide>
+											<SwiperSlide className="add_mygroup-slide vb-vertical-slide">Slide 2</SwiperSlide>
+											<SwiperSlide className="add_mygroup-slide vb-vertical-slide">Slide 3</SwiperSlide>
+											<SwiperSlide className="add_mygroup-slide vb-vertical-slide">Slide 4</SwiperSlide>
+											<SwiperSlide className="add_mygroup-slide vb-vertical-slide">Slide 5</SwiperSlide>
+											<SwiperSlide className="add_mygroup-slide vb-vertical-slide">Slide 6</SwiperSlide>
+											<SwiperSlide className="add_mygroup-slide vb-vertical-slide">Slide 7</SwiperSlide>
+											<SwiperSlide className="add_mygroup-slide vb-vertical-slide">Slide 8</SwiperSlide>
+											<SwiperSlide className="add_mygroup-slide vb-vertical-slide">Slide 9</SwiperSlide>
+										</Swiper>
+										</div>
+									</div>
+									<div className="bottom_sheet_btn">
+										<button className="btn-fill sizeM">단어그룹 추가</button>
+									</div>
+									</div>
+								</div>
+							</div>
+					</div>
+					<div className="new_btn_wrap modal-btn-wrap">
+							<button className="btn-fill sizeM" name="save_btn" onClick={handleSaveClick}>저장</button>                   
+					</div>
+				</div>
+			</div>
+		</div>
+		);
 }
 
 export default Add;

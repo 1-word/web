@@ -1,5 +1,3 @@
-@import "@scss/assets/color.scss";
-
 @mixin main-btn {
     position: relative;
     width: 100%;
@@ -39,31 +37,58 @@
         clip-path: inset(0 0 0 0);
     }
 }
-@mixin btn{
-    width: 100%;
-    padding: 8px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 30px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: 0.4s ease;
+@mixin btn($textColor,$bgColor){
+	appearance: none;
+	-webkit-appearance: none;
+	outline: transparent;
+	cursor: pointer;
+	width: 100%;
+	padding: 0 8px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: $main-br;
+	font-size: 14px;
+	font-family: 'PretendardJP';
+	text-wrap: nowrap;
+	transition: 0.3s ease;
+	color: $textColor;
+	background-color: $bgColor;
+	border: 1px solid $textColor;
+	&:focus,&:focus-visible{
+		background-color: $main-hover-color;
+	}
+	@content;
 }
-@mixin btn-fill {
-    @include btn;
-    background: $main-accent-color;
-    color: $main-bg-color;
-    &:hover,&:focus{
-        background: $main-hover-color;
-    }
+
+[class^="btn"]{
+		// size
+		&.sizeS{
+			height: 32px;
+			border-radius: $sub-br;
+		}
+		&.sizeM{
+			height: 40px;
+		}
+		&.sizeL{
+			height: 50px;
+		}
+	}
+
+// style
+.btn{
+	&-fill{
+		@include btn($default-fff,$main-accent-color){
+			font-size: 16px;
+			font-weight: 500;
+		}
+	}
+	&-light{
+		@include btn($main-accent-color,$default-fff){
+			&:focus,&:focus-visible{
+				background-color: $sub-hover-color;
+			}
+		}
+	}
 }
-@mixin btn-light {
-    @include btn;
-    background: $default-fff;
-    color: $main-accent-color;
-    border: 1px solid $main-accent-color;
-    &:hover,&:focus{
-        background: $sub-hover-color;
-    }
-}
+

@@ -44,14 +44,11 @@ function FolderCog({folderCog}){
     }
 
     return(
-        <div className=" add-cont folder-area">
-            <div className="add-title title-area flex">
-                <h2>폴더</h2>
-            </div>
-            <div className="name-area">
+        <div className="add-cont folder-cont">
+            <ul className="add-area folder-lists">
                 {
                     folderList.map((item, idx) => 
-                        <div key={'fl'+item.folder_id} className="name-title title flex" onClick={handleFolderNameClick(item.folder_id)}>
+                        <li key={'fl'+item.folder_id} className="folder-list flex" onClick={handleFolderNameClick(item.folder_id)}>
                             <span className="folder-color" style={{background: item.background}}></span>
                             <h3>{item.folder_name}</h3>
                             <div className='icon-area flex'>
@@ -67,13 +64,13 @@ function FolderCog({folderCog}){
                             }
                                 
                             </div>
-                        </div>
+                        </li>
                     )
                 }
-            </div>
+            </ul>
             { folderCog.mode === COMM_MODE.MOVE &&
                 <div className="btn-area">
-                    <button className="btn" onClick={handleFolderMoveClick()}>이동하기</button>
+                    <button className="btn-fill sizeM" onClick={handleFolderMoveClick()}>이동하기</button>
                 </div>
             }
         </div>

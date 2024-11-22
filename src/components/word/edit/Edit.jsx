@@ -53,43 +53,37 @@ function Edit(props){
     return <div className="word_cont">
                 <div className="word edit" ref={edit_cont}>
                     <div className="top_area flex">
-                        <span>{props?.word}</span>
+                        <span>{props?.word}word</span>
                         <button className="headset"><i className="xi-headset"></i></button>
                     </div>
                     <div className="mid_area">
-                        <div className="mean_wrap">
+                        <div className="input_wrap">
                             <span>발음</span>
-                            <input defaultValue={editWordList.wread} onChange={handleChangeWread()} className="edit_input"/>
+                            <input type="text" defaultValue={editWordList.wread} onChange={handleChangeWread()} className="edit_input"/>
                         </div>
-                        <div className="mean_wrap">
+                        <div className="input_wrap">
                             <span>뜻</span>
-                            <input defaultValue={editWordList.mean} onChange={handleChangeMean()} className="edit_input"/>
+                            <input type="text" defaultValue={editWordList.mean} onChange={handleChangeMean()} className="edit_input"/>
                         </div>
-                        <div className="synonym_wrap">
+                        <div className="input_wrap">
                             <span>유의어</span>
-                            <div className="synonym_cont flex">
+                            <div className="add_cont flex">
                                 {
                                     synonymList.map((_synonym, idx) =>                                        
-                                        <div className="synonym_add flex" key={idx}>                                    
-                                            <input value={_synonym.synonym} 
+                                        <div className="add_list flex" key={idx}>                                    
+                                            <input type="text" value={_synonym.synonym} 
                                                     onChange={changeSynonym(idx)}/>
                                             <button onClick={minusSynonym(idx)}><i className="xi-close"></i></button>
                                         </div>       
                                     )
                                 }
-                                <div className="flex synonym_plus_cont">
-                                <button className="synonym_plus" onClick={addSynonym}><i className="xi-plus"></i></button>
-                                </div>
+                                <button className="add_plus" onClick={addSynonym}><i className="xi-plus"></i></button>
                             </div>
                         </div>
                     </div>
-                    <div className="foot_area flex">
-                        <div></div>
-                        <div className="btn_area">
-                            <button className="check icon" onClick={handleClickSave}><i className="xi-check"></i></button>
-                            {/* <button className="memo"><i className="xi-comment-o"></i></button> */}
-                            <button className="close icon" onClick={props.setEditExit}><i className="xi-close"></i></button>
-                        </div>
+                    <div className="edit_foot flex">
+                            <button className="btn-light sizeS" onClick={props.setEditExit}>취소</button>
+                            <button className="btn-fill sizeS" onClick={handleClickSave}>수정</button>
                     </div>
                 </div>
             </div>
