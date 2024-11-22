@@ -5,7 +5,6 @@ import Index from '@/pages/index';
 import Word from '@/pages/word/Word';
 import Login from '@/pages/login/Login';
 import Signup from '@/pages/login/Signup';
-import Popup from '@components/modal/Popup';
 import Modals from './components/Modals';
 
 

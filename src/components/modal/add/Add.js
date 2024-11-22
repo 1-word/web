@@ -9,8 +9,7 @@ import { textTypeCheck } from "@/util/textTypeCheck";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 
-function Add({handleClick, idx}){
-
+function Add(){
     const {saveList, saveWordList} = wordListStore(state => state);
     const {clickedFolder} = Store(state=> state);
     const onClickHandler = api();
@@ -49,7 +48,6 @@ function Add({handleClick, idx}){
     // 영어 add
     return(
 		<div className="modal-wrap">
-			<HeaderMini handleClick={handleClick(idx)}></HeaderMini>
 			<div className="modal-cont">
 				<div className="new_cont modal-area">
 					<div className="new_word-cont modal-scroll">

@@ -55,15 +55,22 @@ export function useModal(id, openAction, closeAction){
         return { index, isfind };
     }
 
-    const openModal = (Component, props) => {
+		/**
+		 * 모달을 등록한다.
+		 * @param {func} layout 모달 레이아웃(함수)
+		 * @param {func} contents 실제 컴포넌트(함수)
+		 * @param {*} props 실제 레이아웃에 넘길 props
+		 */
+    const openModal = (layout, contents, props) => {
         if (openAction) openAction();
         //팝업 중복검사 
         if (findKey(id).isfind){
-            console.log("중복");
             return;
         }
         addModal({
-            [id]:Component
+            [id]: layout,
+						contents: contents,
+						props: props
         });
     };
 

@@ -20,31 +20,40 @@ function Modals(){
 		 * 닫는 애니메이션은 없음 
 		 * @param {int} idx 모달 위치
 		 */
-    const handleClick = (idx) => e =>{
-        deleteModal(idx);
-    }
-
-    /**
-		 * 모달 닫기 전 각 컴포넌트에서 할 작업을 실행하고 가장 최상위에 있는 모달(팝업)을 닫는다.
-		 * @param {function} propsCloseAction 닫기 전 실행할 함수
-		 */
-    const compCloseAction = (propsCloseAction) => e => {
-        propsCloseAction();
-        closeModal();
+    const closeModal = (idx) => e => {
+			deleteModal(idx);
     }
 
 		/**
-		 * 가장 최상위에 있는 모달(팝업)을 닫는다.
+		 * "최상위"에 있는 모달(팝업)을 닫는다.
 		 */
-    const closeModal = () => {
+    const closeTopModal = () => {
         // 최상단 모달은 배열의 가장 끝 데이터가 됨
         const idx = openedModals.length - 1 ?? 0;
-        modalWrapRef.current[idx].className = "modal-wrap off";
+				// on, off로 맞춰야함
+				modalWrapRef.current[0].classList.remove("on")
+        modalWrapRef.current[0].classList.add("off")
         // modal.scss의 modal-wrap off에서 animation delay와 동일하게 변경 필요
         setTimeout(function() {
             deleteModal(idx);
         }, 150);
     }
+
+		/**
+		 * 일정 시간 후(애니메이션 이후) 모달을 닫는다.
+		 * 
+		 * @param {*} millis 애니메이션 시간 delay
+		 * @param {*} idx 현재 팝업 위치
+		 * @returns 
+		 */
+    const deleteModalAfterTime = (millis, idx) => e => {
+			modalWrapRef.current[idx].classList.remove("on")
+			modalWrapRef.current[idx].classList.add("off")
+			// modal.scss의 modal-wrap off에서 animation delay와 동일하게 변경 필요
+			setTimeout(function() {
+					deleteModal(idx);
+			}, millis);
+	}
 
     return (
         <>
@@ -59,7 +68,7 @@ function Modals(){
             {/* modal 열렸을 때 모달 뒤 요소들 클릭 못하게 막음 */}
             {
                 openedModals.length > 0 && <ModalPortal id="modal-fix">
-                    <div className="modal-fix" onClick={closeModal}></div>
+                    <div className="modal-fix" onClick={closeTopModal}></div>
                 </ModalPortal>
             }
 
@@ -78,9 +87,11 @@ function Modals(){
 																	Modals[Object.keys(Modals)[0]],
 																	{
 																		idx,
-																		handleClick,
-																		compCloseAction
-																	}
+																		deleteModalAfterTime,
+																		closeTopModal,
+																		contents: Modals[Object.keys(Modals)[1]],
+																		contentsProps: Modals[Object.keys(Modals)[2]],
+																	},
 																)
 															}
                             </div>

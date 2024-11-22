@@ -7,12 +7,22 @@ import Store, {COMM_MODE} from "@/store/store";
 import { useModal, useAlert } from "@/hook/_hooks";
 import FolderCog from "@components/word/folder/FolderCog";
 import Confirm from "../modal/Confirm";
+import CenterModal from "@components/layout/popup/CenterModal";
 
 function WordList(props){
 
     const {update, wordList, memoStatus, setMemoStatus} = wordListStore(state => state);
-    const [openModal] = useModal("move");
+    const [openModal] = useModal("confirm");
     const [addAlert] = useAlert();
+
+
+		const handleModal = () => e => {
+			openModal(CenterModal, Confirm, {
+				type: "confirm",
+				title: "잠깐만요!",
+				content: "정말 삭제하시겠습니까?",
+			});
+		}
 
     const onClickHandler = api();
     const memoRef = useRef([]);
@@ -211,12 +221,12 @@ function WordList(props){
                     {/* 메모 끝 */}
                     <div className="word_card_foot">
                         <div><span>{data?.create_time}2024-11-21</span></div>
-                        {/* <div className="btn_area">
+                        <div className="btn_area">
                             <span className="folder icon"><i className="xi-folder-o" onClick={handleFolderClick(data?.word_id)}></i></span>
                             <span className="pen icon"><i className="xi-pen-o" onClick={handleEditClick(data?.word_id)}></i></span>
                             <span className={memoStatus[idx]?.status === "ON" ? "memo on icon" : "memo icon"}><i className="xi-comment-o" onClick={handleMemoClick(idx)}></i></span>
-                            <span className="close icon"><i className="xi-close" onClick={handleDeleteClick(data?.word_id)}></i></span>
-                        </div> */}
+                            <span className="close icon"><i className="xi-close" onClick={handleModal(data?.word_id)}></i></span>
+                        </div>
                     </div>
                 </div>
             }

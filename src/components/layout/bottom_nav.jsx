@@ -2,12 +2,14 @@ import Top_SVG from "@images/top.svg";
 import { Link } from "react-router-dom";
 import { useModal } from "@/hook/_hooks";
 import Add from "@/components/modal/add/Add";
+import FullModal from "./popup/FullModal";
 
 const BottomNav = () => {
 	// 팝업 이벤트
 	const [ openModal ] = useModal("add");
+
 	const handleModal = e => {
-		openModal(Add);
+		openModal(FullModal, Add);
 	}
 	return(
 <nav className="bottom_nav">
