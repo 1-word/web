@@ -72,20 +72,18 @@ export function useModal(id, openAction, closeAction){
     const openModal = (layout, contents, props, type) => {
 			type = type ?? null;
 			id = id ?? uuidv4();	
-			console.log("type: " + type);
-			console.log("id: " + id);
 			if (openAction) openAction();
 			//팝업 중복검사 
 			if (findKey(id).isfind){
 					return;
 			}
 			const isFirst = isFirstModal(type);
-			console.log("isFirst: "+ isFirst);
 			addModal({
 					[id]: layout,
 					contents: contents,
 					props: props,
-					isFirst: isFirst
+					isFirst: isFirst,
+					isOpened: false,
 			});
     }
 

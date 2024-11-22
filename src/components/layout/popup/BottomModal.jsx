@@ -1,15 +1,25 @@
 import { useEffect, useRef, createElement } from "react";
 
-function BottomModal({ idx, deleteModalAfterTime, contents, contentsProps }) {
-
+function BottomModal({ 
+	idx, 
+	deleteModalAfterTime, 
+	contents, 
+	contentsProps,
+	isOpened,
+	setOpenModal
+}) {
 	const bottom_wrap = useRef(null);
 	useEffect(() => {
-		bottom_wrap.current.classList.add("on");
+		if (!isOpened) {
+			bottom_wrap.current.classList.add("on");
+			setOpenModal();
+		}
 	}, []);
 
 	return (
-		<div ref={bottom_wrap} className="modal_bottom">
-			<div className="modal_bottom_wrap">
+		<div className="modal_bottom off">
+			<div className="modal_bottom_fix" onClick={() => deleteModalAfterTime(150)}></div>
+			<div ref={bottom_wrap} className="modal_bottom_wrap">
 				<div className="modal_bottom_dragable"></div>
 				<div className="modal_bottom_cont">
 				{

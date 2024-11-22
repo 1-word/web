@@ -6,7 +6,7 @@ import React, { useEffect, useRef, createElement } from "react";
 import Confirm from "./modal/Confirm";
 
 function Modals(){
-    const { openedModals, deleteModal, loading } = ModalStore(modal => modal);
+    const { openedModals, deleteModal, loading, setOpenModal } = ModalStore(modal => modal);
     const modalWrapRef = useRef([]);
 
     useEffect(()=>{
@@ -19,7 +19,7 @@ function Modals(){
 		 * 닫는 애니메이션은 없음 
 		 * @param {int} idx 모달 위치
 		 */
-    const closeModal = (idx) => e => {
+    const closeModal = (idx) => {
 			deleteModal(idx);
     }
 
@@ -50,7 +50,8 @@ function Modals(){
 			modalWrapRef.current[idx].classList.add("off")
 			// modal.scss의 modal-wrap off에서 animation delay와 동일하게 변경 필요
 			setTimeout(function() {
-					deleteModal(idx);
+				console.log(idx);
+				deleteModal(idx);
 			}, millis);
 		}
 
@@ -81,8 +82,11 @@ function Modals(){
 																	idx,
 																	deleteModalAfterTime: (millis) => deleteModalAfterTime(millis, idx),
 																	closeTopModal,
-																	contents: Modals[Object.keys(Modals)[1]],
-																	contentsProps: Modals[Object.keys(Modals)[2]],
+																	closeModal,
+																	setOpenModal: () => setOpenModal(idx),
+																	isOpened: Modals.isOpened,
+																	contents: Modals.contents,
+																	contentsProps: Modals.props,
 																},
 															)
 														}

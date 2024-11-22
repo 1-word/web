@@ -1,14 +1,24 @@
 import { useEffect, useRef, createElement } from "react";
 
-function FullModal({ deleteModalAfterTime, contents, contentsProps }) {
-
+function FullModal({
+	setOpenModal,
+	isOpened,
+	deleteModalAfterTime, 
+	contents, 
+	contentsProps 
+}) {
 	const full_wrap = useRef(null);
 	useEffect(() => {
-		full_wrap.current.classList.add("on");
+		full_wrap.current.classList.remove("remove");
+		console.log("modal flag: " + isOpened);
+		if (!isOpened) {
+			full_wrap.current.classList.add("on");
+			setOpenModal();
+		}
 	}, []);
 
 	return (
-		<div ref={full_wrap} className="modal_full_wrap">
+		<div ref={full_wrap} className="modal_full_wrap remove">
 			<header className="mini flex">
 				<button className="back xi-angle-left"></button>
 				<h2 className="title">내 단어장</h2>

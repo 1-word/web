@@ -1,28 +1,14 @@
 import React, { useRef, useEffect } from "react";
 import AddList from "./AddList";
-import HeaderMini from "@components/layout/header_mini";
 import wordListStore, { WORD_KEY } from "@/store/wordListStore";
 import Store from "@/store/store";
 import api, { MODE } from "@/services/api";
 import { textTypeCheck } from "@/util/textTypeCheck";
 
-
-import { useModal } from "@/hook/_hooks";
-import CenterModal from "@/components/layout/popup/CenterModal";
-import Confirm from "../Confirm";
-
 function Add(){
     const {saveList, saveWordList} = wordListStore(state => state);
     const {clickedFolder} = Store(state=> state);
     const onClickHandler = api();
-		const [openModal] = useModal();
-
-		useEffect(() => {
-			openModal(CenterModal, Confirm, {
-				title: "hello",
-				contents: "aaa",
-			});
-		},[])
 
     const handleSaveClick = (e) => {
         let target_name = e.target.name;

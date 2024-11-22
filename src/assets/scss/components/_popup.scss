@@ -3,17 +3,27 @@
 	left: calc(50% - 300px);
 	width: 600px;
 	height: 100%;
-	box-sizing: border-box;
-	background: #f8f8f8a9;
-	backdrop-filter: blur(8px);
-	overflow: hidden;
-	transition: transform 0.3s ease;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	@include deviceSmall(){
 		inset: 0;
 		width: 100%;
+	}
+	&_fix{
+		position: fixed;
+		left: calc(50% - 300px);
+		width: 600px;
+		height: 100%;
+		box-sizing: border-box;
+		background: #f8f8f8a9;
+		backdrop-filter: blur(8px);
+		overflow: hidden;
+		transition: transform 0.3s ease;
+		@include deviceSmall(){
+			inset: 0;
+			width: 100%;
+		}
 	}
 	&_wrap{
 		position: relative;

@@ -1,10 +1,12 @@
 import { useEffect, useRef, createElement } from "react";
 
-function Toast({ deleteModalAfterTime, contentsProps }) {
+function Toast({ idx, closeModal, deleteModalAfterTime, contentsProps }) {
 
 	useEffect(() => {
-		deleteModalAfterTime(3000);
-	});
+		setTimeout(() => {
+			closeModal(idx)
+		}, 3000);
+	}, []);
 
 	return (
 		<div className="toast_wrap">

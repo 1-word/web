@@ -25,6 +25,17 @@ const useStore = set => ({
             openedModals: [...modals.openedModals, modal]
         }))
     },
+		setOpenModal: (id) => {
+			set((modals) => ({
+				openedModals: modals.openedModals.map((item, idx) => 
+					idx === id? {
+						...item,
+						isOpened: true,
+					}
+					: item
+				)
+			}))
+		},
     deleteModal: (itemIndex) => {
         set((modals) => ({
            openedModals: modals.openedModals.filter((value, index) => index !== itemIndex)
