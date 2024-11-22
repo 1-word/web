@@ -11,6 +11,7 @@ const BottomNav = () => {
 	const handleModal = e => {
 		openModal(FullModal, Add);
 	}
+	
 	return(
 <nav className="bottom_nav">
 <div className="bottom_nav_btn_wrap">

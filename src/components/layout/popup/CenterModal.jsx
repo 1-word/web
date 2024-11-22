@@ -1,10 +1,10 @@
-import { useEffect, useRef, createElement } from "react";
+import { createElement } from "react";
 
 function CenterModal({ idx, deleteModalAfterTime, contents, contentsProps }) {
 	return(
-		<div className="vb-pop">
-			<div className="vb_pop_wrap">
-				<div className="vb-pop-cont">
+		<div className="modal_center">
+			<div className="modal_center_wrap">
+				<div className="modal_center_cont">
 				{
 						createElement(
 							contents,

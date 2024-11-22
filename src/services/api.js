@@ -3,6 +3,8 @@ import wordListStore from "@/store/wordListStore"
 import authStore from "@/store/authStore"
 import { useNavigate, useLocation } from "react-router"
 import ModalStore, {ALERT_TYPE} from "@/store/modal"
+import { useModal } from "@/hook/_hooks"
+import Toast from "@/components/layout/popup/Toast"
 
 export const MODE = {
     READ: "read",
@@ -45,9 +47,14 @@ function useEvntHandler(e, modeType, data, func){
     const {createWordList, setUpdateFlag, saveListClear, setFolderList} = wordListStore(state => state);
     const {setLoading, setAlert} = ModalStore();
     const {token, save, saveToken, clearToken} = authStore(state=>state);
+		const [ openModal ] = useModal();
     const navigate = useNavigate();
     const location = useLocation();
     const app = process.env.REACT_APP_ENV;
+
+		const activeToast = (msg) => {
+			openModal(Toast, null, {msg}, "toast");
+		}
 
     const handlerMap = {
         async read(e, id){
@@ -166,7 +173,7 @@ function useEvntHandler(e, modeType, data, func){
             return res;
         } catch (error) {
             let msg = error?.response?.data?.msg || "서버에 응답이 없거나, 오류가 발생하였습니다. 잠시 후 다시 시도해주시기 바랍니다."
-            // setAlert(getAlertData(ALERT_TYPE.ERROR, msg));
+						activeToast(msg);
             throw new Error("error");
         }
         finally{

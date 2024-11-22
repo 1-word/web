@@ -4,7 +4,6 @@ import ModalPortal from "@components/modal/ModalPortal";
 import Loading from "./modal/Loading";
 import React, { useEffect, useRef, createElement } from "react";
 import Confirm from "./modal/Confirm";
-import Alert from "./modal/alert/Alert";
 
 function Modals(){
     const { openedModals, deleteModal, loading } = ModalStore(modal => modal);
@@ -53,41 +52,42 @@ function Modals(){
 			setTimeout(function() {
 					deleteModal(idx);
 			}, millis);
-	}
+		}
 
     return (
         <>
             {/* modal 열렸을 때 모달 뒤 요소들 클릭 못하게 막음 */}
-            {
-                openedModals.length > 0 && <ModalPortal id="modal-fix">
-                    <div className="modal-fix" onClick={closeTopModal}></div>
-                </ModalPortal>
-            }
-
             <ModalPortal id="modal">
                 {/* 로딩창 */}
                 {loading && <Loading></Loading>}
                 {/* 모달이 열렸을 때 열리는 애니메이션 주기 위한 컴포넌트 */}
-                <div className={!openedModals.length > 0 ? "top-wrap" : "top-wrap on"}>
+                <div>
                 {
                     // 등록된 모달 불러옴
                     openedModals.map((Modals, idx) =>
-                        <div className="modal-wrap" key={`modals${idx}`} ref={el => modalWrapRef.current[idx] = el}>
-                            <div className="modal-cont">
-															{
-																createElement(
-																	Modals[Object.keys(Modals)[0]],
-																	{
-																		idx,
-																		deleteModalAfterTime: (millis) => deleteModalAfterTime(millis, idx),
-																		closeTopModal,
-																		contents: Modals[Object.keys(Modals)[1]],
-																		contentsProps: Modals[Object.keys(Modals)[2]],
-																	},
-																)
-															}
-                            </div>
+											<>
+											{
+												Modals.isFirst &&
+												<ModalPortal id="modal-fix">
+														<div className="modal-fix" onClick={closeTopModal}></div>
+												</ModalPortal>
+											}
+				
+                        <div className="modal_wrap" key={`modals${idx}`} ref={el => modalWrapRef.current[idx] = el}>
+														{
+															createElement(
+																Modals[Object.keys(Modals)[0]],
+																{
+																	idx,
+																	deleteModalAfterTime: (millis) => deleteModalAfterTime(millis, idx),
+																	closeTopModal,
+																	contents: Modals[Object.keys(Modals)[1]],
+																	contentsProps: Modals[Object.keys(Modals)[2]],
+																},
+															)
+														}
                         </div>
+												</>
                     )
                 }
                 </div>

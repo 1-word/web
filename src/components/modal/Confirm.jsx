@@ -13,7 +13,10 @@ function Confirm({
     }
 
     const handleSubmit = () => {
-			submit();
+			if (submit) {
+				submit();
+			}
+			deleteModalAfterTime(0);
     }
 
     return(

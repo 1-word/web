@@ -8,11 +8,17 @@ import { useModal, useAlert } from "@/hook/_hooks";
 import FolderCog from "@components/word/folder/FolderCog";
 import Confirm from "../modal/Confirm";
 import CenterModal from "@components/layout/popup/CenterModal";
+import BottomModal from "@components/layout/popup/BottomModal";
 
 function WordList(props){
 
     const {update, wordList, memoStatus, setMemoStatus} = wordListStore(state => state);
     const [openModal] = useModal("confirm");
+		const [moreModal] = useModal("more");
+
+		const handleMoreModal = (id) => e => {
+			moreModal(BottomModal, Confirm);
+		}
 
 		const handleDeleteWord = (id) => e => {
 			openModal(CenterModal, Confirm, {
@@ -189,6 +195,9 @@ function WordList(props){
 												<span className="word_card_read">{data?.wread ?? "" !== "" ? "["+data?.wread+"]" : ""}[미미뀨]</span>
 												<button className="word_card_headset" onClick={handleAudioClick(idx)}>
 														<i ref={el => headsetRef.current[idx] = el} className="xi-headset listen" data-pron-audio={data?.soundPath}></i>
+												</button>
+												<button className="word_card_more" onClick={handleMoreModal(idx)}>
+													<i className="xi-ellipsis-v"></i>
 												</button>
                     </div>
 										<div className="word_card_mean">

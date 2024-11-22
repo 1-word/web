@@ -1,21 +1,20 @@
 
-    .top-wrap{
-      &.on{
-				opacity: 1;
-				visibility: visible;
-      }
-    }
 
-		.modal-wrap{
-			&.off{
-				opacity: 0;
-				visibility: hidden;
-			}
-			&.on{
-				opacity: 1;
-				visibility: visible;
-			}
+.modal_wrap{
+	position: relative;
+	z-index: 1000;
+	// 꺼질때 애니메이션 추가
+	// animation의 delay변경 시 Modals.jsx의 setTimeout도 동일한 시간으로 변경 필요함
+	&.off{
+		.modal_full_wrap{
+			animation: slide-off 0.15s 25ms linear forwards;
 		}
+		.modal_center_wrap{}
+		.modal_bottom_wrap{
+			animation: slide-bottom-off 0.15s 25ms linear forwards;
+		}
+	}
+}
 
 		
 		.modal_full{
@@ -27,7 +26,7 @@
 				box-sizing: border-box;
 				background: #f8f8f8a9;
 				backdrop-filter: blur(8px);
-				z-index: 1000;
+				// z-index: 1000;
 				overflow: hidden;
 				transform: translateX(-50%);
 				visibility: hidden;
@@ -40,14 +39,6 @@
 				}
 				&.off{
 					animation: slide-off 0.15s 25ms linear forwards;
-					@keyframes slide-off {
-						0%{
-							transform: translateX(0);
-						}
-						100%{
-							transform: translateX(-50%);
-						}
-					}
 				}
 				@include deviceSmall(){
 					inset: 0;
@@ -152,17 +143,19 @@
     }
   
   /* 아래의 모든 코드는 영역::코드로 사용 */
-  
-  .modal-wrap {
-    &::-webkit-scrollbar {
-      width: 4px;
-      background: $main-bg-color;
-    }
-  
-    &::-webkit-scrollbar-thumb {
-      min-height: 30px;
-      background: $default-ddd;
-
-    }
-  }
-
+	@keyframes slide-off {
+		0%{
+			transform: translateX(0);
+		}
+		100%{
+			transform: translateX(-50%);
+		}
+	}
+	@keyframes slide-bottom-off {
+		0%{
+			transform: translateY(0);
+		}
+		100%{
+			transform: translateY(50%);
+		}
+	}

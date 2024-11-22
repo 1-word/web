@@ -1,0 +1,47 @@
+.toast{
+	&_wrap{
+		// 위치 잡아주는 용도
+		position: fixed;
+		top: 50px;
+		left: 50%;
+    z-index: 9999;
+    /* animation-name: fadeUpDown; */
+    /* animation-fill-mode: forwards; */
+    min-width: max-content;
+		transform: translateX(-50%);
+	}
+	&_cont{
+		// 실제 애니메이션 들어가는 박스
+		position: relative;
+    padding: 1em 1em;
+    border-radius: 30px;
+		min-width: max-content;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: $default-666;
+		color: $default-fff;
+		font-size: 0.9em;
+    animation: fadeUpDown 3s;
+	}
+}
+
+
+@keyframes fadeUpDown {
+	0%{
+		opacity:0;
+		transform: translate3d(0, -100%, 0);
+	}
+	40%{
+		opacity: 1;
+		transform: translateZ(0);
+	}
+	80% {
+		opacity: 1;
+		transform: translateZ(0);
+	}
+	100% {
+		opacity: 0;        
+		transform: translate3d(0, -100%, 0);
+	}
+}

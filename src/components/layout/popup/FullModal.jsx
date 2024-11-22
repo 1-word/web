@@ -4,7 +4,7 @@ function FullModal({ deleteModalAfterTime, contents, contentsProps }) {
 
 	const full_wrap = useRef(null);
 	useEffect(() => {
-		full_wrap.current.className = "modal_full_wrap on"
+		full_wrap.current.classList.add("on");
 	}, []);
 
 	return (
