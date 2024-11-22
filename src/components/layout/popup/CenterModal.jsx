@@ -9,7 +9,9 @@ function CenterModal({ idx, deleteModalAfterTime, contents, contentsProps }) {
 						createElement(
 							contents,
 							{
-								...contentsProps
+								idx,
+								deleteModalAfterTime,
+								...contentsProps,
 							}
 						)
 					}

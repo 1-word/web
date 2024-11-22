@@ -7,7 +7,7 @@ import Confirm from "./modal/Confirm";
 import Alert from "./modal/alert/Alert";
 
 function Modals(){
-    const { openedModals, deleteModal, alert, setAlert, loading } = ModalStore(modal => modal);
+    const { openedModals, deleteModal, loading } = ModalStore(modal => modal);
     const modalWrapRef = useRef([]);
 
     useEffect(()=>{
@@ -46,7 +46,7 @@ function Modals(){
 		 * @param {*} idx 현재 팝업 위치
 		 * @returns 
 		 */
-    const deleteModalAfterTime = (millis, idx) => e => {
+    const deleteModalAfterTime = (millis, idx) => {
 			modalWrapRef.current[idx].classList.remove("on")
 			modalWrapRef.current[idx].classList.add("off")
 			// modal.scss의 modal-wrap off에서 animation delay와 동일하게 변경 필요
@@ -57,14 +57,6 @@ function Modals(){
 
     return (
         <>
-            {/* Alert 메시지 설정, type:msg, confirm */}
-            {alert.show && 
-                <ModalPortal id="alert">
-                    <Alert msgType={alert.msgType} message={alert.message}>
-                        {alert.type === 'confirm' && alert.component}
-                    </Alert>
-                </ModalPortal>
-            }
             {/* modal 열렸을 때 모달 뒤 요소들 클릭 못하게 막음 */}
             {
                 openedModals.length > 0 && <ModalPortal id="modal-fix">
@@ -87,7 +79,7 @@ function Modals(){
 																	Modals[Object.keys(Modals)[0]],
 																	{
 																		idx,
-																		deleteModalAfterTime,
+																		deleteModalAfterTime: (millis) => deleteModalAfterTime(millis, idx),
 																		closeTopModal,
 																		contents: Modals[Object.keys(Modals)[1]],
 																		contentsProps: Modals[Object.keys(Modals)[2]],

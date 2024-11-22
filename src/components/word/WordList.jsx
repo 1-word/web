@@ -13,14 +13,12 @@ function WordList(props){
 
     const {update, wordList, memoStatus, setMemoStatus} = wordListStore(state => state);
     const [openModal] = useModal("confirm");
-    const [addAlert] = useAlert();
 
-
-		const handleModal = () => e => {
+		const handleDeleteWord = (id) => e => {
 			openModal(CenterModal, Confirm, {
-				type: "confirm",
 				title: "잠깐만요!",
 				content: "정말 삭제하시겠습니까?",
+				submit: () => onClickHandler('', MODE.DELETE, id)
 			});
 		}
 
@@ -66,15 +64,6 @@ function WordList(props){
     }
 
     const handleDeleteClick = (id) => e => {
-        addAlert({
-            type: "confirm",
-            title: "잠깐만요!",
-            content: "정말 삭제하시겠습니까?",
-            component: <Confirm></Confirm>,
-            executionFunction: async function(){
-                onClickHandler('', MODE.DELETE, id);
-            }
-        })
     }
 
     const handleMemoClick = (id, mode, wordId) => e => {
@@ -225,7 +214,7 @@ function WordList(props){
                             <span className="folder icon"><i className="xi-folder-o" onClick={handleFolderClick(data?.word_id)}></i></span>
                             <span className="pen icon"><i className="xi-pen-o" onClick={handleEditClick(data?.word_id)}></i></span>
                             <span className={memoStatus[idx]?.status === "ON" ? "memo on icon" : "memo icon"}><i className="xi-comment-o" onClick={handleMemoClick(idx)}></i></span>
-                            <span className="close icon"><i className="xi-close" onClick={handleModal(data?.word_id)}></i></span>
+                            <span className="close icon"><i className="xi-close" onClick={handleDeleteWord(data?.word_id)}></i></span>
                         </div>
                     </div>
                 </div>

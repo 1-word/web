@@ -19,33 +19,6 @@ const useStore = set => ({
             loading : flag
         }));
     },
-    alert: {
-        show: false,
-        type: ALERT_TYPE.confirm,
-        msgType: ALERT_TYPE.SUCCESS,
-        message: "",
-        component: <></>,
-        title: "",
-        content: "",
-        executionFunction: ()=>{},
-        closeFunction: ()=>{}
-    },
-    setAlert: (obj) => {
-        set((state) => ({
-            alert : {
-                ...state,
-                type: obj?.type,
-                show: obj?.show,
-                msgType: obj?.msgType,
-                message: obj?.message,
-                title: obj?.title,
-                content: obj?.content,
-                component: obj?.component,
-                executionFunction: obj?.executionFunction,
-                closeFunction: obj?.closeFunction
-            }
-        }));
-    },
     openedModals: [],
     addModal: (modal) => {
         set((modals) => ({
