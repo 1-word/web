@@ -1,0 +1,25 @@
+.modal_bottom_select{
+	&_wrap{}
+	&_lists{}
+	&_list{
+		height: 50px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-bottom: 1px solid $default-ddd;
+		cursor: pointer;
+	}
+	&_btn_wrap{
+		height: 50px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-top: 1px solid $main-text-color;
+		button{
+			display: block;
+			width: 100%;
+			height: 100%;
+			font-size: 1em;
+		}
+	}
+}

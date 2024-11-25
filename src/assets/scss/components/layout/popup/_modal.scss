@@ -6,17 +6,16 @@
 	z-index: 1000;
 	// 꺼질때 애니메이션 추가
 	// animation의 delay변경 시 Modals.jsx의 setTimeout도 동일한 시간으로 변경 필요함
-	&.off{
-		.modal_full_wrap{
-			animation: slide-left-off 0.15s 25ms linear forwards;
-		}
-		.modal_center_wrap{}
-		.modal_bottom_wrap{
-			animation: slide-bottom-off 0.15s 25ms linear forwards !important;
-		}
-	}
+	// &.off{
+	// 	.modal_full_wrap{
+	// 		animation: slide-left-off 0.15s 25ms linear forwards;
+	// 	}
+	// 	.modal_center_wrap{}
+	// 	.modal_bottom_wrap{
+	// 		animation: slide-bottom-off 0.15s 25ms linear forwards !important;
+	// 	}
+	// }
 }
-// 지워야함
 
 		
 .modal_full{

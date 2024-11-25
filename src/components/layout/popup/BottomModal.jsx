@@ -1,12 +1,13 @@
+import { getAnimationDuration } from "@/util/utils";
 import { useEffect, useRef, createElement } from "react";
 
 function BottomModal({ 
 	idx, 
-	deleteModalAfterTime, 
 	contents, 
 	contentsProps,
 	isOpened,
-	setOpenModal
+	setOpenModal,
+	deleteModalAfterTime,
 }) {
 	const bottom_wrap = useRef(null);
 	useEffect(() => {
@@ -19,9 +20,9 @@ function BottomModal({
 	}, []);
 
 	return (
-		<div ref={bottom_wrap} className="modal_bottom">
-			<div className="modal_bottom_fix" onClick={() => deleteModalAfterTime(300)}></div>
-			<div className="modal_bottom_wrap">
+		<div className="modal_bottom">
+			<div className="modal_bottom_fix" onClick={() => deleteModalAfterTime(150)}></div>
+			<div ref={bottom_wrap} className="modal_bottom_wrap">
 				<div className="modal_bottom_dragable"></div>
 				<div className="modal_bottom_cont">
 				{

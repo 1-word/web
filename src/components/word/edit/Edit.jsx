@@ -68,7 +68,7 @@ function Edit(props){
                         <div className="input_wrap">
                             <span>유의어</span>
                             <div className="add_cont flex">
-                                {
+                                {/* {
                                     synonymList.map((_synonym, idx) =>                                        
                                         <div className="add_list flex" key={idx}>                                    
                                             <input type="text" value={_synonym.synonym} 
@@ -76,7 +76,7 @@ function Edit(props){
                                             <button onClick={minusSynonym(idx)}><i className="xi-close"></i></button>
                                         </div>       
                                     )
-                                }
+                                } */}
                                 <button className="add_plus" onClick={addSynonym}><i className="xi-plus"></i></button>
                             </div>
                         </div>

@@ -1,25 +1,12 @@
+@import "@scss/components/layout/popup/bottom/bottom_select";
+
 .modal_bottom{
 	position: fixed;
 	left: calc(50% - 300px);
 	width: 600px;
 	height: 100%;
-	&.on{
-		.modal_bottom_wrap{
-			animation: slide-bottom-on 0.15s 25ms linear forwards;
-			animation-duration: 3s;
-		}
-	}
-	&.off{
-		.modal_bottom_wrap{
-			animation: slide-bottom-off 0.15s 25ms linear forwards;
-		}
-	}
-	&.visible{
-		.modal_bottom_wrap{
-			opacity: 1;
-			visibility: visible;
-			transform: none;
-		}
+	&.off .modal_bottom_wrap{
+		animation: slide-bottom-off 0.15s 25ms linear forwards;
 	}
 	&_fix{
 		position: fixed;
@@ -34,16 +21,25 @@
 		position: fixed;
 		bottom: 0;
 		width: 600px;
-		min-height: 70vh;
+		min-height: 60vh;
 		background: $default-fff;
 		border-radius: 20px 20px 0 0;
 		opacity: 0;
 		visibility: hidden;
 		transform: translateY(50%);
+		&.on{
+			animation: slide-bottom-on 0.15s 25ms linear forwards;
+		}
+		
+		&.visible{
+			opacity: 1;
+			visibility: visible;
+			transform: none;
+		}
 		@include deviceSmall(){
 			left: 0;
 			width: 100%;
-			min-height: 50vh;
+			min-height: auto;
 		}
 	}
 	h2{

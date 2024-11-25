@@ -1,13 +1,15 @@
 import React, {useEffect, useRef, useState} from "react";
 import api, { MODE } from "@/services/api";
 import SynonsymsList from "@components/word/SynonymsList";
-import Edit from "@components/word/edit/Edit";
+import Edit from "@components/modal/add/Add";
 import wordListStore from "@/store/wordListStore";
 import Store, {COMM_MODE} from "@/store/store";
 import { useModal, useAlert } from "@/hook/_hooks";
 import FolderCog from "@components/word/folder/FolderCog";
 import Confirm from "../modal/Confirm";
+import BottomModalSelect from "@components/layout/popup/BottomModalSelect";
 import CenterModal from "@components/layout/popup/CenterModal";
+import FullModal from "@components/layout/popup/FullModal";
 import BottomModal from "@components/layout/popup/BottomModal";
 
 function WordList(props){
@@ -15,9 +17,25 @@ function WordList(props){
     const {update, wordList, memoStatus, setMemoStatus} = wordListStore(state => state);
     const [openModal] = useModal("confirm");
 		const [moreModal] = useModal("more");
+		const [editModal] = useModal("edit");
 
-		const handleMoreModal = (id) => e => {
-			moreModal(BottomModal, Confirm);
+		const handleMoreModal = (id,data,word_id) => e => {
+			moreModal(BottomModal, BottomModalSelect, {
+				setting: [
+					{
+					title : "폴더 이동",
+					onClick : handleFolderClick(data?.word_id),
+				},
+					{
+					title : "수정",
+					onClick : HandleEditWord(data?.word_id),
+				},
+					{
+					title : "삭제",
+					onClick : handleDeleteWord(data?.word_id),
+				},
+			],
+			});
 		}
 
 		const handleDeleteWord = (id) => e => {
@@ -25,6 +43,13 @@ function WordList(props){
 				title: "잠깐만요!",
 				content: "정말 삭제하시겠습니까?",
 				submit: () => onClickHandler('', MODE.DELETE, id)
+			});
+		}
+		const HandleEditWord = (id,wordId) => e => {
+			editModal(FullModal, Edit, {
+				word_id: wordId,
+				isEdit: true
+
 			});
 		}
 
@@ -219,12 +244,7 @@ function WordList(props){
                     {/* 메모 끝 */}
                     <div className="word_card_foot">
                         <div><span>{data?.create_time}2024-11-21</span></div>
-                        <div className="btn_area">
-                            <span className="folder icon"><i className="xi-folder-o" onClick={handleFolderClick(data?.word_id)}></i></span>
-                            <span className="pen icon"><i className="xi-pen-o" onClick={handleEditClick(data?.word_id)}></i></span>
-                            <span className={memoStatus[idx]?.status === "ON" ? "memo on icon" : "memo icon"}><i className="xi-comment-o" onClick={handleMemoClick(idx)}></i></span>
-                            <span className="close icon"><i className="xi-close" onClick={handleDeleteWord(data?.word_id)}></i></span>
-                        </div>
+												<button className={memoStatus[idx]?.status === "ON" ? "word_card_memo on" : "word_card_memo"}><i className="xi-comment-o" onClick={handleMemoClick(idx)}></i></button>
                     </div>
                 </div>
             }

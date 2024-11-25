@@ -3,9 +3,9 @@ import { useEffect, useRef, createElement } from "react";
 function FullModal({
 	setOpenModal,
 	isOpened,
-	deleteModalAfterTime, 
+	deleteModal,
 	contents, 
-	contentsProps 
+	contentsProps
 }) {
 	const full_wrap = useRef(null);
 	useEffect(() => {
@@ -22,7 +22,7 @@ function FullModal({
 			<header className="mini flex">
 				<button className="back xi-angle-left"></button>
 				<h2 className="title">내 단어장</h2>
-				<button className="close xi-close" onClick={() => deleteModalAfterTime(150)}></button>
+				<button className="close xi-close" onClick={() => deleteModal(full_wrap.current)}></button>
 			</header>
 			<div className="modal_full_cont">
 				<div className="modal_full_scroll">

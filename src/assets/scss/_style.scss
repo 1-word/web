@@ -17,10 +17,10 @@
 @import "@scss/style/confirm";
 
 // components
-@import "@scss/components/modal";
-@import "@scss/components/popup";
+@import "@scss/components/layout/popup/modal";
+@import "@scss/components/layout/popup/center";
 @import "@scss/components/layout/popup/toast";
-@import "@scss/components/bottom_sheet";
+@import "@scss/components/layout/popup/bottom/bottom_sheet";
 @import "@scss/components/vertical_swiper";
 @import "@scss/components/layout/bottom_navi";
 @import "@scss/components/layout/left_fix";

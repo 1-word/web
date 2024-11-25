@@ -1,10 +1,12 @@
 import ModalStore from "@/store/modal";
-import Store from "@/store/store";
 import ModalPortal from "@components/modal/ModalPortal";
 import Loading from "./modal/Loading";
 import React, { useEffect, useRef, createElement } from "react";
-import Confirm from "./modal/Confirm";
+import { getAnimationDuration } from "@/util/utils";
 
+/**
+ * 모달 관리
+ */
 function Modals(){
     const { openedModals, deleteModal, loading, setOpenModal, deleteModalById } = ModalStore(modal => modal);
     const modalWrapRef = useRef([]);
@@ -20,10 +22,11 @@ function Modals(){
 		 * @param {int} idx 모달 위치
 		 */
     const closeModal = (idx, id) => {
-			console.log(openedModals[idx]);
-			console.log(id);
 			deleteModalById(id);
     }
+
+		// 모달 닫을 때 애니메이션을 적용하기 위해서는
+		// modal-wrap 하위 element에 off css가 적용이 되어있어야 함
 
 		/**
 		 * "최상위"에 있는 모달(팝업)을 닫는다.
@@ -31,30 +34,37 @@ function Modals(){
     const closeTopModal = () => {
         // 최상단 모달은 배열의 가장 끝 데이터가 됨
         const idx = openedModals.length - 1 ?? 0;
-				// on, off로 맞춰야함
-				modalWrapRef.current[0].classList.remove("on")
-        modalWrapRef.current[0].classList.add("off")
-        // modal.scss의 modal-wrap off에서 animation delay와 동일하게 변경 필요
-        setTimeout(function() {
-            deleteModal(idx);
-        }, 150);
+				const child = modalWrapRef?.current[idx]?.childNodes[0];
+        child.classList.add("off");
+				let ms = getAnimationDuration(child);
+				if (ms === 0) {
+					ms = 150;
+				}
+        setTimeoutModal(ms, idx);
     }
 
 		/**
 		 * 일정 시간 후(애니메이션 이후) 모달을 닫는다.
 		 * 
-		 * @param {*} millis 애니메이션 시간 delay
+		 * @param {*} ms 애니메이션 시간 delay
 		 * @param {*} idx 현재 팝업 위치
-		 * @returns 
 		 */
-    const deleteModalAfterTime = (millis, idx) => {
-			modalWrapRef.current[idx].classList.remove("on")
-			modalWrapRef.current[idx].classList.add("off")
-			// modal.scss의 modal-wrap off에서 animation delay와 동일하게 변경 필요
+    const deleteModalAfterTime = (ms, idx, element) => {
+			
+			if (element) {
+				ms = getAnimationDuration(element);
+			} else {
+				element = modalWrapRef?.current[idx]?.childNodes[0];
+			}
+
+			element.classList.add("off");
+			setTimeoutModal(ms, idx);
+		}
+
+		const setTimeoutModal = (ms, idx) => {
 			setTimeout(function() {
-				console.log(openedModals[idx]);
 				deleteModal(idx);
-			}, millis);
+			}, ms);
 		}
 
     return (
@@ -82,8 +92,8 @@ function Modals(){
 																Modals.layout,
 																{
 																	idx,
-																	deleteModalAfterTime: (millis) => deleteModalAfterTime(millis, idx),
-																	closeTopModal,
+																	deleteModalAfterTime: (ms) => deleteModalAfterTime(ms, idx, null),
+																	deleteModal: (element) => deleteModalAfterTime(null, idx, element),
 																	closeModal: () => closeModal(idx, Modals.id),
 																	setOpenModal: () => setOpenModal(idx),
 																	isOpened: Modals.isOpened,
