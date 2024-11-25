@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
 import api, { MODE } from "@/services/api";
-import SynonsymsList from "@components/word/SynonymsList";
 import Edit from "@components/modal/add/Add";
 import wordListStore from "@/store/wordListStore";
 import Store, {COMM_MODE} from "@/store/store";
@@ -16,6 +15,7 @@ function WordList(props){
 
     const {update, wordList, memoStatus, setMemoStatus} = wordListStore(state => state);
     const [openModal] = useModal("confirm");
+    const [folderMoveModal] = useModal("foldercog");
 		const [moreModal] = useModal("more");
 		const [editModal] = useModal("edit");
 
@@ -37,6 +37,18 @@ function WordList(props){
 			],
 			});
 		}
+
+		const handleFolderClick = (word_id) => e => {
+			const config = {
+					word_id: word_id,
+					mode: COMM_MODE.MOVE
+			}
+			folderMoveModal(FullModal, FolderCog,{
+				folderCog: config,
+			})
+			// openModal(<FolderCog folderCog={config}></FolderCog>)
+			// onClickHandler(e, MODE.MEMORIZATION, wordId, {memorization: result});
+	}
 
 		const handleDeleteWord = (id) => e => {
 			openModal(CenterModal, Confirm, {
@@ -149,15 +161,6 @@ function WordList(props){
     const handleCheckClick = (word_id, status) => e => {
         let result = status === "Y" ? "N" : "Y";
         onClickHandler(e, MODE.MEMORIZATION, word_id, {memorization: result});
-    }
-
-    const handleFolderClick = (word_id) => e => {
-        const config = {
-            word_id: word_id,
-            mode: COMM_MODE.MOVE
-        }
-        openModal(<FolderCog folderCog={config}></FolderCog>)
-        // onClickHandler(e, MODE.MEMORIZATION, wordId, {memorization: result});
     }
 
     const wordList1 = [{

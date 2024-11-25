@@ -29,7 +29,7 @@ const BottomNav = () => {
 		<Link><i className="search"></i>검색</Link>
 	</li>
 	<li className="flex">
-		<Link><i className="user"></i>마이페이지</Link>
+		<Link to="/mypage"><i className="user"></i>마이페이지</Link>
 	</li>
 </ul>
 </nav>

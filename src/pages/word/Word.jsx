@@ -61,7 +61,7 @@ function Word(){
 					</div>
 					<ul className="my_word_list">
 						<li>내 단어장</li>
-						<li>최근 찾은 단어</li>
+						<li>오늘의 문장</li>
 						<li>즐겨찾기한 단어</li>
 						<li>단어 퀴즈</li>
 					</ul>
@@ -69,7 +69,7 @@ function Word(){
 				{/* 폴더 추가 컴포넌트 */}
 
 				{/* 내 단어장 클릭시 보여지는 리스트 */}
-        <FolderList></FolderList>
+        {/* <FolderList></FolderList> */}
 
 				{/* 암기탭 */}
 				<ul className="word_tab flex">

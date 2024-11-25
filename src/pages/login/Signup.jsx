@@ -50,7 +50,7 @@ function Signup(){
                     <button className="btn-fill btn-login sizeL" onClick={handleClick}>Join</button>
                     </div>
                 <div className="login-join-wrap">
-                    <p>이미 회원가입을 하셨나요? <Link to='/'>로그인</Link></p>
+                    <p>이미 회원가입을 하셨나요? <Link to='/signin'>로그인</Link></p>
                 </div>
                 </div>
             </div>
