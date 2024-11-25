@@ -16,10 +16,13 @@ input:is([type="text"],[type="password"]){
 	background: $default-fff;
 	text-indent: 10px;
 	&:focus{
-		border: 2px solid $main-accent-color;
+		// border: 2px solid $main-accent-color;
 	}
 	&::placeholder{
 		color: $sub-text-color;
+	}
+	&:read-only,&:disabled{
+		background: $default-ddd;
 	}
 }
 .textarea-box{
@@ -51,11 +54,24 @@ textarea{
 	margin-bottom: 16px;
 	padding: 0;
 	background: none;
-	span{
+	span, label{
 		display: block;
 		margin-left: 8px;
 		font-size: 0.825em;
 		color: $default-666;
 		font-weight: 300;
+	}
+	// 메시지
+	.msg{
+		margin-left: 8px;
+		display: block;
+		font-size: 12px;
+		color: $sub-text-color;
+		&.error{
+			color: $default-error-color;
+		}
+		&.correct{
+			color: $sub-correct-color;
+		}
 	}
 }

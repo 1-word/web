@@ -1,0 +1,23 @@
+@import "@scss/components/user/user_config";
+
+.my_page{
+	&_wrap{
+		margin: 24px 0;
+		padding: $main-p;
+	}
+	&_list{
+		font-size: 1em;
+		li{
+			height: 50px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			border-bottom: 1px solid $default-ddd;
+			cursor: pointer;
+			// 화살표
+			&::after{
+				content: url("/assets/images/next.svg");
+			}
+		}
+	}
+}

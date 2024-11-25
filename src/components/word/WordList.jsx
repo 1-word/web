@@ -25,16 +25,16 @@ function WordList(props){
 					{
 					title : "폴더 이동",
 					onClick : handleFolderClick(data?.word_id),
-				},
+					},
 					{
 					title : "수정",
 					onClick : HandleEditWord(data?.word_id),
-				},
+					},
 					{
 					title : "삭제",
 					onClick : handleDeleteWord(data?.word_id),
-				},
-			],
+					},
+				],
 			});
 		}
 

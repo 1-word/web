@@ -7,8 +7,6 @@
 @import "@scss/components/word/list";
 @import "@scss/components/word/tab";
 
-
-
 * {
   margin: 0;
   padding: 0;
@@ -73,6 +71,7 @@ nav {
 .wrap {
 	width: 100%;
   max-width: $device_small;
+	height: 100%;
   margin: 0 auto;
 	border-left: 1px solid $default-ddd;
 	border-right: 1px solid $default-ddd;
