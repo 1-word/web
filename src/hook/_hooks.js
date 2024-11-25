@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ModalStore, { ALERT_TYPE } from "@/store/modal";
+import ModalStore, { ALERT_TYPE } from "@/store/modalStore";
 
 function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {

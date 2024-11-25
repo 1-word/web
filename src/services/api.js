@@ -2,7 +2,7 @@ import connect, {CONNECT_MODE} from "@/util/axiosUtil"
 import wordListStore from "@/store/wordListStore"
 import authStore from "@/store/authStore"
 import { useNavigate, useLocation } from "react-router"
-import ModalStore, {ALERT_TYPE} from "@/store/modal"
+import ModalStore, {ALERT_TYPE} from "@/store/modalStore"
 import { useModal } from "@/hook/_hooks"
 import Toast from "@/components/layout/popup/Toast"
 
@@ -45,16 +45,16 @@ export const MODE = {
 function useEvntHandler(e, modeType, data, func){
     
     const {createWordList, setUpdateFlag, saveListClear, setFolderList} = wordListStore(state => state);
-    const {setLoading, setAlert} = ModalStore();
+    const {setLoading} = ModalStore();
+    const [ openModal ] = useModal();
     const {token, save, saveToken, clearToken} = authStore(state=>state);
-		const [ openModal ] = useModal();
     const navigate = useNavigate();
     const location = useLocation();
     const app = process.env.REACT_APP_ENV;
 
-		const activeToast = (msg) => {
-			openModal(Toast, null, {msg}, "toast");
-		}
+    const activeToast = (msg) => {
+        openModal(Toast, null, {msg}, "toast");
+    }
 
     const handlerMap = {
         async read(e, id){
@@ -123,7 +123,7 @@ function useEvntHandler(e, modeType, data, func){
             const res = await executeSrvConnect(CONNECT_MODE.LOGIN, '', user, { moveUrl: "/word", isUpdate: false });
 
             if(res.code === 6006) {
-                // setAlert(getAlertData(ALERT_TYPE.SUCCESS, res.msg));
+                activeToast(res.msg);
                 clearToken();
                 return;
             }
@@ -133,11 +133,11 @@ function useEvntHandler(e, modeType, data, func){
                 "accessToken": res.data.accessToken
             };
             saveToken(data, user.user_id);
-            // setAlert(getAlertData(ALERT_TYPE.SUCCESS, "로그인 성공"));
+            // activeToast("로그인 성공");
         },
         async signup(e, user){
             const res = await executeSrvConnect(CONNECT_MODE.SIGNUP, '', user, { returnMsg: false, moveUrl: "/", isUpdate: false });
-            // setAlert(getAlertData(ALERT_TYPE.SUCCESS, "회원가입이 완료되었습니다."));
+            activeToast("회원가입이 완료되었습니다.");
         },
         audio_play(e, data, endFunc){
             const audio = new Audio();
@@ -165,15 +165,16 @@ function useEvntHandler(e, modeType, data, func){
         if ((obj?.isLoading ?? true)) setLoading(true);
         try {
             let res = await connect(connectMode, id, data, token.accessToken);
-            if ((obj?.returnMsg ?? true) && typeof obj?.returnMsg === 'undefined') 
-							// setAlert(getAlertData(obj?.msgType, res.msg ?? obj?.returnMsg));
+            if ((obj?.returnMsg ?? true) && typeof obj?.returnMsg === 'undefined'){
+                activeToast(res.msg);
+            }
             if (res.success === true){
                 if (obj?.moveUrl) navigate(obj?.moveUrl);
             }
             return res;
         } catch (error) {
             let msg = error?.response?.data?.msg || "서버에 응답이 없거나, 오류가 발생하였습니다. 잠시 후 다시 시도해주시기 바랍니다."
-						activeToast(msg);
+            activeToast(msg);
             throw new Error("error");
         }
         finally{
