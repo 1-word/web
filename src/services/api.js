@@ -57,13 +57,10 @@ function useEvntHandler(e, modeType, data, func){
     }
 
     const handlerMap = {
-        async read(_, id){
-            const read_id = id ?? "";
-            const res = await executeSrvConnect("get", `word/${read_id}`, null, {isUpdate: false, returnMsg: false});
+        async read(_){
+            const res = await executeSrvConnect("get", "word", null, {isUpdate: false, returnMsg: false});
             if (!dataCheck(res)) return;
-            createWordList(res.datas.word);
-            //폴더 정보 가져오기
-            this.folderRead(res.datas.folder);
+            createWordList(res.words);
             return res;
         },
         all(){

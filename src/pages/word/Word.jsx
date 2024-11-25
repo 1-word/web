@@ -19,7 +19,7 @@ function Word(){
     const {memorization, setMemorization} = Store(state=>state);
 
     // Modal Test
-		const [openBottomModal] = useModal("bottom");
+	const [openBottomModal] = useModal("bottom");
     
     const onClickHandler = api();
     const searchInput = useRef();    
