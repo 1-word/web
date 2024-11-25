@@ -13,13 +13,15 @@ function BottomModal({
 		if (!isOpened) {
 			bottom_wrap.current.classList.add("on");
 			setOpenModal();
+			return;
 		}
+		bottom_wrap.current.classList.add("visible");
 	}, []);
 
 	return (
-		<div className="modal_bottom off">
-			<div className="modal_bottom_fix" onClick={() => deleteModalAfterTime(150)}></div>
-			<div ref={bottom_wrap} className="modal_bottom_wrap">
+		<div ref={bottom_wrap} className="modal_bottom">
+			<div className="modal_bottom_fix" onClick={() => deleteModalAfterTime(300)}></div>
+			<div className="modal_bottom_wrap">
 				<div className="modal_bottom_dragable"></div>
 				<div className="modal_bottom_cont">
 				{

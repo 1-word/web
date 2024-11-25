@@ -4,8 +4,8 @@ function Toast({ idx, closeModal, deleteModalAfterTime, contentsProps }) {
 
 	useEffect(() => {
 		setTimeout(() => {
-			closeModal(idx)
-		}, 3000);
+			closeModal()
+		}, 2500);
 	}, []);
 
 	return (

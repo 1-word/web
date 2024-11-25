@@ -40,7 +40,12 @@ const useStore = set => ({
         set((modals) => ({
            openedModals: modals.openedModals.filter((value, index) => index !== itemIndex)
         }))
-    }
+    },
+		deleteModalById: (id) => {
+			set((modals) => ({
+				 openedModals: modals.openedModals.filter((value, index) => value.id !== id)
+			}))
+	}
 });
 
 const ModalStore = create(

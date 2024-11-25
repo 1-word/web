@@ -1,5 +1,6 @@
 
 
+// 지워야함
 .modal_wrap{
 	position: relative;
 	z-index: 1000;
@@ -11,10 +12,11 @@
 		}
 		.modal_center_wrap{}
 		.modal_bottom_wrap{
-			animation: slide-bottom-off 0.15s 25ms linear forwards;
+			animation: slide-bottom-off 0.15s 25ms linear forwards !important;
 		}
 	}
 }
+// 지워야함
 
 		
 .modal_full{
@@ -27,11 +29,17 @@
 		background: #f8f8f8a9;
 		backdrop-filter: blur(8px);
 		overflow: hidden;
+		opacity: 0;
+		visibility: hidden;
 		&.on{
 			animation: slide-left-on 0.15s 25ms linear forwards;
 		}
 		&.off{
 			animation: slide-left-off 0.15s 25ms linear forwards;
+		}
+		&.visible{
+			opacity: 1;
+			visibility: visible;
 		}
 		&.remove {
 			opacity: 0 !important;
@@ -78,30 +86,24 @@
 	@keyframes slide-left-on {
 		0%{
 			opacity: 0;
+			visibility: hidden;
 			transform: translateX(-50%);
 		}
 		100%{
 			opacity: 1;
+			visibility: visible;
 			transform: translateX(0);
 		}
 	}
 	@keyframes slide-left-off {
 		0%{
 			opacity: 1;
+			visibility: visible;
 			transform: translateX(0);
 		}
 		100%{
 			opacity: 0;
+			visibility: hidden;
 			transform: translateX(-50%);
-		}
-	}
-	@keyframes slide-bottom-off {
-		0%{
-			opacity: 1;
-			transform: translateY(0);
-		}
-		100%{
-			opacity: 0;
-			transform: translateY(50%);
 		}
 	}

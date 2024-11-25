@@ -9,16 +9,16 @@ function FullModal({
 }) {
 	const full_wrap = useRef(null);
 	useEffect(() => {
-		full_wrap.current.classList.remove("remove");
-		console.log("modal flag: " + isOpened);
 		if (!isOpened) {
 			full_wrap.current.classList.add("on");
 			setOpenModal();
+			return;
 		}
+		full_wrap.current.classList.add("visible");
 	}, []);
 
 	return (
-		<div ref={full_wrap} className="modal_full_wrap remove">
+		<div ref={full_wrap} className="modal_full_wrap">
 			<header className="mini flex">
 				<button className="back xi-angle-left"></button>
 				<h2 className="title">내 단어장</h2>

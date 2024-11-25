@@ -52,7 +52,7 @@ export function useModal(id, openAction, closeAction){
         let isfind = false;
         if (openedModals?.length){
             for (const i in openedModals){
-                if (Object.keys(openedModals[i])[0] === key){
+                if (openedModals[i].id === key){
                     isfind = true;
                     index = i;
                     break;
@@ -79,7 +79,8 @@ export function useModal(id, openAction, closeAction){
 			}
 			const isFirst = isFirstModal(type);
 			addModal({
-					[id]: layout,
+					id: id,
+					layout: layout,
 					contents: contents,
 					props: props,
 					isFirst: isFirst,
