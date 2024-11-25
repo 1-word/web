@@ -1,4 +1,4 @@
-import connect, {CONNECT_MODE} from "@/util/axiosUtil"
+import connect from "@/util/axiosUtil"
 import wordListStore from "@/store/wordListStore"
 import authStore from "@/store/authStore"
 import { useNavigate, useLocation } from "react-router"
@@ -57,9 +57,9 @@ function useEvntHandler(e, modeType, data, func){
     }
 
     const handlerMap = {
-        async read(e, id){
+        async read(_, id){
             const read_id = id ?? "";
-            const res = await executeSrvConnect(CONNECT_MODE.READ, read_id, '', {isUpdate: false, returnMsg: false});
+            const res = await executeSrvConnect("get", `word/${read_id}`, null, {isUpdate: false, returnMsg: false});
             if (!dataCheck(res)) return;
             createWordList(res.datas.word);
             //폴더 정보 가져오기
@@ -67,34 +67,37 @@ function useEvntHandler(e, modeType, data, func){
             return res;
         },
         all(){
-            return executeSrvConnect(CONNECT_MODE.SEARCH, MODE.SEARCH_ALL);
+            return executeSrvConnect("get", "word");
         },
         async search(e, data){
-            const res = await executeSrvConnect(CONNECT_MODE.SEARCH, '', data, {isLoading: false, returnMsg: false});
+            const res = await executeSrvConnect("get", data, null, {isLoading: false, returnMsg: false});
             if (!dataCheck(res)) return;
 
             let wordListrequest = res.list;
+
             // 검색한 단어가 한개이면 배열이 아니므로 배열로 만들어줌
-            if(Array.isArray(wordListrequest)) return createWordList(wordListrequest);
+            if(Array.isArray(wordListrequest)) { 
+                return createWordList(wordListrequest); 
+            }
             let arr = [];
             arr.push(wordListrequest);
             createWordList(arr);
             return arr;
         },
         async delete(e, id){
-            await executeSrvConnect(CONNECT_MODE.DELETE, id, { isUpdate: false });
+            await executeSrvConnect("delete", id, { isUpdate: false });
         },
         async update(e, id, data){
-            return await executeSrvConnect(CONNECT_MODE.UPDATE, id, data);
+            return await executeSrvConnect("put", id, data);
         },
         async updateMemo(e, id, data){
-            return await executeSrvConnect(CONNECT_MODE.UPDATE_MEMO, id, data);
+            return await executeSrvConnect("put", id, data);
         },
         async memorization(e, id, data){
-            return await executeSrvConnect(CONNECT_MODE.MEMORIZATION, id, data);
+            return await executeSrvConnect("put", id, data);
         },
         async save(e, data){
-            let res = await executeSrvConnect(CONNECT_MODE.SAVE, data.type, data);
+            let res = await executeSrvConnect("post", data.type, data);
             saveListClear();
             return res;
         },
@@ -102,16 +105,16 @@ function useEvntHandler(e, modeType, data, func){
             setFolderList(data);
         },
         async folderUpdate(e, data){
-            return await executeSrvConnect(CONNECT_MODE.FOLDER_UPDATE, data.folder_id, data);
+            return await executeSrvConnect("put", data.folder_id, data);
         },
         async folderSave(e, data){
-            return await executeSrvConnect(CONNECT_MODE.FOLDER_SAVE, '', data);
+            return await executeSrvConnect("post", '', data);
         },
         async wordFolderUpdate(e, id, data){
-            return await executeSrvConnect(CONNECT_MODE.WORD_FOLDER_UPDATE, id, data);
+            return await executeSrvConnect("put", id, data);
         },
         async folderDelete(e, id){
-            return await executeSrvConnect(CONNECT_MODE.FOLDER_DELETE, id, '', {msgType: ALERT_TYPE.PRIMARY});
+            return await executeSrvConnect("delete", id, '', {msgType: ALERT_TYPE.PRIMARY});
         },
         open(){
 
@@ -119,27 +122,25 @@ function useEvntHandler(e, modeType, data, func){
         close(){
 
         },
-        async login(e, user){
-            const res = await executeSrvConnect(CONNECT_MODE.LOGIN, '', user, { moveUrl: "/word", isUpdate: false });
-
-            if(res.code === 6006) {
-                activeToast(res.msg);
-                clearToken();
-                return;
-            }
-            save(res);
-            let data = {
-                "refreshToken": res.data.refreshToken,
-                "accessToken": res.data.accessToken
+        async login(_, user){
+            const res = await executeSrvConnect("post", "auth/login", user, { moveUrl: "/word", isUpdate: false });
+            const data = {
+                "accessToken": res.accessToken,
+                "refreshToken": res.refreshToken,
             };
-            saveToken(data, user.user_id);
-            // activeToast("로그인 성공");
+            saveToken(data);
         },
-        async signup(e, user){
-            const res = await executeSrvConnect(CONNECT_MODE.SIGNUP, '', user, { returnMsg: false, moveUrl: "/", isUpdate: false });
+        async signup(_, user){
+            const res = await executeSrvConnect("post", "user/signup", user, { moveUrl: "/", isUpdate: false });
             activeToast("회원가입이 완료되었습니다.");
+            const { email, password } = user;
+            const loginRes = {
+                email,
+                password
+            }
+            this.login(null, loginRes);
         },
-        audio_play(e, data, endFunc){
+        audio_play(_, data, endFunc){
             const audio = new Audio();
             const soundUrl = process.env.PUBLIC_URL + '/pronu/' + data.sound_path + '.mp3';
             audio.src = soundUrl;
@@ -155,51 +156,48 @@ function useEvntHandler(e, modeType, data, func){
 
     /**
      * 
-     * @param {STRING} connectMode CONNECT_MODE(axiosUtil)
-     * @param {NUMBER} id key값
-     * @param {*} data 데이터
-     * @param {*} {isLoading, isUpdate, msgType, returnMsg=true, moveUrl}
+     * @param {'get' | 'post' | 'put' | 'delete'} method http 메소드
+     * @param {string} uri uri
+     * @param {*} data body 데이터
+     * @param {*} obj {isLoading, isUpdate, msgType, returnMsg=true, moveUrl}
      * @returns 
      */
-    const executeSrvConnect = async function(connectMode, id, data, obj){
-        if ((obj?.isLoading ?? true)) setLoading(true);
+    const executeSrvConnect = async function(method, uri, data, obj){
+        // 로딩 화면 출력 여부
+        if ((obj?.isLoading ?? true)) { 
+            setLoading(true);
+        }
+
         try {
-            let res = await connect(connectMode, id, data, token.accessToken);
+            const res = await connect(method, uri, data, token.accessToken);
+
+            const resData = res.data;
+
+            // return 메시지가 있으면 toast 메시지를 띄워준다
             if ((obj?.returnMsg ?? true) && typeof obj?.returnMsg === 'undefined'){
                 activeToast(res.msg);
             }
-            if (res.success === true){
-                if (obj?.moveUrl) navigate(obj?.moveUrl);
+
+            if (res.status < 300 && obj?.moveUrl){
+                navigate(obj?.moveUrl);
             }
-            return res;
+
+            return resData;
         } catch (error) {
-            let msg = error?.response?.data?.msg || "서버에 응답이 없거나, 오류가 발생하였습니다. 잠시 후 다시 시도해주시기 바랍니다."
+            const msg = error?.response?.data?.msg || "서버에 응답이 없거나, 오류가 발생하였습니다. 잠시 후 다시 시도해주시기 바랍니다."
             activeToast(msg);
-            throw new Error("error");
+            throw new Error(msg);
         }
         finally{
+            // 데이터 불러온 후 로딩 false처리
             setLoading(false);
+
             //update state변경, 변경 시 useEffect() 실행, 기본값은 항상 업데이트
-            if (obj?.isUpdate ?? true) setUpdateFlag();
+            if (obj?.isUpdate ?? true) { 
+                setUpdateFlag();
+            }
         }
     }
-
-    /**
-     * @param {alert} obj alert
-     * @param {STRING} type ALERT_TYPE(store)
-     * @param {STRING} message 
-     * @returns alert object
-     * @Description 특정 상황에 알맞는 알림 메시지를 작성한다.
-     */
-    const getAlertData = (msgType, message) => {
-        return {
-            type: ALERT_TYPE.MSG,
-            msgType: msgType ?? ALERT_TYPE.SUCCESS,
-            message: message ?? "성공적으로 데이터를 저장했습니다.",
-            show: true,            
-        }
-    }
-
 
     /**
      * @param {*} data 체크할 data
@@ -209,11 +207,6 @@ function useEvntHandler(e, modeType, data, func){
     const dataCheck = data => {
         if (typeof data === "undefined" || data === -1 || data === "") return false;
         return true;
-    }
-
-    const dataAdd = (data, addData) => {
-        const result = {addData, ...data};
-        return result;
     }
 
     /**

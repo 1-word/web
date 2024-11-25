@@ -158,30 +158,3 @@ export function useAlert(){
 
     return [addAlert];
 }
-
-export function useFetch(baseUrl, initType){
-    const [data, setData] = useState(null);
-    const host = baseUrl ?? process.env.REACT_APP_HOST;
-        
-    // const method = _method.METHOD;
-    // const id = _id ?? "";
-    // const uri = _method.URI ?? "";
-    // const token = uri !== CONNECT_MODE.LOGIN.URI? _token : "";
-    // let url = `${host}${uri}/${id}`;
-    // if (_method.URI === CONNECT_MODE.SEARCH.URI) url = `${host}${uri}/${_data}`;
-
-    // axios({
-    //     method: method,
-    //     url: url,
-    //     data: _data,
-    //     headers:{
-    //         contentType: 'application/json',
-    //         Authorization: `Bearer ${token}`
-    //     }
-    // }).then(res => {
-    //     setData(res);
-    //     return [data, setData];
-    // }).catch(error=>{
-    //     throw new Error(error);
-    // });
-}
