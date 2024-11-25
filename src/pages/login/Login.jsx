@@ -20,15 +20,15 @@ function Login(){
                 <div className="login-area">
                     <h2>Login</h2>
                     <div className="login-input-area">
-                        <input id="user_id" name="user_id" type="text" spellCheck placeholder="UserID" onChange={e=>handleChange(e, loginData)} onKeyDown={handleOnKeyDown} />
+                        <input id="user_id" name="user_id" type="text" spellCheck placeholder="아이디" onChange={e=>handleChange(e, loginData)} onKeyDown={handleOnKeyDown} />
                         <label htmlFor="user_id">UserID</label>
                     </div>
                     <div className="login-input-area">
-                        <input id="password" type="password" name="password" spellCheck placeholder="Password" onChange={e=>handleChange(e, loginData)} onKeyDown={handleOnKeyDown}/>
+                        <input id="password" type="password" name="password" spellCheck placeholder="비밀번호" onChange={e=>handleChange(e, loginData)} onKeyDown={handleOnKeyDown}/>
                         <label htmlFor="password">Password</label>
                     </div>
                     <div className="login-btn-wrap">
-                    <button className="btn-login" onClick={handleSubmit}>Login</button>
+                    <button className="btn-fill sizeL" onClick={handleSubmit}>Login</button>
                     </div>
                 <div className="login-join-wrap">
                     <p>아직 회원가입을 하지 않으셨나요? <Link to='/signup'>회원가입</Link></p>

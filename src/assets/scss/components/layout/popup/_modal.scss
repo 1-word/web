@@ -1,0 +1,108 @@
+
+
+// 지워야함
+.modal_wrap{
+	position: relative;
+	z-index: 1000;
+	// 꺼질때 애니메이션 추가
+	// animation의 delay변경 시 Modals.jsx의 setTimeout도 동일한 시간으로 변경 필요함
+	// &.off{
+	// 	.modal_full_wrap{
+	// 		animation: slide-left-off 0.15s 25ms linear forwards;
+	// 	}
+	// 	.modal_center_wrap{}
+	// 	.modal_bottom_wrap{
+	// 		animation: slide-bottom-off 0.15s 25ms linear forwards !important;
+	// 	}
+	// }
+}
+
+		
+.modal_full{
+	&_wrap{
+		position: fixed;
+		left: calc(50% - 300px);
+		width: 600px;
+		height: 100%;
+		box-sizing: border-box;
+		background: #f8f8f8a9;
+		backdrop-filter: blur(8px);
+		overflow: hidden;
+		opacity: 0;
+		visibility: hidden;
+		&.on{
+			animation: slide-left-on 0.15s 25ms linear forwards;
+		}
+		&.off{
+			animation: slide-left-off 0.15s 25ms linear forwards;
+		}
+		&.visible{
+			opacity: 1;
+			visibility: visible;
+		}
+		&.remove {
+			opacity: 0 !important;
+		}
+		@include deviceSmall(){
+			inset: 0;
+			width: 100%;
+		}
+		&::-webkit-scrollbar {
+			width: 4px;
+			background: $main-bg-color;
+		}
+	
+		&::-webkit-scrollbar-thumb {
+			min-height: 30px;
+			background: $default-ddd;
+
+		}
+	}
+	&_cont{
+		height: 100%;
+		padding: $main-p;
+		margin-top: 16px;
+	}
+	&_scroll{
+		max-height: 76dvh;
+		overflow-y: auto;
+		padding-bottom: 64px;
+	}
+	&_title{
+		font-size: 1.2rem;
+		font-weight: 500;
+	}
+	&_btn_wrap{
+		position: fixed;
+		bottom: 0;
+		width: 100%;
+		left: 0;
+		padding: 16px;
+	}
+}
+
+  /* 아래의 모든 코드는 영역::코드로 사용 */
+	@keyframes slide-left-on {
+		0%{
+			opacity: 0;
+			visibility: hidden;
+			transform: translateX(-50%);
+		}
+		100%{
+			opacity: 1;
+			visibility: visible;
+			transform: translateX(0);
+		}
+	}
+	@keyframes slide-left-off {
+		0%{
+			opacity: 1;
+			visibility: visible;
+			transform: translateX(0);
+		}
+		100%{
+			opacity: 0;
+			visibility: hidden;
+			transform: translateX(-50%);
+		}
+	}

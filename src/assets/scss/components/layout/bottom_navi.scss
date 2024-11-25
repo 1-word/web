@@ -1,0 +1,144 @@
+.bottom_nav{
+	position: fixed;
+	bottom: 0;
+	width: calc(600px - 2px);
+	padding: 0;
+	z-index: 100;
+	@include deviceSmall(){
+		width: 100%;
+	}
+	&_list{
+		position: relative;
+		display: flex;
+		background: $default-fff;
+		border-top: 1px solid $default-ddd;
+		li{
+			flex: 1;
+			align-items: center;
+			justify-content: center;
+			font-size: 10px;
+			a{
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 4px;
+				width: 100%;
+				height: 100%;
+				padding: 14px 0;
+				color: $sub-text-color;
+			}
+			// li active시 컬러 변경
+			&.active,&:hover{
+				a{
+					color: $main-accent-color;
+				}
+			}
+			// li active시 icon setting
+		}
+		>li .active, a:is(:focus,:active,:hover){
+			.user{
+				background-image: icon(user,$accentColor);
+			}
+			.search{
+				background-image: icon(search,$accentColor);
+			}
+			.wordbook{
+				background-image: icon(wordbook,$accentColor);
+			}
+			.learn{
+				background-image: icon(learn,$accentColor);
+			}
+		}
+		// icon setting
+		.user{
+			@include icon(){
+				background-image: icon(user);
+			}
+		}
+		.search{
+			@include icon(){
+				background-image: icon(search);
+			}
+		}
+		.wordbook{
+			@include icon(){
+				background-image: icon(wordbook);
+			}
+		}
+		.learn{
+			@include icon(){
+				background-image: icon(learn);
+			}
+		}
+	}
+	// 탑 버튼
+	&_top{
+		position: fixed;
+		bottom: 2vw;
+		right: 2vw;
+		width: 80px;
+		height: 80px;
+		padding: 20px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		background-color: $default-fff;
+		border: 1px solid $default-ddd;
+		@include deviceSmall(){
+			position: absolute;
+			top: -100%;
+			width: 40px;
+			height: 40px;
+			padding: 8px;
+		}
+	}
+	// 단어장 추가 버튼
+	&_new_word{
+		position: fixed;
+		bottom: 8.5vw;
+		right: 2vw;
+		width: 80px;
+		height: 80px;
+		transition: all 3s ease-in;
+		background: $main-bg-color;
+		color: $main-accent-color;
+		font-size: 1.3em;
+		border-radius: 50%;
+		z-index: 10;
+		overflow: hidden;
+		@include deviceSmall(){
+			position: absolute;
+			top: calc(-100% - 44px);
+			width: 40px;
+			height: 40px;
+		}
+	
+		&::before {
+			content: "";
+			display: block;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%) scale(0.8);
+			width: 100%;
+			height: 100%;
+			background: #f0eafd;
+			border-radius: 50%;
+			z-index: -1;
+			animation: bloom 1s 3s linear alternate infinite;
+		}
+		i{
+			&.xi-plus{
+				font-weight: 600;
+			}
+		}
+	}
+}
+
+@keyframes bloom {
+  100% {
+    transform: translate(-50%, -50%) scale(1.4);
+  }
+}

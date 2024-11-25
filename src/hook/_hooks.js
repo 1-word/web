@@ -1,6 +1,13 @@
 import { useState } from "react";
 import ModalStore, { ALERT_TYPE } from "@/store/modal";
 
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
 export function useInput(initivalValue, submitAction){
     const [inputValue, setInputValue] = useState(initivalValue);
 
@@ -45,7 +52,7 @@ export function useModal(id, openAction, closeAction){
         let isfind = false;
         if (openedModals?.length){
             for (const i in openedModals){
-                if (Object.keys(openedModals[i])[0] === key){
+                if (openedModals[i].id === key){
                     isfind = true;
                     index = i;
                     break;
@@ -55,17 +62,43 @@ export function useModal(id, openAction, closeAction){
         return { index, isfind };
     }
 
-    const openModal = (Component, props) => {
-        if (openAction) openAction();
-        //팝업 중복검사 
-        if (findKey(id).isfind){
-            console.log("중복");
-            return;
-        }
-        addModal({
-            [id]:Component
-        });
-    };
+		/**
+		 * 모달을 등록한다.
+		 * @param {func} layout 모달 레이아웃(함수)
+		 * @param {func} contents 실제 컴포넌트(함수)
+		 * @param {*} props 실제 레이아웃에 넘길 props
+		 * @param {string} type 모달 타입(nullable)
+		 */
+    const openModal = (layout, contents, props, type) => {
+			type = type ?? null;
+			id = id ?? uuidv4();	
+			if (openAction) openAction();
+			//팝업 중복검사 
+			if (findKey(id).isfind){
+					return;
+			}
+			const isFirst = isFirstModal(type);
+			addModal({
+					id: id,
+					layout: layout,
+					contents: contents,
+					props: props,
+					isFirst: isFirst,
+					isOpened: false,
+			});
+    }
+
+		const isFirstModal = (type) => {
+			if (type !== null) {
+				return false;
+			}
+			for (let modals of openedModals) {
+				if (modals.isFirst) {
+					return false;
+				}
+			}
+			return true;
+		}
 
     /**
      * 클릭한 요소가 여백인지 확인

@@ -1,6 +1,32 @@
+// reset
+@import "@scss/reset";
+@import "@scss/assets/media";
+
+// assets
+@import "@scss/assets/color";
+@import "@scss/assets/radius";
+@import "@scss/assets/button";
+@import "@scss/assets/input";
+@import "@scss/assets/padding";
+@import "@scss/assets/icon";
+
+// pages
+@import "@scss/style/load";
 @import "@scss/style/main";
-@import "@scss/style/login.scss";
-@import "@scss/style/confirm.scss";
-@import "@scss/style/add.scss";
-@import "@scss/style/colorpick.scss";
-@import "@scss/style/load.scss";
+@import "@scss/style/login";
+@import "@scss/style/confirm";
+
+// components
+@import "@scss/components/layout/popup/modal";
+@import "@scss/components/layout/popup/center";
+@import "@scss/components/layout/popup/toast";
+@import "@scss/components/layout/popup/bottom/bottom_sheet";
+@import "@scss/components/vertical_swiper";
+@import "@scss/components/layout/bottom_navi";
+@import "@scss/components/layout/left_fix";
+@import "@scss/components/layout/header";
+@import "@scss/components/layout/footer";
+
+
+
+

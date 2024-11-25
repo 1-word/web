@@ -1,0 +1,51 @@
+[data-tooltip] {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  &:before, &:after {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    font-size: 11px;
+  }
+
+  &:before {
+    content: attr(data-tooltip);
+    height: 13px;
+    position: absolute;
+    top: -20px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: $default-fff;
+    background: $main-text-color;
+    box-shadow: 0 3px 8px rgba(165, 165, 165, 0.5);
+  }
+
+  &:after {
+    content: "";
+    border-left: 5px solid transparent;
+    top: 2px;
+		right: 4px;
+    border-right: 5px solid transparent;
+    border-top: 5px solid $main-text-color;
+    z-index: -1;
+  }
+
+  &:not([data-tooltip=""]):hover {
+    &:before {
+      visibility: inherit;
+      opacity: 1;
+      top: -35px;
+    }
+
+    &:after {
+      visibility: visible;
+      opacity: 1;
+      top: -12px;
+    }
+  }
+}

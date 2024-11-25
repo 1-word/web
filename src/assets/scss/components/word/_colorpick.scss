@@ -1,0 +1,103 @@
+.folder{
+	&-lists{
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+	}
+	&-list{
+		align-items: center;
+		gap: 8px;
+		.icon-area{
+			gap: 12px;
+			margin-left: auto;
+			font-size: 16px;
+			color: $sub-text-color;
+		}
+	}
+	&-color {
+		display: flex;
+		flex: 34px 0 0;
+		width: 34px;
+		height: 34px;
+		align-items: center;
+		gap: 0.625rem;
+		flex-shrink: 0;
+		border-radius: 0.625rem;
+		background: #FFF;
+		box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.25);
+	}
+}
+
+.color{
+	&-cont{
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+	&-preview-area {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		.preview {
+			display: inline-flex;
+			width: 54px;
+			height: 48px;
+			justify-content: center;
+			align-items: center;
+			flex-shrink: 0;
+			border-radius: $sub-br;
+			background: var(--color);
+			box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+			h3 {
+				font-size: 12px;
+				font-weight: 400;
+			}
+		}
+	}
+	&-title{
+		font-size: 14px;
+		color: $default-666;
+		margin-bottom: 10px;
+	}
+	&-pick{
+		padding: 14px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: $sub-br;
+		background: #FFF;
+		border: 1px solid $default-ddd;
+		.area {
+			display: flex;
+			align-items: flex-start;
+			align-content: flex-start;
+			gap: 0.5rem;
+			flex-wrap: wrap;
+		}
+
+		.color {
+			width: 1.875rem;
+			height: 1.875rem;
+			flex-shrink: 0;
+			border-radius: $sub-br;
+			box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
+			background: var(--color);
+			transition: border 0.23s ease;
+			text-indent: -1000000px;
+			font-size: 0;
+			&:last-child {
+				background: linear-gradient(180deg, #FA8787 0%, rgba(250, 134, 136, 0.99) 0.01%, rgba(250, 180, 129, 0.95) 16.15%, rgba(250, 238, 129, 0.95) 32.81%, rgba(180, 251, 155, 0.71) 50%, rgba(169, 179, 204, 0.58) 65.1%, rgba(200, 141, 245, 0.58) 82.29%, rgba(255, 0, 229, 0) 100%);
+			}
+			&:focus, &:hover {
+				border: 1px solid #989393;
+			}
+		}
+	}
+}
+
+.add-cont{
+	.btn-area {
+		margin-top: 2.38rem;
+	}
+
+}

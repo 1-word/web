@@ -1,0 +1,12 @@
+$device_small: 600px;
+$device_large: 1480px;
+@mixin deviceSmall(){
+	@media screen and (max-width:$device_small){
+		@content;
+	}
+}
+@mixin deviceLarge(){
+	@media screen and (max-width:$device_large){
+		@content;
+	}
+}

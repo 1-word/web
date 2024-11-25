@@ -1,0 +1,54 @@
+.new{
+	&_cont{
+		.add{
+			&_cont{
+				position: relative;
+				grid-template-columns: auto;
+			}
+			&_plus{
+				position: absolute;
+				bottom: 0;
+			}
+			&_minus{
+				position: absolute;
+				top: 50%;
+				right: 3%;
+				transform: translateY(-50%);
+				z-index: 10;
+			}
+		}
+	}
+	&_sub{
+		&_title{
+			padding: 12px;
+			// 화살표
+			margin-bottom: 16px;
+			&::after{
+				content: url("/assets/images/next.svg");
+			}
+		}
+		&_cont{
+			position: relative;
+			padding-bottom: 44px;
+			h2{
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+			}
+			span{
+				display: block;
+				margin-left: 8px;
+				font-size: 0.825em;
+				color: $default-666;
+				font-weight: 300;
+			}
+			.input_wrap{
+				margin-bottom: 0;
+			}
+			// + 버튼 항상 밑으로 보내는 스타일
+			> .new_sub_list:first-child .add_cont{
+				position: static;
+			}
+		}
+	}
+}

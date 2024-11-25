@@ -1,0 +1,43 @@
+.box{
+	&_fix{
+		position: fixed;
+		top: 50%;
+		left: calc((100% - 600px) / 4 );
+		transform: translate(-50% , -50%);
+		@include deviceLarge(){
+			display: none;
+		}
+	}
+	&_ani{
+		path{
+			stroke-width: 2px;
+			stroke-dasharray: 50%;
+			stroke-dashoffset: 0;
+			animation: writingSvg 10s linear;
+		}
+		&_ko{
+			path{
+				display: none;
+				animation: writingSvg 10s 20s linear infinite;
+			}
+		}
+		&_en{
+			path{
+				animation: writingSvg 20s 20s linear infinite;
+				fill: $main-accent-color;
+			}
+		}
+	}
+}
+
+@keyframes writingSvg {
+	0%{
+			stroke-dashoffset: 100%;
+			fill: none;
+	}
+
+	100%{
+			stroke-dashoffset: -100%;
+			fill: auto;
+	}
+}

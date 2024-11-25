@@ -1,0 +1,126 @@
+.word{
+	&_wrap{
+		position: relative;
+		width: 100%;
+		margin-top: 30px;
+		padding: $main-p;
+	}
+	&_cont{
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		gap: 1em;
+	}
+	// 폴더 구분 북클립
+	&_bookclip{
+		position: absolute;
+		top: -10px;
+		left: 8px;
+		width: 60px;
+		height: 21px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 0.8rem;
+		background: #03CDBF;
+		border-radius: 6px 6px 0 0;
+		z-index: 1;
+	}
+	&_card{
+		min-height: 150px;
+		padding: 1em 1.1em;
+		display: flex;
+		flex-direction: column;
+		border-radius: $main-br;
+		background: $main-bg-color;
+	}
+}
+
+// 카드부분 스타일
+.word_card{
+	&_top,&_foot{
+		button{
+			width: 20px;
+			height: 20px;
+			font-size: 1em;
+			color: $default-666;
+		}
+	}
+	&_top{
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		font-size: 1.2em;
+		word-break: break-all;
+	}
+	&_name{
+		margin-left: 4px;
+		font-weight: bold;
+	}
+	&_read{
+		font-size: 0.7em;
+	}
+	&_headset{
+		color: $default-666;
+		.xi-headset.listen.on{
+			color: $main-accent-color;
+		}
+	}
+	&_more{
+		margin-left: auto;
+		flex-shrink: 0;
+	}
+	&_check{
+		&.on{
+			path{
+				fill: $main-accent-color;
+				&.check{
+					stroke: $default-fff;
+					animation: drawCheck 0.36s ease-out forwards;
+					&:last-of-type{
+						animation-delay: 0.1s;
+					}
+				}
+				&.border{
+					fill: $main-hover-color;
+				}
+			}
+		}
+	}
+	&_mean{
+		margin-top: 1em;
+		color: $main-accent-color;
+		&_list{
+			display: flex;
+			gap: 8px;
+		}
+	}
+	&_foot{
+		margin-top: auto;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		font-size: 0.8em;
+		color: $default-666;
+	}
+	&_memo{
+		margin-left: auto;
+		&.on{
+			color: $main-accent-color;
+		}
+		i{
+			font-size: 1.4em;
+		}
+	}
+}
+
+// check animation
+.check_ani{
+	path{
+		transition: all 0.24s ease;
+		stroke-width:0;
+	}
+}
+@keyframes drawCheck {
+  100%{stroke-width: 2px;}
+}

@@ -1,0 +1,100 @@
+@import "@scss/components/layout/popup/bottom/bottom_select";
+
+.modal_bottom{
+	position: fixed;
+	left: calc(50% - 300px);
+	width: 600px;
+	height: 100%;
+	&.off .modal_bottom_wrap{
+		animation: slide-bottom-off 0.15s 25ms linear forwards;
+	}
+	&_fix{
+		position: fixed;
+		left: calc(50% - 300px);
+		width: 600px;
+		height: 100%;
+		background: #f8f8f8a9;
+		backdrop-filter: blur(8px);
+		background: #00000040;
+	}
+	&_wrap{
+		position: fixed;
+		bottom: 0;
+		width: 600px;
+		min-height: 60vh;
+		background: $default-fff;
+		border-radius: 20px 20px 0 0;
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(50%);
+		&.on{
+			animation: slide-bottom-on 0.15s 25ms linear forwards;
+		}
+		
+		&.visible{
+			opacity: 1;
+			visibility: visible;
+			transform: none;
+		}
+		@include deviceSmall(){
+			left: 0;
+			width: 100%;
+			min-height: auto;
+		}
+	}
+	h2{
+		padding: 14px 12px;
+		font-size: 1em;
+	}
+	&_dragable{
+		padding-top: 16px;
+		padding-bottom: 10px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		&::before{
+			content: "";
+			display: block;
+			width: 12px;
+			height: 3px;
+			background: $default-ddd;
+		}
+	}
+	&_cont{
+		padding: 0 14px;
+	}
+	&_btn{
+		padding: 0 14px;
+		margin-top: 20px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px;
+	}
+}
+
+@keyframes slide-bottom-on {
+	0%{
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(100%);
+	}
+	100%{
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+	}
+}
+
+@keyframes slide-bottom-off {
+	0%{
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+	}
+	100%{
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(100%);
+	}
+}

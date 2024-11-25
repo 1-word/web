@@ -19,44 +19,33 @@ const useStore = set => ({
             loading : flag
         }));
     },
-    alert: {
-        show: false,
-        type: ALERT_TYPE.confirm,
-        msgType: ALERT_TYPE.SUCCESS,
-        message: "",
-        component: <></>,
-        title: "",
-        content: "",
-        executionFunction: ()=>{},
-        closeFunction: ()=>{}
-    },
-    setAlert: (obj) => {
-        set((state) => ({
-            alert : {
-                ...state,
-                type: obj?.type,
-                show: obj?.show,
-                msgType: obj?.msgType,
-                message: obj?.message,
-                title: obj?.title,
-                content: obj?.content,
-                component: obj?.component,
-                executionFunction: obj?.executionFunction,
-                closeFunction: obj?.closeFunction
-            }
-        }));
-    },
     openedModals: [],
     addModal: (modal) => {
         set((modals) => ({
             openedModals: [...modals.openedModals, modal]
         }))
     },
+		setOpenModal: (id) => {
+			set((modals) => ({
+				openedModals: modals.openedModals.map((item, idx) => 
+					idx === id? {
+						...item,
+						isOpened: true,
+					}
+					: item
+				)
+			}))
+		},
     deleteModal: (itemIndex) => {
         set((modals) => ({
            openedModals: modals.openedModals.filter((value, index) => index !== itemIndex)
         }))
-    }
+    },
+		deleteModalById: (id) => {
+			set((modals) => ({
+				 openedModals: modals.openedModals.filter((value, index) => value.id !== id)
+			}))
+	}
 });
 
 const ModalStore = create(

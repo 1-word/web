@@ -10,7 +10,7 @@ function AddList(props){
         // 피연산자 앞에 + 연산자가 있으면 Number형으로 반환
         let target_id = +e.target.id;
         //유의어 input 추가
-        if(target_name === "plus_btn") {
+        if(target_name === "add_plus") {
             let updateList = [{synonym: "", memo: ""}]
             saveList.synonyms = [...saveList.synonyms, ...updateList]
             saveWordList(saveList)
@@ -33,9 +33,9 @@ function AddList(props){
         saveWordList(saveList);
     }
 
-    return <div className="add-word-area">
-            <label className="add-label">{props.text}</label>
-            <div className="input-area">
+    return <div className="new_sub_list input_wrap">
+            <span>{props.text}</span>
+            <div className="add_cont">
             <input name={props.name} id={props.id} value={props.value}type="text"onChange={handleOnchange}/>
             {props.name === WORD_KEY.SYNONYMS
             ? <button className={props.btncls} name={props.btnname} id={props.id} value={props.value} onClick={handleClick} />
