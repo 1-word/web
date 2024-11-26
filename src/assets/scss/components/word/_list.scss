@@ -88,9 +88,9 @@
 		}
 	}
 	&_mean{
-		margin-top: 1em;
-		color: $main-accent-color;
-		&_list{
+		&_wrap{
+			margin-top: 1em;
+			color: $main-accent-color;
 			display: flex;
 			gap: 8px;
 		}

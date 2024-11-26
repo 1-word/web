@@ -20,7 +20,7 @@ const BottomNav = () => {
 </div>
 <ul className="bottom_nav_list flex">
 	<li className="flex">
-		<Link><i className="wordbook"></i>단어장</Link>
+		<Link to="/word"><i className="wordbook"></i>단어장</Link>
 	</li>
 	<li className="flex">
 		<Link><i className="learn"></i>단어 학습</Link>

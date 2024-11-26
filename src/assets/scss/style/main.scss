@@ -73,12 +73,7 @@ nav {
   max-width: $device_small;
 	height: 100%;
   margin: 0 auto;
-	border-left: 1px solid $default-ddd;
-	border-right: 1px solid $default-ddd;
 	background-color: $default-fff;
-	@include deviceSmall(){
-		border: 0;
-	}
 }
 
 .modal-fix {
@@ -367,7 +362,7 @@ nav {
 		max-height: 0;
 		overflow: hidden;
 		transition: 0.4s ease;
-		margin-bottom: 10px;
+		margin-bottom: 24px;
 		&.on {
 			margin-top: 24px;
 			max-height: 200px;
