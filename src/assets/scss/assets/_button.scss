@@ -58,6 +58,10 @@
 	&:focus,&:focus-visible{
 		background-color: $main-hover-color;
 	}
+	&:disabled{
+		background: $default-ddd;
+		cursor: default;
+	}
 	@content;
 }
 

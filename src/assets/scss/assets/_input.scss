@@ -50,27 +50,34 @@ textarea{
 .input_wrap {
 	display: flex;
 	flex-direction: column;
-	gap: 8px;
 	margin-bottom: 16px;
 	padding: 0;
 	background: none;
 	span, label{
 		display: block;
 		margin-left: 8px;
+		margin-bottom: 8px;
 		font-size: 0.825em;
 		color: $default-666;
 		font-weight: 300;
 	}
+	input{
+		&.error{
+			border: 2px solid $default-error-color;
+		}
+	}
 	// 메시지
 	.msg{
-		margin-left: 8px;
 		display: block;
+		margin-left: 8px;
 		font-size: 12px;
 		color: $sub-text-color;
 		&.error{
+			margin-top: 8px;
 			color: $default-error-color;
 		}
 		&.correct{
+			margin-top: 8px;
 			color: $sub-correct-color;
 		}
 	}

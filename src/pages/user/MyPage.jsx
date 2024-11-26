@@ -33,6 +33,7 @@ function MyPage(){
 					<li onClick={handleUserConfig()}>내 계정 설정</li>
 					<li>내 단어 그룹 관리</li>
 					<li>로그아웃</li>
+					<li>계정탈퇴</li>
 				</ul>
 			</div>
 		</div>
