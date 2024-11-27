@@ -1,4 +1,4 @@
-import ModalStore from "@/store/modal";
+import ModalStore from "@/store/modalStore";
 
 function Confirm({
 	idx,

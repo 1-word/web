@@ -3,7 +3,7 @@ import AddList from "./AddList";
 import wordListStore, { WORD_KEY } from "@/store/wordListStore";
 import Store from "@/store/store";
 import api, { MODE } from "@/services/api";
-import { textTypeCheck } from "@/util/textTypeCheck";
+import { textTypeCheck } from "@/util/utils";
 
 function Add(){
     const {saveList, saveWordList} = wordListStore(state => state);

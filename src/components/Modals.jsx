@@ -1,4 +1,4 @@
-import ModalStore from "@/store/modal";
+import ModalStore from "@/store/modalStore";
 import ModalPortal from "@components/modal/ModalPortal";
 import Loading from "./modal/Loading";
 import React, { useEffect, useRef, createElement } from "react";
