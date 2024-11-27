@@ -6,7 +6,8 @@ function Signup(){
     const signupData = useRef(null);
     const onClickHandler = api();
 
-    const handleClick = () => {
+    const handleClick = (e) => {
+        e.preventDefault();
         const data = signupData.current;
 
         if (!checkPassword(data?.confirm_password, data?.password)) {
