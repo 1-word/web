@@ -32,6 +32,11 @@
 	&-scroll{
 		height: 100%;
 		overflow-y: auto;
+		@include deviceSmall(){
+			&::-webkit-scrollbar{
+				display: none;
+			}
+		}
 	}
 	&-title{
 		margin-top: 80px;

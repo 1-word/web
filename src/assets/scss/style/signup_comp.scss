@@ -79,14 +79,32 @@
 
 // 스와이퍼
 .comp_swiper{
+	--swiper-theme-color: #989393;
+	--swiper-pagination-bullet-size: 4px;
+	.swiper-pagination{
+		position: relative;
+		bottom: inherit !important;
+		top: inherit;
+	}
 	&_wrap{
-		width: 310px;
+		margin: 24px auto 0;
+		width: 280px;
+		border-radius: $sub-br;
+		background-color: $default-fff;
+		@include deviceSmall(){
+			padding: 0 16px;
+			width: 80vw;
+		}
 	}
 	&_slide{
-		height: 300px;
-		display: flex;
+		height: 400px !important;
+		display: flex !important;
 		align-items: center;
 		justify-content: center;
+	}
+	&_title{
+		margin-top: auto;
+		margin-bottom: 24px;
 	}
 }
 
