@@ -29,14 +29,23 @@
 			z-index: -1;
 		}
 	}
+	&-scroll{
+		height: 100%;
+		overflow-y: auto;
+	}
 	&-cont{
 		position: relative;
 		max-width: 360px;
-		margin: 10vw auto;
+		margin: 4vw auto;
 		border-radius: 20px;
 		background: #ffffff80;
 		backdrop-filter: blur(10px);
 		border: 1px solid $default-ddd;
+		@include deviceSmall(){
+			border: 0;
+			max-width: 90%;
+			margin: 10vw auto;
+		}
 		&::before {
 			content: "";
 			position: relative;
@@ -50,34 +59,80 @@
 		}
 	}
 	&-area{
-		padding: 24px;
+		padding: 10px 24px 24px 24px;
+		&:invalid{
+			.btn-login{
+				background: $default-ddd !important;
+			}
+		}
 		h2 {
+			margin-bottom: 24px;
 			font-size: 24px;
 			font-weight: 700;
 		}
 	}
 	&-input-area{
-		margin-top: 34px;
 		display: flex;
-		flex-direction: column-reverse;
-		label {
-			margin-bottom: 9px;
-			font-size: 14px;
-			text-indent: 8px;
-		}
+		flex-direction: column;
 		input{
 			height: 40px;
+			&:focus{
+				border: 2px solid $main-accent-color;
+			}
 		}
 	}
 	&-btn-wrap{
-		margin-top: 44px;
+		margin-top: 32px;
+	}
+	&-sns{
+		&-lists{
+			margin-top: 32px;
+			padding-top: 16px;
+			border-top: 1px solid $default-ddd;
+			display: flex;
+			flex-direction: column;
+			gap: 16px;
+		}
+		&-list{
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 40px;
+			border-radius: $sub-br;
+			border: 1px solid $default-ddd;
+			padding: 0 20px;
+			text-align: center;
+			&:has(.kakao){
+				background-color: #FEE500;
+			}
+			i{
+				position: absolute;
+				left: 20px;
+			}
+		}
+	}
+}
+.naver{
+	@include icon(){
+		background-image: icon(naver);
+	}
+}
+.kakao{
+
+	@include icon(){
+		background-image: icon(kakao);
+	}
+}
+.google{
+	@include icon(){
+		background-image: icon(google);
 	}
 }
 
 // 로그인 회원가입 공통
 .login-join-wrap {
 	margin-top: 20px;
-  padding-bottom: 40px;
   font-weight: 500;
   letter-spacing: -1px;
 	text-align: center;

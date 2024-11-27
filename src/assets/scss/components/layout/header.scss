@@ -39,13 +39,16 @@ header {
 		top: 0;
 		background-color: $main-bg-color;
 		padding: 1rem 14px;
-		justify-content: center;
-		gap: 0;
+		justify-content: start;
+		gap: 16px;
 		.title{
-			margin: 0 auto;
+			// margin: 0 auto;
 		}
 		.back,.close{
 			font-size: 16px;
+		}
+		.close{
+			margin-left: auto;
 		}
 	}
 }

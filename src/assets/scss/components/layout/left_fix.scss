@@ -13,7 +13,7 @@
 			stroke-width: 2px;
 			stroke-dasharray: 50%;
 			stroke-dashoffset: 0;
-			animation: writingSvg 10s linear;
+			animation: writingSvg 14s linear;
 		}
 		&_ko{
 			path{
@@ -32,12 +32,15 @@
 
 @keyframes writingSvg {
 	0%{
-			stroke-dashoffset: 100%;
-			fill: none;
+		stroke-dashoffset: 100%;
+		fill: none;
+	}
+
+	50%{
+		stroke-dashoffset: -100%;
 	}
 
 	100%{
-			stroke-dashoffset: -100%;
-			fill: auto;
+		fill: auto;
 	}
 }

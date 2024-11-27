@@ -24,10 +24,6 @@ function Word(){
     const onClickHandler = api();
     const searchInput = useRef();    
 
-		const handleBottomClick = e => {
-			openBottomModal(HeaderMini)
-		}
-
     const handleSearchClick = e => {
         let searchText = searchInput.current.value || "";
         searchText !== "" ? searchText = searchText : searchText = MODE.SEARCH_ALL;
@@ -40,7 +36,6 @@ function Word(){
 
     return (
     <div className="wrap">
-			<div onClick={handleBottomClick}>hello123123</div>
 			<LeftFix></LeftFix>
 			<BottomNav></BottomNav>
 			<Header></Header>
