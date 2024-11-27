@@ -121,15 +121,16 @@ function useEvntHandler(e, modeType, data, func){
 
         },
         async login(_, user){
-            const res = await executeSrvConnect("post", "auth/login", user, { moveUrl: "/word", isUpdate: false });
+            const res = await executeSrvConnect("post", "auth/login", user, { isUpdate: false });
             const data = {
                 "accessToken": res.accessToken,
                 "refreshToken": res.refreshToken,
             };
             saveToken(data);
+            navigate("/word");
         },
         async signup(_, user){
-            const res = await executeSrvConnect("post", "user/signup", user, { moveUrl: "/", isUpdate: false });
+            const res = await executeSrvConnect("post", "user/signup", user, { isUpdate: false });
             activeToast("회원가입이 완료되었습니다.");
             const { email, password } = user;
             const loginRes = {
@@ -162,7 +163,7 @@ function useEvntHandler(e, modeType, data, func){
      * @param {'get' | 'post' | 'put' | 'delete'} method http 메소드
      * @param {string} uri uri
      * @param {*} data body 데이터
-     * @param {*} obj {isLoading, isUpdate, msgType, returnMsg=true, moveUrl}
+     * @param {*} obj {isLoading, isUpdate}
      * @returns 
      */
     const executeSrvConnect = async function(method, uri, data, obj){
@@ -177,12 +178,10 @@ function useEvntHandler(e, modeType, data, func){
             const resData = res.data;
 
             // return 메시지가 있으면 toast 메시지를 띄워준다
-            if ((obj?.returnMsg ?? true) && typeof obj?.returnMsg === 'undefined'){
+            if (res.msg && 
+                (obj?.returnMsg ?? true) && 
+                typeof obj?.returnMsg === 'undefined'){
                 activeToast(res.msg);
-            }
-
-            if (res.status < 300 && obj?.moveUrl){
-                navigate(obj?.moveUrl);
             }
 
             return resData;

@@ -8,7 +8,9 @@ function Login(){
 	const onClickHandler = api();
 
 	const handleSubmit = (e) => {
-		e.preventDefault();
+		if (e) {
+			e.preventDefault();
+		}
 		const data = loginData.current;
 		onClickHandler('', MODE.LOGIN, data);
 	}
