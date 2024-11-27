@@ -30,7 +30,8 @@ export const MODE = {
     FOLDER_SAVE: "folderSave",
     FOLDER_DELETE: "folderDelete",
     MEMORIZATION: "memorization",
-    WORD_FOLDER_UPDATE: "wordFolderUpdate"
+    WORD_FOLDER_UPDATE: "wordFolderUpdate",
+    SIGNOUT: "signout",
 }
 
 /**
@@ -120,15 +121,16 @@ function useEvntHandler(e, modeType, data, func){
 
         },
         async login(_, user){
-            const res = await executeSrvConnect("post", "auth/login", user, { moveUrl: "/word", isUpdate: false });
+            const res = await executeSrvConnect("post", "auth/login", user, { isUpdate: false });
             const data = {
                 "accessToken": res.accessToken,
                 "refreshToken": res.refreshToken,
             };
             saveToken(data);
+            navigate("/word");
         },
         async signup(_, user){
-            const res = await executeSrvConnect("post", "user/signup", user, { moveUrl: "/", isUpdate: false });
+            const res = await executeSrvConnect("post", "user/signup", user, { isUpdate: false });
             activeToast("회원가입이 완료되었습니다.");
             const { email, password } = user;
             const loginRes = {
@@ -136,6 +138,11 @@ function useEvntHandler(e, modeType, data, func){
                 password
             }
             this.login(null, loginRes);
+        },
+        async signout(_) {
+            const res = await executeSrvConnect("delete", "auth");
+            clearToken();
+            navigate("/");
         },
         audio_play(_, data, endFunc){
             const audio = new Audio();
@@ -148,7 +155,7 @@ function useEvntHandler(e, modeType, data, func){
                     
                 }).finally(()=>endFunc(data.id))
             }
-        }
+        },
     }
 
     /**
@@ -156,10 +163,16 @@ function useEvntHandler(e, modeType, data, func){
      * @param {'get' | 'post' | 'put' | 'delete'} method http 메소드
      * @param {string} uri uri
      * @param {*} data body 데이터
-     * @param {*} obj {isLoading, isUpdate, msgType, returnMsg=true, moveUrl}
+     * @param {*} obj {isLoading, isUpdate}
      * @returns 
      */
     const executeSrvConnect = async function(method, uri, data, obj){
+        const connectInfo = {
+            method,
+            uri,
+            data,
+            obj
+        }
         // 로딩 화면 출력 여부
         if ((obj?.isLoading ?? true)) { 
             setLoading(true);
@@ -171,16 +184,30 @@ function useEvntHandler(e, modeType, data, func){
             const resData = res.data;
 
             // return 메시지가 있으면 toast 메시지를 띄워준다
-            if ((obj?.returnMsg ?? true) && typeof obj?.returnMsg === 'undefined'){
+            if (res.msg && 
+                (obj?.returnMsg ?? true) && 
+                typeof obj?.returnMsg === 'undefined'){
                 activeToast(res.msg);
-            }
-
-            if (res.status < 300 && obj?.moveUrl){
-                navigate(obj?.moveUrl);
             }
 
             return resData;
         } catch (error) {
+            // accessToken 만료 시 토큰 재발급
+            if (error?.response?.status === 401) {
+                const response = await connect("post", "auth/reissue", {
+                    accessToken: token.accessToken,
+                    refreshToken: token.refreshToken
+                });
+
+                const data = {
+                    "accessToken": response.data.accessToken,
+                    "refreshToken": response.data.refreshToken,
+                };
+
+                saveToken(data);
+                activeToast("재 로그인되었습니다. 다시 시도해주세요.");
+                throw new Error("재 로그인 되었습니다. 다시 시도해주세요.");
+            }
             const msg = error?.response?.data?.msg || "서버에 응답이 없거나, 오류가 발생하였습니다. 잠시 후 다시 시도해주시기 바랍니다."
             activeToast(msg);
             throw new Error(msg);

@@ -10,7 +10,9 @@ function Login(){
 	const onClickHandler = api();
 
 	const handleSubmit = (e) => {
-		e.preventDefault();
+		if (e) {
+			e.preventDefault();
+		}
 		const data = loginData.current;
 		onClickHandler('', MODE.LOGIN, data);
 	}
@@ -33,6 +35,13 @@ function Login(){
 		if(e.key === 'Enter'){
 				handleSubmit();
 		}
+	}
+
+	const onClickSocialLogin = (e) => {
+		const service = e.target.dataset.name;
+		const host = process.env.REACT_APP_HOST;
+		const url = `${host}oauth2/authorization/${service}`
+		window.location.href = url;
 	}
 
 	return (
@@ -58,15 +67,15 @@ function Login(){
 						</div>
 						{/* sns login */}
 						<ul className="login-sns-lists">
-							<li className="login-sns-list">
+							<li data-name="kakao" className="login-sns-list" onClick={onClickSocialLogin}>
 								<i className="kakao"></i>
 								카카오 로그인
 							</li>
-							<li className="login-sns-list">
+							<li data-name="naver" className="login-sns-list" onClick={onClickSocialLogin}>
 								<i className="naver"></i>
 								네이버 로그인
 							</li>
-							<li className="login-sns-list">
+							<li data-name="google" className="login-sns-list" onClick={onClickSocialLogin}>
 								<i className="google"></i>
 								구글 로그인
 							</li>

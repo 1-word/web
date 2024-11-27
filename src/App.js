@@ -8,6 +8,7 @@ import Signup from '@/pages/user/SignUp';
 import SignupComplete from '@/pages/user/SignUpComplete';
 import MyPage from '@/pages/user/MyPage';
 import Modals from './components/Modals';
+import OAuth from './pages/oauth/OAuth';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
       <Route path="/signup" element={<Signup></Signup>}/>
       <Route path="/signup_comp" element={<SignupComplete></SignupComplete>}/>
       <Route path="/mypage" element={<MyPage></MyPage>}/>
+      <Route path="/oauth/callback" element={<OAuth></OAuth>}/>
     </Routes> 
     );
   }
