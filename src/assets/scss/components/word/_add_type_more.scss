@@ -1,0 +1,32 @@
+.add_type{
+	&_wrap{
+		
+	}
+}
+// 스와이퍼
+.add_type_swiper{
+	width: 100%;
+	--swiper-theme-color: #989393;
+	--swiper-pagination-bullet-size: 4px;
+	.swiper-wrapper{
+		height: 78px;
+	}
+	.swiper-pagination{
+		position: relative;
+		bottom: inherit !important;
+		top: inherit;
+		margin-top: 10px;
+	}
+	&_wrap{
+		margin-top: 24px;
+	}
+	&_slide{
+		padding: 10px;
+		display: flex !important;
+		align-items: center;
+		justify-content: center;
+		border-radius: $sub-br;
+		border: 1px solid $default-ddd;
+		font-size: 12px;
+	}
+}
