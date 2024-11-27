@@ -197,7 +197,6 @@ function WordList(props){
 
     const dataList = resultList.map((data, idx) => {
 			return (
-				<div className="word_cont" key={'wl'+data?.word_id}>
 					<div className="word_card" id={data?.word_id}>
 						<div className="word_card_top">
 							<button className={data?.memorization === "Y"? "word_card_check on" : "word_card_check"} onClick={handleCheckClick(data?.word_id, data?.memorization)}>
@@ -278,15 +277,13 @@ function WordList(props){
 							<button className={memoStatus[idx]?.status === "ON" ? "word_card_memo on" : "word_card_memo"}><i className="xi-comment-o" onClick={handleMemoClick(idx)}></i></button>
 						</div>
 					</div>
-				</div>
 			)
 		});
 
-
     return (
-        <>
-        {dataList}
-        </>
+        <div className="word_cont">
+            {dataList}
+        </div>
     );
 }
 
