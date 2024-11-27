@@ -30,7 +30,8 @@ export const MODE = {
     FOLDER_SAVE: "folderSave",
     FOLDER_DELETE: "folderDelete",
     MEMORIZATION: "memorization",
-    WORD_FOLDER_UPDATE: "wordFolderUpdate"
+    WORD_FOLDER_UPDATE: "wordFolderUpdate",
+    SIGNOUT: "signout",
 }
 
 /**
@@ -136,6 +137,11 @@ function useEvntHandler(e, modeType, data, func){
                 password
             }
             this.login(null, loginRes);
+        },
+        async signout(_) {
+            const res = await executeSrvConnect("delete", "auth");
+            clearToken();
+            navigate("/");
         },
         audio_play(_, data, endFunc){
             const audio = new Audio();
