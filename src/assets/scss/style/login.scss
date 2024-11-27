@@ -33,6 +33,18 @@
 		height: 100%;
 		overflow-y: auto;
 	}
+	&-title{
+		margin-top: 80px;
+		position: relative;
+		z-index: 1;
+		font-size: 0;
+		display: flex;
+		justify-content: center;
+		a{
+			margin: auto;
+			display: inline-flex;
+		}
+	}
 	&-cont{
 		position: relative;
 		max-width: 360px;
