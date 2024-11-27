@@ -167,6 +167,12 @@ function useEvntHandler(e, modeType, data, func){
      * @returns 
      */
     const executeSrvConnect = async function(method, uri, data, obj){
+        const connectInfo = {
+            method,
+            uri,
+            data,
+            obj
+        }
         // 로딩 화면 출력 여부
         if ((obj?.isLoading ?? true)) { 
             setLoading(true);
@@ -186,6 +192,22 @@ function useEvntHandler(e, modeType, data, func){
 
             return resData;
         } catch (error) {
+            // accessToken 만료 시 토큰 재발급
+            if (error?.response?.status === 401) {
+                const response = await connect("post", "auth/reissue", {
+                    accessToken: token.accessToken,
+                    refreshToken: token.refreshToken
+                });
+
+                const data = {
+                    "accessToken": response.data.accessToken,
+                    "refreshToken": response.data.refreshToken,
+                };
+
+                saveToken(data);
+                activeToast("재 로그인되었습니다. 다시 시도해주세요.");
+                throw new Error("재 로그인 되었습니다. 다시 시도해주세요.");
+            }
             const msg = error?.response?.data?.msg || "서버에 응답이 없거나, 오류가 발생하였습니다. 잠시 후 다시 시도해주시기 바랍니다."
             activeToast(msg);
             throw new Error(msg);
