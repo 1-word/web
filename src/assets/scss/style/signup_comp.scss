@@ -1,0 +1,36 @@
+.comp_{
+	&wrap{
+		position: relative;
+	}
+	&cont{
+		@include deviceMedium(){
+			overflow: hidden;
+		}
+	}
+	&confetti{
+		position: fixed;
+		width: 1000px;
+		top: 50%;
+		left: 50%;
+		z-index: 1;
+		transform: translate(-50%,-50%);
+	}
+	&area{
+		min-height: 50vh;
+		max-height: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		h2{
+			line-height: 32px;
+			margin-bottom: 0;
+		}
+	}
+	&btn_wrap{
+		position: relative;
+		z-index: 2;
+		padding: 24px;
+	}
+}

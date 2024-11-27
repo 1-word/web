@@ -40,6 +40,9 @@
 		font-size: 0;
 		display: flex;
 		justify-content: center;
+		@include deviceSmall(){
+			margin-top: 40px;
+		}
 		a{
 			margin: auto;
 			display: inline-flex;
@@ -58,20 +61,20 @@
 			max-width: 90%;
 			margin: 10vw auto;
 		}
-		&::before {
-			content: "";
-			position: relative;
-			top: -13px;
-			left: 13px;
-			display: block;
-			width: 33px;
-			height: 30px;
-			background-image: url("/assets/images/logo.svg");
-			background-size: contain;
-		}
+		// &::before {
+		// 	content: "";
+		// 	position: relative;
+		// 	top: -13px;
+		// 	left: 13px;
+		// 	display: block;
+		// 	width: 33px;
+		// 	height: 30px;
+		// 	background-image: url("/assets/images/logo.svg");
+		// 	background-size: contain;
+		// }
 	}
 	&-area{
-		padding: 10px 24px 24px 24px;
+		padding: 24px;
 		&:invalid{
 			.btn-login{
 				background: $default-ddd !important;
