@@ -155,7 +155,7 @@ function useEvntHandler(e, modeType, data, func){
                     
                 }).finally(()=>endFunc(data.id))
             }
-        }
+        },
     }
 
     /**
