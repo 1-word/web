@@ -89,7 +89,7 @@ function useEvntHandler(e, modeType, data, func){
             return await executeSrvConnect("put", id, data);
         },
         async updateMemo(e, id, data){
-            return await executeSrvConnect("put", id, data);
+            return await executeSrvConnect("put", `word/memo/${id}`, data, {isUpdate: false});
         },
         async memorization(e, id, data){
             return await executeSrvConnect("put", id, data);

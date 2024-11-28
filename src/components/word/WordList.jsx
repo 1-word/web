@@ -13,9 +13,16 @@ import BottomModal from "@components/layout/popup/BottomModal";
 import WordDetailList from "./WordDetailList";
 
 function WordList(props) {
-    const { update, memoStatus, setMemoStatus } = wordListStore(state => state);
+    const { update } = wordListStore(state => state);
 
-    const [wordList, setWordList] = useState([]);
+    const [ wordList, setWordList ] = useState([]);
+    const [ memoStatus, setMemoStatusState ] = useState({
+        0: {
+            "status": "OFF",
+            "memo": ""
+        }
+    });
+
 
     const [openModal] = useModal("confirm");
     const [folderMoveModal] = useModal("foldercog");
@@ -99,15 +106,9 @@ function WordList(props) {
         let status = memoStatus[id]?.status ?? "FIRST";
         const memo_mode = mode ?? status;
 
-        if (memo_mode === "FIRST") {
+        if (memo_mode === "FIRST" || memo_mode === "OFF") {
             status = "ON";
-            memo_input.memo = memo_input.childNodes[0].value;  //텍스트 저장
-            setMemoStatus({ id: id, status: status });
-            return;
-        }
-
-        if (memo_mode === "OFF") {
-            status = "ON";
+            memo_input.previous = memo_input.value;  //텍스트 저장
             setMemoStatus({ id: id, status: status });
             return;
         }
@@ -119,17 +120,29 @@ function WordList(props) {
         }
 
         if (memo_mode === "CANCLE") {
-            memo_input.childNodes[0].value = memo_input.memo;
+            memo_input.value = memo_input.previous;
             return;
         }
 
         if (memo_mode === "SAVE") {
-            let data = {};
-            data.memo = memo_input?.childNodes[0]?.value;
-            memo_input.memo = memo_input.childNodes[0].value;  //텍스트 저장
+            const data = {
+                memo: memo_input.value
+            };
+            memo_input.previous = memo_input.value;  //텍스트 저장
             onClickHandler(e, MODE.UPDATE_MEMO, wordId, data);
             return;
         }
+    }
+
+    const setMemoStatus = ({id, status, memo}) => {
+        setMemoStatusState({
+                ...memoStatus,
+                [id]: {
+                    "status": status,
+                    "memo": memo
+                }
+            }
+        )
     }
 
     const handleAudioEnd = id => e => {
@@ -186,9 +199,9 @@ function WordList(props) {
                 <WordDetailList details={data?.details}></WordDetailList>
                 {/* 품사 영역 */}
                 {/* 메모 */}
-                <div ref={el => memoRef.current[idx] = el} className={memoStatus[idx]?.status === "ON" ? "memo_area on" : "memo_area"}>
+                <div className={memoStatus[idx]?.status === "ON" ? "memo_area on" : "memo_area"}>
                     <div className="memo_box textarea-box">
-                        <textarea className="memo_text" maxLength={3000}
+                        <textarea ref={el => memoRef.current[idx] = el} className="memo_text" maxLength={3000}
                             defaultValue={data?.memo.replace(/\\n/g, '\n')}>
                         </textarea>
                     </div>
