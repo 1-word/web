@@ -28,9 +28,9 @@
 	&_wrap{
 		position: relative;
 		width: 90%;
-		border-radius: 0 0 1.875rem 1.875rem;
+		border-radius: 0 0 20px 20px;
 		background: #FFF;
-		box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+		box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
 		@include deviceSmall(){
 			width: 90%;
 			border-radius: $sub-br;
@@ -60,11 +60,13 @@
 		padding: 16px 14px;
 	}
 	&_btn{
-		padding: 0 14px;
-		margin-top: 20px;
+		margin-top: 40px;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		gap: 12px;
+		@include deviceSmall(){
+			margin-top: 20px;
+		}
 	}
 }

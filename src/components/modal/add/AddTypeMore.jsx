@@ -4,6 +4,8 @@ import MyDeault_SVG from "@images/myImgDefault.svg";
 import { useModal } from "@/hook/_hooks";
 import BottomModalSelect from "@components/layout/popup/BottomModalSelect";
 import BottomModal from "@components/layout/popup/BottomModal";
+import CenterModal from "@components/layout/popup/CenterModal";
+import AddName from './AddName';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Grid, Pagination } from 'swiper/modules';
@@ -11,8 +13,12 @@ import 'swiper/css';
 import 'swiper/css/grid';
 import 'swiper/css/pagination';
 
-function addTypeMore(){
-	// const [photoConfigModal] = useModal("photoConfig");
+function AddTypeMore(){
+	const [addNameModal] = useModal("addName");
+
+	const handleAddNameModal = () => e => {
+		addNameModal(CenterModal,AddName)
+	}
 
 	// const handlePhotoConfigModal = (id) => e => {
 	// 	photoConfigModal(BottomModal, BottomModalSelect, {
@@ -37,7 +43,7 @@ function addTypeMore(){
 
 	return(
 		<div className="add_type_wrap">
-			<h2 className="modal_center_title">그룹 지정</h2>
+			<h2 className="modal_center_title">품사 지정</h2>
 			<div className="add_type_swiper_wrap">
 				<Swiper
 					slidesPerView={3}
@@ -56,9 +62,9 @@ function addTypeMore(){
 				</Swiper>
 			</div>
 			<div className='modal_center_btn'>
-				<button className='btn-light sizeM'>그룹 추가</button>
+				<button className='btn-light sizeM' onClick={handleAddNameModal()}>품사 추가</button>
 			</div>
 		</div>
 	);
 };
-export default addTypeMore;
+export default AddTypeMore;

@@ -5,7 +5,7 @@ import Store from "@/store/store";
 import api, { MODE } from "@/services/api";
 import { textTypeCheck } from "@/util/utils";
 import { useModal } from "@/hook/_hooks";
-import addTypeMore from "./AddTypeMore";
+import AddTypeMore from "./AddTypeMore";
 
 import BottomModalSelect from "@components/layout/popup/BottomModalSelect";
 import CenterModal from "@components/layout/popup/CenterModal";
@@ -19,7 +19,7 @@ function Add(){
     const onClickHandler = api();
 
 		const handleMoreModal = (id) => (e) => {
-			addTypeMoreModal(CenterModal,addTypeMore)
+			addTypeMoreModal(CenterModal,AddTypeMore)
 		}
 
     const handleSaveClick = (e) => {
