@@ -118,9 +118,9 @@
 .check_ani{
 	path{
 		transition: all 0.24s ease;
-		stroke-width:0;
+		strokeWidth:0;
 	}
 }
 @keyframes drawCheck {
-  100%{stroke-width: 2px;}
+  100%{strokeWidth: 2px;}
 }

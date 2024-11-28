@@ -6,8 +6,8 @@ function BottomModalSelect({setting,deleteModalAfterTime}){
 			<ul className="modal_bottom_select_lists">
 				{/* 불러올 애들 [] */}
 				{
-				setting.map((data)=>{
-					return <li className="modal_bottom_select_list" onClick={(data.onClick)}>{data.title}</li>;
+				setting.map((data, idx)=>{
+					return <li key={idx} className="modal_bottom_select_list" onClick={(data.onClick)}>{data.title}</li>;
 				})
 				}
 			</ul>

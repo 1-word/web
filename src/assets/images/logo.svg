@@ -4,12 +4,12 @@
 <circle cx="63" cy="55" r="5" fill="#20B9F1"/>
 <defs>
 <linearGradient id="paint0_linear_10_154" x1="43.8308" y1="56.2394" x2="43.8308" y2="115.239" gradientUnits="userSpaceOnUse">
-<stop stop-color="#946CF4"/>
-<stop offset="1" stop-color="#20B9F1"/>
+<stop stopColor="#946CF4"/>
+<stop offset="1" stopColor="#20B9F1"/>
 </linearGradient>
 <linearGradient id="paint1_linear_10_154" x1="39.5075" y1="61.2428" x2="39.5075" y2="120.243" gradientUnits="userSpaceOnUse">
-<stop stop-color="#946CF4"/>
-<stop offset="1" stop-color="#6524FF"/>
+<stop stopColor="#946CF4"/>
+<stop offset="1" stopColor="#6524FF"/>
 </linearGradient>
 </defs>
 </svg>
