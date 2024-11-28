@@ -67,8 +67,8 @@ function WordDetailList({details}){
         <ul className="word_type_wrap flex">
     {
             details?.map(detail => 
-                <>
-                    <li key={detail.wordGroupId} className="word_type_list flex">
+                <React.Fragment key={detail.wordGroupId}>
+                    <li className="word_type_list flex">
                         <span className="word_type_title">{detail.groupName}</span>
                         <ul className="word_type_cont flex">
                             {
@@ -81,7 +81,7 @@ function WordDetailList({details}){
                             }
                         </ul>
                     </li>
-                </>
+                </React.Fragment>
     )}
         </ul>
     </>

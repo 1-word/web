@@ -78,32 +78,32 @@ function Modals(){
                 {
                     // 등록된 모달 불러옴
                     openedModals.map((Modals, idx) =>
-											<>
-											{
-												Modals.isFirst &&
-												<ModalPortal id="modal-fix">
-														<div className="modal-fix" onClick={closeTopModal}></div>
-												</ModalPortal>
-											}
-				
-                        <div className="modal_wrap" key={`modals${idx}`} ref={el => modalWrapRef.current[idx] = el}>
-														{
-															createElement(
-																Modals.layout,
-																{
-																	idx,
-																	deleteModalAfterTime: (ms) => deleteModalAfterTime(ms, idx, null),
-																	deleteModal: (element) => deleteModalAfterTime(null, idx, element),
-																	closeModal: () => closeModal(idx, Modals.id),
-																	setOpenModal: () => setOpenModal(idx),
-																	isOpened: Modals.isOpened,
-																	contents: Modals.contents,
-																	contentsProps: Modals.props,
-																},
-															)
-														}
-                        </div>
-												</>
+											<React.Fragment key={idx}>
+												{
+													Modals.isFirst &&
+													<ModalPortal id="modal-fix">
+															<div className="modal-fix" onClick={closeTopModal}></div>
+													</ModalPortal>
+												}
+					
+													<div className="modal_wrap" key={`modals${idx}`} ref={el => modalWrapRef.current[idx] = el}>
+															{
+																createElement(
+																	Modals.layout,
+																	{
+																		idx,
+																		deleteModalAfterTime: (ms) => deleteModalAfterTime(ms, idx, null),
+																		deleteModal: (element) => deleteModalAfterTime(null, idx, element),
+																		closeModal: () => closeModal(idx, Modals.id),
+																		setOpenModal: () => setOpenModal(idx),
+																		isOpened: Modals.isOpened,
+																		contents: Modals.contents,
+																		contentsProps: Modals.props,
+																	},
+																)
+															}
+													</div>
+												</React.Fragment>	
                     )
                 }
                 </div>
