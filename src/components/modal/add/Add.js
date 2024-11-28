@@ -18,7 +18,7 @@ function Add(){
     const {clickedFolder} = Store(state=> state);
     const onClickHandler = api();
 
-		const handleMoreModal = (id) => (e) => {
+		const handleMoreModal = () => (e) => {
 			addTypeMoreModal(CenterModal,AddTypeMore)
 		}
 

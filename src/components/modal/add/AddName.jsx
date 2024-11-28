@@ -1,7 +1,7 @@
 import {useState, useRef, useEffect} from 'react';
 
 
-function AddName(){
+function AddName({deleteModalAfterTime}){
 
 	return(
 		<div className="add_type_wrap">
@@ -10,7 +10,7 @@ function AddName(){
 				<input type="text" />
 			</div>
 			<div className='modal_center_btn'>
-				<button className='btn-light sizeM'>취소</button>
+				<button className='btn-light sizeM' onClick={() => deleteModalAfterTime(240)}>취소</button>
 				<button className='btn-fill sizeM'>확인</button>
 			</div>
 		</div>
