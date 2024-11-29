@@ -9,38 +9,31 @@ export const WORD_KEY = {
     SYNONYM: "synonym"
 }
 
-/**
- * @Description WordList 상태 관리
- * @Author 정현경
- * @LastEdit 20230112
- */
-
-
 const store = set => ({
-    wordList: [{
-            "word_id": 0,
-            "type": "",
-            "word": "",
-            "mean": "",
-            "wread": "",
-            "memo": "",
-            "soundPath": "",
-            "memorization": "",
-            "update_time": "",
-            "synonyms": [
-                {
-                    "synonym_id": 0,
-                    "synonym": "",
-                    "memo": ""
-                },
-                {
-                    "synonym_id": 0,
-                    "synonym": "",
-                    "memo": ""
-                }
-            ]
+    wordList: {
+        words:[],
+        page:{
+            current: 0
         }
-    ],
+    },
+    previousWordList: [],
+    preventDisableFunc: () => {},
+    setPreventDisableFunc: (func) => {
+        set(() => ({
+            preventDisableFunc: func
+        }))
+    },
+    savePreviousWordList: () => {
+        set((state) => ({
+            previousWordList: state.wordList
+        }));
+    },
+    wordListRestore: () => {
+        set((state) => ({
+            wordList: state.previousWordList,
+            previousWordList: [],
+        }))
+    },
     saveList: {
         "user_id": "",
         "word": "",
@@ -63,35 +56,40 @@ const store = set => ({
             "memo": ""
         }
     ],
-    memoStatus: {
-        0: {
-            "status": "OFF",
-            "memo": ""
-        }
-    },
-    update: false,
+    update: true,
     /**
-     * @param {*} wordList (Object) 전체 word데이터 리스트
-     * @returns 
+     * @param {*} wordList 전체 word데이터 리스트
      * @Description 전체 word데이터 저장 (페이지 처음 접속 시 호출)
      * @LastEdit 20230112
      */
 
-    createWordList: (wordListRequest) => {set(() => ({
+    setWordList: (wordListRequest) => {set(() => ({
         wordList: wordListRequest
     }))
     },
 
     /**
-     * @param {*} wordId(int) 컴포넌트 Key 값 
-     * @param {*} updateList(Object) 수정할 전체 word데이터 리스트
-     * @returns 
+     * 단어 데이터를 추가한다.
+     * @param {*} wordList {words: [], page: {}}
+     */
+    addWordList: (wordList) => {
+        set((state) => ({
+            wordList: {
+                words: [...state.wordList.words, ...wordList.words],
+                page: wordList.page,
+            }
+        }))
+    },
+
+    /**
+     * @param {bigint} wordId 컴포넌트 Key 값 
+     * @param {*} updateList 수정할 전체 word데이터 리스트
      * @Description 수정 데이터 업데이트
      * @LastEdit 20230112
      */
 
     updateWordList: (wordId, wordListRequest) => set(state => ({
-        wordList: state.wordList.map(item =>
+        wordList: state.wordList.words.map(item =>
             item.word_id === wordId
             ? {
                 ...wordListRequest 
@@ -101,14 +99,13 @@ const store = set => ({
     })),
 
     /**
-     * @param {*} wordId(int) 컴포넌트 Key 값 
-     * @returns 
+     * @param {bigint} wordId 컴포넌트 Key 값 
      * @Description 삭제 데이터 업데이트
      * @LastEdit 20230112
      */
 
     deleteWordList: (wordId) => set (state => ({
-        wordList: state.wordList.filter(item => item.word_id !== wordId)
+        wordList: state.wordList.words.filter(item => item.word_id !== wordId)
     })),
 
     saveWordList: (saveListRequest) => set(state => ({
@@ -130,26 +127,16 @@ const store = set => ({
             "folder_id": ""
     }})),
 
-    setUpdateFlag: () => set((state) => ({
-        update: !state.update
+    setUpdateFlag: (flag) => set((state) => ({
+        update: flag 
+    })),
+
+    updateStart: () => set(() => ({
+        update: true 
     })),
 
     setFolderList: (folderListRequest) => set(state => ({
         folderList: folderListRequest
-    })),
-
-    setMemoStatus: ({id, status, memo}) => set(state => ({
-        memoStatus: {
-            ...state.memoStatus,
-            [id]: {
-                "status": status,
-                "memo": memo
-            }
-        }
-    })),
-
-    setMemoStatusInit: () => set(() => ({
-        memoStatus: {}
     })),
 })
 

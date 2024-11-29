@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import MyDeault_SVG from "@images/myImgDefault.svg";
 import WordList from "@components/word/WordList";
 import Store, {MEMORIZATION_TYPE} from "@/store/store";
@@ -7,32 +7,83 @@ import Header from "@components/layout/header";
 import Footer from "@components/layout/footer";
 import BottomNav from "@components/layout/bottom_nav";
 import LeftFix from "@components/layout/left_fix";
-import FolderList from "@components/word/folder/FolderList";
-import Colorpick from "@components/word/folder/Colorpick";
-import FolderCog from "@components/word/folder/FolderCog";
-import { useModal } from "@/hook/_hooks";
-import { Link } from "react-router-dom";
-import HeaderMini from "@/components/layout/header_mini";
+import wordListStore from "@/store/wordListStore";
+import { Pagination } from "@/util/Pagination";
 
 function Word(){
     // Store 사용
     const {memorization, setMemorization} = Store(state=>state);
+		const { setWordList, savePreviousWordList, wordListRestore, preventDisableFunc } = wordListStore(state => state);
 
-    // Modal Test
-		const [openBottomModal] = useModal("bottom");
-    
+		const pageRef = useRef({
+			current: 0,
+			lastWordId: null,
+		});
+
     const onClickHandler = api();
-    const searchInput = useRef();    
+    const searchInput = useRef();
+		const isSearchingRef = useRef(false);
+		const previousSearchText = useRef("");
 
-		const handleBottomClick = e => {
-			openBottomModal(HeaderMini)
-		}
+    const handleSearchWord = e => {
+				const isSearching = isSearchingRef.current;
+				let page = pageRef.current;
 
-    const handleSearchClick = e => {
-        let searchText = searchInput.current.value || "";
-        searchText !== "" ? searchText = searchText : searchText = MODE.SEARCH_ALL;
-        onClickHandler('', MODE.SEARCH, searchText);
+				if (!isSearching) {
+					// 검색하기 이전의 단어 데이터들을 저장한다.
+					savePreviousWordList();
+					page = {
+						current: 0,
+						lastWordId: null,
+					};
+					setPage(page);
+				}
+				
+				isSearchingRef.current = true;
+        const searchText = searchInput.current.value.replaceAll('?', '') || '';
+				
+				// 검색 완료
+				if (searchText === "") {
+					// 이전에 검색한 단어들을 다시 복원한다.
+					// 서버 api를 다시 호출하지 않게 하기 위함
+					wordListRestore();
+					setPage(null);
+					isSearchingRef.current = false;
+					preventDisableFunc();
+					return;
+				}
+
+				// 이전에 검색한 단어가 아니면 page를 초기화
+				if (searchText !== previousSearchText) {
+					page = {
+						current: 0,
+						lastWordId: null,
+					};
+					setPage(page);	
+				}
+
+				// 페이징 처리
+				const queryParams = [{
+						name: "current",
+						value: page.current ?? 0
+				}, {
+						name: "lastWordId",
+						value: page.lastWordId
+				}];
+
+				const query = Pagination.getPageParameter(queryParams);
+
+        onClickHandler(null, MODE.SEARCH, searchText + query)
+				.then((res => {
+					setWordList(res);
+					setPage(res.page);
+					previousSearchText.current = searchText;
+				}));
     }
+
+		const setPage = (page) => {
+			pageRef.current = page;
+		}
 
     const handleMemorizeClick = (status) => e => {
         setMemorization(status);
@@ -40,14 +91,13 @@ function Word(){
 
     return (
     <div className="wrap">
-			<div onClick={handleBottomClick}>hello123123</div>
 			<LeftFix></LeftFix>
 			<BottomNav></BottomNav>
 			<Header></Header>
         <div className="search_wrap">
             <div className="search_cont">
-                <input ref={searchInput} onChange={handleSearchClick} type="text" className="s_text" placeholder="검색어를 입력해 주세요"/>
-                <button className="search_icon" onClick={handleSearchClick}><i className="xi-search"></i></button>
+                <input ref={searchInput} onChange={handleSearchWord} type="text" className="s_text" placeholder="검색어를 입력해 주세요"/>
+                <button className="search_icon" onClick={handleSearchWord}><i className="xi-search"></i></button>
             </div>
         </div>
 

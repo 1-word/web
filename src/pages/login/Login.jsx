@@ -1,18 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useRef} from "react";
 import api, { MODE } from "@/services/api";
 import { Link } from "react-router-dom";
 import { useInput } from "@/hook/_hooks"
 
 function Login(){
-    // const [loginData, setLoginData] = useState({user_id: '', password: ''});
+    const loginData = useRef(null);
+    const onClickHandler = api();
 
-    const submitAction = () => {
-        onClickHandler('', MODE.LOGIN, loginData);
+    const handleSubmit = () => {
+        const data = loginData.current;
+        onClickHandler('', MODE.LOGIN, data);
     }
 
-    const [loginData, handleChange, handleSubmit, handleOnKeyDown] = useInput({user_id: '', password: ''}, submitAction);
+    const setInput = e => {
+        const data = loginData.current;
+        const { value, name } = e.target;
 
-    const onClickHandler = api();
+        setData({
+            ...data,
+            [name]: value
+        });
+
+    }
+
+    const setData = (data) => {
+        loginData.current = data;
+    }
+
+    const onKeyDown = (e) => {
+        if(e.key === 'Enter'){
+            handleSubmit();
+        }
+    }
+
 
     return (
         <div className="login-wrap">        
@@ -20,11 +40,11 @@ function Login(){
                 <div className="login-area">
                     <h2>Login</h2>
                     <div className="login-input-area">
-                        <input id="user_id" name="user_id" type="text" spellCheck placeholder="아이디" onChange={e=>handleChange(e, loginData)} onKeyDown={handleOnKeyDown} />
+                        <input name="email" type="text" spellCheck placeholder="아이디" onChange={setInput} onKeyDown={onKeyDown} />
                         <label htmlFor="user_id">UserID</label>
                     </div>
                     <div className="login-input-area">
-                        <input id="password" type="password" name="password" spellCheck placeholder="비밀번호" onChange={e=>handleChange(e, loginData)} onKeyDown={handleOnKeyDown}/>
+                        <input type="password" name="password" spellCheck placeholder="비밀번호" onChange={setInput} onKeyDown={onKeyDown}/>
                         <label htmlFor="password">Password</label>
                     </div>
                     <div className="login-btn-wrap">

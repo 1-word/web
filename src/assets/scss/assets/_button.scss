@@ -25,16 +25,16 @@
         height: 100%;
         border-radius: 20px;
         background: $main-bg-color;
-        transition: -webkit-clip-path 0.1s linear;
-        transition: clip-path 0.1s linear;
-        transition: clip-path 0.1s linear, -webkit-clip-path 0.1s linear;
-        -webkit-clip-path: inset(5% 50% 15% 50%);
-        clip-path: inset(5% 50% 15% 50%);
+        transition: -webkit-clipPath 0.1s linear;
+        transition: clipPath 0.1s linear;
+        transition: clipPath 0.1s linear, -webkit-clipPath 0.1s linear;
+        -webkit-clipPath: inset(5% 50% 15% 50%);
+        clipPath: inset(5% 50% 15% 50%);
         z-index: -1;
     }
     &:hover::after{
-        -webkit-clip-path: inset(0 0 0 0);
-        clip-path: inset(0 0 0 0);
+        -webkit-clipPath: inset(0 0 0 0);
+        clipPath: inset(0 0 0 0);
     }
 }
 @mixin btn($textColor,$bgColor){
@@ -57,6 +57,10 @@
 	border: 1px solid $textColor;
 	&:focus,&:focus-visible{
 		background-color: $main-hover-color;
+	}
+	&:disabled{
+		background: $default-ddd;
+		cursor: default;
 	}
 	@content;
 }

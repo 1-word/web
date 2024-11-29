@@ -1,14 +1,24 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import api, { MODE } from "@/services/api";
 import { Link } from "react-router-dom";
 
 function Signup(){
-    const [signupData, setSignupData] = useState({user_id: '', password: '', username: ''});
-
+    const signupData = useRef(null);
     const onClickHandler = api();
 
-    const handleClick = () => {
-        onClickHandler('', MODE.SIGNUP, signupData);
+    const handleClick = (e) => {
+        e.preventDefault();
+        const data = signupData.current;
+
+        if (!checkPassword(data?.confirm_password, data?.password)) {
+            // 아래 메시지를 출력해줄 text 추가 필요
+            console.log("비밀번호와 일치하지 않습니다.");
+            return;
+        }
+
+        const {confirm_password, ...req} = data;
+        console.log(req);
+        onClickHandler(null, MODE.SIGNUP, req);
     }
 
     const onKeyDown = (e) => {
@@ -17,12 +27,32 @@ function Signup(){
         }
     }
 
+    const checkPassword = (value, password) => {
+        if (value !== password) {
+            return false;
+        }
+        return true;
+    }
+
     const setSignupInput = e => {
+        const data = signupData.current;
         const { value, name } = e.target;
+
         setSignupData({
-            ...signupData,
+            ...data,
             [name]: value
         });
+
+        if (data?.password &&
+            name === "confirm_password" && 
+            !checkPassword(value, data?.password)) {
+            // 아래 메시지를 출력해줄 text 추가 필요
+            console.log("비밀번호와 일치하지 않습니다.");
+        }
+    }
+
+    const setSignupData = (data) => {
+        signupData.current = data;
     }
 
     return (
@@ -31,19 +61,19 @@ function Signup(){
                 <div className="login-area">
                     <h2>Join</h2>
                     <div className="login-input-area">
-                        <input id="user_id" name="user_id" type="text" spellCheck placeholder="아이디" onChange={setSignupInput} onKeyDown={onKeyDown} />
+                        <input name="email" type="text" spellCheck placeholder="아이디" onChange={setSignupInput} onKeyDown={onKeyDown} />
                         <label htmlFor="UserID">UserID</label>
                     </div>
                     <div className="login-input-area">
-                        <input id="username" name="username" type="text" spellCheck placeholder="이름" onChange={setSignupInput} onKeyDown={onKeyDown} />
-                        <label htmlFor="username">Username</label>
+                        <input name="nickname" type="text" spellCheck placeholder="이름" onChange={setSignupInput} onKeyDown={onKeyDown} />
+                        <label htmlFor="username">Nickname</label>
                     </div>
                     <div className="login-input-area">
-                        <input id="password" type="password" name="password" spellCheck placeholder="비밀번호" onChange={setSignupInput} onKeyDown={onKeyDown}/>
+                        <input type="password" name="password" spellCheck placeholder="비밀번호" onChange={setSignupInput} onKeyDown={onKeyDown}/>
                         <label htmlFor="password">Password</label>
                     </div>
                     <div className="login-input-area">
-                        <input id="" type="password" name="" spellCheck placeholder="비밀번호 확인" onChange={setSignupInput} onKeyDown={onKeyDown}/>
+                        <input type="password" name="confirm_password" spellCheck placeholder="비밀번호 확인" onChange={setSignupInput} onKeyDown={onKeyDown}/>
                         <label htmlFor="">Confirm Password</label>
                     </div>
                     <div className="login-btn-wrap">

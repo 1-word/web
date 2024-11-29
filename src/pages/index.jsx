@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import Header from "@components/layout/header";
 import Footer from "@components/layout/footer";
 import Canvas from "@components/main/canvas";
+import LeftFix from "@components/layout/left_fix";
 
 function Index(){
 return (
 <div className="wrap">
+<LeftFix></LeftFix>
 <Header></Header>
 <Canvas></Canvas>
 <div className="vb_main_wrap">

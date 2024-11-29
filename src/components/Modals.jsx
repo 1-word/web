@@ -1,4 +1,4 @@
-import ModalStore from "@/store/modal";
+import ModalStore from "@/store/modalStore";
 import ModalPortal from "@components/modal/ModalPortal";
 import Loading from "./modal/Loading";
 import React, { useEffect, useRef, createElement } from "react";
@@ -8,7 +8,7 @@ import { getAnimationDuration } from "@/util/utils";
  * 모달 관리
  */
 function Modals(){
-    const { openedModals, deleteModal, loading, setOpenModal, deleteModalById } = ModalStore(modal => modal);
+    const { openedModals, deleteModal, loading, setOpenModal, deleteModalById, deleteAllModal } = ModalStore(modal => modal);
     const modalWrapRef = useRef([]);
 
     useEffect(()=>{
@@ -49,22 +49,32 @@ function Modals(){
 		 * @param {*} ms 애니메이션 시간 delay
 		 * @param {*} idx 현재 팝업 위치
 		 */
-    const deleteModalAfterTime = (ms, idx, element) => {
+    const deleteModalAfterTime = (ms, idx, element, mode) => {
 			
 			if (element) {
 				ms = getAnimationDuration(element);
 			} else {
 				element = modalWrapRef?.current[idx]?.childNodes[0];
+				ms = ms ?? 0;
 			}
 
 			element.classList.add("off");
-			setTimeoutModal(ms, idx);
+			setTimeoutModal(ms, idx, () => {
+				setDeleteModalFunc(mode)(idx);
+			});
 		}
 
-		const setTimeoutModal = (ms, idx) => {
+		const setTimeoutModal = (ms, idx, func) => {
 			setTimeout(function() {
-				deleteModal(idx);
+				func()
 			}, ms);
+		}
+
+		const setDeleteModalFunc = (mode) => {
+			if (mode === "ALL") {
+				return deleteAllModal;
+			}
+			return deleteModal;
 		}
 
     return (
@@ -78,32 +88,32 @@ function Modals(){
                 {
                     // 등록된 모달 불러옴
                     openedModals.map((Modals, idx) =>
-											<>
-											{
-												Modals.isFirst &&
-												<ModalPortal id="modal-fix">
-														<div className="modal-fix" onClick={closeTopModal}></div>
-												</ModalPortal>
-											}
-				
-                        <div className="modal_wrap" key={`modals${idx}`} ref={el => modalWrapRef.current[idx] = el}>
-														{
-															createElement(
-																Modals.layout,
-																{
-																	idx,
-																	deleteModalAfterTime: (ms) => deleteModalAfterTime(ms, idx, null),
-																	deleteModal: (element) => deleteModalAfterTime(null, idx, element),
-																	closeModal: () => closeModal(idx, Modals.id),
-																	setOpenModal: () => setOpenModal(idx),
-																	isOpened: Modals.isOpened,
-																	contents: Modals.contents,
-																	contentsProps: Modals.props,
-																},
-															)
-														}
-                        </div>
-												</>
+											<React.Fragment key={idx}>
+												{
+													Modals.isFirst &&
+													<ModalPortal id="modal-fix">
+															<div className="modal-fix" onClick={closeTopModal}></div>
+													</ModalPortal>
+												}
+					
+													<div className="modal_wrap" key={`modals${idx}`} ref={el => modalWrapRef.current[idx] = el}>
+															{
+																createElement(
+																	Modals.layout,
+																	{
+																		idx,
+																		deleteModalAfterTime: (ms, mode) => deleteModalAfterTime(ms, idx, null, mode),
+																		deleteModal: (element) => deleteModalAfterTime(null, idx, element),
+																		closeModal: () => closeModal(idx, Modals.id),
+																		setOpenModal: () => setOpenModal(idx),
+																		isOpened: Modals.isOpened,
+																		contents: Modals.contents,
+																		contentsProps: Modals.props,
+																	},
+																)
+															}
+													</div>
+												</React.Fragment>	
                     )
                 }
                 </div>

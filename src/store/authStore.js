@@ -44,9 +44,8 @@ const store = persist({
          * 토큰 저장
          * @param {*} tokenRequest {refreshToken: '', accessToken: ''}
          */  
-        saveToken: (tokenRequest, user_id) => set(() => ({
+        saveToken: (tokenRequest) => set(() => ({
             token: tokenRequest,
-            user_id: user_id
         })),
         clearToken: () => set(() => ({
             token: {
