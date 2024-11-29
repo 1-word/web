@@ -59,28 +59,28 @@ function useEvntHandler(e, modeType, data, func){
 
     const handlerMap = {
         async read(_){
-            const res = await executeSrvConnect("get", "word", null, {isUpdate: false, returnMsg: false});
+            const res = await executeSrvConnect("get", "word?current=0", null, {isUpdate: false, returnMsg: false});
             if (!dataCheck(res)) return;
-            createWordList(res.words);
+            // createWordList(res.words);
             return res;
         },
         all(){
             return executeSrvConnect("get", "word");
         },
-        async search(e, data){
-            const res = await executeSrvConnect("get", data, null, {isLoading: false, returnMsg: false});
-            if (!dataCheck(res)) return;
+        async search(e, query){
+            const res = await executeSrvConnect("get", `word/${query}`, null, {isUpdate:false, isLoading: false, returnMsg: false});
+            // if (!dataCheck(res)) return;
 
-            let wordListrequest = res.list;
+            // let wordListrequest = res.list;
 
-            // 검색한 단어가 한개이면 배열이 아니므로 배열로 만들어줌
-            if(Array.isArray(wordListrequest)) { 
-                return createWordList(wordListrequest); 
-            }
-            let arr = [];
-            arr.push(wordListrequest);
-            createWordList(arr);
-            return arr;
+            // // 검색한 단어가 한개이면 배열이 아니므로 배열로 만들어줌
+            // if(Array.isArray(wordListrequest)) { 
+            //     return createWordList(wordListrequest); 
+            // }
+            // let arr = [];
+            // arr.push(wordListrequest);
+            // createWordList(arr);
+            return res;
         },
         async delete(e, id){
             await executeSrvConnect("delete", id, { isUpdate: false });
@@ -218,7 +218,7 @@ function useEvntHandler(e, modeType, data, func){
 
             //update state변경, 변경 시 useEffect() 실행, 기본값은 항상 업데이트
             if (obj?.isUpdate ?? true) { 
-                setUpdateFlag();
+                setUpdateFlag(true);
             }
         }
     }

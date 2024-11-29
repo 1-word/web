@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import api, { MODE } from "@/services/api";
 import Edit from "@components/modal/add/Add";
 import wordListStore from "@/store/wordListStore";
-import { COMM_MODE } from "@/store/store";
+import Store, { COMM_MODE } from "@/store/store";
 import { useModal } from "@/hook/_hooks";
 import FolderCog from "@components/word/folder/FolderCog";
 import Confirm from "../modal/Confirm";
@@ -13,16 +13,11 @@ import BottomModal from "@components/layout/popup/BottomModal";
 import WordDetailList from "./WordDetailList";
 
 function WordList(props) {
-    const { update } = wordListStore(state => state);
+    const { wordList, setWordList, page, setPage, update, setUpdateFlag } = wordListStore(state => state);
 
-    const [ wordList, setWordList ] = useState([]);
     const [ memoStatus, setMemoStatusState ] = useState({
-        0: {
-            "status": "OFF",
-            "memo": ""
-        }
+        0: { "status": "OFF" }
     });
-
 
     const [openModal] = useModal("confirm");
     const [folderMoveModal] = useModal("foldercog");
@@ -30,10 +25,13 @@ function WordList(props) {
     const [editModal] = useModal("edit");
 
     useEffect(() => {
-        onClickHandler(null, MODE.READ)
-            .then(res => {
-                setWordList(res.words);
-            });
+        if (update) {
+            setUpdateFlag(false);
+            onClickHandler(null, MODE.READ)
+                .then(res => {
+                    setWordList(res);
+                });
+        }
     }, [update]);
 
     const handleMoreModal = (id, data, wordId) => e => {
@@ -154,7 +152,7 @@ function WordList(props) {
         onClickHandler(e, MODE.MEMORIZATION, wordId, { memorization: result });
     }
 
-    resultList = wordList;
+    resultList = wordList.words;
     if (props.memorization === props.memorization_type.MEMORIZATION) {
         resultList = wordList.filter(data => data?.memorization === "Y");
     }
@@ -163,7 +161,7 @@ function WordList(props) {
         resultList = wordList.filter(data => data?.memorization === "N");
     }
 
-    const dataList = resultList.map((data, idx) => {
+    const dataList = wordList?.words.map((data, idx) => {
         return (
             <div className="word_card" key={data?.wordId}>
                 <div className="word_card_top">
