@@ -62,7 +62,7 @@ function Signup(){
 				<h1 className="login-title"><Link to="/">VOCABOX<img src={LOGOTitle_SVG} alt="VOCABOX" /></Link></h1>
 					<div className="login-cont">
 							<form className="login-area">
-									<h2>회원가입</h2>
+									<legend className="disN">회원가입</legend>
 									{/* 에러 메시지 :: error : 에러 / correct : 통과 */}
 									<div className="login-input-area input_wrap">
 											<label htmlFor="email">아이디</label>
@@ -86,7 +86,7 @@ function Signup(){
 											<p className="msg correct">통과입니다</p>
 									</div>
 									<div className="login-btn-wrap">
-									<button className="btn-fill btn-login sizeL" onClick={handleClick}>Join</button>
+									<button className="btn-fill btn-login sizeL" onClick={handleClick}>회원가입</button>
 									</div>
 									<div className="login-join-wrap">
 											<p>이미 회원가입을 하셨나요? <Link to='/signin'>로그인</Link></p>

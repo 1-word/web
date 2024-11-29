@@ -1,0 +1,25 @@
+.auth_num{
+	&_area{
+		position: relative;
+		display: flex;
+		gap: 12px;
+	}
+	&_count{
+		position: absolute;
+		top: 50%;
+		right: 124px;
+		transform: translateY(-50%);
+		font-size: 12px;
+		color: $default-error-color;
+		@include deviceSmall(){
+			right: 96px;
+		}
+	}
+	&_btn{
+		flex-basis: 100px;
+		flex-shrink: 0;
+		@include deviceSmall(){
+			flex-basis: 74px;
+		}
+	}
+}
