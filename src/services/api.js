@@ -58,8 +58,8 @@ function useEvntHandler(e, modeType, data, func){
     }
 
     const handlerMap = {
-        async read(_){
-            const res = await executeSrvConnect("get", "word?current=0", null, {isUpdate: false, returnMsg: false});
+        async read(_, query){
+            const res = await executeSrvConnect("get", `word${query}`, null, {isUpdate: false, returnMsg: false});
             if (!dataCheck(res)) return;
             // createWordList(res.words);
             return res;
@@ -69,17 +69,6 @@ function useEvntHandler(e, modeType, data, func){
         },
         async search(e, query){
             const res = await executeSrvConnect("get", `word/${query}`, null, {isUpdate:false, isLoading: false, returnMsg: false});
-            // if (!dataCheck(res)) return;
-
-            // let wordListrequest = res.list;
-
-            // // 검색한 단어가 한개이면 배열이 아니므로 배열로 만들어줌
-            // if(Array.isArray(wordListrequest)) { 
-            //     return createWordList(wordListrequest); 
-            // }
-            // let arr = [];
-            // arr.push(wordListrequest);
-            // createWordList(arr);
             return res;
         },
         async delete(e, id){

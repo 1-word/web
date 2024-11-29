@@ -13,7 +13,7 @@ import BottomModal from "@components/layout/popup/BottomModal";
 import WordDetailList from "./WordDetailList";
 
 function WordList(props) {
-    const { wordList, setWordList, page, setPage, update, setUpdateFlag } = wordListStore(state => state);
+    const { wordList, setWordList, update, setUpdateFlag } = wordListStore(state => state);
 
     const [ memoStatus, setMemoStatusState ] = useState({
         0: { "status": "OFF" }
@@ -27,7 +27,18 @@ function WordList(props) {
     useEffect(() => {
         if (update) {
             setUpdateFlag(false);
-            onClickHandler(null, MODE.READ)
+            let query = "";
+            
+            if (wordList.page.current !== null || wordList.page.current !== "undefined") {
+                query += `?current=${wordList.page.current}`;
+
+            }
+
+            if (wordList.page.lastWordId) {
+                query += `&lastWordId=${wordList.page.lastWordId}`;
+            }
+
+            onClickHandler(null, MODE.READ, query)
                 .then(res => {
                     setWordList(res);
                 });

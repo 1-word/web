@@ -12,7 +12,9 @@ export const WORD_KEY = {
 const store = set => ({
     wordList: {
         words:[],
-        page:{}
+        page:{
+            current: 0
+        }
     },
     previousWordList: [],
     savePreviousWordList: () => {
