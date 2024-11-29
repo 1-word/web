@@ -1,3 +1,5 @@
+
+import LOGOTitle_SVG from "@images/logoTitle.svg";
 import React, { useState, useRef } from "react";
 import api, { MODE } from "@/services/api";
 import { Link } from "react-router-dom";
@@ -45,6 +47,7 @@ function Login(){
 	return (
 		<div className="login-wrap">
 			<div className="login-scroll">
+			<h1 className="login-title"><Link to="/">VOCABOX<img src={LOGOTitle_SVG} alt="VOCABOX" /></Link></h1>
 				<div className="login-cont">
 					<form className="login-area">
 						<h2>로그인</h2>
