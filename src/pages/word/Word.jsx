@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import MyDeault_SVG from "@images/myImgDefault.svg";
 import WordList from "@components/word/WordList";
 import Store, {MEMORIZATION_TYPE} from "@/store/store";
@@ -7,18 +7,13 @@ import Header from "@components/layout/header";
 import Footer from "@components/layout/footer";
 import BottomNav from "@components/layout/bottom_nav";
 import LeftFix from "@components/layout/left_fix";
-import FolderList from "@components/word/folder/FolderList";
-import Colorpick from "@components/word/folder/Colorpick";
-import FolderCog from "@components/word/folder/FolderCog";
-import { useModal } from "@/hook/_hooks";
-import { Link } from "react-router-dom";
-import HeaderMini from "@/components/layout/header_mini";
 import wordListStore from "@/store/wordListStore";
+import { Pagination } from "@/util/Pagination";
 
 function Word(){
     // Store 사용
     const {memorization, setMemorization} = Store(state=>state);
-		const { setWordList, savePreviousWordList, wordListRestore } = wordListStore(state => state);
+		const { setWordList, savePreviousWordList, wordListRestore, preventDisableFunc } = wordListStore(state => state);
 
 		const pageRef = useRef({
 			current: 0,
@@ -43,10 +38,10 @@ function Word(){
 					};
 					setPage(page);
 				}
-
+				
 				isSearchingRef.current = true;
-        const searchText = searchInput.current.value.replaceAll("?", "") || "";
-
+        const searchText = searchInput.current.value.replaceAll('?', '') || '';
+				
 				// 검색 완료
 				if (searchText === "") {
 					// 이전에 검색한 단어들을 다시 복원한다.
@@ -54,6 +49,7 @@ function Word(){
 					wordListRestore();
 					setPage(null);
 					isSearchingRef.current = false;
+					preventDisableFunc();
 					return;
 				}
 
@@ -67,11 +63,15 @@ function Word(){
 				}
 
 				// 페이징 처리
-				let query = `?current=${page.current}`;
+				const queryParams = [{
+						name: "current",
+						value: page.current ?? 0
+				}, {
+						name: "lastWordId",
+						value: page.lastWordId
+				}];
 
-				if (page.lastWordId) {
-					query += `&lastWordId=${page.lastWordId}`;
-				}
+				const query = Pagination.getPageParameter(queryParams);
 
         onClickHandler(null, MODE.SEARCH, searchText + query)
 				.then((res => {

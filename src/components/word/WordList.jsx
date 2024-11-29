@@ -3,7 +3,7 @@ import api, { MODE } from "@/services/api";
 import Edit from "@components/modal/add/Add";
 import wordListStore from "@/store/wordListStore";
 import Store, { COMM_MODE } from "@/store/store";
-import { useModal } from "@/hook/_hooks";
+import { useModal, useObserver } from "@/hook/_hooks";
 import FolderCog from "@components/word/folder/FolderCog";
 import Confirm from "../modal/Confirm";
 import BottomModalSelect from "@components/layout/popup/BottomModalSelect";
@@ -11,39 +11,68 @@ import CenterModal from "@components/layout/popup/CenterModal";
 import FullModal from "@components/layout/popup/FullModal";
 import BottomModal from "@components/layout/popup/BottomModal";
 import WordDetailList from "./WordDetailList";
+import { Pagination } from "@/util/Pagination";
 
 function WordList(props) {
-    const { wordList, setWordList, update, setUpdateFlag } = wordListStore(state => state);
+    const { wordList, setWordList, update, setUpdateFlag, addWordList, setPreventDisableFunc } = wordListStore(state => state);
 
     const [ memoStatus, setMemoStatusState ] = useState({
         0: { "status": "OFF" }
     });
 
+    const [obsPage, obsInit, isEnd, preventDisable] = useObserver();
+
     const [openModal] = useModal("confirm");
     const [folderMoveModal] = useModal("foldercog");
     const [moreModal] = useModal("more");
     const [editModal] = useModal("edit");
+    const obsRef = useRef();
+
+    useEffect(() => {
+        obsInit(obsRef);
+        setPreventDisableFunc(preventDisable);
+    },[]);
 
     useEffect(() => {
         if (update) {
             setUpdateFlag(false);
-            let query = "";
-            
-            if (wordList.page.current !== null || wordList.page.current !== "undefined") {
-                query += `?current=${wordList.page.current}`;
 
-            }
+            const queryParams = [{
+                name: "current",
+                value: wordList.page.current ?? 0
+            }, {
+                name: "lastWordId",
+                value: wordList.page.lastWordId
+            }];
 
-            if (wordList.page.lastWordId) {
-                query += `&lastWordId=${wordList.page.lastWordId}`;
-            }
+            const query = Pagination.getPageParameter(queryParams);
 
             onClickHandler(null, MODE.READ, query)
                 .then(res => {
                     setWordList(res);
+                    preventDisable();
                 });
         }
     }, [update]);
+
+    useEffect(()=> {
+        if (obsPage > -1 && wordList.page?.hasNext){
+            const queryParams = [{
+                name: "current",
+                value: wordList.page.current ?? 0
+            }, {
+                name: "lastWordId",
+                value: wordList.page.lastWordId
+            }];
+
+            const query = Pagination.getPageParameter(queryParams);
+            onClickHandler(null, MODE.READ, query)
+                .then(res => {
+                    addWordList(res);
+                    preventDisable();
+                });
+        }
+    },[obsPage]);
 
     const handleMoreModal = (id, data, wordId) => e => {
         moreModal(BottomModal, BottomModalSelect, {
@@ -231,6 +260,7 @@ function WordList(props) {
     return (
         <div className="word_cont">
             {dataList}
+            <div ref={obsRef} style={{height:"100px"}}></div>
         </div>
     );
 }

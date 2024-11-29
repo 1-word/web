@@ -17,6 +17,12 @@ const store = set => ({
         }
     },
     previousWordList: [],
+    preventDisableFunc: () => {},
+    setPreventDisableFunc: (func) => {
+        set(() => ({
+            preventDisableFunc: func
+        }))
+    },
     savePreviousWordList: () => {
         set((state) => ({
             previousWordList: state.wordList
@@ -60,6 +66,19 @@ const store = set => ({
     setWordList: (wordListRequest) => {set(() => ({
         wordList: wordListRequest
     }))
+    },
+
+    /**
+     * 단어 데이터를 추가한다.
+     * @param {*} wordList {words: [], page: {}}
+     */
+    addWordList: (wordList) => {
+        set((state) => ({
+            wordList: {
+                words: [...state.wordList.words, ...wordList.words],
+                page: wordList.page,
+            }
+        }))
     },
 
     /**
