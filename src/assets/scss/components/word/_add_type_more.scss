@@ -5,6 +5,15 @@
 	&_input_wrap{
 		margin-top: 24px;
 	}
+	&_edit_btn{
+		margin-left: auto;
+		font-size: 0;
+		i{
+			@include icon(){
+				background-image: icon(edit,989393);
+			}
+		}
+	}
 }
 // 스와이퍼
 .add_type_swiper{

@@ -1,8 +1,14 @@
 import wordListStore, { WORD_KEY } from "@/store/wordListStore";
+import { useModal } from "@/hook/_hooks";
+import CenterModal from "@components/layout/popup/CenterModal";
+import AddTypeEdit from "./addTypeEdit";
 
 function AddList(props){
-
+	const [addTypeEditModal] = useModal("addTypeEdit");
     const {saveList, saveWordList} = wordListStore(state => state);
+		const handleAddTypeEditModal = () => (e) => {
+			addTypeEditModal(CenterModal,AddTypeEdit);
+		}
 
     // 버튼 이벤트 
     const handleClick = e => {
@@ -33,13 +39,18 @@ function AddList(props){
         saveWordList(saveList);
     }
 
-    return <div className="new_sub_list input_wrap">
-            <span>{props.text}</span>
-            <div className="add_cont">
-            <input name={props.name} id={props.id} value={props.value}type="text"onChange={handleOnchange}/>
-            {props.name === WORD_KEY.SYNONYMS
-            ? <button className={props.btncls} name={props.btnname} id={props.id} value={props.value} onClick={handleClick} />
-            : null}
+    return <div className="new_sub_list">
+						<div className="new_sub_list_head">
+							<p className="new_sub_list_title">내 커스텀</p>
+							<button className="new_sub_list_btn" onClick={handleAddTypeEditModal()}>수정</button>
+							<button className="new_sub_list_btn">삭제</button>
+						</div>
+						<div className="input_wrap new_sub_list_input_wrap">
+							<span>{props.text}</span>
+							<input name={props.name} id={props.id} value={props.value}type="text"onChange={handleOnchange}/>
+							{props.name === WORD_KEY.SYNONYMS
+								? <button className={props.btncls} name={props.btnname} id={props.id} value={props.value} onClick={handleClick} />
+								: null}
             </div>
         </div>    
 }

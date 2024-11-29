@@ -1,6 +1,9 @@
 @import "@scss/components/word/add_type_more";
 
 .new{
+	&_btn_wrap{
+		padding-top: 24px;
+	}
 	&_cont{
 		.add{
 			&_cont{
@@ -13,9 +16,8 @@
 			}
 			&_minus{
 				position: absolute;
-				top: 50%;
+				top: 20px;
 				right: 3%;
-				transform: translateY(-50%);
 				z-index: 10;
 			}
 		}
@@ -51,6 +53,36 @@
 			> .new_sub_list:first-child .add_cont{
 				position: static;
 			}
+		}
+	}
+}
+// list
+.new_sub_list{
+	margin-top: 16px;
+	&_head{
+		margin-bottom: 16px;
+		padding: 12px;
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		background-color: $main-bg-color;
+		border-radius: $sub-br;
+	}
+	&_title{
+		font-weight: bold;
+		margin-right: auto;
+	}
+	&_input_wrap{
+		position: relative;
+		&:has(.add_plus){
+			position: static;
+		}
+	}
+	&_btn{
+		padding: 4px;
+		font-size: 12px;
+		&:last-of-type{
+			color: $default-error-color;
 		}
 	}
 }

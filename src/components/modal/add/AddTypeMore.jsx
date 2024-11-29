@@ -20,27 +20,6 @@ function AddTypeMore(){
 		addNameModal(CenterModal,AddName)
 	}
 
-	// const handlePhotoConfigModal = (id) => e => {
-	// 	photoConfigModal(BottomModal, BottomModalSelect, {
-	// 		setting: [
-	// 			{
-	// 			title : "이미지 선택",
-	// 			onClick : "",
-	// 			},
-	// 			{
-	// 			title : "사진 촬영",
-	// 			onClick : "",
-	// 			},
-	// 			{
-	// 			title : "기본으로 설정",
-	// 			onClick : "",
-	// 			},
-	// 		],
-	// 	});
-	// }
-
-
-
 	return(
 		<div className="add_type_wrap">
 			<h2 className="modal_center_title">품사 지정</h2>
