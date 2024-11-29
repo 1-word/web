@@ -34,15 +34,17 @@ function WordList(props) {
     },[]);
 
     useEffect(() => {
+        // 단어 데이터 초기화
         if (update) {
             setUpdateFlag(false);
 
+            // 처음 데이터 조회이므로 쿼리 파라미터 초기화
             const queryParams = [{
                 name: "current",
-                value: wordList.page.current ?? 0
+                value: 0,
             }, {
                 name: "lastWordId",
-                value: wordList.page.lastWordId
+                value: null,
             }];
 
             const query = Pagination.getPageParameter(queryParams);
@@ -74,20 +76,20 @@ function WordList(props) {
         }
     },[obsPage]);
 
-    const handleMoreModal = (id, data, wordId) => e => {
+    const handleMoreModal = (id) => e => {
         moreModal(BottomModal, BottomModalSelect, {
             setting: [
                 {
                     title: "폴더 이동",
-                    onClick: handleFolderClick(data?.wordId),
+                    onClick: handleFolderClick(id),
                 },
                 {
                     title: "수정",
-                    onClick: HandleEditWord(data?.wordId),
+                    onClick: HandleEditWord(id),
                 },
                 {
                     title: "삭제",
-                    onClick: handleDeleteWord(data?.wordId),
+                    onClick: handleDeleteWord(id),
                 },
             ],
         });
@@ -221,7 +223,7 @@ function WordList(props) {
                     <button className="word_card_headset" onClick={handleAudioClick(idx)}>
                         <i ref={el => headsetRef.current[idx] = el} className="xi-headset listen" data-pron-audio={data?.soundPath}></i>
                     </button>
-                    <button className="word_card_more" onClick={handleMoreModal(idx)}>
+                    <button className="word_card_more" onClick={handleMoreModal(data?.wordId)}>
                         <i className="xi-ellipsis-v"></i>
                     </button>
                 </div>

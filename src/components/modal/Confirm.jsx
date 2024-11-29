@@ -1,11 +1,9 @@
-import ModalStore from "@/store/modalStore";
-
 function Confirm({
 	idx,
 	title,
 	content,
 	submit,
-	deleteModalAfterTime
+	deleteModalAfterTime,
 }){
 
     const handleCancle = (millis) => e => {
@@ -16,7 +14,9 @@ function Confirm({
 			if (submit) {
 				submit();
 			}
-			deleteModalAfterTime(0);
+			
+			// 모든 모달창 삭제
+			deleteModalAfterTime(0, "ALL");
     }
 
     return(

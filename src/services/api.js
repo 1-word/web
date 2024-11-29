@@ -71,8 +71,8 @@ function useEvntHandler(e, modeType, data, func){
             const res = await executeSrvConnect("get", `word/${query}`, null, {isUpdate:false, isLoading: false, returnMsg: false});
             return res;
         },
-        async delete(e, id){
-            await executeSrvConnect("delete", id, { isUpdate: false });
+        async delete(_, wordId){
+            await executeSrvConnect("delete", `word/${wordId}`);
         },
         async update(e, id, data){
             return await executeSrvConnect("put", id, data);
