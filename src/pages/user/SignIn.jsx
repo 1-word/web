@@ -50,20 +50,21 @@ function Login(){
 			<h1 className="login-title"><Link to="/">VOCABOX<img src={LOGOTitle_SVG} alt="VOCABOX" /></Link></h1>
 				<div className="login-cont">
 					<form className="login-area">
-						<h2>로그인</h2>
+						<legend className="disN">로그인</legend>
 						<div className="login-input-area input_wrap">
 							<label htmlFor="email">아이디</label>
-							<input id="email" name="email" type="text" required spellCheck placeholder="아이디" onChange={setInput} onKeyDown={onKeyDown} />
+							<input id="email" name="email" type="text" required spellCheck placeholder="아이디를 입력해 주세요" onChange={setInput} onKeyDown={onKeyDown} />
 						</div>
 						<div className="login-input-area input_wrap">
 							<label htmlFor="password">비밀번호</label>
-							<input id="password" type="password" name="password" required spellCheck placeholder="비밀번호" onChange={setInput} onKeyDown={onKeyDown}/>
+							<input id="password" type="password" name="password" required spellCheck placeholder="비밀번호를 입력해 주세요" onChange={setInput} onKeyDown={onKeyDown}/>
 						</div>
 						<div className="login-btn-wrap">
-							<button className="btn-fill btn-login sizeL" onClick={handleSubmit}>Login</button>
+							<button className="btn-fill btn-login sizeL" disabled onClick={handleSubmit}>로그인</button>
 						</div>
 						<div className="login-join-wrap">
-								<p>아직 회원가입을 하지 않으셨나요? <Link to='/signup'>회원가입</Link></p>
+								<Link to='/setPw'>비밀번호 재설정</Link>
+								<Link to='/signup'>회원가입</Link>
 						</div>
 						{/* sns login */}
 						<ul className="login-sns-lists">

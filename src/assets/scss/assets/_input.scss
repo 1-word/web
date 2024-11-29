@@ -6,7 +6,7 @@ input,textarea,select{
 	outline: none;
 }
 
-input:is([type="text"],[type="password"]){
+input:is([type="text"],[type="password"],[type="email"]){
 	display: block;
 	width: 100%;
 	height: 36px;
