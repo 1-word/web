@@ -7,6 +7,7 @@ import Login from '@/pages/user/SignIn';
 import Signup from '@/pages/user/SignUp';
 import SignupComplete from '@/pages/user/SignUpComplete';
 import SetPw from '@/pages/user/SetPw';
+import AuthNumComp from '@/pages/user/AuthNumComplete';
 import MyPage from '@/pages/user/MyPage';
 import Modals from './components/Modals';
 import OAuth from './pages/oauth/OAuth';
@@ -28,6 +29,7 @@ function App() {
       <Route path="/signup" element={<Signup></Signup>}/>
       <Route path="/signup_comp" element={<SignupComplete></SignupComplete>}/>
 			<Route path="/setPw" element={<SetPw></SetPw>}/>
+			<Route path="/authcomplete" element={<AuthNumComp></AuthNumComp>}/>
       <Route path="/mypage" element={<MyPage></MyPage>}/>
       <Route path="/oauth/callback" element={<OAuth></OAuth>}/>
     </Routes> 
