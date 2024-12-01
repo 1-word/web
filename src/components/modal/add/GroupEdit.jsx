@@ -1,13 +1,22 @@
 import {useState, useRef, useEffect} from "react";
+import { useModal } from "@/hook/_hooks";
+import CenterModal from "@/components/layout/popup/CenterModal";
+import AddName from "./AddName";
 
 
 function GroupEdit({deleteModalAfterTime}){
+
+	const [addNameModal] = useModal("addName");
+
+	const handleAddNameModal = () => e => {
+		addNameModal(CenterModal,AddName)
+	}
 
 	return(
 		<div className="add_type_wrap">
 			<h2 className="modal_center_title">
 				품사 이름
-				<button className="add_type_edit_btn">
+				<button className="add_type_edit_btn" onClick={handleAddNameModal()}>
 					수정
 					<i className="edit"></i>
 				</button>
