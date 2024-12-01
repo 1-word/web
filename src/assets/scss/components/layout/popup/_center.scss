@@ -27,11 +27,13 @@
 	}
 	&_wrap{
 		position: relative;
-		width: 90%;
+		width: 60%;
 		border-radius: 0 0 20px 20px;
 		background: #FFF;
 		box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
 		@include deviceSmall(){
+			min-width: none;
+			max-width: none;
 			width: 90%;
 			border-radius: $sub-br;
 			box-shadow: none;
@@ -62,13 +64,10 @@
 		padding: 16px 14px;
 	}
 	&_btn{
-		margin-top: 40px;
+		margin-top: 24px;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		gap: 12px;
-		@include deviceSmall(){
-			margin-top: 20px;
-		}
 	}
 }

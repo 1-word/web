@@ -1,31 +1,24 @@
 import wordListStore, { WORD_KEY } from "@/store/wordListStore";
 import { useModal } from "@/hook/_hooks";
 import CenterModal from "@components/layout/popup/CenterModal";
+import CenterModalConfirm from "@/components/layout/popup/CenterModalConfirm";
 import AddTypeEdit from "./addTypeEdit";
 
 function AddList(props){
 	const [addTypeEditModal] = useModal("addTypeEdit");
+	const [deleteTypeEditModal] = useModal("deleteTypeEditModal");
     const {saveList, saveWordList} = wordListStore(state => state);
 		const handleAddTypeEditModal = () => (e) => {
 			addTypeEditModal(CenterModal,AddTypeEdit);
 		}
 
-    // 버튼 이벤트 
-    const handleClick = e => {
-        let target_name = e.target.name;
-        // 피연산자 앞에 + 연산자가 있으면 Number형으로 반환
-        let target_id = +e.target.id;
-        //유의어 input 추가
-        if(target_name === "add_plus") {
-            let updateList = [{synonym: "", memo: ""}]
-            saveList.synonyms = [...saveList.synonyms, ...updateList]
-            saveWordList(saveList)
-        //유의어 input 제거     
-        }else if(target_name === "minus_btn"){
-            saveList.synonyms = saveList.synonyms.filter((item, idx) => idx !== target_id);
-            saveWordList(saveList);
-        }        
-    }   
+		const handleDeleteTypeEditModal = () => (e) => {
+			deleteTypeEditModal(CenterModal,CenterModalConfirm,{
+				title: "",
+				content: "정말 삭제하시겠습니까?add_listadd_listadd_listadd_list",
+				onClick: () => {},
+			})
+		}
 
     const handleOnchange = e => {
         //변수 설정
@@ -43,14 +36,11 @@ function AddList(props){
 						<div className="new_sub_list_head">
 							<p className="new_sub_list_title">내 커스텀</p>
 							<button className="new_sub_list_btn" onClick={handleAddTypeEditModal()}>수정</button>
-							<button className="new_sub_list_btn">삭제</button>
+							<button className="new_sub_list_btn" onClick={handleDeleteTypeEditModal()}>삭제</button>
 						</div>
 						<div className="input_wrap new_sub_list_input_wrap">
 							<span>{props.text}</span>
 							<input name={props.name} id={props.id} value={props.value}type="text"onChange={handleOnchange}/>
-							{props.name === WORD_KEY.SYNONYMS
-								? <button className={props.btncls} name={props.btnname} id={props.id} value={props.value} onClick={handleClick} />
-								: null}
             </div>
         </div>    
 }

@@ -25,7 +25,7 @@ function AddTypeMore(){
 			<h2 className="modal_center_title">품사 지정</h2>
 			<div className="add_type_swiper_wrap">
 				<Swiper
-					slidesPerView={3}
+					slidesPerView={2}
 					spaceBetween={12}
 					grid={{
 						rows: 2,
@@ -36,7 +36,7 @@ function AddTypeMore(){
 				>
 					{/* 최대 12글자 제한 */}
 					<SwiperSlide className="add_type_swiper_slide">
-						동명사시시사사사사사사사
+						동명사
 					</SwiperSlide>
 				</Swiper>
 			</div>

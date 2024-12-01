@@ -42,12 +42,9 @@ function Add(){
             onClickHandler(e, MODE.SAVE, resultList);
     }
 
-    const synonymInputList = saveList.synonyms.map((data, idx) => (
+    const moreInputList = saveList.synonyms.map((data, idx) => (
         <AddList key={idx}
-            btncls = {idx===0? "add_plus xi-plus" : "add_minus xi-close"}
-            btnname = {idx===0? "add_plus" : "minus_btn"}
             name= {WORD_KEY.SYNONYMS}
-            text= {idx===0? "유의어" : ""} 
             id = {idx}
             value = { data.synonym }
         />
@@ -55,26 +52,29 @@ function Add(){
 
     // 영어 add
     return(
-		<div className="modal-wrap">
-			<div className="modal-cont">
-				<div className="new_cont modal-area">
-					<div className="new_word-cont modal-scroll">
-							<div className="new_main">
-							<AddList name="word" text="단어" value={saveList.word} ></AddList>          
-							<AddList name="mean" text="뜻" value={saveList.mean} ></AddList>
-							<AddList name="wread" text="발음" value={saveList.wread} ></AddList>
-							</div>
-							<div className="new_sub_cont">
-								<h2 className="new_sub_title btn-light" onClick={handleMoreModal()}>세부사항 추가를 원하신다면 눌러주세요</h2>
-								{synonymInputList}
-							</div>
+			<>
+				<div className="new_cont">
+					<div className="input_wrap">
+						<span>단어</span>
+						<input name="word" id="" value="" type="text" />
 					</div>
-					<div className="new_btn_wrap modal-btn-wrap">
-							<button className="btn-fill sizeM" name="save_btn" onClick={handleSaveClick}>저장</button>                   
+					<div className="input_wrap">
+						<span>뜻</span>
+						<input name="mean" id="" value="" type="text" />
+					</div>
+					<div className="input_wrap">
+						<span>발음</span>
+						<input name="wread" id="" value="" type="text" />
+					</div>
+					<div className="new_sub_cont">
+						<h2 className="new_sub_title btn-light" onClick={handleMoreModal()}>세부사항 추가를 원하신다면 눌러주세요</h2>
+						{moreInputList}
 					</div>
 				</div>
-			</div>
-		</div>
+				<div className="new_btn_wrap">
+						<button className="btn-fill sizeM" name="save_btn" onClick={handleSaveClick}>저장</button>                   
+				</div>
+			</>
 		);
 }
 

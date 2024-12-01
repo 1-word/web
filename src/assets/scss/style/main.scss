@@ -398,7 +398,7 @@ nav {
 	}
 	&_cont{
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(2, 1fr);
 		justify-items: stretch;
 		gap: 1rem;
 		row-gap: 10px;
@@ -411,6 +411,9 @@ nav {
 		width: 100%;
 		display: flex;
 		align-items: center;
+		input{
+			padding-right: 32px;
+		}
 		// 삭제버튼
 		button{
 			margin-left: -28px;
