@@ -39,7 +39,11 @@ function AddList(props){
 							<button className="new_sub_list_btn" onClick={handleDeleteTypeEditModal()}>삭제</button>
 						</div>
 						<div className="input_wrap new_sub_list_input_wrap">
-							<span>{props.text}</span>
+							<span>{props.text}동사원형</span>
+							<input name={props.name} id={props.id} value={props.value}type="text"onChange={handleOnchange}/>
+            </div>
+						<div className="input_wrap new_sub_list_input_wrap">
+							<span>{props.text}동사원형</span>
 							<input name={props.name} id={props.id} value={props.value}type="text"onChange={handleOnchange}/>
             </div>
         </div>    
