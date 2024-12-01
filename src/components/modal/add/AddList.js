@@ -2,7 +2,7 @@ import wordListStore, { WORD_KEY } from "@/store/wordListStore";
 import { useModal } from "@/hook/_hooks";
 import CenterModal from "@components/layout/popup/CenterModal";
 import CenterModalConfirm from "@/components/layout/popup/CenterModalConfirm";
-import AddTypeEdit from "./addTypeEdit";
+import AddTypeEdit from "./GroupEdit";
 
 function AddList(props){
 	const [addTypeEditModal] = useModal("addTypeEdit");

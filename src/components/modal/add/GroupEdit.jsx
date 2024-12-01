@@ -1,7 +1,7 @@
 import {useState, useRef, useEffect} from "react";
 
 
-function AddTypeEdit({deleteModalAfterTime}){
+function GroupEdit({deleteModalAfterTime}){
 
 	return(
 		<div className="add_type_wrap">
@@ -46,4 +46,4 @@ function AddTypeEdit({deleteModalAfterTime}){
 		</div>
 	);
 };
-export default AddTypeEdit;
+export default GroupEdit;
