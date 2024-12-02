@@ -73,10 +73,7 @@
 		margin-right: auto;
 	}
 	&_input_wrap{
-		position: relative;
-		&:has(.add_plus){
-			position: static;
-		}
+		margin-top: 16px;
 	}
 	&_btn{
 		padding: 4px;

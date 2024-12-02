@@ -1,11 +1,11 @@
 import React from "react";
 
-const HeaderMini = ({idx, handleClick, compCloseAction}) => {
+const HeaderMini = ({idx, handleClick, compCloseAction, title}) => {
 
 return(
 	<header className="mini flex">
 		<button className="back xi-angle-left"></button>
-		<h2 className="title">내 단어장</h2>
+		<h2 className="title">{title}</h2>
 	</header>
 	);
 };

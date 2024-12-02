@@ -20,15 +20,15 @@ function Confirm({
     }
 
     return(
-        <section className="alert-wrap">
-					<div className="alert-area">
-							<div className="alert-img-area"></div>
-							<div className="alert-txt-area">
+        <section className="confirm-wrap">
+					<div className="confirm-area">
+							<div className="confirm-img-area"></div>
+							<div className="confirm-txt-area">
 									<h2>{title ?? "확인"}</h2>
 									<p>{content ?? ""}</p>
 							</div>
 					</div>
-					<div className="alert-btn vb-pop_btn">
+					<div className="confirm-btn">
 							<button className="btn-light sizeS" onClick={handleCancle(0)}>아니요</button>
 							<button className="btn-fill sizeS" onClick={(handleSubmit)}>네</button>
 					</div>

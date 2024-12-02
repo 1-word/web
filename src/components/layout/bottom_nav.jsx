@@ -26,7 +26,7 @@ const BottomNav = () => {
 		<Link><i className="learn"></i>단어 학습</Link>
 	</li>
 	<li className="flex">
-		<Link><i className="search"></i>검색</Link>
+		<Link to="/daily_sentence/main"><i className="calendar"></i>오늘의 내 문장</Link>
 	</li>
 	<li className="flex">
 		<Link to="/mypage"><i className="user"></i>마이페이지</Link>

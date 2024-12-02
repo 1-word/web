@@ -40,7 +40,7 @@ function Modals(){
 				if (ms === 0) {
 					ms = 150;
 				}
-        setTimeoutModal(ms, idx);
+        setTimeoutModal(ms, idx, () => deleteModal(idx));
     }
 
 		/**
