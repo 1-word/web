@@ -5,7 +5,7 @@
 		// padding: 14px 0;
 		ul{
 			padding: $main-p;
-			font-size: 12px;
+			font-size: 14px;
 			li {
 				// default값
 				position: relative;
@@ -61,7 +61,7 @@
 		}
 	}
 	&_list_name{
-		
+		line-height: 18px;
 	}
 	&_list_wordamount{
 		margin-top: 12px;
