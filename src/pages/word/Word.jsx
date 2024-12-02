@@ -3,7 +3,7 @@ import MyDeault_SVG from "@images/myImgDefault.svg";
 import WordList from "@components/word/WordList";
 import Store, {MEMORIZATION_TYPE} from "@/store/store";
 import api, { MODE } from "@/services/api";
-import Header from "@components/layout/header";
+import HeaderMini from "@components/layout/header_mini";
 import Footer from "@components/layout/footer";
 import BottomNav from "@components/layout/bottom_nav";
 import LeftFix from "@components/layout/left_fix";
@@ -92,8 +92,8 @@ function Word(){
     return (
     <div className="wrap">
 			<LeftFix></LeftFix>
-			<BottomNav active="word" isWord="true"></BottomNav>
-			<Header></Header>
+			<BottomNav active="word"></BottomNav>
+			<HeaderMini title="단어장"></HeaderMini>
         <div className="search_wrap">
             <div className="search_cont">
                 <input ref={searchInput} onChange={handleSearchWord} type="text" className="s_text" placeholder="검색어를 입력해 주세요"/>
