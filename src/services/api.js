@@ -32,6 +32,9 @@ export const MODE = {
     MEMORIZATION: "memorization",
     WORD_FOLDER_UPDATE: "wordFolderUpdate",
     SIGNOUT: "signout",
+    CODE: "code",
+    VERIFICATION: "verification",
+    RESET_PW: "resetPw"
 }
 
 /**
@@ -146,6 +149,22 @@ function useEvntHandler(e, modeType, data, func){
                 }).finally(()=>endFunc(data.id))
             }
         },
+        async code(_, {type, email}) {
+            const res = await executeSrvConnect("post", `auth/code/${type}`, {email}, {isUpdate: false});
+            activeToast(res);
+            return true;
+        },
+        async verification(_,{email, code}) {
+            const res = await executeSrvConnect("post", `auth/code/verify`, {email, code}, {isUpdate: false});
+            activeToast(res);
+            return true;
+        },
+        async resetPw(_, {email, newPassword}) {
+            const res = await executeSrvConnect("put", 'user/pw/reset', {email, newPassword}, {isUpdate: false});
+            activeToast('비밀번호 재설정이 완료되었습니다.');
+            navigate('/signin');
+            return true;
+        }
     }
 
     /**
@@ -199,7 +218,7 @@ function useEvntHandler(e, modeType, data, func){
                 throw new Error("재 로그인 되었습니다. 다시 시도해주세요.");
             }
 
-            if (error.response.data.msg === "로그인이 필요합니다.") {
+            if (error.response?.data.msg === "로그인이 필요합니다.") {
                 navigate("/signin");
             }
 

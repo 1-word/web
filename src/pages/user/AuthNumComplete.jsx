@@ -1,40 +1,66 @@
 import LOGOTitle_SVG from "@images/logoTitle.svg";
 import { Link } from "react-router-dom";
 import React, { useState, useRef } from "react";
+import api, { MODE } from "@/services/api";
 
-function AuthNumComp(){
-	const [btnState, setBtnState] = useState(true);
-	const [text, setText] = useState('');
+function AuthNumComp({email}){
 	const [disabled , setDisabled] = useState(true);
+	const [errorMsg, setErrorMsg] = useState('');
+	const [confirmErrorMsg, setConfirmErrorMsg] = useState('');
+	const passwordRe = /(?=.*[a-zA-Z])(?=.*[\d\W]).{8,20}/g;
+	const passwordRef = useRef(null);
+	const confirmPasswordRef = useRef(null);
+	const onClickHandler = api();
 
   function handleChange(e) {
-		const {value} = e.target;
-    setText(e.target.value);
-		if(value === undefined || value === "" || value === null){
-			setDisabled(true);
-		}else{
-			setDisabled(false);
+		e.preventDefault();
+		setDisabled(true);
+		const {name, value} = e.target;
+		const password = passwordRef.current.value;
+		const confirmPassword = confirmPasswordRef.current.value;
+		
+		// 비밀번호 규칙 확인
+		if (name === "password" && !passwordRe.test(value)) {
+			setErrorMsg('8~20자, 영문+숫자/특수문자를 포함해야 합니다.');
+			return;
 		}
+
+		setErrorMsg('');
+
+		// 비밀번호와 비밀번호 확인 동일한지 확인
+		if (password !== confirmPassword) {
+			setConfirmErrorMsg('비밀번호가 맞지 않습니다.');
+			return;
+		}
+
+		setConfirmErrorMsg('');
+		setDisabled(false);
   }
+
+	const resetPassword = e => {
+		e.preventDefault();
+		onClickHandler(null, MODE.RESET_PW, {
+			email,
+			newPassword:	passwordRef.current.value
+		});
+	}
+
 	return(
-		<div className="login-wrap">
-		<div className="login-scroll">
-		<h1 className="login-title"><Link to="/">VOCABOX<img src={LOGOTitle_SVG} alt="VOCABOX" /></Link></h1>
-			<div className="login-cont">
-				<form className="login-area">
-					<legend className="disN">이메일 인증 완료</legend>
-					<div className="login-input-area input_wrap">
-						<label htmlFor="password">비밀번호</label>
-						<input id="password" name="" type="password" spellCheck placeholder="새 비밀번호를 입력해 주세요" onChange={handleChange} />
-						<p className="msg error">사용할 수 없는 비밀번호입니다</p>
-					</div>
-					<div className="login-btn-wrap">
-						<button className="btn-fill btn-login sizeL" disabled={disabled}>비밀번호 재설정</button>
-					</div>
-				</form>
+		<>
+			<div className="login-input-area input_wrap">
+				<label htmlFor="">비밀번호</label>
+				<input ref={passwordRef} name="password" type="password" spellCheck placeholder="새 비밀번호를 입력해 주세요" onChange={handleChange} />
+				<p className="msg error">{errorMsg}</p>
 			</div>
-		</div>
-	</div>
+			<div className="login-input-area input_wrap">
+				<label htmlFor="">비밀번호 확인</label>
+				<input ref={confirmPasswordRef} name="confirmPassword" type="password" spellCheck placeholder="다시 한번 비밀번호를 입력해주세요" onChange={handleChange} />
+				<p className="msg error">{confirmErrorMsg}</p>
+			</div>
+			<div className="login-btn-wrap">
+				<button className="btn-fill btn-login sizeL" disabled={disabled} onClick={resetPassword}>비밀번호 재설정</button>
+			</div>
+		</>
 	);
 };
 export default AuthNumComp;
