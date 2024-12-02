@@ -1,4 +1,4 @@
-import Header from "@components/layout/header_mini";
+import HeaderMini from "@components/layout/header_mini";
 import BottomNav from "@components/layout/bottom_nav";
 import LeftFix from "@components/layout/left_fix";
 import MyDeault_SVG from "@images/myImgDefault.svg";
@@ -42,7 +42,7 @@ function MyPage(){
 		<div className="wrap">
 			<LeftFix></LeftFix>
 			<BottomNav></BottomNav>
-			<Header></Header>
+			<HeaderMini title="마이페이지"></HeaderMini>
 			<div className="my_page_wrap">
 				<div className="my_user">
 					<div className="my_user_img">
