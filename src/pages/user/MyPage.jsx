@@ -11,12 +11,17 @@ import FullModal from "@components/layout/popup/FullModal";
 import BottomModal from "@components/layout/popup/BottomModal";
 
 import UserConfig from "@components/user/UserConfig";
+import FolderList from "@/components/word/folder/FolderList";
 
 function MyPage(){
 	const [userConfigModal] = useModal("userConfig");
+	const [folderListModal] = useModal("folderList");
 	const onClickHandler = api();
 	const handleUserConfig = () => e => {
 		userConfigModal(FullModal,UserConfig)
+	}
+	const handleFolderList = () => e => {
+		folderListModal(FullModal,FolderList)
 	}
 
 	const signout = (e) => {
@@ -37,7 +42,7 @@ function MyPage(){
 				</div>
 				<ul className="my_page_list">
 					<li onClick={handleUserConfig()}>내 계정 설정</li>
-					<li>내 단어 그룹 관리</li>
+					<li onClick={handleFolderList()}>내 단어장 관리</li>
 					<li onClick={signout}>로그아웃</li>
 					<li>계정탈퇴</li>
 				</ul>

@@ -2,16 +2,14 @@
 	&_wrap{
 	}
 	&_cont{
-		padding: 14px 0;
+		// padding: 14px 0;
 		ul{
 			padding: $main-p;
 			font-size: 12px;
 			li {
 				// default값
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
-				padding: 12px;
+				position: relative;
+				padding: 16px 14px;
 				background-color: $main-bg-color;
 				border-radius: $sub-br;
 				&.on, &:hover, &:focus-visible {
@@ -25,11 +23,49 @@
 	&_top{
 		padding: 0 12px;
 		justify-content: space-between;
+		button{
+			padding: 8px;
+		}
 	}
 	&_lists{
 		margin-top: 14px;
 		flex-direction: column;
 		flex-wrap: wrap;
 		gap: 14px;
+		
+	}
+	&_list_area{
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		button{
+			width: 24px;
+			font-size: 0;
+		}
+	}
+	&_list_btn_area{
+		position: absolute;
+		bottom: 12px;
+		right: 12px;
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		.edit{
+			@include icon(){
+				background-image: icon(edit,989393)
+			}
+		}
+		.xi-close{
+			font-size: 18px;
+			color: #989393;
+		}
+	}
+	&_list_name{
+		
+	}
+	&_list_wordamount{
+		margin-top: 12px;
+		font-size: 10px;
+		color: $sub-text-color;
 	}
 }
