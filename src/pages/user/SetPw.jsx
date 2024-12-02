@@ -8,7 +8,6 @@ function SetPw(){
 	const pattern = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-za-z0-9\-]+/;
 	const [btnState, setBtnState] = useState(true);
 	const [disabled , setDisabled] = useState(true);
-	const [errorMsg, setErrorMsg] = useState('');
 	const emailRef = useRef(null);
 	const onClickHandler = api();
 
@@ -56,7 +55,6 @@ function SetPw(){
 					<div className="login-input-area input_wrap">
 						<label htmlFor="email">이메일</label>
 						<input ref={emailRef} id="email" name="email" type="text" spellCheck placeholder="이메일을 입력해 주세요" onChange={handleChange} />
-						<p className="msg error">{errorMsg}</p>
 					</div>
 					<div className="login-btn-wrap">
 						{

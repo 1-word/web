@@ -45,7 +45,6 @@ function AuthNum({retry, email}){
 		}).then(res => {
 			if (res) {
 				// 비밀번호 재설정 출력
-				console.log("비밀번호 재설정");
 				endTimer();
 				setResetStatus(true)
 			}
