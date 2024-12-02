@@ -3,15 +3,15 @@ import api, {MODE} from "@/services/api";
 import wordListStore from "@/store/wordListStore";
 import Store, { COMM_MODE } from "@/store/store";
 import { useModal } from "@/hook/_hooks";
-import Colorpick from "@/components/word/folder/AddFolder";
-import FolderCog from "@components/word/folder/FolderCog";
+import AddFolder from "@/components/word/folder/AddFolder";
+import FullModal from "@components/layout/popup/FullModal";
 
 function FolderList(){
     const {folderList, setMemoStatusInit} = wordListStore(state => state);
     const {clickedFolder, setColorPickModal, setClickedfolder, setFolderCog, setColorPickPop} = Store(state => state);
 		const [editState, setEditState] = useState(false);
     
-    const [openColorPick, closeColorPick ] = useModal("colorPick");
+    const [addFolderModal] = useModal("addFolder");
     const [openConfig, closeConfig ] = useModal("config");
 
     const onClickHandler = api();
@@ -19,8 +19,8 @@ function FolderList(){
     useEffect(() => {
     }, []); 
 
-    const handleAddClick = () => {
-        openColorPick(<Colorpick></Colorpick>)
+    const handleAddClick = () => e => {
+			addFolderModal(FullModal,AddFolder);
     }
 
     const handleConfigClick = () => {
@@ -38,7 +38,7 @@ function FolderList(){
 								<div className="folder_cont">
 								<div className="folder_top flex">
                     <button onClick={handleConfigClick}>단어장 관리</button>
-										<button className="folder_plus" onClick={handleAddClick}>새 단어장 만들기<i className="xi-plus"></i></button>
+										<button className="folder_plus" onClick={handleAddClick()}>새 단어장 만들기<i className="xi-plus"></i></button>
 								</div>
                 <ul className="folder_lists flex">
                     <li id="allFolder" onClick={()=>{
