@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import api, {MODE} from "@/services/api";
 import Store, {COMM_MODE} from '@/store/store';
 
-function Colorpick({colorPickPop}){
+function AddFolder({colorPickPop}){
     const [pickColor, setPickColor] = useState({});
 
     useEffect(() => {
@@ -121,4 +121,4 @@ function Colorpick({colorPickPop}){
     )
 }
 
-export default Colorpick;
+export default AddFolder;

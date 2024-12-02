@@ -3,7 +3,7 @@ import api, {MODE} from "@/services/api";
 import wordListStore from "@/store/wordListStore";
 import Store, { COMM_MODE } from "@/store/store";
 import { useModal } from "@/hook/_hooks";
-import Colorpick from "@components/word/folder/Colorpick";
+import Colorpick from "@/components/word/folder/AddFolder";
 import FolderCog from "@components/word/folder/FolderCog";
 
 function FolderList(){
@@ -55,7 +55,7 @@ function FolderList(){
                             }}
                         >
 													<div className="folder_list_area">
-														<p className="folder_list_name">{item.folder_name.slice(0,2)}name</p>
+														<p className="folder_list_name">{item.folder_name.slice(0,2)}The golden rays of the setting sun cascaded </p>
 														{
 															editState?
 															<div className="folder_list_btn_area">
