@@ -32,7 +32,8 @@ function Login(){
 
 	const onKeyDown = (e) => {
 		if(e.key === 'Enter'){
-				handleSubmit();
+			e.preventDefault();
+			handleSubmit();
 		}
 	}
 
