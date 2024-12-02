@@ -80,6 +80,8 @@
 	}
 	&-area{
 		padding: 24px;
+		padding-top: 0;
+		margin-top: 24px;
 		&:invalid{
 			.btn-login{
 				background: $default-ddd !important;
@@ -92,6 +94,7 @@
 		}
 	}
 	&-input-area{
+		margin-top: 16px;
 		display: flex;
 		flex-direction: column;
 		input{
