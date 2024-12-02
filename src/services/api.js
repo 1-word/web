@@ -86,9 +86,8 @@ function useEvntHandler(e, modeType, data, func){
         async memorization(e, id, data){
             return await executeSrvConnect("put", id, data);
         },
-        async save(e, data){
-            let res = await executeSrvConnect("post", data.type, data);
-            saveListClear();
+        async save(_, data){
+            let res = await executeSrvConnect("post", 'word', data);
             return res;
         },
         folderRead(data){
