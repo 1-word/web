@@ -11,6 +11,7 @@ import AuthNumComp from '@/pages/user/AuthNumComplete';
 import MyPage from '@/pages/user/MyPage';
 import Modals from './components/Modals';
 import OAuth from './pages/oauth/OAuth';
+import DailySentence from '@/pages/dailySentence/DailySentence';
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
 			<Route path="/authcomplete" element={<AuthNumComp></AuthNumComp>}/>
       <Route path="/mypage" element={<MyPage></MyPage>}/>
       <Route path="/oauth/callback" element={<OAuth></OAuth>}/>
+      <Route path="/daily_sentence/main" element={<DailySentence></DailySentence>}/>
     </Routes> 
     );
   }
