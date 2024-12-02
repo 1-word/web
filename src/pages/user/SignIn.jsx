@@ -3,12 +3,11 @@ import LOGOTitle_SVG from "@images/logoTitle.svg";
 import React, { useState, useRef } from "react";
 import api, { MODE } from "@/services/api";
 import { Link } from "react-router-dom";
-import { useInput } from "@/hook/_hooks"
 
 function Login(){
 	const loginData = useRef(null);
 	const onClickHandler = api();
-
+	
 	const handleSubmit = (e) => {
 		if (e) {
 			e.preventDefault();
@@ -33,7 +32,8 @@ function Login(){
 
 	const onKeyDown = (e) => {
 		if(e.key === 'Enter'){
-				handleSubmit();
+			e.preventDefault();
+			handleSubmit();
 		}
 	}
 
@@ -60,7 +60,7 @@ function Login(){
 							<input id="password" type="password" name="password" required spellCheck placeholder="비밀번호를 입력해 주세요" onChange={setInput} onKeyDown={onKeyDown}/>
 						</div>
 						<div className="login-btn-wrap">
-							<button className="btn-fill btn-login sizeL" disabled onClick={handleSubmit}>로그인</button>
+							<button className="btn-fill btn-login sizeL" onClick={handleSubmit}>로그인</button>
 						</div>
 						<div className="login-join-wrap">
 								<Link to='/setPw'>비밀번호 재설정</Link>
