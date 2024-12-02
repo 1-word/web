@@ -29,28 +29,16 @@
 				color: $sub-text-color;
 			}
 			// li active시 컬러 변경
-			&.active,&:hover{
-				a{
-					color: $main-accent-color;
-				}
-			}
+			// &.active,&:hover{
+			// 	a{
+			// 		color: $main-accent-color;
+			// 	}
+			// }
 			// li active시 icon setting
 		}
 		>li .active, a:is(:focus,:active,:hover){
-			.user{
-				background-image: icon(user,$accentColor);
-			}
 			.search{
 				background-image: icon(search,$accentColor);
-			}
-			.wordbook{
-				background-image: icon(wordbook,$accentColor);
-			}
-			.learn{
-				background-image: icon(learn,$accentColor);
-			}
-			.calendar{
-				background-image: icon(calendar,$accentColor);
 			}
 		}
 		// icon setting
@@ -77,6 +65,27 @@
 		.calendar{
 			@include icon(){
 				background-image: icon(calendar);
+			}
+		}
+		// active시 아이콘 setting
+		&[active="mypage"]{
+			.user{
+				background-image: icon(user,$accentColor);
+			}
+		}
+		&[active="word"]{
+			.wordbook{
+				background-image: icon(wordbook,$accentColor);
+			}
+		}
+		&[active="learn"]{
+			.learn{
+				background-image: icon(learn,$accentColor);
+			}
+		}
+		&[active="dailySentence"]{
+			.calendar{
+				background-image: icon(calendar,$accentColor);
 			}
 		}
 	}

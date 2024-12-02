@@ -7,7 +7,7 @@ function DailySentence(){
 		<div className="wrap">
 			<HeaderMini title="오늘의 내 문장"></HeaderMini>
 			<LeftFix></LeftFix>
-			<BottomNav></BottomNav>
+			<BottomNav active="dailySentence"></BottomNav>
 			<div className="daily_sentence_wrap">
 				<div className="daily_sentence_cont">
 					<div className="daily_sentence_callendar_wrap">

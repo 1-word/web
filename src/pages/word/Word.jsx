@@ -92,7 +92,7 @@ function Word(){
     return (
     <div className="wrap">
 			<LeftFix></LeftFix>
-			<BottomNav></BottomNav>
+			<BottomNav active="word" isWord="true"></BottomNav>
 			<Header></Header>
         <div className="search_wrap">
             <div className="search_cont">

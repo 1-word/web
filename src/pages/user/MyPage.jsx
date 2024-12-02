@@ -41,7 +41,7 @@ function MyPage(){
 	return (
 		<div className="wrap">
 			<LeftFix></LeftFix>
-			<BottomNav></BottomNav>
+			<BottomNav active="mypage"></BottomNav>
 			<HeaderMini title="마이페이지"></HeaderMini>
 			<div className="my_page_wrap">
 				<div className="my_user">
