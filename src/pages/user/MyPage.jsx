@@ -51,7 +51,9 @@ function MyPage(){
 					<span className="my_user_name">유저 네임</span> 님, 오늘도 힘내봐요!
 				</div>
 				<ul className="my_page_list">
-					<li onClick={handleUserConfig()}>내 계정 설정</li>
+					<li onClick={handleUserConfig()}>내 계정 설정
+						<p className="my_page_email">mikku101@naver.com</p>
+					</li>
 					<li onClick={handleFolderList()}>내 단어장 관리</li>
 					<li onClick={signout}>로그아웃</li>
 					<li onClick={handleDeleteAccountModal()}>계정 삭제</li>

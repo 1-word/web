@@ -29,23 +29,17 @@ function MyPage(){
 
 	return (
 		<div className="my_page_config_wrap">
-			<div className="my_page_config_img_wrap" onClick={handlePhotoConfigModal()}>
-				<img src={MyDeault_SVG} className="my_page_config_img" alt="default" />
+			<div className="my_page_config_name_area">
+				<div className="my_page_config_img_wrap" onClick={handlePhotoConfigModal()}>
+					<img src={MyDeault_SVG} className="my_page_config_img" alt="default" />
+				</div>
+				<div className="my_page_config_email">mikku101@naver.com</div>
 			</div>
 			<ul className="my_page_config_lists">
 				<li className="input_wrap">
-					<label>이름</label>
+					<label>닉네임</label>
 					<input type="text" />
 					<div className="msg error">에러입니다</div>
-				</li>
-				<li className="input_wrap">
-					<label>아이디</label>
-					<input type="text" readOnly />
-					<div className="msg correct">맞습니다</div>
-				</li>
-				<li className="input_wrap">
-					<label>이메일</label>
-					<input type="text" />
 				</li>
 				<li className="input_wrap">
 					<label>새 비밀번호</label>
