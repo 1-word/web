@@ -1,12 +1,159 @@
 .daily_sentence{
-	&_wrap{}
-	&_cont{}
+	&_wrap{
+		height: 94%;
+		background-color: $main-bg-color;
+		display: flex;
+		flex-direction: column;
+	}
+	&_cont{
+		padding: 24px 14px 0;
+	}
+	&_plus_btn{
+		font-size: 24px;
+		margin-left: auto;
+		i{
+			color: $main-accent-color;
+		}
+	}
+	&_read_type_btn{
+		min-width: 46px;
+		width: auto;
+		margin-left: auto;
+	}
 }
 
 // 달력
 .daily_sentence_callendar{
-	&_wrap{}
-	&_cont{}
-	&_lists{}
-	&_list{}
+	&_wrap{
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+	&_head{
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		font-size: 24px;
+		font-weight: bold;
+		&_btn{
+			width: 24px;
+			color: $sub-text-color;
+		}
+	}
+	&_area{
+		margin: 16px 0;
+	}
+	// 달력 그리드
+	&_grid{
+		display: grid;
+		column-gap: 12px;
+		grid-template-columns: repeat(7,1fr);
+		grid-auto-rows: 1fr;
+		li{
+			width: 100%;
+			height: 100%;
+			padding: 16px 10px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			@include deviceSmall(){
+				padding: 10px;
+			}
+		}
+		.today{
+			background-color: $main-accent-color !important;
+			border-radius: $main-br;
+			color: $default-fff !important;
+		}
+		.dot{
+			position: relative;
+			&::before{
+				content: "";
+				display: block;
+				position: absolute;
+				bottom: 10%;
+				width: 4px;
+				height: 4px;
+				border-radius: 50%;
+				background: $main-hover-color;
+			}
+		}
+		.active{
+			background-color: $sub-hover-color;
+			border-radius: $main-br;
+			color: $main-accent-color;
+		}
+		.none{
+			opacity: 0.6;
+		}
+	}
+	&_grid_top{
+		li{
+			&:first-child{
+				color: $default-error-color
+			}
+			&:last-child{
+				color: $sub-correct-color;
+			}
+		}
+	}
+}
+
+// 리스트 컨테이너
+.daily_sentence_mylist{
+	&_wrap{
+		width: 100%;
+		margin-top: auto;
+		flex: 46%;
+		background: $default-fff;
+		border-top: 1px solid $default-ddd;
+		padding: 16px;
+		padding-right: 0;
+		overflow: hidden;
+		@include deviceSmall(){
+			flex: 50%;
+		}
+	}
+	&_scroll{
+		height: 100%;
+		overflow-y: auto;
+		padding-bottom: 16px;
+	}
+	&_lists{
+		padding-right: 16px;
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		li{
+			padding: 12px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			border-radius: $sub-br;
+			background-color: $main-bg-color;
+			&::before{
+				content: "";
+				display: block;
+				flex-shrink: 0;
+				width: 4px;
+				height: 4px;
+				margin-right: 12px;
+				border-radius: 50%;
+				background-color: $main-hover-color;
+			}
+		}
+	}
+	&_mysentence{
+		margin-right: auto;
+		line-height: 20px;
+		&_mean{
+			margin-top: 4px;
+			opacity: 0.8;
+		}
+	}
+	&_date{
+		font-size: 10px;
+		color: $sub-text-color;
+		flex-shrink: 0;
+	}
 }
