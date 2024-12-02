@@ -49,6 +49,9 @@
 			.learn{
 				background-image: icon(learn,$accentColor);
 			}
+			.calendar{
+				background-image: icon(calendar,$accentColor);
+			}
 		}
 		// icon setting
 		.user{
@@ -69,6 +72,11 @@
 		.learn{
 			@include icon(){
 				background-image: icon(learn);
+			}
+		}
+		.calendar{
+			@include icon(){
+				background-image: icon(calendar);
 			}
 		}
 	}
