@@ -1,7 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react';
 import { useModal } from "@/hook/_hooks";
 import CenterModal from "@components/layout/popup/CenterModal";
-import GroupEdit from './GroupEdit';
+import GroupEdit from './GroupDetail';
 import api, { MODE } from "@/services/api";
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -23,8 +23,19 @@ function AddTypeMore({
 		// 기본 품사 조회
 		onClickHandler(null, MODE.WORD_GROUP_READ)
 		.then(res => {
-			console.log(res);
-			setGroups(res);
+			// 이미 추가 되어져있는지 확인
+			const wordGroupIds = saveList?.details.map(val => val.wordGroupId);
+			const result = res.map(val => {
+				for (let id of wordGroupIds) {
+					if (val.wordGroupId === id) {
+						val.disabled = true;
+						return val;
+					}
+				}
+				val.disabled = false;
+				return val;
+			});
+			setGroups(result);
 		})
 	}, []);
 
@@ -51,21 +62,23 @@ function AddTypeMore({
 	}
 
 	const handleGroupClick = (group) => e => {
-		console.log(group.wordGroupId);
-		groupEditModal(CenterModal, GroupEdit, {
-			group,
-			saveList,
-			saveGroupList,
-			updateGroupName,
-			createGroup
-		});
+		if (!group?.disabled) {
+			groupEditModal(CenterModal, GroupEdit, {
+				group,
+				saveList,
+				saveGroupList,
+				updateGroupName,
+				createGroup
+			});
+		}
 	}
 
 	const groupList = groups.map((group) => {
 		return <React.Fragment key={`groupList${group.wordGroupId}`}>
 			<SwiperSlide key={`groupList${group.wordGroupId}`} 
 									className="add_type_swiper_slide" 
-									onClick={handleGroupClick(group)}>
+									onClick={handleGroupClick(group)}
+									disabled={group?.disabled}>
 				{group.name}
 			</SwiperSlide>	
 		</React.Fragment>

@@ -5,7 +5,8 @@ function FullModal({
 	isOpened,
 	deleteModal,
 	contents, 
-	contentsProps
+	contentsProps,
+	deleteModalAfterTime
 }) {
 	const full_wrap = useRef(null);
 	useEffect(() => {
@@ -30,7 +31,8 @@ function FullModal({
 						createElement(
 							contents,
 							{
-								...contentsProps
+								...contentsProps,
+								deleteModalAfterTime
 							}
 						)
 					}

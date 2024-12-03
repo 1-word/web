@@ -4,13 +4,15 @@ import CenterModal from "@/components/layout/popup/CenterModal";
 import AddName from "./AddName";
 import api, { MODE } from "@/services/api";
 
-function GroupEdit({
+function GroupDetail({
 	deleteModalAfterTime,
 	group,
 	saveList,
 	saveGroupList,
 	updateGroupName,
-	createGroup
+	createGroup,
+	isEdit,
+	editIdx,
 }){
 
 	const [groupDetail, setGroupDetail] = useState([{}]);
@@ -18,8 +20,9 @@ function GroupEdit({
 	const onClickHandler = api();
 
 	useEffect(() => {
-	
-
+		if (isEdit){
+			setGroupDetail(group.groups);
+		}
 	}, []);
 
 	const handleAddNameModal = () => e => {
@@ -30,37 +33,69 @@ function GroupEdit({
 		});
 	}
 
-	const setGroupName = () => {
-	}
-
+	// title 입력
 	const handleOnChangeInput = (idx) => e => {
 		const {name, value} = e.target;
 
 		const saveGroup = [...groupDetail];
 		saveGroup[idx]['title'] = value;
+
 		setGroupDetail(saveGroup);
 	}
 
+	// + 버튼 클릭
 	const hanndleClickAdd = e => {
 		setGroupDetail([...groupDetail, {}]);
 	}
 
+	// title 삭제
 	const handleClickDelete = (idx) => e => {
 		const deleteGroup = groupDetail.filter((value, i) => i !== idx);
 		setGroupDetail(deleteGroup);
 	}
 
+	// 완료
 	const handleClickComplete = e => {
-		console.log(groupDetail);
+		if (isEdit) {
+			// 수정된건 수정,
+			let editGroups = group.groups.map((val, idx) => {
+				val.title = groupDetail[idx].title;
+				return val;
+			});
+
+			const preGroupLen = group.groups.length;
+
+			if (preGroupLen < groupDetail.length) {
+				for (let i=preGroupLen; i<groupDetail.length; i++) {
+					editGroups = [...editGroups, {title: groupDetail[i].title}];
+				}
+			}
+
+			let edit = {...saveList};
+			edit.details[editIdx].groups = editGroups;
+			deleteModalAfterTime(240);
+			saveGroupList(edit);
+			return;
+		}
+
+		const result = {
+			wordGroupId: group.wordGroupId,
+			groupName: group.name,
+			groups: groupDetail
+		}
+
+		let data = {...saveList};
+		data.details = [...data?.details, result];
+		deleteModalAfterTime(240);
+		saveGroupList(data);
 	}
 
-	const groupNameEdit = e => {
-	}
+	const groupNameEdit = e => {}
 
-	const groupDetailList = groupDetail.map((group, idx) => {
+	const groupDetailList = groupDetail?.map((group, idx) => {
 		return <React.Fragment key={`groupDetail${idx}`}>
 			<li className="add_list">
-						<input type="text" value={group.title} onChange={handleOnChangeInput(idx)}/>
+						<input type="text" value={group.title || ''} onChange={handleOnChangeInput(idx)}/>
 						<button className="xi-close" onClick={handleClickDelete(idx)}></button>
 			</li>
 		</React.Fragment>
@@ -69,8 +104,8 @@ function GroupEdit({
 	return(
 		<div className="add_type_wrap">
 			<h2 className="modal_center_title">
-				{group.name}
-				{ !group?.isDefaultGroup && 
+				{group.name || group.groupName}
+				{ (!group?.isDefaultGroup && !isEdit) && 
 				<button className="add_type_edit_btn" onClick={handleAddNameModal()}>
 					수정
 				<i className="edit" onClick={groupNameEdit}></i>
@@ -92,4 +127,4 @@ function GroupEdit({
 		</div>
 	);
 };
-export default GroupEdit;
+export default GroupDetail;

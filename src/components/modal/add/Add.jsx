@@ -1,37 +1,22 @@
 import React, { useRef, useEffect, useState } from "react";
 import AddList from "./AddList";
-import wordListStore, { WORD_KEY } from "@/store/wordListStore";
-import Store from "@/store/store";
 import api, { MODE } from "@/services/api";
-import { textTypeCheck } from "@/util/utils";
 import { useModal } from "@/hook/_hooks";
 import AddTypeMore from "./AddTypeMore";
 
-import BottomModalSelect from "@components/layout/popup/BottomModalSelect";
 import CenterModal from "@components/layout/popup/CenterModal";
-import FullModal from "@components/layout/popup/FullModal";
-import BottomModal from "@components/layout/popup/BottomModal";
 
-function Add({details}){
+function Add({
+	wordList,
+	deleteModalAfterTime
+}){
 	const [addTypeMoreModal] = useModal("userConfig");
 		const [saveList, setWordList] = useState({	
 				word: '',
 				read: '',
 				mean: '',
-				details: [{
-				"wordGroupId": 1,
-				"groupName": "동사",
-				groups: [
-					{
-						"title": "3인칭 단수",
-						"content": "child",
-					}
-				]
-		}, {
-				"wordGroupId": 2,
-				"groupName": "명사",
-				groups: []
-		}]});
+				details: []
+			});
 
     const onClickHandler = api();
 
@@ -54,8 +39,27 @@ function Add({details}){
 		}
 
     const handleSaveClick = (e) => {
-			console.log(saveList);
-			// onClickHandler(null, MODE.SAVE, saveList);
+			const result = {
+				word: saveList.word,
+				mean: saveList.mean,
+				read: saveList.read,
+				memo: '',
+				memorization: 'N',
+				details: saveList.details.flatMap(group => 
+					group.groups.map(item => ({
+						wordGroupId: group.wordGroupId,
+						title: item.title,
+						content: item.content
+					}))
+				)
+			};
+
+			onClickHandler(null, MODE.SAVE, result)
+			.then(res => {
+				if (res) {
+					deleteModalAfterTime(240);
+				}
+			});
     }
 
     const moreInputList = saveList.details.map((data, idx) => (

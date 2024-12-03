@@ -90,7 +90,7 @@ function useEvntHandler(e, modeType, data, func){
             return await executeSrvConnect("put", id, data);
         },
         async save(_, data){
-            let res = await executeSrvConnect("post", 'word', data);
+            let res = await executeSrvConnect("post", 'word/EN', data);
             return res;
         },
         folderRead(data){
@@ -176,7 +176,6 @@ function useEvntHandler(e, modeType, data, func){
             return res;
         },
         async wordGroupUpdate(_, {id, name}) {
-            console.log(name);
             const res = await executeSrvConnect('put', `wordGroup/${id}`, {name}, {isUpdate: false});
             return res;
         },

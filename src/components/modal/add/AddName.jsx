@@ -14,8 +14,6 @@ function AddName({
 	const handleClickComplete = e => {
 		const text = textRef.current.value;
 
-		console.log(text);
-
 		// 새로 추가
 		if (wordGroupId === null || wordGroupId === undefined) {
 			onClickHandler(null, MODE.WORD_GROUP_SAVE, {
@@ -34,7 +32,6 @@ function AddName({
 		});
 
 		updateGroupName(wordGroupId, text);
-
 		deleteModalAfterTime(240);
 	}
 
