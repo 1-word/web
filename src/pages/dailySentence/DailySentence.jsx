@@ -7,10 +7,12 @@ import BottomModal from "@/components/layout/popup/BottomModal";
 import BottomModalSelect from "@/components/layout/popup/BottomModalSelect";
 import FullModal from "@/components/layout/popup/FullModal";
 import AddDailySentence from "@/components/dailySentence/AddDailySentence";
+import DailySentenceView from "@/components/dailySentence/DailySentenceView";
 
 function DailySentence(){
 	const [readTypeModal] = useModal('readType');
 	const [addDailySentenceModal] = useModal('addDailySentence');
+	const [dailySentenceViewModal] = useModal('dailySentenceView');
 	const handleReadTypeModal = () => e => {
 		readTypeModal(BottomModal,BottomModalSelect,{
 			setting : [
@@ -31,6 +33,12 @@ function DailySentence(){
 	}
 	const handleAddModal = () => e => {
 		addDailySentenceModal(FullModal,AddDailySentence)
+	}
+
+	const handleViewModal = () => e => {
+		dailySentenceViewModal(FullModal,DailySentenceView,{
+
+		})
 	}
 
 	return(
@@ -116,7 +124,7 @@ function DailySentence(){
 					<div className="daily_sentence_mylist_scroll">
 						<ul className="daily_sentence_mylist_lists">
 							{/* li 반복 */}
-							<li>
+							<li onClick={handleViewModal()}>
 								<div className="daily_sentence_mylist_mysentence">
 									<p className="daily_sentence_mylist_date">2024-12-01</p>
 									<p>
@@ -127,7 +135,7 @@ function DailySentence(){
 									</p>
 								</div>
 							</li>
-							<li>
+							<li onClick={handleViewModal()}>
 								<div className="daily_sentence_mylist_mysentence">
 									<p className="daily_sentence_mylist_date">2024-12-01</p>
 									<p>
