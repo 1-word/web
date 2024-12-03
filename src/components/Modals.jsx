@@ -88,7 +88,7 @@ function Modals(){
                 {
                     // 등록된 모달 불러옴
                     openedModals.map((Modals, idx) =>
-											<React.Fragment key={idx}>
+											<React.Fragment key={`modals${idx}`}>
 												{
 													Modals.isFirst &&
 													<ModalPortal id="modal-fix">
@@ -96,7 +96,7 @@ function Modals(){
 													</ModalPortal>
 												}
 					
-													<div className="modal_wrap" key={`modals${idx}`} ref={el => modalWrapRef.current[idx] = el}>
+													<div className="modal_wrap" ref={el => modalWrapRef.current[idx] = el}>
 															{
 																createElement(
 																	Modals.layout,

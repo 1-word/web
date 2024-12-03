@@ -35,8 +35,11 @@ function Add({details}){
 
     const onClickHandler = api();
 
-		const handleMoreModal = () => (e) => {
-			addTypeMoreModal(CenterModal,AddTypeMore)
+		const handleMoreModal = () => e => {
+			addTypeMoreModal(CenterModal, AddTypeMore, {
+				saveList,
+				saveGroupList,
+			})
 		}
 
 		const saveWordList = (key, value) => {
@@ -56,7 +59,7 @@ function Add({details}){
     }
 
     const moreInputList = saveList.details.map((data, idx) => (
-        <AddList key={idx}
+        <AddList key={`details${data.wordGroupId}`}
 						idx={idx}
             detail={data}
 						saveList={saveList}

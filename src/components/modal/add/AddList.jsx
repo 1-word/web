@@ -32,7 +32,7 @@ function AddList(props){
     }
 
 		const groupList = props.detail.groups.map((group, idx) => {
-			return <React.Fragment key={idx}>
+			return <React.Fragment key={`detailGroups${props.idx}${idx}`}>
 							<div className="input_wrap new_sub_list_input_wrap">
 								<span>{group.title}</span>
 								<input name='content' value={group.content} type="text" onChange={handleOnchange(idx)}/>

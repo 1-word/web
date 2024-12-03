@@ -34,7 +34,10 @@ export const MODE = {
     SIGNOUT: "signout",
     CODE: "code",
     VERIFICATION: "verification",
-    RESET_PW: "resetPw"
+    RESET_PW: "resetPw",
+    WORD_GROUP_READ: "wordGroupRead",
+    WORD_GROUP_UPDATE: "wordGroupUpdate",
+    WORD_GROUP_SAVE: "wordGroupSave"
 }
 
 /**
@@ -163,7 +166,20 @@ function useEvntHandler(e, modeType, data, func){
             activeToast('비밀번호 재설정이 완료되었습니다.');
             navigate('/signin');
             return true;
-        }
+        },
+        async wordGroupRead(_) {
+            const res = await executeSrvConnect('get', 'wordGroup', null, {isUpdate: false});
+            return res;
+        },
+        async wordGroupSave(_, {name}) {
+            const res = await executeSrvConnect('post', `wordGroup`, {name}, {isUpdate: false});
+            return res;
+        },
+        async wordGroupUpdate(_, {id, name}) {
+            console.log(name);
+            const res = await executeSrvConnect('put', `wordGroup/${id}`, {name}, {isUpdate: false});
+            return res;
+        },
     }
 
     /**
