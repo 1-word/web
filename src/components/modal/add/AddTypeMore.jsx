@@ -13,7 +13,8 @@ import AddName from './AddName';
 
 function AddTypeMore({
 	saveList,
-	saveGroupList
+	saveGroupList,
+	deleteModalAfterTime
 }){
 	const [groupEditModal] = useModal("groupEdit");
 	const [groups, setGroups] = useState([]);
@@ -68,9 +69,14 @@ function AddTypeMore({
 				saveList,
 				saveGroupList,
 				updateGroupName,
-				createGroup
+				createGroup,
+				afterCompleteGroupDetailAdd
 			});
 		}
+	}
+
+	const afterCompleteGroupDetailAdd = () => {
+		deleteModalAfterTime(20);
 	}
 
 	const groupList = groups.map((group) => {
