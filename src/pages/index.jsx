@@ -19,7 +19,7 @@ return (
 			이젠 VOCABOX가 직접 만들고 수정하며 암기하고 학습하도록 도와드립니다.
 		</p>
 		<div className="vb_main_btn">
-			<Link className="btn-fill sizeM">사용해보기</Link>
+			<Link to="/word" className="btn-fill sizeM">사용해보기</Link>
 		</div>
 	</div>
 	<div className="vb_main_cont_img">

@@ -1,13 +1,51 @@
 import HeaderMini from "@/components/layout/header_mini";
 import LeftFix from "@components/layout/left_fix";
 import BottomNav from "@components/layout/bottom_nav";
+import {useEffect,useState} from "react";
+import { useModal } from "@/hook/_hooks";
+import BottomModal from "@/components/layout/popup/BottomModal";
+import BottomModalSelect from "@/components/layout/popup/BottomModalSelect";
+import FullModal from "@/components/layout/popup/FullModal";
+import AddDailySentence from "@/components/dailySentence/AddDailySentence";
+import DailySentenceView from "@/components/dailySentence/DailySentenceView";
 
 function DailySentence(){
+	const [readTypeModal] = useModal('readType');
+	const [addDailySentenceModal] = useModal('addDailySentence');
+	const [dailySentenceViewModal] = useModal('dailySentenceView');
+	const handleReadTypeModal = () => e => {
+		readTypeModal(BottomModal,BottomModalSelect,{
+			setting : [
+				{
+					title: "연도",
+					onClick: () => {},
+				},
+				{
+					title: "월",
+					onClick: () => {},
+				},
+				{
+					title: "주간",
+					onClick: () => {},
+				},
+			]
+		})
+	}
+	const handleAddModal = () => e => {
+		addDailySentenceModal(FullModal,AddDailySentence)
+	}
+
+	const handleViewModal = () => e => {
+		dailySentenceViewModal(FullModal,DailySentenceView,{
+
+		})
+	}
+
 	return(
 		<div className="wrap">
 			<HeaderMini title="오늘의 내 문장"></HeaderMini>
 			<LeftFix></LeftFix>
-			<BottomNav></BottomNav>
+			<BottomNav active="dailySentence"></BottomNav>
 			<div className="daily_sentence_wrap">
 				<div className="daily_sentence_cont">
 					<div className="daily_sentence_callendar_wrap">
@@ -19,8 +57,8 @@ function DailySentence(){
 							<button className="daily_sentence_callendar_head_btn">
 								<i className="xi-angle-right"></i>
 							</button>
-							<button className="btn-light sizeS daily_sentence_read_type_btn">보기</button>
-							<button className="daily_sentence_callendar_head_btn daily_sentence_plus_btn">
+							<button className="btn-light sizeS daily_sentence_read_type_btn" onClick={handleReadTypeModal()}>보기</button>
+							<button className="daily_sentence_callendar_head_btn daily_sentence_plus_btn" onClick={handleAddModal()}>
 								<i className="xi-plus"></i>
 							</button>
 						</div>
@@ -85,7 +123,19 @@ function DailySentence(){
 				<div className="daily_sentence_mylist_wrap">
 					<div className="daily_sentence_mylist_scroll">
 						<ul className="daily_sentence_mylist_lists">
-							<li>
+							{/* li 반복 */}
+							<li onClick={handleViewModal()}>
+								<div className="daily_sentence_mylist_mysentence">
+									<p className="daily_sentence_mylist_date">2024-12-01</p>
+									<p>
+									The golden rays of the setting sun cascaded through the towering trees, painting the forest floor in hues of amber and bronze, as the gentle rustle of leaves created a symphony that danced in harmony with the whispering breeze
+									</p>
+									<p className="daily_sentence_mylist_mysentence_mean">
+									황금빛 석양의 광선이 우뚝 솟은 나무들 사이로 흘러내리며 숲바닥을 호박과 청동빛으로 물들였고, 부드러운 나뭇잎의 바스락거림은 속삭이는 바람과 조화를 이루며 춤추는 교향곡을 만들어냈다.
+									</p>
+								</div>
+							</li>
+							<li onClick={handleViewModal()}>
 								<div className="daily_sentence_mylist_mysentence">
 									<p className="daily_sentence_mylist_date">2024-12-01</p>
 									<p>

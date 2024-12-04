@@ -1,5 +1,14 @@
 .my_page_config{
 	&_wrap{}
+	&_name_area{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 24px;
+	}
+	&_name{
+		font-size: 1.1em;
+	}
 	&_img_wrap{
 		position: relative;
 		width: 80px;
