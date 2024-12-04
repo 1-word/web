@@ -81,7 +81,6 @@ function Add({
 			}
 			
 			const type = textTypeCheck(saveList.word);
-			console.log(type);
 
 			onClickHandler(null, MODE.SAVE, type, result)
 			.then(res => {
@@ -116,7 +115,6 @@ function Add({
 		}
 
 		const handleOnClick = (e) => {
-			console.log(e.target.textContent)
 			wordRelative.current.classList.remove('on')
 		}
 

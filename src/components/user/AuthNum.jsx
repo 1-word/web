@@ -4,13 +4,14 @@ import React, { useState, useRef, useEffect } from "react";
 import api, { MODE } from "@/services/api";
 import AuthNumComp from "@/pages/user/AuthNumComplete";
 
-function AuthNum({retry, email}){
+function AuthNum({retry, email, isSignup, setComplete}){
 	const onClickHandler = api();
 	const codeRef = useRef(null);
 	const [timer, setTimer] = useState(300);
 	const [reset, setResetStatus] = useState(false);
 
 	useEffect(() => {
+		isSignup = isSignup ?? false;
     const interval = setInterval(() => {
       setTimer(prevTime => {
         if (prevTime <= 1) {
@@ -47,6 +48,8 @@ function AuthNum({retry, email}){
 				// 비밀번호 재설정 출력
 				endTimer();
 				setResetStatus(true)
+				if (setComplete)
+					setComplete();
 			}
 		});
 	}
@@ -67,7 +70,7 @@ function AuthNum({retry, email}){
 					<button className="btn-fill btn-login sizeL" onClick={verificationCode}>인증번호 확인</button>
 				</div>
 			</>
-			: <AuthNumComp email={email}></AuthNumComp>
+			: !isSignup && <AuthNumComp email={email}></AuthNumComp>
 			}
 		</div>
 	);
