@@ -40,6 +40,7 @@ export const MODE = {
     WORD_GROUP_SAVE: "wordGroupSave",
     IMAGE_UPLOAD: "imageUpload",
     USER_UPDATE: "userUpdate",
+    USER_DELETE: "userDelete",
 }
 
 /**
@@ -190,7 +191,13 @@ function useEvntHandler(e, modeType, data, func){
         async userUpdate(_, data) {
             const res = await executeSrvConnect('put', 'user', data, {isUpdate: false});
             return res;
-        }
+        },
+        async userDelete(_) {
+            const res = await executeSrvConnect('delete', 'user', null, {isUpdate: false});
+            activeToast('회원탈퇴가 완료되었습니다.');
+            clearToken();
+            navigate('/'); 
+        },
     }
 
     /**

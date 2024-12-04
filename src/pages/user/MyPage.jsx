@@ -38,7 +38,9 @@ function MyPage(){
 		deleteAccountModal(CenterModal,CenterModalConfirm,{
 			title: "정말 떠나시는 건가요?",
 			content: "계정 삭제시 이메일, 닉네임, 계정사진 및 모든 저장 사항이 삭제되어요. 그래도 진행하실 건가요?",
-			onClick: ()=>{},
+			onClick: () => {
+				onClickHandler(null, MODE.USER_DELETE);
+			},
 		})
 	}
 
