@@ -8,9 +8,9 @@ import { devtools } from 'zustand/middleware'
  */
 
 export const MEMORIZATION_TYPE = {
-    ALL: "all",
-    MEMORIZATION: "memorization",
-    MEMORIZATION_PERIOD: "memorizationPeriod"
+    ALL: null,
+    MEMORIZATION: 'Y',
+    MEMORIZATION_PERIOD: 'N'
 }
 
 export const COMM_MODE = {

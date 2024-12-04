@@ -23,7 +23,7 @@ function Word(){
     const onClickHandler = api();
     const searchInput = useRef();
 		const isSearchingRef = useRef(false);
-		const previousSearchText = useRef("");
+		const previousSearchText = useRef('');
 
     const handleSearchWord = e => {
 				const isSearching = isSearchingRef.current;
@@ -69,6 +69,9 @@ function Word(){
 				}, {
 						name: "lastWordId",
 						value: page.lastWordId
+				}, {
+					name: "memorization",
+					value: memorization === MEMORIZATION_TYPE.ALL ? null : memorization
 				}];
 
 				const query = Pagination.getPageParameter(queryParams);
@@ -87,6 +90,21 @@ function Word(){
 
     const handleMemorizeClick = (status) => e => {
         setMemorization(status);
+
+				const queryParams = [{
+					name: "current",
+					value: 0,
+					},{
+						name: "memorization",
+						value: status
+					}];
+
+				const query = Pagination.getPageParameter(queryParams);
+				onClickHandler(null, MODE.READ, query)
+				.then(res => {
+					setWordList(res);
+					preventDisableFunc();
+				})
     }
 
     return (
@@ -123,16 +141,16 @@ function Word(){
 
 				{/* 암기탭 */}
 				<ul className="word_tab flex">
-						<li className= {memorization === MEMORIZATION_TYPE.ALL ? "active" : ""} onClick={handleMemorizeClick(MEMORIZATION_TYPE.ALL)}>전체</li>
-						<li className= {memorization === MEMORIZATION_TYPE.MEMORIZATION_PERIOD ? "active" : ""} 
+						<li className= {memorization === MEMORIZATION_TYPE.ALL ? "active" : ''} onClick={handleMemorizeClick(MEMORIZATION_TYPE.ALL)}>전체</li>
+						<li className= {memorization === MEMORIZATION_TYPE.MEMORIZATION_PERIOD ? "active" : ''} 
 									onClick={handleMemorizeClick(MEMORIZATION_TYPE.MEMORIZATION_PERIOD)}>미암기</li>
-						<li className= {memorization === MEMORIZATION_TYPE.MEMORIZATION ? "active" : ""} 
+						<li className= {memorization === MEMORIZATION_TYPE.MEMORIZATION ? "active" : ''} 
 								onClick={handleMemorizeClick(MEMORIZATION_TYPE.MEMORIZATION)}>암기</li>
 				</ul>
 				
 				{/* 단어 리스트 */}
         <div className="word_wrap">
-            <WordList memorization={memorization} memorization_type={MEMORIZATION_TYPE}></WordList>
+            <WordList memorization={memorization}></WordList>
         </div>
 				<Footer></Footer>
      </div>
