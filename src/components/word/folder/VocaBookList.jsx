@@ -3,7 +3,7 @@ import api, {MODE} from "@/services/api";
 import wordListStore from "@/store/wordListStore";
 import Store, { COMM_MODE } from "@/store/store";
 import { useModal } from "@/hook/_hooks";
-import AddFolder from "@/components/word/folder/AddFolder";
+import AddVocaBook from "@/components/word/folder/AddVocaBook";
 import FullModal from "@components/layout/popup/FullModal";
 
 function VocabookList(){
@@ -20,7 +20,7 @@ function VocabookList(){
     }, []); 
 
     const handleAddClick = () => e => {
-			addFolderModal(FullModal,AddFolder);
+			addFolderModal(FullModal,AddVocaBook);
     }
 
     const handleConfigClick = () => {

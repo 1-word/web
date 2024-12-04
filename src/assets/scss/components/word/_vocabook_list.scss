@@ -5,9 +5,10 @@
 }
 .voca_book{
 	&_wrap{
+		margin-top: 24px;
 	}
 	&_cont{
-		margin-top: 24px;
+		padding-bottom: 80px;
 		ul{
 			padding: $main-p;
 			font-size: 14px;

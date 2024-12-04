@@ -70,7 +70,7 @@ function AddFolder({colorPickPop}){
     const font_color_list = Object.keys(FONT_COLOR);
 
     return(
-        <div className="add-cont color-cont">
+        <div className="color-cont">
             <div className="color-preview-area">
                 <div className="preview" style={{'--color': pickColor?.background}}>
                     <h3 style={{'color': pickColor?.color}}>미리보기</h3>
@@ -78,7 +78,7 @@ function AddFolder({colorPickPop}){
             </div>
             <div className="color-list">
                 <div className="color-title">
-                    <h3>이름<span>(10글자 이내로 적어주세요)</span></h3>
+                    <h3>이름 (10글자 이내로 적어주세요)</h3>
                 </div>
                 <div>
                     <input ref={folderNameInput} type="text" maxLength="10" defaultValue={pickColor?.folder_name}/>
@@ -86,7 +86,7 @@ function AddFolder({colorPickPop}){
             </div>
             <div className="color-pick-area color-list">
                 <div className="color-title">
-                    <h3>폴더 색</h3>
+                    <h3>단어장 색을 설정해주세요 (선택)</h3>
                 </div>
                 <div className="color-pick">
                     <div className="area">
@@ -99,23 +99,8 @@ function AddFolder({colorPickPop}){
                     </div>
                 </div>
             </div>
-            <div className="color-pick-area color-list">
-                <div className="color-title">
-                    <h3>글자 색</h3>
-                </div>
-                <div className="color-pick">
-                    <div className="area">
-                        { 
-                            font_color_list.map((key, idx) => 
-                                <span key={`fcl${idx}`} className={FONT_COLOR[key] === pickColor.color ? "color on" : "color"} style={{ '--color': FONT_COLOR[key] }} 
-                                onClick={handleColorClick("color", FONT_COLOR[key])}></span>
-                            )
-                        }
-                    </div>
-                </div>
-            </div>
-            <div className='btn-area flex'>
-                <button className='btn-fill sizeL' onClick={handleConfirmClick()}>확인</button>
+            <div className='modal_full_btn_wrap'>
+                <button className='btn-fill sizeL' onClick={handleConfirmClick()}>단어장 추가</button>
             </div>
         </div>
     )
