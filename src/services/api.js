@@ -80,8 +80,8 @@ function useEvntHandler(e, modeType, data, func){
         async delete(_, wordId){
             await executeSrvConnect("delete", `word/${wordId}`);
         },
-        async update(e, id, data){
-            return await executeSrvConnect("put", id, data);
+        async update(e, wordId, data){
+            return await executeSrvConnect("put", `word/all/${wordId}`, data);
         },
         async updateMemo(e, id, data){
             return await executeSrvConnect("put", `word/memo/${id}`, data, {isUpdate: false});
@@ -89,8 +89,8 @@ function useEvntHandler(e, modeType, data, func){
         async memorization(e, id, data){
             return await executeSrvConnect("put", id, data);
         },
-        async save(_, data){
-            let res = await executeSrvConnect("post", 'word/EN', data);
+        async save(_, type, data){
+            let res = await executeSrvConnect("post", `word/${type}`, data);
             return res;
         },
         folderRead(data){

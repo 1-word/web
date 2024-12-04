@@ -76,7 +76,7 @@ function WordList(props) {
         }
     },[obsPage]);
 
-    const handleMoreModal = (id) => e => {
+    const handleMoreModal = (id, word) => e => {
         moreModal(BottomModal, BottomModalSelect, {
             setting: [
                 {
@@ -85,7 +85,7 @@ function WordList(props) {
                 },
                 {
                     title: "수정",
-                    onClick: HandleEditWord(id),
+                    onClick: HandleEditWord(id, word),
                 },
                 {
                     title: "삭제",
@@ -95,6 +95,7 @@ function WordList(props) {
         });
     }
 
+    // 단어장 변경
     const handleFolderClick = (wordId) => e => {
         const config = {
             wordId: wordId,
@@ -105,6 +106,7 @@ function WordList(props) {
         })
     }
 
+    // 단어 삭제
     const handleDeleteWord = (id) => e => {
         openModal(CenterModal, Confirm, {
             title: "잠깐만요!",
@@ -113,11 +115,12 @@ function WordList(props) {
         });
     }
 
-    const HandleEditWord = (id, wordId) => e => {
+    // 단어 수정
+    const HandleEditWord = (id, word) => e => {
         editModal(FullModal, Edit, {
-            wordId: wordId,
+            word,
             isEdit: true
-
+            
         });
     }
 
@@ -223,7 +226,7 @@ function WordList(props) {
                     <button className="word_card_headset" onClick={handleAudioClick(idx)}>
                         <i ref={el => headsetRef.current[idx] = el} className="xi-headset listen" data-pron-audio={data?.soundPath}></i>
                     </button>
-                    <button className="word_card_more" onClick={handleMoreModal(data?.wordId)}>
+                    <button className="word_card_more" onClick={handleMoreModal(data?.wordId, data)}>
                         <i className="xi-ellipsis-v"></i>
                     </button>
                 </div>
