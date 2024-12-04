@@ -40,5 +40,9 @@
 		border-radius: $sub-br;
 		border: 1px solid $default-ddd;
 		font-size: 12px;
+		// disabled style
+		&[disabled],&:disabled,&[disabled="disabled"]{
+			background-color: $default-ddd;
+		}
 	}
 }
