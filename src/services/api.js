@@ -32,6 +32,15 @@ export const MODE = {
     MEMORIZATION: "memorization",
     WORD_FOLDER_UPDATE: "wordFolderUpdate",
     SIGNOUT: "signout",
+    CODE: "code",
+    VERIFICATION: "verification",
+    RESET_PW: "resetPw",
+    WORD_GROUP_READ: "wordGroupRead",
+    WORD_GROUP_UPDATE: "wordGroupUpdate",
+    WORD_GROUP_SAVE: "wordGroupSave",
+    IMAGE_UPLOAD: "imageUpload",
+    USER_UPDATE: "userUpdate",
+    USER_DELETE: "userDelete",
 }
 
 /**
@@ -48,7 +57,7 @@ function useEvntHandler(e, modeType, data, func){
     const {createWordList, setUpdateFlag, saveListClear, setFolderList} = wordListStore(state => state);
     const {setLoading} = ModalStore();
     const [ openModal ] = useModal();
-    const {token, save, saveToken, clearToken} = authStore(state=>state);
+    const {token, save, saveToken, clearToken, setUserInfo} = authStore(state=>state);
     const navigate = useNavigate();
     const location = useLocation();
     const app = process.env.REACT_APP_ENV;
@@ -74,18 +83,17 @@ function useEvntHandler(e, modeType, data, func){
         async delete(_, wordId){
             await executeSrvConnect("delete", `word/${wordId}`);
         },
-        async update(e, id, data){
-            return await executeSrvConnect("put", id, data);
+        async update(e, wordId, data){
+            return await executeSrvConnect("put", `word/all/${wordId}`, data);
         },
         async updateMemo(e, id, data){
             return await executeSrvConnect("put", `word/memo/${id}`, data, {isUpdate: false});
         },
-        async memorization(e, id, data){
-            return await executeSrvConnect("put", id, data);
+        async memorization(e, wordId, data){
+            return await executeSrvConnect("put", `word/memorization/${wordId}`, data);
         },
-        async save(e, data){
-            let res = await executeSrvConnect("post", data.type, data);
-            saveListClear();
+        async save(_, type, data){
+            let res = await executeSrvConnect("post", `word/${type}`, data);
             return res;
         },
         folderRead(data){
@@ -117,6 +125,9 @@ function useEvntHandler(e, modeType, data, func){
             };
             saveToken(data);
             navigate("/word");
+            setUpdateFlag(true);
+            const userRes = await connect('get', 'user', null, data.accessToken);
+            setUserInfo(userRes.data);
         },
         async signup(_, user){
             const res = await executeSrvConnect("post", "user/signup", user, { isUpdate: false });
@@ -135,7 +146,7 @@ function useEvntHandler(e, modeType, data, func){
         },
         audio_play(_, data, endFunc){
             const audio = new Audio();
-            const soundUrl = process.env.PUBLIC_URL + '/pronu/' + data.sound_path + '.mp3';
+            const soundUrl = process.env.PUBLIC_URL + 'data/sound/' + data.sound_path + '.mp3';
             audio.src = soundUrl;
             audio.onended= endFunc(data.id);
             let playPromise = audio.play();
@@ -144,6 +155,48 @@ function useEvntHandler(e, modeType, data, func){
                     
                 }).finally(()=>endFunc(data.id))
             }
+        },
+        async code(_, {type, email}) {
+            const res = await executeSrvConnect("post", `auth/code/${type}`, {email}, {isUpdate: false});
+            activeToast(res);
+            return true;
+        },
+        async verification(_,{email, code}) {
+            const res = await executeSrvConnect("post", `auth/code/verify`, {email, code}, {isUpdate: false});
+            activeToast(res);
+            return true;
+        },
+        async resetPw(_, {email, newPassword}) {
+            const res = await executeSrvConnect("put", 'user/pw/reset', {email, newPassword}, {isUpdate: false});
+            activeToast('비밀번호 재설정이 완료되었습니다.');
+            navigate('/signin');
+            return true;
+        },
+        async wordGroupRead(_) {
+            const res = await executeSrvConnect('get', 'wordGroup', null, {isUpdate: false});
+            return res;
+        },
+        async wordGroupSave(_, {name}) {
+            const res = await executeSrvConnect('post', `wordGroup`, {name}, {isUpdate: false});
+            return res;
+        },
+        async wordGroupUpdate(_, {id, name}) {
+            const res = await executeSrvConnect('put', `wordGroup/${id}`, {name}, {isUpdate: false});
+            return res;
+        },
+        async imageUpload(_, formData) {
+            const res = await executeSrvConnect('post', 'files/upload/thumbnail', formData, {isUpdate: false});
+            return res;
+        },
+        async userUpdate(_, data) {
+            const res = await executeSrvConnect('put', 'user', data, {isUpdate: false});
+            return res;
+        },
+        async userDelete(_) {
+            const res = await executeSrvConnect('delete', 'user', null, {isUpdate: false});
+            activeToast('회원탈퇴가 완료되었습니다.');
+            clearToken();
+            navigate('/'); 
         },
     }
 
@@ -182,7 +235,7 @@ function useEvntHandler(e, modeType, data, func){
             return resData;
         } catch (error) {
             // accessToken 만료 시 토큰 재발급
-            if (error?.response?.status === 401) {
+            if (error?.response?.status === 401 && token.accessToken !== "") {
                 const response = await connect("post", "auth/reissue", {
                     accessToken: token.accessToken,
                     refreshToken: token.refreshToken
@@ -197,6 +250,11 @@ function useEvntHandler(e, modeType, data, func){
                 activeToast("재 로그인되었습니다. 다시 시도해주세요.");
                 throw new Error("재 로그인 되었습니다. 다시 시도해주세요.");
             }
+
+            if (error.response?.data.msg === "로그인이 필요합니다.") {
+                navigate("/signin");
+            }
+
             const msg = error?.response?.data?.msg || "서버에 응답이 없거나, 오류가 발생하였습니다. 잠시 후 다시 시도해주시기 바랍니다."
             activeToast(msg);
             throw new Error(msg);

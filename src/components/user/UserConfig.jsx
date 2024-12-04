@@ -3,62 +3,109 @@ import MyDeault_SVG from "@images/myImgDefault.svg";
 import { useModal } from "@/hook/_hooks";
 import BottomModalSelect from "@components/layout/popup/BottomModalSelect";
 import BottomModal from "@components/layout/popup/BottomModal";
+import { useRef, useState } from "react";
+import api, { MODE } from "@/services/api";
+import authStore from "@/store/authStore";
 
 function MyPage(){
 	const [photoConfigModal] = useModal("photoConfig");
+	const uploadRef = useRef(null);
+	const cameraRef = useRef(null);
+	const userInfoRef = useRef(null);
+	const {userInfo, setUserInfo} = authStore(state=>state);
+	const [thumbnail, setThumbnail] = useState(userInfo?.profileImagePath ?? '/myImgDefault.svg');
 
+	const onClickHandler = api();
 	
 	const handlePhotoConfigModal = (id) => e => {
 		photoConfigModal(BottomModal, BottomModalSelect, {
 			setting: [
 				{
 				title : "이미지 선택",
-				onClick : "",
+				onClick : () => {
+						uploadRef.current.click();
+					},
 				},
 				{
 				title : "사진 촬영",
-				onClick : "",
+				onClick : () => {
+						cameraRef.current.click();
+					},
 				},
 				{
 				title : "기본으로 설정",
-				onClick : "",
+				onClick : () => {
+					setThumbnail('/myImgDefault.svg');
+				},
 				},
 			],
 		});
 	}
 
+	const onUploadImage = e => {
+		if (!e.target.files) {
+			return;
+		}
+
+		const formData = new FormData();
+		formData.append('files', e.target.files[0]);
+
+		onClickHandler(null, MODE.IMAGE_UPLOAD, formData)
+		.then(res => {
+			if (res) {
+				setThumbnail(res);
+			}
+		})
+	}
+
+	const onChangeUserInfo = e => {
+		const {name, value} = e.target;
+		
+		const newUserInfo = {
+			...userInfoRef.current,
+			[name]: value
+		}
+
+		userInfoRef.current = newUserInfo;
+	}
+
+	const onClickComplete = () => {
+		const userInfo = {
+			...userInfoRef.current,
+			profileImagePath: thumbnail,
+		};
+
+		onClickHandler(null, MODE.USER_UPDATE, userInfo)
+		.then(res => {
+			if(res) {
+				console.log(res);
+				setUserInfo(res);
+			}
+		});
+	}
+
 	return (
 		<div className="my_page_config_wrap">
-			<div className="my_page_config_img_wrap" onClick={handlePhotoConfigModal()}>
-				<img src={MyDeault_SVG} className="my_page_config_img" alt="default" />
+			<div className="my_page_config_name_area">
+				<div className="my_page_config_img_wrap" onClick={handlePhotoConfigModal()}>
+					<img src={thumbnail} className="my_page_config_img" alt="default" />
+				</div>
+				<div className="my_page_config_email">{userInfo?.email ?? ''}</div>
 			</div>
 			<ul className="my_page_config_lists">
 				<li className="input_wrap">
-					<label>이름</label>
-					<input type="text" />
-					<div className="msg error">에러입니다</div>
-				</li>
-				<li className="input_wrap">
-					<label>아이디</label>
-					<input type="text" readOnly />
-					<div className="msg correct">맞습니다</div>
-				</li>
-				<li className="input_wrap">
-					<label>이메일</label>
-					<input type="text" />
-				</li>
-				<li className="input_wrap">
-					<label>새 비밀번호</label>
-					<input type="password" />
-				</li>
-				<li className="input_wrap">
-					<label>새 비밀번호 확인</label>
-					<input type="password" />
+					<label>닉네임</label>
+					<input name="nickname" type="text" defaultValue={userInfo?.nickname?? ''}onChange={onChangeUserInfo}/>
 				</li>
 			</ul>
 			<div className="my_page_config_btn_wrap">
-				<button className="btn-fill sizeM">확인</button>
+				<button className="btn-fill sizeM" onClick={onClickComplete}>확인</button>
 			</div>
+			<input ref={uploadRef} type="file" accept="image/*" required multiple style={{display: 'none'}} 
+			onChange={onUploadImage}></input>
+
+			<input ref={cameraRef} type="file" accept="image/*" required multiple style={{display: 'none'}} capture='camera'
+			onChange={onUploadImage}></input>
 		</div>
 	);
 }

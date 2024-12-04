@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import api, { MODE } from "@/services/api";
 import Edit from "@components/modal/add/Add";
 import wordListStore from "@/store/wordListStore";
-import Store, { COMM_MODE } from "@/store/store";
+import Store, { COMM_MODE, MEMORIZATION_TYPE } from "@/store/store";
 import { useModal, useObserver } from "@/hook/_hooks";
 import FolderCog from "@components/word/folder/FolderCog";
 import Confirm from "../modal/Confirm";
@@ -15,6 +15,7 @@ import { Pagination } from "@/util/Pagination";
 
 function WordList(props) {
     const { wordList, setWordList, update, setUpdateFlag, addWordList, setPreventDisableFunc } = wordListStore(state => state);
+    const {memorization, setMemorization} = Store(state=>state);
 
     const [ memoStatus, setMemoStatusState ] = useState({
         0: { "status": "OFF" }
@@ -45,6 +46,9 @@ function WordList(props) {
             }, {
                 name: "lastWordId",
                 value: null,
+            }, {
+                name: "memorization",
+                value: memorization, 
             }];
 
             const query = Pagination.getPageParameter(queryParams);
@@ -65,6 +69,9 @@ function WordList(props) {
             }, {
                 name: "lastWordId",
                 value: wordList.page.lastWordId
+            }, {
+                name: "memorization",
+                value: memorization === MEMORIZATION_TYPE.ALL ? null : memorization
             }];
 
             const query = Pagination.getPageParameter(queryParams);
@@ -76,26 +83,27 @@ function WordList(props) {
         }
     },[obsPage]);
 
-    const handleMoreModal = (id) => e => {
+    const handleMoreModal = (id, word) => e => {
         moreModal(BottomModal, BottomModalSelect, {
             setting: [
                 {
                     title: "폴더 이동",
-                    onClick: handleFolderClick(id),
+                    onClick: () => handleFolderClick(id),
                 },
                 {
                     title: "수정",
-                    onClick: HandleEditWord(id),
+                    onClick: () => HandleEditWord(id, word),
                 },
                 {
                     title: "삭제",
-                    onClick: handleDeleteWord(id),
+                    onClick: () => handleDeleteWord(id),
                 },
             ],
         });
     }
 
-    const handleFolderClick = (wordId) => e => {
+    // 단어장 변경
+    const handleFolderClick = (wordId) => {
         const config = {
             wordId: wordId,
             mode: COMM_MODE.MOVE
@@ -105,7 +113,8 @@ function WordList(props) {
         })
     }
 
-    const handleDeleteWord = (id) => e => {
+    // 단어 삭제
+    const handleDeleteWord = (id) => {
         openModal(CenterModal, Confirm, {
             title: "잠깐만요!",
             content: "정말 삭제하시겠습니까?",
@@ -113,11 +122,12 @@ function WordList(props) {
         });
     }
 
-    const HandleEditWord = (id, wordId) => e => {
+    // 단어 수정
+    const HandleEditWord = (id, word) => {
         editModal(FullModal, Edit, {
-            wordId: wordId,
+            word,
             isEdit: true
-
+            
         });
     }
 
@@ -189,25 +199,24 @@ function WordList(props) {
         headsetRef?.current[id]?.classList?.remove('on');
     }
 
-    const handleCheckClick = (wordId, status) => e => {
-        let result = status === "Y" ? "N" : "Y";
-        onClickHandler(e, MODE.MEMORIZATION, wordId, { memorization: result });
-    }
-
-    resultList = wordList.words;
-    if (props.memorization === props.memorization_type.MEMORIZATION) {
-        resultList = wordList.filter(data => data?.memorization === "Y");
-    }
-
-    if (props.memorization === props.memorization_type.MEMORIZATION_PERIOD) {
-        resultList = wordList.filter(data => data?.memorization === "N");
+    const handleCheckClick = (idx, wordId, status) => e => {
+        const current = status === 'Y' ? 'N' : 'Y';
+        onClickHandler(e, MODE.MEMORIZATION, wordId, { memorization: current })
+        .then(res => {
+            if (res) {
+                // 완료 후 상태 업데이트
+                const result = {...wordList};
+                result.words[idx].memorization = current;
+                setWordList(result);
+            }
+        });
     }
 
     const dataList = wordList?.words.map((data, idx) => {
         return (
             <div className="word_card" key={data?.wordId}>
                 <div className="word_card_top">
-                    <button className={data?.memorization === "Y" ? "word_card_check on" : "word_card_check"} onClick={handleCheckClick(data?.wordId, data?.memorization)}>
+                    <button className={data?.memorization === "Y" ? "word_card_check on" : "word_card_check"} onClick={handleCheckClick(idx, data?.wordId, data?.memorization)}>
                         <i className="check_ani">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path className="border" d="M9.91475 0.893067C4.9913 0.952124 1.04788 4.9913 1.10693 9.91475C1.16599 14.8385 5.20516 18.7816 10.1286 18.7226C15.0523 18.6635 18.9955 14.6246 18.9364 9.70088C18.8774 4.77743 14.8385 0.834007 9.91475 0.893067ZM10.1155 17.6258C5.81437 17.6774 2.27287 14.2025 2.22128 9.90134C2.16968 5.60026 5.62703 2.05897 9.92811 2.00738C14.2292 1.95578 17.7705 5.41314 17.8221 9.71421C17.8737 14.0153 14.4165 17.5742 10.1155 17.6258Z" fill="#666666" />
@@ -223,14 +232,14 @@ function WordList(props) {
                     <button className="word_card_headset" onClick={handleAudioClick(idx)}>
                         <i ref={el => headsetRef.current[idx] = el} className="xi-headset listen" data-pron-audio={data?.soundPath}></i>
                     </button>
-                    <button className="word_card_more" onClick={handleMoreModal(data?.wordId)}>
+                    <button className="word_card_more" onClick={handleMoreModal(data?.wordId, data)}>
                         <i className="xi-ellipsis-v"></i>
                     </button>
                 </div>
                 {/* 뜻 여러개인 경우 :: 한 개일 경우에도 이 안에 넣으면 됨 */}
                 <div className="word_card_mean_wrap">
                     {
-                        data?.mean.split(",").map((value, idx) =>
+                        data?.mean?.split(",")?.map((value, idx) =>
                             <div key={idx} className="word_card_mean_list">{idx + 1}.{value}</div>
                         )
                     }
@@ -242,7 +251,7 @@ function WordList(props) {
                 <div className={memoStatus[idx]?.status === "ON" ? "memo_area on" : "memo_area"}>
                     <div className="memo_box textarea-box">
                         <textarea ref={el => memoRef.current[idx] = el} className="memo_text" maxLength={3000}
-                            defaultValue={data?.memo.replace(/\\n/g, '\n')}>
+                            defaultValue={data?.memo?.replace(/\\n/g, '\n')}>
                         </textarea>
                     </div>
                     <div className="btn_area flex">

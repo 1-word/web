@@ -3,7 +3,7 @@ import MyDeault_SVG from "@images/myImgDefault.svg";
 import WordList from "@components/word/WordList";
 import Store, {MEMORIZATION_TYPE} from "@/store/store";
 import api, { MODE } from "@/services/api";
-import Header from "@components/layout/header";
+import HeaderMini from "@components/layout/header_mini";
 import Footer from "@components/layout/footer";
 import BottomNav from "@components/layout/bottom_nav";
 import LeftFix from "@components/layout/left_fix";
@@ -23,7 +23,7 @@ function Word(){
     const onClickHandler = api();
     const searchInput = useRef();
 		const isSearchingRef = useRef(false);
-		const previousSearchText = useRef("");
+		const previousSearchText = useRef('');
 
     const handleSearchWord = e => {
 				const isSearching = isSearchingRef.current;
@@ -69,6 +69,9 @@ function Word(){
 				}, {
 						name: "lastWordId",
 						value: page.lastWordId
+				}, {
+					name: "memorization",
+					value: memorization === MEMORIZATION_TYPE.ALL ? null : memorization
 				}];
 
 				const query = Pagination.getPageParameter(queryParams);
@@ -87,13 +90,28 @@ function Word(){
 
     const handleMemorizeClick = (status) => e => {
         setMemorization(status);
+
+				const queryParams = [{
+					name: "current",
+					value: 0,
+					},{
+						name: "memorization",
+						value: status
+					}];
+
+				const query = Pagination.getPageParameter(queryParams);
+				onClickHandler(null, MODE.READ, query)
+				.then(res => {
+					setWordList(res);
+					preventDisableFunc();
+				})
     }
 
     return (
     <div className="wrap">
 			<LeftFix></LeftFix>
-			<BottomNav></BottomNav>
-			<Header></Header>
+			<BottomNav active="word"></BottomNav>
+			<HeaderMini title="단어장"></HeaderMini>
         <div className="search_wrap">
             <div className="search_cont">
                 <input ref={searchInput} onChange={handleSearchWord} type="text" className="s_text" placeholder="검색어를 입력해 주세요"/>
@@ -123,16 +141,16 @@ function Word(){
 
 				{/* 암기탭 */}
 				<ul className="word_tab flex">
-						<li className= {memorization === MEMORIZATION_TYPE.ALL ? "active" : ""} onClick={handleMemorizeClick(MEMORIZATION_TYPE.ALL)}>전체</li>
-						<li className= {memorization === MEMORIZATION_TYPE.MEMORIZATION_PERIOD ? "active" : ""} 
+						<li className= {memorization === MEMORIZATION_TYPE.ALL ? "active" : ''} onClick={handleMemorizeClick(MEMORIZATION_TYPE.ALL)}>전체</li>
+						<li className= {memorization === MEMORIZATION_TYPE.MEMORIZATION_PERIOD ? "active" : ''} 
 									onClick={handleMemorizeClick(MEMORIZATION_TYPE.MEMORIZATION_PERIOD)}>미암기</li>
-						<li className= {memorization === MEMORIZATION_TYPE.MEMORIZATION ? "active" : ""} 
+						<li className= {memorization === MEMORIZATION_TYPE.MEMORIZATION ? "active" : ''} 
 								onClick={handleMemorizeClick(MEMORIZATION_TYPE.MEMORIZATION)}>암기</li>
 				</ul>
 				
 				{/* 단어 리스트 */}
         <div className="word_wrap">
-            <WordList memorization={memorization} memorization_type={MEMORIZATION_TYPE}></WordList>
+            <WordList memorization={memorization}></WordList>
         </div>
 				<Footer></Footer>
      </div>
