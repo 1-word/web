@@ -33,7 +33,7 @@ const BottomNav = (activeClass) => {
 
 <ul className="bottom_nav_list flex" {...activeClass}>
 	<li className="flex">
-		<Link to="/word"><i className="wordbook"></i>단어장</Link>
+		<Link to="/vocabook"><i className="wordbook"></i>단어장</Link>
 	</li>
 	<li className="flex">
 		<Link><i className="learn"></i>단어 학습</Link>
