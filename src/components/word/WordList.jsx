@@ -88,22 +88,22 @@ function WordList(props) {
             setting: [
                 {
                     title: "폴더 이동",
-                    onClick: handleFolderClick(id),
+                    onClick: () => handleFolderClick(id),
                 },
                 {
                     title: "수정",
-                    onClick: HandleEditWord(id, word),
+                    onClick: () => HandleEditWord(id, word),
                 },
                 {
                     title: "삭제",
-                    onClick: handleDeleteWord(id),
+                    onClick: () => handleDeleteWord(id),
                 },
             ],
         });
     }
 
     // 단어장 변경
-    const handleFolderClick = (wordId) => e => {
+    const handleFolderClick = (wordId) => {
         const config = {
             wordId: wordId,
             mode: COMM_MODE.MOVE
@@ -114,7 +114,7 @@ function WordList(props) {
     }
 
     // 단어 삭제
-    const handleDeleteWord = (id) => e => {
+    const handleDeleteWord = (id) => {
         openModal(CenterModal, Confirm, {
             title: "잠깐만요!",
             content: "정말 삭제하시겠습니까?",
@@ -123,7 +123,7 @@ function WordList(props) {
     }
 
     // 단어 수정
-    const HandleEditWord = (id, word) => e => {
+    const HandleEditWord = (id, word) => {
         editModal(FullModal, Edit, {
             word,
             isEdit: true

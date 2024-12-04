@@ -13,11 +13,15 @@ import BottomModal from "@components/layout/popup/BottomModal";
 
 import UserConfig from "@components/user/UserConfig";
 import FolderList from "@/components/word/folder/FolderList";
+import Store from "@/store/store";
+import authStore from "@/store/authStore";
 
 function MyPage(){
 	const [userConfigModal] = useModal("userConfig");
 	const [folderListModal] = useModal("folderList");
-	const [deleteAccountModal] = useModal("deleteAccount")
+	const [deleteAccountModal] = useModal("deleteAccount");
+	const {userInfo} = authStore(state => state);
+
 	const onClickHandler = api();
 	const handleUserConfig = () => e => {
 		userConfigModal(FullModal,UserConfig)
@@ -46,13 +50,13 @@ function MyPage(){
 			<div className="my_page_wrap">
 				<div className="my_user">
 					<div className="my_user_img">
-					<img src={MyDeault_SVG} alt="default" />
+					<img src={userInfo?.profileImagePath ?? '/myImgDefault.svg'} alt="default" />
 					</div>
-					<span className="my_user_name">유저 네임</span> 님, 오늘도 힘내봐요!
+					<span className="my_user_name">{userInfo?.nickname || ''}</span>님, 오늘도 힘내봐요!
 				</div>
 				<ul className="my_page_list">
 					<li onClick={handleUserConfig()}>내 계정 설정
-						<p className="my_page_email">mikku101@naver.com</p>
+						<p className="my_page_email">{userInfo?.email}</p>
 					</li>
 					<li onClick={handleFolderList()}>내 단어장 관리</li>
 					<li onClick={signout}>로그아웃</li>

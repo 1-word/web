@@ -10,7 +10,7 @@ import persist from '../util/persist'
 
 const store = persist({
         key: 'auth',
-        allowlist: ['isAuthenticated', 'token', "user_id"]
+        allowlist: ['isAuthenticated', 'token', "user_id", "userInfo"]
     }, (set) => ({
         isAuthenticated: false,
         token: {
@@ -28,6 +28,14 @@ const store = persist({
                 "accessToken": "",
                 "accessTokenExpireDate": 0
             }
+        },
+        userInfo: {
+
+        },
+        setUserInfo: (user) => {
+            set(() => ({
+                userInfo: user
+            }))
         },
         /**
          * 로그인 데이터 저장
@@ -52,7 +60,8 @@ const store = persist({
             "refreshToken": "",
             "accessToken": ""
             },
-            user_id: ""
+            user_id: "",
+            userInfo: null,
         }))
     }))
 

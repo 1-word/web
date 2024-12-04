@@ -38,6 +38,8 @@ export const MODE = {
     WORD_GROUP_READ: "wordGroupRead",
     WORD_GROUP_UPDATE: "wordGroupUpdate",
     WORD_GROUP_SAVE: "wordGroupSave",
+    IMAGE_UPLOAD: "imageUpload",
+    USER_UPDATE: "userUpdate",
 }
 
 /**
@@ -54,7 +56,7 @@ function useEvntHandler(e, modeType, data, func){
     const {createWordList, setUpdateFlag, saveListClear, setFolderList} = wordListStore(state => state);
     const {setLoading} = ModalStore();
     const [ openModal ] = useModal();
-    const {token, save, saveToken, clearToken} = authStore(state=>state);
+    const {token, save, saveToken, clearToken, setUserInfo} = authStore(state=>state);
     const navigate = useNavigate();
     const location = useLocation();
     const app = process.env.REACT_APP_ENV;
@@ -123,6 +125,8 @@ function useEvntHandler(e, modeType, data, func){
             saveToken(data);
             navigate("/word");
             setUpdateFlag(true);
+            const userRes = await connect('get', 'user', null, data.accessToken);
+            setUserInfo(userRes.data);
         },
         async signup(_, user){
             const res = await executeSrvConnect("post", "user/signup", user, { isUpdate: false });
@@ -141,7 +145,7 @@ function useEvntHandler(e, modeType, data, func){
         },
         audio_play(_, data, endFunc){
             const audio = new Audio();
-            const soundUrl = process.env.PUBLIC_URL + '/pronu/' + data.sound_path + '.mp3';
+            const soundUrl = process.env.PUBLIC_URL + 'data/sound/' + data.sound_path + '.mp3';
             audio.src = soundUrl;
             audio.onended= endFunc(data.id);
             let playPromise = audio.play();
@@ -179,6 +183,14 @@ function useEvntHandler(e, modeType, data, func){
             const res = await executeSrvConnect('put', `wordGroup/${id}`, {name}, {isUpdate: false});
             return res;
         },
+        async imageUpload(_, formData) {
+            const res = await executeSrvConnect('post', 'files/upload/thumbnail', formData, {isUpdate: false});
+            return res;
+        },
+        async userUpdate(_, data) {
+            const res = await executeSrvConnect('put', 'user', data, {isUpdate: false});
+            return res;
+        }
     }
 
     /**
