@@ -6,6 +6,8 @@ import AddTypeMore from "./AddTypeMore";
 
 import CenterModal from "@components/layout/popup/CenterModal";
 import { textTypeCheck } from "@/util/utils";
+import FullModal from "@/components/layout/popup/FullModal";
+import VocabookList from "@/components/word/folder/VocaBookList";
 
 function Add({
 	word,
@@ -22,6 +24,11 @@ function Add({
 		const wordRelative = useRef([]);
 
     const onClickHandler = api();
+		const [vocaBookListModal] = useModal("vocaBookList");
+
+		const handleVocaBookListModal = () => e => {
+			vocaBookListModal(FullModal,VocabookList)
+		}
 
 		useEffect(() => {
 			if (isEdit) {
@@ -117,6 +124,10 @@ function Add({
     return(
 			<>
 				<div className="new_cont">
+					<div className="new_location">
+						현재 단어장 위치
+						<div className="btn-light new_location_name" onClick={handleVocaBookListModal()}>내맘대로짓는단어장이름 아이신난다 최대한 길게 만들어봐요. 터지면 어떻게 되나 궁금하잖아아아아앙아아</div>
+					</div>
 					<div ref={wordRelative} className="input_wrap word_relative_wrap">
 						<span>단어</span>
 						<input name="word" value={saveList?.word} disabled={isEdit} type="text" autoComplete="off" onChange={onChangeInput}
