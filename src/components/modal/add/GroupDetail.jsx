@@ -13,6 +13,7 @@ function GroupDetail({
 	createGroup,
 	isEdit,
 	editIdx,
+	afterCompleteGroupDetailAdd
 }){
 
 	const [groupDetail, setGroupDetail] = useState([{}]);
@@ -73,7 +74,7 @@ function GroupDetail({
 
 			let edit = {...saveList};
 			edit.details[editIdx].groups = editGroups;
-			deleteModalAfterTime(240);
+			deleteModalAfterTime(0);
 			saveGroupList(edit);
 			return;
 		}
@@ -86,7 +87,13 @@ function GroupDetail({
 
 		let data = {...saveList};
 		data.details = [...data?.details, result];
-		deleteModalAfterTime(240);
+
+		deleteModalAfterTime(0);
+
+		if (afterCompleteGroupDetailAdd) {
+			afterCompleteGroupDetailAdd();
+		}
+
 		saveGroupList(data);
 	}
 
@@ -121,7 +128,7 @@ function GroupDetail({
 				</ul>
 			</div>
 			<div className="modal_center_btn">
-				<button className="btn-light sizeM" onClick={() => deleteModalAfterTime(240)}>취소</button>
+				<button className="btn-light sizeM" onClick={() => deleteModalAfterTime(0)}>취소</button>
 				<button className="btn-fill sizeM" onClick={handleClickComplete}>확인</button>
 			</div>
 		</div>

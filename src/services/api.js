@@ -37,7 +37,7 @@ export const MODE = {
     RESET_PW: "resetPw",
     WORD_GROUP_READ: "wordGroupRead",
     WORD_GROUP_UPDATE: "wordGroupUpdate",
-    WORD_GROUP_SAVE: "wordGroupSave"
+    WORD_GROUP_SAVE: "wordGroupSave",
 }
 
 /**
@@ -80,17 +80,17 @@ function useEvntHandler(e, modeType, data, func){
         async delete(_, wordId){
             await executeSrvConnect("delete", `word/${wordId}`);
         },
-        async update(e, id, data){
-            return await executeSrvConnect("put", id, data);
+        async update(e, wordId, data){
+            return await executeSrvConnect("put", `word/all/${wordId}`, data);
         },
         async updateMemo(e, id, data){
             return await executeSrvConnect("put", `word/memo/${id}`, data, {isUpdate: false});
         },
-        async memorization(e, id, data){
-            return await executeSrvConnect("put", id, data);
+        async memorization(e, wordId, data){
+            return await executeSrvConnect("put", `word/memorization/${wordId}`, data);
         },
-        async save(_, data){
-            let res = await executeSrvConnect("post", 'word/EN', data);
+        async save(_, type, data){
+            let res = await executeSrvConnect("post", `word/${type}`, data);
             return res;
         },
         folderRead(data){
