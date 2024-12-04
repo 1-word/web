@@ -19,6 +19,7 @@ function Add({
 				mean: '',
 				details: []
 			});
+		const wordRelative = useRef([]);
 
     const onClickHandler = api();
 
@@ -96,15 +97,40 @@ function Add({
 			e.preventDefault();
 			const {name, value} = e.target
 			saveWordList(name, value);
+			if(name === "word" && value !== ""){
+				wordRelative.current.classList.add('on')
+			}else{
+				wordRelative.current.classList.remove('on')
+			}
+		}
+
+		const onBlurInput = () => {
+			wordRelative.current.classList.remove('on')
+		}
+
+		const handleOnClick = (e) => {
+			console.log(e.target.textContent)
+			wordRelative.current.classList.remove('on')
 		}
 
     // 영어 add
     return(
 			<>
 				<div className="new_cont">
-					<div className="input_wrap">
+					<div ref={wordRelative} className="input_wrap word_relative_wrap">
 						<span>단어</span>
-						<input name="word" value={saveList?.word} disabled={isEdit} type="text" onChange={onChangeInput}/>
+						<input name="word" value={saveList?.word} disabled={isEdit} type="text" autoComplete="off" onChange={onChangeInput}
+							// onBlur={onBlurInput}
+						/>
+						<div className="word_relative_layer">
+							<ul className="word_relative_layer_lists">
+								<li className="word_relative_layer_list" onClick={handleOnClick}>apple pie</li>
+								<li className="word_relative_layer_list">apple pie</li>
+								<li className="word_relative_layer_list">apple pie</li>
+								<li className="word_relative_layer_list">apple pie</li>
+								<li className="word_relative_layer_list">apple pie</li>
+							</ul>
+						</div>
 					</div>
 					<div className="input_wrap">
 						<span>뜻</span>

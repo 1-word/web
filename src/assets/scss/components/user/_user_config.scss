@@ -4,44 +4,49 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 24px;
+		gap: 16px;
 	}
 	&_name{
 		font-size: 1.1em;
 	}
+	&_img_area{
+    position: relative;
+    border-radius: 50%;
+  }
 	&_img_wrap{
 		position: relative;
 		width: 80px;
+		height: 80px;
 		margin: auto;
-		padding: 10px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		border-radius: 50%;
 		background-color: $default-fff;
 		cursor: pointer;
-		&::before{
-			font-family: xeicon!important;
-			content: "\e913";
-			position: absolute;
-			bottom: 0;
-			right: 0;
-			width: 24px;
-			height: 24px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			border-radius: 50%;
-			background-color: $main-accent-color;
-			color: $default-fff;
-			font-size: 12px;
-		}
+		overflow: hidden;
+	}
+	&_plus_btn{
+		font-family: xeicon!important;
+		content: "\e913";
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		width: 24px;
+		height: 24px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		background-color: $main-accent-color;
+		color: $default-fff;
+		font-size: 12px;
+		cursor: pointer;
 	}
 	&_img{
 		width: 100%;
 		object-fit: cover;
 		object-position: center;
-		overflow: hidden;
 	}
 	&_lists{
 		margin-top: 32px;
