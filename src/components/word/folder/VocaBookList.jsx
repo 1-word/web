@@ -3,10 +3,10 @@ import api, {MODE} from "@/services/api";
 import wordListStore from "@/store/wordListStore";
 import Store, { COMM_MODE } from "@/store/store";
 import { useModal } from "@/hook/_hooks";
-import AddFolder from "@/components/word/folder/AddFolder";
+import AddVocaBook from "@/components/word/folder/AddVocaBook";
 import FullModal from "@components/layout/popup/FullModal";
 
-function FolderList(){
+function VocabookList(){
     const {folderList, setMemoStatusInit} = wordListStore(state => state);
     const {clickedFolder, setColorPickModal, setClickedfolder, setFolderCog, setColorPickPop} = Store(state => state);
 		const [editState, setEditState] = useState(false);
@@ -20,7 +20,7 @@ function FolderList(){
     }, []); 
 
     const handleAddClick = () => e => {
-			addFolderModal(FullModal,AddFolder);
+			addFolderModal(FullModal,AddVocaBook);
     }
 
     const handleConfigClick = () => {
@@ -34,13 +34,13 @@ function FolderList(){
     }
 
     return (
-            <div className="folder_wrap">
-								<div className="folder_cont">
-								<div className="folder_top flex">
+            <div className="voca_book_wrap">
+								<div className="voca_book_cont">
+								<div className="voca_book_top flex">
                     <button onClick={handleConfigClick}>단어장 관리</button>
-										<button className="folder_plus" onClick={handleAddClick()}>새 단어장 만들기<i className="xi-plus"></i></button>
+										<button className="voca_book_plus" onClick={handleAddClick()}>새 단어장 만들기<i className="xi-plus"></i></button>
 								</div>
-                <ul className="folder_lists flex">
+                <ul className="voca_book_lists flex">
                     <li id="allFolder" onClick={()=>{
                         setClickedfolder(-1);
                         onClickHandler('', MODE.READ);
@@ -54,11 +54,11 @@ function FolderList(){
                                 onClickHandler('', MODE.READ, item.folder_id);
                             }}
                         >
-													<div className="folder_list_area">
-														<p className="folder_list_name">{item.folder_name.slice(0,2)}The golden rays of the setting sun cascaded </p>
+													<div className="voca_book_list_area">
+														<p className="voca_book_list_name">{item.folder_name.slice(0,2)}The golden rays of the setting sun cascaded </p>
 														{
 															editState?
-															<div className="folder_list_btn_area">
+															<div className="voca_book_list_btn_area">
 															<button>
 																수정
 																<i className="edit"></i>
@@ -71,7 +71,7 @@ function FolderList(){
 														: "" 
 														}
 													</div>
-													<div className="folder_list_wordamount">
+													<div className="voca_book_list_wordamount">
 														총 단어 갯수 : 0개
 													</div>
 												</li>
@@ -84,4 +84,4 @@ function FolderList(){
         );
     }
 
-export default FolderList;
+export default VocabookList;

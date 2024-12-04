@@ -12,7 +12,7 @@ import FullModal from "@components/layout/popup/FullModal";
 import BottomModal from "@components/layout/popup/BottomModal";
 
 import UserConfig from "@components/user/UserConfig";
-import FolderList from "@/components/word/folder/FolderList";
+import FolderList from "@/components/word/folder/VocaBookList";
 import Store from "@/store/store";
 import authStore from "@/store/authStore";
 

@@ -23,6 +23,27 @@
 			}
 		}
 	}
+	&_location{
+		margin-bottom: 16px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 10px;
+		@include deviceSmall(){
+		}
+		&_name{
+			display: inline-flex;
+			width: auto;
+			padding: 8px;
+			gap: 8px;
+			word-break: auto-phrase;
+			text-wrap: wrap;
+			&::after{
+				content: url("/assets/images/next.svg");
+			}
+		}
+	}
 	&_sub{
 		&_title{
 			padding: 12px;
@@ -39,6 +60,8 @@
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
+				gap: 8px;
+				text-wrap: wrap;
 			}
 			span{
 				display: block;
