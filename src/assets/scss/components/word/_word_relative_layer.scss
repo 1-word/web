@@ -1,0 +1,35 @@
+.word_relative_wrap{
+	position: relative;
+	&.on{
+		input{
+			border-radius: 8px 8px 0 0;
+			border-bottom: 0;
+		}
+		.word_relative_layer{
+			display: block;
+		}
+	}
+}
+
+.word_relative_layer{
+	display: none;
+	position: absolute;
+	top: 57px;
+	left: 0;
+	width: 100%;
+	&_lists{
+		padding: 12px 0;
+		background-color: $default-fff;
+		border: 1px solid $default-ddd;
+		border-radius: 0 0 8px 8px;
+	}
+	&_list{
+		padding: 6px 12px;
+		font-size: 14px;
+		color: $main-text-color;
+		cursor: pointer;
+		&:hover{
+			background-color: rgba(74,68,83,0.04);
+		}
+	}
+}
