@@ -72,7 +72,7 @@ function Add({
 
     const handleSaveClick = (e) => {
 			const result = {
-				folderId: saveList.folderId,
+				folderId: saveList.folderId ?? storeFolderList.folderId,
 				word: saveList.word,
 				mean: saveList.mean,
 				read: saveList.read,

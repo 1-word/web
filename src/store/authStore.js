@@ -39,7 +39,7 @@ const store = persist({
         },
         storeFolderList: [
             {
-                "folder_id" : null,
+                "folderId" : null,
                 "folder_name": "",
                 "background": "",
                 "color": "",
