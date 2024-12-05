@@ -5,14 +5,18 @@ import Store, { COMM_MODE } from "@/store/store";
 import { useModal } from "@/hook/_hooks";
 import AddVocaBook from "@/components/word/folder/AddVocaBook";
 import FullModal from "@components/layout/popup/FullModal";
+import { useNavigate } from "react-router-dom";
 
 function VocabookList({
   clickedFolder,
-  afterCompleteFunc
+  afterCompleteFunc,
+  deleteModalAfterTime
 }){
   const [editState, setEditState] = useState(false);
   const [folderList, setFolderList] = useState([]);
   const [addFolderModal] = useModal("addFolder");
+  const { updateStart } = wordListStore(state => state);
+  const navigate = useNavigate();
 
   const onClickHandler = api();
 
@@ -52,6 +56,11 @@ function VocabookList({
 
     // 단어장으로 이동하기
     if (!afterCompleteFunc) {
+      navigate(`/word/${id}`);
+      updateStart();
+      if(deleteModalAfterTime) {
+        deleteModalAfterTime(0);
+      }
       return;
     }
 

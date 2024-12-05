@@ -9,10 +9,12 @@ import BottomNav from "@components/layout/bottom_nav";
 import LeftFix from "@components/layout/left_fix";
 import wordListStore from "@/store/wordListStore";
 import { Pagination } from "@/util/Pagination";
+import { useParams } from "react-router-dom";
 
 function Word(){
     // Store 사용
     const {memorization, setMemorization} = Store(state=>state);
+		const { folderId } = useParams();
 		const { setWordList, savePreviousWordList, wordListRestore, preventDisableFunc } = wordListStore(state => state);
 
 		const pageRef = useRef({
@@ -35,6 +37,7 @@ function Word(){
 					page = {
 						current: 0,
 						lastWordId: null,
+						folderId
 					};
 					setPage(page);
 				}
@@ -71,7 +74,10 @@ function Word(){
 						value: page.lastWordId
 				}, {
 					name: "memorization",
-					value: memorization === MEMORIZATION_TYPE.ALL ? null : memorization
+					value: memorization
+				}, {
+					name: "folderId",
+					value: folderId
 				}];
 
 				const query = Pagination.getPageParameter(queryParams);
@@ -97,6 +103,9 @@ function Word(){
 					},{
 						name: "memorization",
 						value: status
+					},{
+						name: "folderId",
+						value: folderId
 					}];
 
 				const query = Pagination.getPageParameter(queryParams);

@@ -27,7 +27,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Index></Index>}/>
       <Route path="/signin" element={<Login></Login>}/>
-      <Route path="/word" element={<Word></Word>}/>   
+      <Route path="/word/:folderId" element={<Word></Word>}/>   
       <Route path="/signup" element={<Signup></Signup>}/>
       <Route path="/signup-comp" element={<SignupComplete></SignupComplete>}/>
 			<Route path="/setPw" element={<SetPw></SetPw>}/>
