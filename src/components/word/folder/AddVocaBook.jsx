@@ -1,13 +1,19 @@
 import { useState, useRef, useEffect } from 'react';
 import api, {MODE} from "@/services/api";
 import Store, {COMM_MODE} from '@/store/store';
+import { compileAsync } from 'sass';
 
-function AddFolder({colorPickPop}){
-    const [pickColor, setPickColor] = useState({});
+function AddFolder({
+    prevFolder,
+    setFolderList,
+    deleteModalAfterTime
+}){
+    const [folderInfo, setfolderInfo] = useState({});
 
     useEffect(() => {
-        if (colorPickPop)
-            setPickColor(colorPickPop);
+        if (prevFolder) {
+            setfolderInfo(prevFolder);
+        }
     }, []);
 
     const folderNameInput = useRef();
@@ -42,8 +48,8 @@ function AddFolder({colorPickPop}){
     const handleColorClick = (colorName, color) => e => {
         let result_color = color;
         if (color === "RANDOM") result_color = getRandomColor();
-        setPickColor({
-            ...pickColor,
+        setfolderInfo({
+            ...folderInfo,
             [colorName]: result_color
         });
     }
@@ -52,17 +58,36 @@ function AddFolder({colorPickPop}){
 	    return "#" + Math.floor(Math.random() * 16777215).toString(16);
     }
 
-    const handleConfirmClick = () => e => {
+    const handleConfirmClick = () => async(e) => {
         const folderData = {
-            ...pickColor,
-            folder_name: folderNameInput.current.value
+            ...folderInfo,
+            folderName: folderNameInput.current.value
         }
-
-        if (colorPickPop?.mode === COMM_MODE.EDIT){
-            onClickHandler(e, MODE.FOLDER_UPDATE, folderData);    
+        
+        // 수정
+        if (prevFolder){
+            const res = await onClickHandler(e, MODE.FOLDER_UPDATE, prevFolder.folderId, folderData);
+            setFolderList(prev => {
+                return setFolderList(prev => 
+                    prev.map(folder => folder.folders.folderId === prevFolder.folderId 
+                        ? { ...folder, folders: { ...res } } 
+                        : folder
+                    )
+                );
+            });
+            deleteModalAfterTime(0);
             return;
         }
-        onClickHandler(e, MODE.FOLDER_SAVE, folderData);
+
+        // 신규
+        const res = await onClickHandler(e, MODE.FOLDER_SAVE, folderData);
+        setFolderList(prev => {
+            return [...prev, {
+                count: 0,
+                folders:res
+            }]
+        });
+        deleteModalAfterTime(0);
     }
 
     // 컬러 KEY값 추출
@@ -72,8 +97,8 @@ function AddFolder({colorPickPop}){
     return(
         <div className="color-cont">
             <div className="color-preview-area">
-                <div className="preview" style={{'--color': pickColor?.background}}>
-                    <h3 style={{'color': pickColor?.color}}>미리보기</h3>
+                <div className="preview" style={{'--color': folderInfo?.background}}>
+                    <h3 style={{'color': folderInfo?.color}}>미리보기</h3>
                 </div>
             </div>
             <div className="color-list">
@@ -81,7 +106,7 @@ function AddFolder({colorPickPop}){
                     <h3>이름 (10글자 이내로 적어주세요)</h3>
                 </div>
                 <div>
-                    <input ref={folderNameInput} type="text" maxLength="10" defaultValue={pickColor?.folder_name}/>
+                    <input ref={folderNameInput} type="text" maxLength="10" defaultValue={folderInfo?.folderName}/>
                 </div>
             </div>
             <div className="color-pick-area color-list">
@@ -92,7 +117,7 @@ function AddFolder({colorPickPop}){
                     <div className="area">
                         { 
                             foler_color_list.map((key, idx) => 
-                                <span key={`fcl${idx}`} className={FOLDER_COLOR[key] === pickColor.background ? "color on" : "color"} style={{ '--color': FOLDER_COLOR[key] }} 
+                                <span key={`fcl${idx}`} className={FOLDER_COLOR[key] === folderInfo.background ? "color on" : "color"} style={{ '--color': FOLDER_COLOR[key] }} 
                                 onClick={handleColorClick("background", FOLDER_COLOR[key])}></span>
                             )
                         }
