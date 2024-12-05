@@ -93,24 +93,27 @@ function useEvntHandler(e, modeType, data, func){
             return await executeSrvConnect("put", `word/memorization/${wordId}`, data);
         },
         async save(_, type, data){
-            let res = await executeSrvConnect("post", `word/${type}`, data);
+            const res = await executeSrvConnect("post", `word/${type}`, data);
             return res;
         },
-        folderRead(data){
-            setFolderList(data);
+        // 폴더
+        async folderRead(_){
+            const res = await executeSrvConnect('get', `folders`, null, {isUpdate: false});
+            return res;
         },
-        async folderUpdate(e, data){
-            return await executeSrvConnect("put", data.folder_id, data);
+        async folderUpdate(_, folderId, data){
+            return await executeSrvConnect("put", `folders/${folderId}`, data, {isUpdate: false});
         },
-        async folderSave(e, data){
-            return await executeSrvConnect("post", '', data);
+        async folderSave(_, data){
+            return await executeSrvConnect("post", 'folders', data, {isUpdate: false});
         },
         async wordFolderUpdate(e, id, data){
             return await executeSrvConnect("put", id, data);
         },
-        async folderDelete(e, id){
-            return await executeSrvConnect("delete", id, '', {msgType: ALERT_TYPE.PRIMARY});
+        async folderDelete(_, folderId){
+            return await executeSrvConnect("delete", `folders/${folderId}`, null, {isUpdate: false});
         },
+
         open(){
 
         },
