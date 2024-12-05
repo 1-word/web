@@ -134,8 +134,8 @@ function WordList(props) {
     const HandleEditWord = (id, word) => {
         editModal(FullModal, Edit, {
             word,
-            isEdit: true
-            
+            isEdit: true,
+            folderId 
         });
     }
 

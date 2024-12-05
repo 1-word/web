@@ -1,6 +1,6 @@
 import Top_SVG from "@images/top.svg";
 import React, {useEffect, useState} from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useModal } from "@/hook/_hooks";
 import Add from "@/components/modal/add/Add";
 import FullModal from "./popup/FullModal";
@@ -11,9 +11,12 @@ const BottomNav = (activeClass) => {
 	const [ openModal ] = useModal("add");
 	const [ openAddVocaModal ] = useModal("addVocaBook");
 	const [btnState,setBtnState] = useState(false);
+	const { folderId } = useParams();
 
 	const handleModal = e => {
-		openModal(FullModal, Add);
+		openModal(FullModal, Add, {
+			folderId
+		});
 	}
 
 	const handleVocaBookModal = () => e => {

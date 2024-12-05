@@ -47,9 +47,9 @@ const store = set => ({
         }],
         "folder_id": "",
     },
-    folderList: [
+    storeFolderList: [
         {
-            "folder_id" : 0,
+            "folder_id" : null,
             "folder_name": "",
             "background": "",
             "color": "",
@@ -135,8 +135,8 @@ const store = set => ({
         update: true 
     })),
 
-    setFolderList: (folderListRequest) => set(state => ({
-        folderList: folderListRequest
+    setStoreFolderList: (folderListRequest) => set(state => ({
+        storeFolderList: folderListRequest
     })),
 })
 

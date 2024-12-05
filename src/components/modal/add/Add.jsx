@@ -8,8 +8,10 @@ import CenterModal from "@components/layout/popup/CenterModal";
 import { textTypeCheck } from "@/util/utils";
 import FullModal from "@/components/layout/popup/FullModal";
 import VocabookList from "@/components/word/folder/VocaBookList";
+import wordListStore from "@/store/wordListStore";
 
 function Add({
+	folderId,
 	word,
 	isEdit,
 	deleteModalAfterTime
@@ -22,18 +24,30 @@ function Add({
 				details: []
 			});
 		const wordRelative = useRef([]);
+		const [folderName, setFolderName] = useState('');
+		const {storeFolderList} = wordListStore(state => state);
 
     const onClickHandler = api();
 		const [vocaBookListModal] = useModal("vocaBookList");
 
 		const handleVocaBookListModal = () => e => {
-			vocaBookListModal(FullModal,VocabookList)
+			vocaBookListModal(FullModal, VocabookList, {
+				folderId,
+				afterCompleteFunc
+			})
+		}
+
+		const afterCompleteFunc = (item) => {
+			const id = item.folders.folderId;
+			setFolderName(item.folders.folderName);
+			saveWordList('folderId', id);
 		}
 
 		useEffect(() => {
 			if (isEdit) {
 				setWordList(word);
 			}
+			setFolderName(storeFolderList.folderName);
 		},[]);
 
 		const handleMoreModal = () => e => {
@@ -56,6 +70,7 @@ function Add({
 
     const handleSaveClick = (e) => {
 			const result = {
+				folderId: saveList.folderId,
 				word: saveList.word,
 				mean: saveList.mean,
 				read: saveList.read,
@@ -69,7 +84,7 @@ function Add({
 					}))
 				)
 			};
-			
+
 			if (isEdit) {
 				onClickHandler(null, MODE.UPDATE, saveList.wordId, result)
 				.then(res => {
@@ -124,7 +139,7 @@ function Add({
 				<div className="new_cont">
 					<div className="new_location">
 						현재 단어장 위치
-						<div className="btn-light new_location_name" onClick={handleVocaBookListModal()}>내맘대로짓는단어장이름 아이신난다 최대한 길게 만들어봐요. 터지면 어떻게 되나 궁금하잖아아아아앙아아</div>
+						<div className="btn-light new_location_name" onClick={handleVocaBookListModal()}>{folderName || ''}</div>
 					</div>
 					<div ref={wordRelative} className="input_wrap word_relative_wrap">
 						<span>단어</span>

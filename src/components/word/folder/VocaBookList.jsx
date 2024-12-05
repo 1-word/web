@@ -15,7 +15,7 @@ function VocabookList({
   const [editState, setEditState] = useState(false);
   const [folderList, setFolderList] = useState([]);
   const [addFolderModal] = useModal("addFolder");
-  const { updateStart } = wordListStore(state => state);
+  const { updateStart, setStoreFolderList } = wordListStore(state => state);
   const navigate = useNavigate();
 
   const onClickHandler = api();
@@ -48,8 +48,10 @@ function VocabookList({
     onClickHandler(null, MODE.FOLDER_DELETE, id);
   }
 
-  const onFolderClick = (id) => e => {
+  const onFolderClick = (item) => e => {
+    const id = item.folders.folderId;
     e.preventDefault();
+
     if (editState) {
       return false;
     }
@@ -58,14 +60,16 @@ function VocabookList({
     if (!afterCompleteFunc) {
       navigate(`/word/${id}`);
       updateStart();
+      setStoreFolderList(item.folders);
       if(deleteModalAfterTime) {
         deleteModalAfterTime(0);
       }
       return;
     }
 
-    // 클릭된 폴더 아이디 넘겨주기
-    afterCompleteFunc(id);
+    // 클릭된 폴더 데이터 넘겨주기
+    afterCompleteFunc(item);
+    deleteModalAfterTime(0);
   }
 
   return (
@@ -83,7 +87,7 @@ function VocabookList({
                 key={`folders${item.folders.folderId}`} 
                 style={{ background: item.folders.background || '#fff', color: item.folders.color || '#946CF4'}}
                 disabled={editState}
-                onClick={onFolderClick(item.folders.folderId)}
+                onClick={onFolderClick(item)}
             >
             <div className="voca_book_list_area">
             <p className="voca_book_list_name">{item.folders.folderName}</p>
