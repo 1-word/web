@@ -9,6 +9,7 @@ import { textTypeCheck } from "@/util/utils";
 import FullModal from "@/components/layout/popup/FullModal";
 import VocabookList from "@/components/word/folder/VocaBookList";
 import wordListStore from "@/store/wordListStore";
+import authStore from "@/store/authStore";
 
 function Add({
 	folderId,
@@ -25,7 +26,7 @@ function Add({
 			});
 		const wordRelative = useRef([]);
 		const [folderName, setFolderName] = useState('');
-		const {storeFolderList} = wordListStore(state => state);
+		const {storeFolderList} = authStore(state => state);
 		const [wordRelativeList, setwordRelativeList] = useState([]);
 
     const onClickHandler = api();

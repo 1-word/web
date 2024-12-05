@@ -6,6 +6,7 @@ import { useModal } from "@/hook/_hooks";
 import AddVocaBook from "@/components/word/folder/AddVocaBook";
 import FullModal from "@components/layout/popup/FullModal";
 import { useNavigate } from "react-router-dom";
+import authStore from "@/store/authStore";
 
 function VocabookList({
   clickedFolder,
@@ -15,7 +16,8 @@ function VocabookList({
   const [editState, setEditState] = useState(false);
   const [folderList, setFolderList] = useState([]);
   const [addFolderModal] = useModal("addFolder");
-  const { updateStart, setStoreFolderList } = wordListStore(state => state);
+  const { updateStart } = wordListStore(state => state);
+  const {setStoreFolderList} = authStore(state => state);
   const navigate = useNavigate();
 
   const onClickHandler = api();
@@ -60,7 +62,7 @@ function VocabookList({
     if (!afterCompleteFunc) {
       navigate(`/word/${id}`);
       updateStart();
-      setStoreFolderList(item.folders);
+      setStoreFolderList(item.folders)
       if(deleteModalAfterTime) {
         deleteModalAfterTime(0);
       }
