@@ -26,6 +26,7 @@ function Add({
 		const wordRelative = useRef([]);
 		const [folderName, setFolderName] = useState('');
 		const {storeFolderList} = wordListStore(state => state);
+		const [wordRelativeList, setwordRelativeList] = useState([]);
 
     const onClickHandler = api();
 		const [vocaBookListModal] = useModal("vocaBookList");
@@ -119,18 +120,35 @@ function Add({
 			const {name, value} = e.target
 			saveWordList(name, value);
 			if(name === "word" && value !== ""){
-				wordRelative.current.classList.add('on')
+				wordRelative.current.classList.add('on');
+				onClickHandler(null, MODE.WORD_RELATIVE_READ, value)
+				.then(res => {
+					setwordRelativeList(res);
+				});
 			}else{
-				wordRelative.current.classList.remove('on')
+				wordRelative.current.classList.remove('on');
 			}
 		}
 
 		const onBlurInput = () => {
-			wordRelative.current.classList.remove('on')
+			wordRelative.current.classList.remove('on');
 		}
 
 		const handleOnClick = (e) => {
-			wordRelative.current.classList.remove('on')
+			wordRelative.current.classList.remove('on');
+		}
+
+		const handleDictClick = async(e) => {
+			const word = e.target.textContent;
+			const res = await onClickHandler(null, MODE.WORD_DICT, word);
+			if (res.mean !== null) {
+				setWordList({
+					...saveList,
+					mean: res.mean,
+					word: word,
+				})
+			}
+			wordRelative.current.classList.remove('on');
 		}
 
     // 영어 add
@@ -147,12 +165,14 @@ function Add({
 							// onBlur={onBlurInput}
 						/>
 						<div className="word_relative_layer">
-							<ul className="word_relative_layer_lists">
-								<li className="word_relative_layer_list" onClick={handleOnClick}>apple pie</li>
-								<li className="word_relative_layer_list">apple pie</li>
-								<li className="word_relative_layer_list">apple pie</li>
-								<li className="word_relative_layer_list">apple pie</li>
-								<li className="word_relative_layer_list">apple pie</li>
+							<ul className="word_relative_layer_lists" onClick={handleDictClick}>
+								{
+									wordRelativeList.map((val, idx) => 
+										<React.Fragment key={`wordRelative${idx}`}>
+											<li className="word_relative_layer_list">{val.word}</li>
+										</React.Fragment>
+									)
+								}
 							</ul>
 						</div>
 					</div>

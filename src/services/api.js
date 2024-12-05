@@ -41,6 +41,8 @@ export const MODE = {
     IMAGE_UPLOAD: "imageUpload",
     USER_UPDATE: "userUpdate",
     USER_DELETE: "userDelete",
+    WORD_RELATIVE_READ: "wordRelativeRead",
+    WORD_DICT: "wordDict",
 }
 
 /**
@@ -149,7 +151,7 @@ function useEvntHandler(e, modeType, data, func){
         },
         audio_play(_, data, endFunc){
             const audio = new Audio();
-            const soundUrl = process.env.PUBLIC_URL + 'data/sound/' + data.sound_path + '.mp3';
+            const soundUrl = process.env.REACT_APP_HOME_URL + '/data/sound/' + data.sound_path + '.mp3';
             audio.src = soundUrl;
             audio.onended= endFunc(data.id);
             let playPromise = audio.play();
@@ -201,6 +203,12 @@ function useEvntHandler(e, modeType, data, func){
             clearToken();
             navigate('/'); 
         },
+        async wordRelativeRead(_, word) {
+            return await executeSrvConnect('get', `dict/list/${word}`, null, {isUpdate: false, isLoading: false});
+        },
+        async wordDict(_, word) {
+            return await executeSrvConnect('get', `dict/${word}`, null, {isUpdate: false, isLoading: false});
+        }
     }
 
     /**
