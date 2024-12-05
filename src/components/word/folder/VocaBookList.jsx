@@ -71,12 +71,14 @@ function VocabookList({
             folderList?.map(item =>
                 // 현재 단어장 위치
             <li className={clickedFolder === item.folders.folderId? "on" : "off"} 
-                key={`folders${item.folders.folderId}`} 
-                style={{ background: item.folders.background || '#fff', color: item.folders.color || '#946CF4'}}
+                key={`folders${item.folders.folderId}`}
                 disabled={editState}
                 onClick={onFolderClick(item.folders.folderId)}
             >
             <div className="voca_book_list_area">
+							<div className="voca_book_color"
+									style={{ backgroundColor: item.folders.background || '#946CF4'}}>
+							</div>
             <p className="voca_book_list_name">{item.folders.folderName}</p>
               { editState &&
                 <div className="voca_book_list_btn_area">

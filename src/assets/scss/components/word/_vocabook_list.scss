@@ -4,6 +4,12 @@
 	}
 }
 .voca_book{
+	&_color{
+		width: 8px;
+		height: 8px;
+		flex-shrink: 0;
+		border-radius: 50%;
+	}
 	&_wrap{
 		margin-top: 24px;
 	}
@@ -17,9 +23,6 @@
 				position: relative;
 				padding: 16px 14px;
 				background-color: $main-bg-color;
-				border-width: 1px;
-				border-style: solid;
-				border-color: $main-accent-color;
 				border-radius: $sub-br;
 				cursor: pointer;
 				&.on, &:hover, &:focus-visible {
