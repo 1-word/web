@@ -42,7 +42,7 @@ const BottomNav = (activeClass) => {
 		<Link to="/vocabook"><i className="wordbook"></i>단어장</Link>
 	</li>
 	<li className="flex">
-		<Link><i className="learn"></i>단어 학습</Link>
+		<Link to="/quiz"><i className="learn"></i>단어 학습</Link>
 	</li>
 	<li className="flex">
 		<Link to="/daily-sentence/main"><i className="calendar"></i>오늘의 내 문장</Link>
