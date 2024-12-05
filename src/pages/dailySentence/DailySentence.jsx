@@ -41,6 +41,48 @@ function DailySentence(){
 		})
 	}
 
+	// calendar
+	const nowDate = new Date();
+	const [date, setDate] = useState(
+		{
+			year: '',
+			month: '',
+			week: ''
+		}
+	);
+	useEffect(()=>{
+
+		const year = nowDate.getFullYear();
+		// const month = String(nowDate.getMonth()).padStart(2,'0');
+		const month = 1;
+		const realMonth = parseInt(month) + 1;
+		const week = new Date(year, month).getDay();
+		//1월부터 12월까지 마지막 일을 배열로 저장
+		let last = [31,28,31,30,31,30,31,31,30,31,30,31];
+	 
+		//윤년 계산
+		if (year % 4 === 0 && year % 100 !==0 || year % 400 === 0) {
+		 last[1] = 29;
+		}	 
+		//현재 월의 마지막 일 정보
+		const lastDate = last[month];
+	
+		console.log(`lastDate: ${lastDate}`);
+
+		setDate({
+			year,
+			month: realMonth,
+			week,
+			lastDate,
+		});
+	},[])
+
+	const calcCalendar = Array.from({length: date.lastDate+date?.week}, (v, i) => i+1).map((v, i) => {
+			return <>
+			<li>{i>=date?.week? v-date?.week : ''}</li>
+			</>
+		});
+
 	return(
 		<div className="wrap">
 			<HeaderMini title="오늘의 내 문장"></HeaderMini>
@@ -53,7 +95,7 @@ function DailySentence(){
 							<button className="daily_sentence_callendar_head_btn">
 								<i className="xi-angle-left"></i>
 							</button>
-							<div>2024.01</div>
+							<div>{date.year}.{date.month}{date.week}</div>
 							<button className="daily_sentence_callendar_head_btn">
 								<i className="xi-angle-right"></i>
 							</button>
@@ -81,41 +123,7 @@ function DailySentence(){
 								<li>토</li>
 							</ul>
 							<ul className="daily_sentence_callendar_grid">
-								<li>1</li>
-								<li className="today dot active">2</li>
-								<li>3</li>
-								<li>4</li>
-								<li>5</li>
-								<li>6</li>
-								<li>7</li>
-								<li>1</li>
-								<li className="dot">2</li>
-								<li>3</li>
-								<li>4</li>
-								<li className="active dot">5</li>
-								<li>6</li>
-								<li>7</li>
-								<li>1</li>
-								<li className="dot">2</li>
-								<li>3</li>
-								<li>4</li>
-								<li>5</li>
-								<li>6</li>
-								<li>7</li>
-								<li>1</li>
-								<li className="dot">2</li>
-								<li>3</li>
-								<li>4</li>
-								<li>5</li>
-								<li>6</li>
-								<li>7</li>
-								<li>1</li>
-								<li>2</li>
-								<li className="none">3</li>
-								<li className="none">4</li>
-								<li className="none">5</li>
-								<li className="none">6</li>
-								<li className="none">7</li>
+								{calcCalendar}
 							</ul>
 						</div>
 					</div>
