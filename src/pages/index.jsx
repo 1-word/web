@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Header from "@components/layout/header";
-import Footer from "@components/layout/footer";
+import Footer from "@/components/layout/Footer";
 import Canvas from "@components/main/canvas";
-import LeftFix from "@components/layout/left_fix";
+import LeftFix from "@/components/layout/LeftFix";
 
 function Index(){
 return (

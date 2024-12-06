@@ -1,7 +1,7 @@
-import HeaderMini from "@components/layout/header_mini";
-import Footer from "@components/layout/footer";
-import BottomNav from "@components/layout/bottom_nav";
-import LeftFix from "@components/layout/left_fix";
+import HeaderMini from "@/components/layout/HeaderMini";
+import Footer from "@/components/layout/Footer";
+import BottomNav from "@/components/layout/BottomNav";
+import LeftFix from "@/components/layout/LeftFix";
 import VocabookList from "@/components/word/folder/VocaBookList";
 
 function VocaBook(){

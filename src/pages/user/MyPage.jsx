@@ -1,6 +1,6 @@
-import HeaderMini from "@components/layout/header_mini";
-import BottomNav from "@components/layout/bottom_nav";
-import LeftFix from "@components/layout/left_fix";
+import HeaderMini from "@/components/layout/HeaderMini";
+import BottomNav from "@/components/layout/BottomNav";
+import LeftFix from "@/components/layout/LeftFix";
 import MyDeault_SVG from "@images/myImgDefault.svg";
 import api, { MODE } from "@/services/api";
 import { useModal } from "@/hook/_hooks";
