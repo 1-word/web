@@ -4,14 +4,19 @@ import FullModal from "@/components/layout/popup/FullModal";
 import CenterModal from "../layout/popup/CenterModal";
 import CenterModalConfirm from "../layout/popup/CenterModalConfirm";
 import AddDailySentence from "@/components/dailySentence/AddDailySentence";
+import api, { MODE } from "@/services/api";
 
 function DailySentenceView({
 	idx,
-	dailySentenceList
+	dailySentenceList,
+	setDailySentenceList,
+	deleteModalAfterTime,
+	setUpdate
 }){
 	
 	const [editModal] = useModal('edit');
 	const [deleteModal] = useModal('delete');
+	const onClickHandler = api();
 
 	const [disabled, setDisabled] = useState({
 		prev: false,
@@ -37,14 +42,30 @@ function DailySentenceView({
 	}, [currentSetence]);
 	
 	const handleEditModal = () => e => {
-		editModal(FullModal, AddDailySentence)
-	};
+		editModal(FullModal, AddDailySentence, {
+			dailySentence: currentSetence,
+			afterEditSentence,
+			setUpdate
+		})
+	}
+
+	const afterEditSentence = () => {
+		deleteModalAfterTime(0);
+	}
 	
-	const handleDeleteModal = () => e => {
-		deleteModal(CenterModal,CenterModalConfirm,{
+	const handleDeleteModal = (dailySentenceId) => e => {
+		deleteModal(CenterModal, CenterModalConfirm, {
 			title : "신중하게 선택해주세요",
 			content : "오늘의 내 문장을 삭제하시겠습니까?",
-			onClick : () => {}
+			onClick : () => {
+				onClickHandler(null, MODE.DAILY_SENTENCE_DELETE, dailySentenceId)
+				.then(_ => {
+					deleteModalAfterTime(0);
+					if (setUpdate) {
+						setUpdate(prev => !prev);
+					}
+				})
+			}
 		})
 	}
 
@@ -108,7 +129,7 @@ function DailySentenceView({
 				<button className="daily_sentence_view_head_btn" onClick={handleEditModal()}>
 					<i className="edit"></i>
 				</button>
-				<button className="daily_sentence_view_head_btn" onClick={handleDeleteModal()}>
+				<button className="daily_sentence_view_head_btn" onClick={handleDeleteModal(currentSetence.dailySentenceId)}>
 					<i className="xi-close"></i>
 				</button>
 			</div>

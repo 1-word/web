@@ -46,6 +46,8 @@ export const MODE = {
     WORD_DICT: "wordDict",
     DAILY_SENTENCE_SAVE: "dailySentenceSave",
     DAILY_SENTENCE_READ: "dailySentenceRead",
+    DAILY_SENTENCE_UPDATE: "dailySentenceUpdate",
+    DAILY_SENTENCE_DELETE: "dailySentenceDelete",
     DAILY_SENTENCE_DAYS_READ: "dailySentenceDaysRead",
 }
 
@@ -218,6 +220,8 @@ function useEvntHandler(e, modeType, data, func){
         async wordDict(_, word) {
             return await executeSrvConnect('get', `dict/${word}`, null, {isUpdate: false, isLoading: false});
         },
+
+        // 오늘의 내 문장
         async dailySentenceSave(_, data) {
             return await executeSrvConnect('post', 'daily-sentence', data, {isUpdate: false});
         },
@@ -226,7 +230,15 @@ function useEvntHandler(e, modeType, data, func){
         },
         async dailySentenceDaysRead(_, {year, month}) {
             return await executeSrvConnect('get', `daily-sentence/days?year=${year}&month=${month}`, null, {isUpdate: false});
-        }
+        },
+        async dailySentenceUpdate(_, id, {sentence, mean}) {
+            await executeSrvConnect('put', `daily-sentence/${id}`, {sentence, mean}, null, {isUpdate: false});
+        },
+        async dailySentenceDelete(_, id) {
+            await executeSrvConnect('delete', `daily-sentence/${id}`, null, {isUpdate: false});
+            activeToast('문장 삭제가 완료되었습니다.');
+        },
+        // 오늘의 내 문장 끝
     }
 
     /**

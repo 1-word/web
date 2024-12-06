@@ -50,7 +50,9 @@ function DailySentence(){
 	const handleViewModal = (sentence, idx) => e => {
 		dailySentenceViewModal(FullModal, DailySentenceView, {
 			idx,
-			dailySentenceList
+			dailySentenceList,
+			setDailySentenceList,
+			setUpdate
 		})
 	}
 
