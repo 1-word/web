@@ -40,13 +40,16 @@ function DailySentence(){
 			]
 		})
 	}
+
 	const handleAddModal = () => e => {
-		addDailySentenceModal(FullModal,AddDailySentence)
+		addDailySentenceModal(FullModal, AddDailySentence, {
+			setUpdate
+		})
 	}
 
 	const handleViewModal = (sentence) => e => {
 		dailySentenceViewModal(FullModal, DailySentenceView, {
-			sentence
+			sentence,
 		})
 	}
 

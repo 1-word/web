@@ -3,7 +3,9 @@ import api, { MODE } from "@/services/api";
 
 function AddDailySentence({
 	dailySentenceId,
-	deleteModalAfterTime
+	dailySentence,
+	deleteModalAfterTime,
+	setUpdate
 }){
   const onClickHandler = api();
 	const dailSentence = useRef({
@@ -22,7 +24,9 @@ function AddDailySentence({
 
 	const dailySentenceSave = async(data) => {
 		const res = await onClickHandler(null, MODE.DAILY_SENTENCE_SAVE, data);
-		console.log(res);
+		if (setUpdate) {
+			setUpdate(prev => !prev);
+		}
 		deleteModalAfterTime(0);
 	}
 
@@ -35,13 +39,20 @@ function AddDailySentence({
 			<div className="input_wrap">
 				<label htmlFor="sentence">문장</label>
 				<div className="textarea-box">
-					<textarea ref={el => dailSentence.current.sentence = el} name="" id="sentence" defaultValue="" onChange={onChangeText} maxLength={255}>문장을 입력해 주세요 (최대 255문자)</textarea>
+					<textarea ref={el => dailSentence.current.sentence = el} 
+					defaultValue={dailSentence.sentence || ''} 
+					onChange={onChangeText} maxLength={255}
+					placeholder="문장을 입력해 주세요 (최대 255문자)"></textarea>
+
 				</div>
 			</div>
 			<div className="input_wrap">
 				<label htmlFor="smean">뜻</label>
 				<div className="textarea-box">
-					<textarea ref={el => dailSentence.current.mean = el} name="" id="smean" defaultValue=""onChange={onChangeText} maxLength={255}>뜻을 입력해 주세요 (최대 255문자)</textarea>
+					<textarea ref={el => dailSentence.current.mean = el}
+					defaultValue={dailSentence.mean || ''} 
+					onChange={onChangeText} maxLength={255}
+					placeholder="뜻을 입력해 주세요 (최대 255문자)"></textarea>
 				</div>
 			</div>
 			<div className="modal_full_btn_wrap">
