@@ -60,6 +60,8 @@
 	}
 	&:disabled{
 		background: $default-ddd;
+		color: $default-fff;
+		border-color: transparent;
 		cursor: default;
 	}
 	@content;
@@ -76,6 +78,7 @@
 		}
 		&.sizeL{
 			height: 50px;
+			font-size: 16px;
 		}
 	}
 
@@ -83,7 +86,6 @@
 .btn{
 	&-fill{
 		@include btn($default-fff,$main-accent-color){
-			font-size: 16px;
 			font-weight: 500;
 		}
 	}
