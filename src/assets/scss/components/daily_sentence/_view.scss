@@ -1,7 +1,28 @@
 .daily_sentence_view{
+	&_head{
+		margin-bottom: 24px;
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		&_btn{
+			width: 24px;
+			height: 24px;
+			&:first-of-type{
+				margin-left: auto;
+			}
+		}
+		.edit{
+			@include icon(){
+				background-image: icon(edit,222222);
+			}
+		}
+		.xi-close{
+			font-size: 20px;
+			color: $default-666;
+		}
+	}
 	&_date{
 		color: $sub-text-color;
-		margin-bottom: 24px;
 	}
 	&_area{
 		background: $default-fff;

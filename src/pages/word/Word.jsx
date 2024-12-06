@@ -128,26 +128,6 @@ function Word(){
             </div>
         </div>
 
-				{/* 폴더 추가 컴포넌트 */}
-				<div className="my_word_wrap">
-					<div className="my_user">
-						<div className="my_user_img">
-						<img src={MyDeault_SVG} alt="default" />
-						</div>
-						<span className="my_user_name">유저 네임</span> 님, 오늘도 힘내봐요!
-					</div>
-					<ul className="my_word_list">
-						<li>내 단어장</li>
-						<li>오늘의 문장</li>
-						<li>즐겨찾기한 단어</li>
-						<li>단어 퀴즈</li>
-					</ul>
-				</div>
-				{/* 폴더 추가 컴포넌트 */}
-
-				{/* 내 단어장 클릭시 보여지는 리스트 */}
-        {/* <FolderList></FolderList> */}
-
 				{/* 암기탭 */}
 				<ul className="word_tab flex">
 						<li className= {memorization === MEMORIZATION_TYPE.ALL ? "active" : ''} onClick={handleMemorizeClick(MEMORIZATION_TYPE.ALL)}>전체</li>

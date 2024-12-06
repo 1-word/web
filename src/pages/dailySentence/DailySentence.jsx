@@ -47,9 +47,10 @@ function DailySentence(){
 		})
 	}
 
-	const handleViewModal = (sentence) => e => {
+	const handleViewModal = (sentence, idx) => e => {
 		dailySentenceViewModal(FullModal, DailySentenceView, {
-			sentence,
+			idx,
+			dailySentenceList
 		})
 	}
 
@@ -235,7 +236,7 @@ function DailySentence(){
 
 	const dailySentenceComp = dailySentenceList.map((val, idx) => {
 		return <React.Fragment key={`dailySentenceList${idx}`}>
-						<li onClick={handleViewModal(val)}>
+						<li onClick={handleViewModal(val, idx)}>
 							<div className="daily_sentence_mylist_mysentence">
 								<p className="daily_sentence_mylist_date">{val.year}-{val.month}-{val.day}</p>
 								<p>
