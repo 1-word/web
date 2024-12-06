@@ -47,15 +47,6 @@ const store = set => ({
         }],
         "folder_id": "",
     },
-    folderList: [
-        {
-            "folder_id" : 0,
-            "folder_name": "",
-            "background": "",
-            "color": "",
-            "memo": ""
-        }
-    ],
     update: true,
     /**
      * @param {*} wordList 전체 word데이터 리스트
@@ -133,10 +124,6 @@ const store = set => ({
 
     updateStart: () => set(() => ({
         update: true 
-    })),
-
-    setFolderList: (folderListRequest) => set(state => ({
-        folderList: folderListRequest
     })),
 })
 

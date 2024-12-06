@@ -41,6 +41,11 @@ export const MODE = {
     IMAGE_UPLOAD: "imageUpload",
     USER_UPDATE: "userUpdate",
     USER_DELETE: "userDelete",
+    WORD_RELATIVE_READ: "wordRelativeRead",
+    WORD_DICT: "wordDict",
+    DAILY_SENTENCE_SAVE: "dailySentenceSave",
+    DAILY_SENTENCE_READ: "dailySentenceRead",
+    DAILY_SENTENCE_DAYS_READ: "dailySentenceDaysRead",
 }
 
 /**
@@ -149,7 +154,7 @@ function useEvntHandler(e, modeType, data, func){
         },
         audio_play(_, data, endFunc){
             const audio = new Audio();
-            const soundUrl = process.env.PUBLIC_URL + 'data/sound/' + data.sound_path + '.mp3';
+            const soundUrl = process.env.REACT_APP_HOME_URL + '/data/sound/' + data.sound_path + '.mp3';
             audio.src = soundUrl;
             audio.onended= endFunc(data.id);
             let playPromise = audio.play();
@@ -201,6 +206,21 @@ function useEvntHandler(e, modeType, data, func){
             clearToken();
             navigate('/'); 
         },
+        async wordRelativeRead(_, word) {
+            return await executeSrvConnect('get', `dict/list/${word}`, null, {isUpdate: false, isLoading: false});
+        },
+        async wordDict(_, word) {
+            return await executeSrvConnect('get', `dict/${word}`, null, {isUpdate: false, isLoading: false});
+        },
+        async dailySentenceSave(_, data) {
+            return await executeSrvConnect('post', 'daily-sentence', data, {isUpdate: false});
+        },
+        async dailySentenceRead(_, query) {
+            return await executeSrvConnect('get', `daily-sentence${query}`, null, {isUpdate: false});
+        },
+        async dailySentenceDaysRead(_, {year, month}) {
+            return await executeSrvConnect('get', `daily-sentence/days?year=${year}&month=${month}`, null, {isUpdate: false});
+        }
     }
 
     /**

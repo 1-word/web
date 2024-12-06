@@ -5,14 +5,20 @@ import Store, { COMM_MODE } from "@/store/store";
 import { useModal } from "@/hook/_hooks";
 import AddVocaBook from "@/components/word/folder/AddVocaBook";
 import FullModal from "@components/layout/popup/FullModal";
+import { useNavigate } from "react-router-dom";
+import authStore from "@/store/authStore";
 
 function VocabookList({
   clickedFolder,
-  afterCompleteFunc
+  afterCompleteFunc,
+  deleteModalAfterTime
 }){
   const [editState, setEditState] = useState(false);
   const [folderList, setFolderList] = useState([]);
   const [addFolderModal] = useModal("addFolder");
+  const { updateStart } = wordListStore(state => state);
+  const {setStoreFolderList} = authStore(state => state);
+  const navigate = useNavigate();
 
   const onClickHandler = api();
 
@@ -44,19 +50,28 @@ function VocabookList({
     onClickHandler(null, MODE.FOLDER_DELETE, id);
   }
 
-  const onFolderClick = (id) => e => {
+  const onFolderClick = (item) => e => {
+    const id = item.folders.folderId;
     e.preventDefault();
+
     if (editState) {
       return false;
     }
 
     // 단어장으로 이동하기
     if (!afterCompleteFunc) {
+      navigate(`/word/${id}`);
+      updateStart();
+      setStoreFolderList(item.folders)
+      if(deleteModalAfterTime) {
+        deleteModalAfterTime(0);
+      }
       return;
     }
 
-    // 클릭된 폴더 아이디 넘겨주기
-    afterCompleteFunc(id);
+    // 클릭된 폴더 데이터 넘겨주기
+    afterCompleteFunc(item);
+    deleteModalAfterTime(0);
   }
 
   return (
@@ -73,7 +88,7 @@ function VocabookList({
             <li className={clickedFolder === item.folders.folderId? "on" : "off"} 
                 key={`folders${item.folders.folderId}`}
                 disabled={editState}
-                onClick={onFolderClick(item.folders.folderId)}
+                onClick={onFolderClick(item)}
             >
             <div className="voca_book_list_area">
 							<div className="voca_book_color"
