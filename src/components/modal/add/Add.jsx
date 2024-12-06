@@ -34,7 +34,7 @@ function Add({
 
 		const handleVocaBookListModal = () => e => {
 			vocaBookListModal(FullModal, VocabookList, {
-				folderId,
+				clickedFolder: folderId,
 				afterCompleteFunc
 			})
 		}

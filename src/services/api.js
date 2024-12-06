@@ -115,8 +115,8 @@ function useEvntHandler(e, modeType, data, func){
         async folderSave(_, data){
             return await executeSrvConnect("post", 'folders', data, {isUpdate: false});
         },
-        async wordFolderUpdate(e, id, data){
-            return await executeSrvConnect("put", id, data);
+        async wordFolderUpdate(_, {wordId, folderId}){
+            return await executeSrvConnect('put', `word/${wordId}/folder/${folderId}`, null);
         },
         async folderDelete(_, folderId){
             return await executeSrvConnect("delete", `folders/${folderId}`, null, {isUpdate: false});
