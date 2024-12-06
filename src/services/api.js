@@ -35,6 +35,7 @@ export const MODE = {
     CODE: "code",
     VERIFICATION: "verification",
     RESET_PW: "resetPw",
+    UPDATE_PW: "updatePw",
     WORD_GROUP_READ: "wordGroupRead",
     WORD_GROUP_UPDATE: "wordGroupUpdate",
     WORD_GROUP_SAVE: "wordGroupSave",
@@ -178,6 +179,11 @@ function useEvntHandler(e, modeType, data, func){
             const res = await executeSrvConnect("put", 'user/pw/reset', {email, newPassword}, {isUpdate: false});
             activeToast('비밀번호 재설정이 완료되었습니다.');
             navigate('/signin');
+            return true;
+        },
+        async updatePw(_, {oldPassword, newPassword}) {
+            await executeSrvConnect('put', 'user/pw', {oldPassword, newPassword}, {isUpdate: false});
+            activeToast('비밀번호 변경이 완료되었습니다.');
             return true;
         },
         async wordGroupRead(_) {
