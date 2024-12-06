@@ -6,13 +6,17 @@
 		height: 6px;
 		width: 100%;
 		background-color: $main-accent-color;
+		transition: width 0.3s ease;
 	}
 	&_progress_indicator{
 		position: absolute;
-		left: 24px;
-		top: calc(50% - 30px);
-		transform: translateY(-50%);
+		left: 16px;
+		bottom: 16px;
 		color: $sub-text-color;
+	}
+	&_ani{
+		position: absolute;
+		background-color: $default-fff;
 	}
 	&_wrap{
 		height: 100%;
@@ -22,6 +26,7 @@
 		gap: 24px;
 	}
 	&_area{
+		position: relative;
 		flex: 1;
 		border: 1px solid $default-ddd;
 		border-radius: $sub-br;
@@ -59,6 +64,35 @@
 				justify-content: center;
 				border: 1px solid $default-ddd;
 				border-radius: $sub-br;
+				&.correct{
+					border: 1px solid $main-accent-color;
+					background-color: $main-accent-color;
+					color: $default-fff;
+				}
+				&.active{
+					border-color: transparent;
+					background-color: $main-bg-color;
+					color: $main-accent-color;
+				}
 		}
+	}
+}
+
+.false{
+	.quiz_area,.active{
+		border-color: $default-error-color !important;
+	}
+}
+.true{
+	.quiz_area{
+		border-color: $sub-correct-color;
+	}
+}
+
+.false,.true{
+	.quiz_correct{
+		width: auto;
+		height: auto;
+		border: 0;
 	}
 }
