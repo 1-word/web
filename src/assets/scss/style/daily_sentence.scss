@@ -58,13 +58,21 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
+			border-style: solid;
+			border-width: 1px;
+			border-color: transparent;
+			border-radius: $main-br;
+			cursor: pointer;
+			&:hover{
+				border-color: $main-hover-color;
+			}
 			@include deviceSmall(){
-				padding: 10px;
+				padding: 10px 0;
 			}
 		}
 		.today{
 			background-color: $main-accent-color !important;
-			border-radius: $main-br;
+
 			color: $default-fff !important;
 		}
 		.dot{
@@ -82,15 +90,21 @@
 		}
 		.active{
 			background-color: $sub-hover-color;
-			border-radius: $main-br;
 			color: $main-accent-color;
 		}
 		.none{
 			opacity: 0.6;
+			&:hover{
+				border-color: transparent;
+			}
 		}
 	}
 	&_grid_top{
 		li{
+			cursor: default;
+			&:hover{
+				border-color: transparent;
+			}
 			&:first-child{
 				color: $default-error-color
 			}

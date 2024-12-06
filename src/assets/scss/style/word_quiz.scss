@@ -1,0 +1,23 @@
+.word_quiz{
+	&_wrap{
+		margin-top: 24px;
+		padding: $main-p;
+	}
+	&_cont{
+		padding-bottom: 80px;
+	}
+	&_vocabook_lists{
+		margin-top: 24px;
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		li{
+			padding: 16px 10px;
+			border: 1px solid $default-ddd;
+			border-radius: $sub-br;
+		}
+	}
+	&_btn_wrap{
+		padding-top: 40px;
+	}
+}

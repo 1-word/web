@@ -9,10 +9,11 @@ import SignupComplete from '@/pages/user/SignUpComplete';
 import SetPw from '@/pages/user/SetPw';
 import AuthNumComp from '@/pages/user/AuthNumComplete';
 import MyPage from '@/pages/user/MyPage';
-import Modals from './components/Modals';
-import OAuth from './pages/oauth/OAuth';
+import Modals from '@/components/Modals';
+import OAuth from '@/pages/oauth/OAuth';
 import DailySentence from '@/pages/dailySentence/DailySentence';
-import VocaBook from './pages/word/VocaBook';
+import VocaBook from '@/pages/word/VocaBook';
+import WordQuiz from '@/pages/learn/WordQuiz';
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
       <Route path="/oauth/callback" element={<OAuth></OAuth>}/>
       <Route path="/daily-sentence/main" element={<DailySentence></DailySentence>}/>
       <Route path="/vocabook" element={<VocaBook></VocaBook>}/>
+      <Route path="/quiz" element={<WordQuiz></WordQuiz>}/>
     </Routes> 
     );
   }
