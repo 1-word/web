@@ -45,6 +45,7 @@ export const MODE = {
     WORD_DICT: "wordDict",
     DAILY_SENTENCE_SAVE: "dailySentenceSave",
     DAILY_SENTENCE_READ: "dailySentenceRead",
+    DAILY_SENTENCE_DAYS_READ: "dailySentenceDaysRead",
 }
 
 /**
@@ -217,6 +218,9 @@ function useEvntHandler(e, modeType, data, func){
         async dailySentenceRead(_, query) {
             return await executeSrvConnect('get', `daily-sentence${query}`, null, {isUpdate: false});
         },
+        async dailySentenceDaysRead(_, {year, month}) {
+            return await executeSrvConnect('get', `daily-sentence/days?year=${year}&month=${month}`, null, {isUpdate: false});
+        }
     }
 
     /**

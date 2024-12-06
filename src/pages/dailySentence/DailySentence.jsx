@@ -1,7 +1,7 @@
 import HeaderMini from "@/components/layout/header_mini";
 import LeftFix from "@components/layout/left_fix";
 import BottomNav from "@components/layout/bottom_nav";
-import React, {useEffect,useState} from "react";
+import React, {useEffect,useRef,useState} from "react";
 import { useModal } from "@/hook/_hooks";
 import BottomModal from "@/components/layout/popup/BottomModal";
 import BottomModalSelect from "@/components/layout/popup/BottomModalSelect";
@@ -17,6 +17,9 @@ function DailySentence(){
 	const [dailySentenceViewModal] = useModal('dailySentenceView');
 	const [update, setUpdate] = useState(false);
 	const [dailySentenceList, setDailySentenceList] = useState([]);
+
+	const dailySentenceDays = useRef([]);
+
 	const onClickHandler = api();
 
 	const handleReadTypeModal = () => e => {
@@ -41,9 +44,9 @@ function DailySentence(){
 		addDailySentenceModal(FullModal,AddDailySentence)
 	}
 
-	const handleViewModal = () => e => {
-		dailySentenceViewModal(FullModal,DailySentenceView,{
-
+	const handleViewModal = (sentence) => e => {
+		dailySentenceViewModal(FullModal, DailySentenceView, {
+			sentence
 		})
 	}
 
@@ -56,6 +59,14 @@ function DailySentence(){
 			day: 1,
 		}
 	);
+
+	useEffect(() => {
+		const nowDate = new Date();
+		const year = nowDate.getFullYear();
+		const month = nowDate.getMonth() + 1;
+
+		setSentenceDays({year, month});
+	},[]);
 
 	useEffect(() => {
 		let nowDate;
@@ -88,6 +99,7 @@ function DailySentence(){
 			month: realMonth,
 			week,
 			lastDate,
+			day
 		});
 
 		const queryParams = [{
@@ -113,6 +125,16 @@ function DailySentence(){
 		});
 	}
 
+	const setSentenceDays = ({year, month}) => {
+		// month 변경으로 저장한 문장이 있는 날 표시를 위해 날짜 리스트를 받아온다.
+		onClickHandler(null, MODE.DAILY_SENTENCE_DAYS_READ, {
+			year,
+			month
+		}).then(res => {
+			dailySentenceDays.current = res;
+		})
+	}
+
 	const changeLeftMonth = e => {
 		changeMonth(-1);
 	}
@@ -121,37 +143,65 @@ function DailySentence(){
 		changeMonth(+1);
 	}
 	
+	// 월 변경
 	const changeMonth = flag => {
-		setDate(prev => {
-			let month = (prev.month + flag) % 12 === 0? 12 : (prev.month + flag) % 12;
-			let year = prev.year;
+		let month = (date.month + flag) % 12 === 0? 12 : (date.month + flag) % 12;
+		let year = date.year;
 
-			// 다음 년도
-			if (prev.month === 12 && month === 1) {
-				year = prev.year +=1;
-			}
+		// 다음 년도
+		if (date.month === 12 && month === 1) {
+			year = date.year +=1;
+		}
 
-			// 이전 년도
-			if (prev.month === 1 && month === 12) {
-				year = prev.year -=1;
-			}
+		// 이전 년도
+		if (date.month === 1 && month === 12) {
+			year = date.year -=1;
+		}
 
-			return {
-				...prev,
+		setDate({
+				...date,
 				month,
-				year
-			}
+				year,
+				day: 1
+		});
+
+		setSentenceDays({
+			year, 
+			month
 		});
 		
 		setTimeout(()=> {
 			setUpdate(!update);
-		}, 100);
+		}, 50);
 	}
 
 	// 달력 그려주기
 	const calcCalendar = Array.from({length: date.lastDate+date?.week}, (v, i) => i+1).map((v, i) => {
+			const today = new Date();
+
+			const calenderDay = i>=date?.week? v-date?.week : '';
+			let className = '';
+
+			// 오늘 날짜 계산
+			if (today.getFullYear() === date.year && today.getMonth()+1 === date.month && today.getDate() === calenderDay) {
+				className += 'today';
+			}
+
+			// 선택한 날짜
+			if (calenderDay === date.day) {
+				className += ' active';
+			}
+
+			const days = dailySentenceDays.current;
+
+			days.forEach(val => {
+				if (val === calenderDay){
+					className += ' dot';
+				}
+			});
+
 			return <React.Fragment key={`$calendar${i}`}>
-			<li>{i>=date?.week? v-date?.week : ''}</li>
+			<li className={className}>{calenderDay}</li>
 			</React.Fragment>
 	});
 
@@ -162,7 +212,7 @@ function DailySentence(){
 			setDate(prev => {
 				return {
 				...prev,
-				day
+				day: parseInt(day)
 			}});
 
 			const queryParams = [{
@@ -175,14 +225,14 @@ function DailySentence(){
 				name: "day",
 				value: day ?? null,
 			}];
-			
+
 			getSentenceList(queryParams);
 		}
 	}
 
 	const dailySentenceComp = dailySentenceList.map((val, idx) => {
 		return <React.Fragment key={`dailySentenceList${idx}`}>
-						<li onClick={handleViewModal(val.dailySentenceId)}>
+						<li onClick={handleViewModal(val)}>
 							<div className="daily_sentence_mylist_mysentence">
 								<p className="daily_sentence_mylist_date">{val.year}-{val.month}-{val.day}</p>
 								<p>
