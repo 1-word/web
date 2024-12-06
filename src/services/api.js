@@ -43,6 +43,8 @@ export const MODE = {
     USER_DELETE: "userDelete",
     WORD_RELATIVE_READ: "wordRelativeRead",
     WORD_DICT: "wordDict",
+    DAILY_SENTENCE_SAVE: "dailySentenceSave",
+    DAILY_SENTENCE_READ: "dailySentenceRead",
 }
 
 /**
@@ -208,7 +210,13 @@ function useEvntHandler(e, modeType, data, func){
         },
         async wordDict(_, word) {
             return await executeSrvConnect('get', `dict/${word}`, null, {isUpdate: false, isLoading: false});
-        }
+        },
+        async dailySentenceSave(_, data) {
+            return await executeSrvConnect('post', 'daily-sentence', data, {isUpdate: false});
+        },
+        async dailySentenceRead(_, query) {
+            return await executeSrvConnect('get', `daily-sentence${query}`, null, {isUpdate: false});
+        },
     }
 
     /**

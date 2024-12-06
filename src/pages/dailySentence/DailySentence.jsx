@@ -8,12 +8,17 @@ import BottomModalSelect from "@/components/layout/popup/BottomModalSelect";
 import FullModal from "@/components/layout/popup/FullModal";
 import AddDailySentence from "@/components/dailySentence/AddDailySentence";
 import DailySentenceView from "@/components/dailySentence/DailySentenceView";
+import { Pagination } from "@/util/Pagination";
+import api, { MODE } from "@/services/api";
 
 function DailySentence(){
 	const [readTypeModal] = useModal('readType');
 	const [addDailySentenceModal] = useModal('addDailySentence');
 	const [dailySentenceViewModal] = useModal('dailySentenceView');
 	const [update, setUpdate] = useState(false);
+	const [dailySentenceList, setDailySentenceList] = useState([]);
+	const onClickHandler = api();
+
 	const handleReadTypeModal = () => e => {
 		readTypeModal(BottomModal,BottomModalSelect,{
 			setting : [
@@ -47,7 +52,8 @@ function DailySentence(){
 		{
 			year: '',
 			month: '',
-			week: ''
+			week: '',
+			day: 1,
 		}
 	);
 
@@ -57,13 +63,15 @@ function DailySentence(){
 		if (date.year === "") {
 			nowDate = new Date();
 		} else {	// 달력 변경 시 세팅
-			nowDate = new Date(date.year, date.month-1);
+			nowDate = new Date(date.year, date.month-1, date.day?? 1);
 		}
 		const year = nowDate.getFullYear();
 		const month = nowDate.getMonth();
 		// const month = 1;
 		const realMonth = parseInt(month) + 1;
 		const week = new Date(year, month).getDay();
+		const day = nowDate.getDate();
+
 		//1월부터 12월까지 마지막 일을 배열로 저장
 		let last = [31,28,31,30,31,30,31,31,30,31,30,31];
 	 
@@ -81,7 +89,29 @@ function DailySentence(){
 			week,
 			lastDate,
 		});
+
+		const queryParams = [{
+			name: "year",
+			value: year ?? null,
+		}, {
+			name: "month",
+			value: realMonth ?? null,
+		}, {
+			name: "day",
+			value: day ?? null,
+		}];
+
+		getSentenceList(queryParams);
 	},[update]);
+
+	const getSentenceList = queryParams => {
+		const query = Pagination.getPageParameter(queryParams);
+
+		onClickHandler(null, MODE.DAILY_SENTENCE_READ, query)
+		.then(res => {
+			setDailySentenceList(res);
+		});
+	}
 
 	const changeLeftMonth = e => {
 		changeMonth(-1);
@@ -129,9 +159,42 @@ function DailySentence(){
 	const onCalendarClick = e => {
 		const day = e.target.textContent;
 		if (day < 32 && day !== '') {
-			console.log(day);
+			setDate(prev => {
+				return {
+				...prev,
+				day
+			}});
+
+			const queryParams = [{
+				name: "year",
+				value: date.year ?? null,
+			}, {
+				name: "month",
+				value: date.realMonth ?? null,
+			}, {
+				name: "day",
+				value: day ?? null,
+			}];
+			
+			getSentenceList(queryParams);
 		}
 	}
+
+	const dailySentenceComp = dailySentenceList.map((val, idx) => {
+		return <React.Fragment key={`dailySentenceList${idx}`}>
+						<li onClick={handleViewModal(val.dailySentenceId)}>
+							<div className="daily_sentence_mylist_mysentence">
+								<p className="daily_sentence_mylist_date">{val.year}-{val.month}-{val.day}</p>
+								<p>
+									{val.sentence}
+								</p>
+								<p className="daily_sentence_mylist_mysentence_mean">
+									{val.mean}
+								</p>
+							</div>
+						</li>
+					</React.Fragment>
+	})
 
 	return(
 		<div className="wrap">
@@ -181,29 +244,8 @@ function DailySentence(){
 				<div className="daily_sentence_mylist_wrap">
 					<div className="daily_sentence_mylist_scroll">
 						<ul className="daily_sentence_mylist_lists">
+							{dailySentenceComp}
 							{/* li 반복 */}
-							<li onClick={handleViewModal()}>
-								<div className="daily_sentence_mylist_mysentence">
-									<p className="daily_sentence_mylist_date">2024-12-01</p>
-									<p>
-									The golden rays of the setting sun cascaded through the towering trees, painting the forest floor in hues of amber and bronze, as the gentle rustle of leaves created a symphony that danced in harmony with the whispering breeze
-									</p>
-									<p className="daily_sentence_mylist_mysentence_mean">
-									황금빛 석양의 광선이 우뚝 솟은 나무들 사이로 흘러내리며 숲바닥을 호박과 청동빛으로 물들였고, 부드러운 나뭇잎의 바스락거림은 속삭이는 바람과 조화를 이루며 춤추는 교향곡을 만들어냈다.
-									</p>
-								</div>
-							</li>
-							<li onClick={handleViewModal()}>
-								<div className="daily_sentence_mylist_mysentence">
-									<p className="daily_sentence_mylist_date">2024-12-01</p>
-									<p>
-									The golden rays of the setting sun cascaded through the towering trees, painting the forest floor in hues of amber and bronze, as the gentle rustle of leaves created a symphony that danced in harmony with the whispering breeze
-									</p>
-									<p className="daily_sentence_mylist_mysentence_mean">
-									황금빛 석양의 광선이 우뚝 솟은 나무들 사이로 흘러내리며 숲바닥을 호박과 청동빛으로 물들였고, 부드러운 나뭇잎의 바스락거림은 속삭이는 바람과 조화를 이루며 춤추는 교향곡을 만들어냈다.
-									</p>
-								</div>
-							</li>
 						</ul>
 					</div>
 				</div>
