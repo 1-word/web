@@ -133,7 +133,7 @@ function useEvntHandler(e, modeType, data, func){
                 "refreshToken": res.refreshToken,
             };
             saveToken(data);
-            navigate("/word");
+            navigate('/vocabook');
             setUpdateFlag(true);
             const userRes = await connect('get', 'user', null, data.accessToken);
             setUserInfo(userRes.data);

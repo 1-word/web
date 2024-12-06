@@ -1,12 +1,21 @@
 
 import LOGOTitle_SVG from "@images/logoTitle.svg";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import api, { MODE } from "@/services/api";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import authStore from "@/store/authStore";
 
 function Login(){
 	const loginData = useRef(null);
 	const onClickHandler = api();
+	const {token} = authStore();
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (token.accessToken) {
+			navigate('/vocabook');
+		}
+	}, []);
 	
 	const handleSubmit = (e) => {
 		if (e) {

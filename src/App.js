@@ -1,7 +1,7 @@
 import {Routes, Route} from 'react-router-dom'
 import { PersistGate } from 'zustand-persist'
 import '@scss/_style';
-import Index from '@/pages/Index';
+import Home from '@/pages/Home';
 import Word from '@/pages/word/Word';
 import Login from '@/pages/user/SignIn';
 import Signup from '@/pages/user/SignUp';
@@ -26,7 +26,7 @@ function App() {
   function Router(){
     return (
     <Routes>
-      <Route path="/" element={<Index></Index>}/>
+      <Route path="/" element={<Home></Home>}/>
       <Route path="/signin" element={<Login></Login>}/>
       <Route path="/word/:folderId" element={<Word></Word>}/>   
       <Route path="/signup" element={<Signup></Signup>}/>
