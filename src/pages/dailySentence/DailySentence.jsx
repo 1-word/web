@@ -1,6 +1,6 @@
-import HeaderMini from "@/components/layout/header_mini";
-import LeftFix from "@components/layout/left_fix";
-import BottomNav from "@components/layout/bottom_nav";
+import HeaderMini from "@/components/layout/HeaderMini";
+import LeftFix from "@/components/layout/LeftFix";
+import BottomNav from "@/components/layout/BottomNav";
 import React, {useEffect,useRef,useState} from "react";
 import { useModal } from "@/hook/_hooks";
 import BottomModal from "@/components/layout/popup/BottomModal";

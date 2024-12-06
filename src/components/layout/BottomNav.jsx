@@ -4,12 +4,11 @@ import { Link, useParams } from "react-router-dom";
 import { useModal } from "@/hook/_hooks";
 import Add from "@/components/modal/add/Add";
 import FullModal from "./popup/FullModal";
-import AddVocaBook from "@/components/word/folder/AddVocaBook";
 
 const BottomNav = (activeClass) => {
 	// 팝업 이벤트
 	const [ openModal ] = useModal("add");
-	const [ openAddVocaModal ] = useModal("addVocaBook");
+
 	const [btnState,setBtnState] = useState(false);
 	const { folderId } = useParams();
 
@@ -19,9 +18,13 @@ const BottomNav = (activeClass) => {
 		});
 	}
 
-	const handleVocaBookModal = () => e => {
-		openModal(FullModal,AddVocaBook)
+	const handleToTop = () => {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth'
+		})
 	}
+
 	useEffect(()=>{
 		if({...activeClass}.active === "word"){
 			setBtnState(true);
@@ -35,7 +38,7 @@ const BottomNav = (activeClass) => {
 		btnState?
 		<div className="bottom_nav_btn_wrap">
 			<button className="bottom_nav_new_word" onClick={handleModal}><i className="xi-plus"></i></button>
-			<button className="bottom_nav_top"><img src={Top_SVG} alt="top" /></button>
+			<button className="bottom_nav_top" onClick={handleToTop}><img src={Top_SVG} alt="top"/></button>
 		</div>
 		: ""
 	}
