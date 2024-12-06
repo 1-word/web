@@ -78,7 +78,6 @@ function MyPage(){
 		onClickHandler(null, MODE.USER_UPDATE, userInfo)
 		.then(res => {
 			if(res) {
-				console.log(res);
 				setUserInfo(res);
 			}
 		});

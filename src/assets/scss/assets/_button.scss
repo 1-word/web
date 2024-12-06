@@ -37,6 +37,16 @@
         clipPath: inset(0 0 0 0);
     }
 }
+
+@mixin changeColor($color){
+	@keyframes changeColor {
+		from{
+			background-color: $color;
+		}
+	}
+	@content;
+}
+
 @mixin btn($textColor,$bgColor){
 	appearance: none;
 	-webkit-appearance: none;
@@ -55,11 +65,10 @@
 	color: $textColor;
 	background-color: $bgColor;
 	border: 1px solid $textColor;
-	&:focus,&:focus-visible{
-		background-color: $main-hover-color;
-	}
 	&:disabled{
 		background: $default-ddd;
+		color: $default-fff;
+		border-color: transparent;
 		cursor: default;
 	}
 	@content;
@@ -76,6 +85,7 @@
 		}
 		&.sizeL{
 			height: 50px;
+			font-size: 16px;
 		}
 	}
 
@@ -83,14 +93,20 @@
 .btn{
 	&-fill{
 		@include btn($default-fff,$main-accent-color){
-			font-size: 16px;
 			font-weight: 500;
+			&:focus,&:focus-visible{
+				@include changeColor($main-hover-color){
+					animation: changeColor 0.5s ease;
+				}
+			}
 		}
 	}
 	&-light{
 		@include btn($main-accent-color,$default-fff){
 			&:focus,&:focus-visible{
-				background-color: $sub-hover-color;
+				@include changeColor($sub-hover-color){
+					animation: changeColor 0.5s ease;
+				}
 			}
 		}
 	}

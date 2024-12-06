@@ -12,10 +12,12 @@ import FullModal from "@components/layout/popup/FullModal";
 import BottomModal from "@components/layout/popup/BottomModal";
 import WordDetailList from "./WordDetailList";
 import { Pagination } from "@/util/Pagination";
+import { useParams } from "react-router-dom";
 
 function WordList(props) {
     const { wordList, setWordList, update, setUpdateFlag, addWordList, setPreventDisableFunc } = wordListStore(state => state);
     const {memorization, setMemorization} = Store(state=>state);
+    const {folderId} = useParams();
 
     const [ memoStatus, setMemoStatusState ] = useState({
         0: { "status": "OFF" }
@@ -49,6 +51,9 @@ function WordList(props) {
             }, {
                 name: "memorization",
                 value: memorization, 
+            }, {
+                name: "folderId",
+                value: folderId
             }];
 
             const query = Pagination.getPageParameter(queryParams);
@@ -71,7 +76,10 @@ function WordList(props) {
                 value: wordList.page.lastWordId
             }, {
                 name: "memorization",
-                value: memorization === MEMORIZATION_TYPE.ALL ? null : memorization
+                value: memorization
+            }, {
+                name: "folderId",
+                value: folderId
             }];
 
             const query = Pagination.getPageParameter(queryParams);
@@ -126,8 +134,8 @@ function WordList(props) {
     const HandleEditWord = (id, word) => {
         editModal(FullModal, Edit, {
             word,
-            isEdit: true
-            
+            isEdit: true,
+            folderId 
         });
     }
 

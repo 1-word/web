@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Header from "@components/layout/header";
-import Footer from "@components/layout/footer";
+import Footer from "@/components/layout/Footer";
 import Canvas from "@components/main/canvas";
-import LeftFix from "@components/layout/left_fix";
+import LeftFix from "@/components/layout/LeftFix";
 
-function Index(){
+function Home(){
 return (
 <div className="wrap">
 <LeftFix></LeftFix>
@@ -19,7 +19,7 @@ return (
 			이젠 VOCABOX가 직접 만들고 수정하며 암기하고 학습하도록 도와드립니다.
 		</p>
 		<div className="vb_main_btn">
-			<Link to="/word" className="btn-fill sizeM">사용해보기</Link>
+			<Link to="/signin" className="btn-fill sizeM">사용해보기</Link>
 		</div>
 	</div>
 	<div className="vb_main_cont_img">
@@ -34,7 +34,7 @@ return (
 			나만의 폴더를 생성해 나만의 단어장을 완성해보세요.
 		</p>
 		<div className="vb_main_btn">
-			<Link className="btn-fill sizeM">사용해보기</Link>
+			<Link to="/signin" className="btn-fill sizeM">사용해보기</Link>
 		</div>
 	</div>
 	<div className="vb_main_cont_img">
@@ -71,7 +71,7 @@ return (
 			</li>
 		</ul>
 		<div className="vb_main_btn">
-			<Link className="btn-fill sizeM">사용해보기</Link>
+			<Link to="/signin" className="btn-fill sizeM">사용해보기</Link>
 		</div>
 	</div>
 </div>
@@ -80,4 +80,4 @@ return (
 );
 };
 
-export default Index;
+export default Home;

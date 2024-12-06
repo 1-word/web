@@ -10,7 +10,7 @@ import persist from '../util/persist'
 
 const store = persist({
         key: 'auth',
-        allowlist: ['isAuthenticated', 'token', "user_id", "userInfo"]
+        allowlist: ['isAuthenticated', 'token', "user_id", "userInfo", "storeFolderList"]
     }, (set) => ({
         isAuthenticated: false,
         token: {
@@ -37,6 +37,18 @@ const store = persist({
                 userInfo: user
             }))
         },
+        storeFolderList: [
+            {
+                "folderId" : null,
+                "folder_name": "",
+                "background": "",
+                "color": "",
+                "memo": ""
+            }
+        ],
+        setStoreFolderList: (folderListRequest) => set(state => ({
+            storeFolderList: folderListRequest
+        })),
         /**
          * 로그인 데이터 저장
          * @param {*} user {user_id: '', password: ''}

@@ -1,8 +1,20 @@
-.folder{
+.modal_wrap{
+	.voca_book_wrap{
+		margin-top: 0;
+	}
+}
+.voca_book{
+	&_color{
+		width: 8px;
+		height: 8px;
+		flex-shrink: 0;
+		border-radius: 50%;
+	}
 	&_wrap{
+		margin-top: 24px;
 	}
 	&_cont{
-		// padding: 14px 0;
+		padding-bottom: 80px;
 		ul{
 			padding: $main-p;
 			font-size: 14px;
@@ -12,6 +24,7 @@
 				padding: 16px 14px;
 				background-color: $main-bg-color;
 				border-radius: $sub-br;
+				cursor: pointer;
 				&.on, &:hover, &:focus-visible {
 					background: #fff;
 					color: $main-accent-color;

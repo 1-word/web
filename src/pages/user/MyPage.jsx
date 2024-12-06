@@ -1,6 +1,6 @@
-import HeaderMini from "@components/layout/header_mini";
-import BottomNav from "@components/layout/bottom_nav";
-import LeftFix from "@components/layout/left_fix";
+import HeaderMini from "@/components/layout/HeaderMini";
+import BottomNav from "@/components/layout/BottomNav";
+import LeftFix from "@/components/layout/LeftFix";
 import MyDeault_SVG from "@images/myImgDefault.svg";
 import api, { MODE } from "@/services/api";
 import { useModal } from "@/hook/_hooks";
@@ -12,7 +12,8 @@ import FullModal from "@components/layout/popup/FullModal";
 import BottomModal from "@components/layout/popup/BottomModal";
 
 import UserConfig from "@components/user/UserConfig";
-import FolderList from "@/components/word/folder/FolderList";
+import FolderList from "@/components/word/folder/VocaBookList";
+import ChangePw from "@/components/user/ChangePw";
 import Store from "@/store/store";
 import authStore from "@/store/authStore";
 
@@ -20,6 +21,7 @@ function MyPage(){
 	const [userConfigModal] = useModal("userConfig");
 	const [folderListModal] = useModal("folderList");
 	const [deleteAccountModal] = useModal("deleteAccount");
+	const [changePwModal] = useModal("changePw");
 	const {userInfo} = authStore(state => state);
 
 	const onClickHandler = api();
@@ -28,6 +30,9 @@ function MyPage(){
 	}
 	const handleFolderList = () => e => {
 		folderListModal(FullModal,FolderList)
+	}
+	const handleChangePwModal = () => e => {
+		changePwModal(FullModal,ChangePw)
 	}
 
 	const signout = (e) => {
@@ -60,6 +65,7 @@ function MyPage(){
 					<li onClick={handleUserConfig()}>내 계정 설정
 						<p className="my_page_email">{userInfo?.email}</p>
 					</li>
+					<li onClick={handleChangePwModal()}>비밀번호 변경</li>
 					<li onClick={handleFolderList()}>내 단어장 관리</li>
 					<li onClick={signout}>로그아웃</li>
 					<li onClick={handleDeleteAccountModal()}>계정 삭제</li>

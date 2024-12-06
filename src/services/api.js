@@ -35,12 +35,20 @@ export const MODE = {
     CODE: "code",
     VERIFICATION: "verification",
     RESET_PW: "resetPw",
+    UPDATE_PW: "updatePw",
     WORD_GROUP_READ: "wordGroupRead",
     WORD_GROUP_UPDATE: "wordGroupUpdate",
     WORD_GROUP_SAVE: "wordGroupSave",
     IMAGE_UPLOAD: "imageUpload",
     USER_UPDATE: "userUpdate",
     USER_DELETE: "userDelete",
+    WORD_RELATIVE_READ: "wordRelativeRead",
+    WORD_DICT: "wordDict",
+    DAILY_SENTENCE_SAVE: "dailySentenceSave",
+    DAILY_SENTENCE_READ: "dailySentenceRead",
+    DAILY_SENTENCE_UPDATE: "dailySentenceUpdate",
+    DAILY_SENTENCE_DELETE: "dailySentenceDelete",
+    DAILY_SENTENCE_DAYS_READ: "dailySentenceDaysRead",
 }
 
 /**
@@ -93,24 +101,27 @@ function useEvntHandler(e, modeType, data, func){
             return await executeSrvConnect("put", `word/memorization/${wordId}`, data);
         },
         async save(_, type, data){
-            let res = await executeSrvConnect("post", `word/${type}`, data);
+            const res = await executeSrvConnect("post", `word/${type}`, data);
             return res;
         },
-        folderRead(data){
-            setFolderList(data);
+        // 폴더
+        async folderRead(_){
+            const res = await executeSrvConnect('get', `folders`, null, {isUpdate: false});
+            return res;
         },
-        async folderUpdate(e, data){
-            return await executeSrvConnect("put", data.folder_id, data);
+        async folderUpdate(_, folderId, data){
+            return await executeSrvConnect("put", `folders/${folderId}`, data, {isUpdate: false});
         },
-        async folderSave(e, data){
-            return await executeSrvConnect("post", '', data);
+        async folderSave(_, data){
+            return await executeSrvConnect("post", 'folders', data, {isUpdate: false});
         },
         async wordFolderUpdate(e, id, data){
             return await executeSrvConnect("put", id, data);
         },
-        async folderDelete(e, id){
-            return await executeSrvConnect("delete", id, '', {msgType: ALERT_TYPE.PRIMARY});
+        async folderDelete(_, folderId){
+            return await executeSrvConnect("delete", `folders/${folderId}`, null, {isUpdate: false});
         },
+
         open(){
 
         },
@@ -124,7 +135,7 @@ function useEvntHandler(e, modeType, data, func){
                 "refreshToken": res.refreshToken,
             };
             saveToken(data);
-            navigate("/word");
+            navigate('/vocabook');
             setUpdateFlag(true);
             const userRes = await connect('get', 'user', null, data.accessToken);
             setUserInfo(userRes.data);
@@ -146,7 +157,7 @@ function useEvntHandler(e, modeType, data, func){
         },
         audio_play(_, data, endFunc){
             const audio = new Audio();
-            const soundUrl = process.env.PUBLIC_URL + 'data/sound/' + data.sound_path + '.mp3';
+            const soundUrl = process.env.REACT_APP_HOME_URL + '/data/sound/' + data.sound_path + '.mp3';
             audio.src = soundUrl;
             audio.onended= endFunc(data.id);
             let playPromise = audio.play();
@@ -170,6 +181,11 @@ function useEvntHandler(e, modeType, data, func){
             const res = await executeSrvConnect("put", 'user/pw/reset', {email, newPassword}, {isUpdate: false});
             activeToast('비밀번호 재설정이 완료되었습니다.');
             navigate('/signin');
+            return true;
+        },
+        async updatePw(_, {oldPassword, newPassword}) {
+            await executeSrvConnect('put', 'user/pw', {oldPassword, newPassword}, {isUpdate: false});
+            activeToast('비밀번호 변경이 완료되었습니다.');
             return true;
         },
         async wordGroupRead(_) {
@@ -198,6 +214,31 @@ function useEvntHandler(e, modeType, data, func){
             clearToken();
             navigate('/'); 
         },
+        async wordRelativeRead(_, word) {
+            return await executeSrvConnect('get', `dict/list/${word}`, null, {isUpdate: false, isLoading: false});
+        },
+        async wordDict(_, word) {
+            return await executeSrvConnect('get', `dict/${word}`, null, {isUpdate: false, isLoading: false});
+        },
+
+        // 오늘의 내 문장
+        async dailySentenceSave(_, data) {
+            return await executeSrvConnect('post', 'daily-sentence', data, {isUpdate: false});
+        },
+        async dailySentenceRead(_, query) {
+            return await executeSrvConnect('get', `daily-sentence${query}`, null, {isUpdate: false});
+        },
+        async dailySentenceDaysRead(_, {year, month}) {
+            return await executeSrvConnect('get', `daily-sentence/days?year=${year}&month=${month}`, null, {isUpdate: false});
+        },
+        async dailySentenceUpdate(_, id, {sentence, mean}) {
+            await executeSrvConnect('put', `daily-sentence/${id}`, {sentence, mean}, null, {isUpdate: false});
+        },
+        async dailySentenceDelete(_, id) {
+            await executeSrvConnect('delete', `daily-sentence/${id}`, null, {isUpdate: false});
+            activeToast('문장 삭제가 완료되었습니다.');
+        },
+        // 오늘의 내 문장 끝
     }
 
     /**

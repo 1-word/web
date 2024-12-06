@@ -3,16 +3,18 @@ import MyDeault_SVG from "@images/myImgDefault.svg";
 import WordList from "@components/word/WordList";
 import Store, {MEMORIZATION_TYPE} from "@/store/store";
 import api, { MODE } from "@/services/api";
-import HeaderMini from "@components/layout/header_mini";
-import Footer from "@components/layout/footer";
-import BottomNav from "@components/layout/bottom_nav";
-import LeftFix from "@components/layout/left_fix";
+import HeaderMini from "@/components/layout/HeaderMini";
+import Footer from "@/components/layout/Footer";
+import BottomNav from "@/components/layout/BottomNav";
+import LeftFix from "@/components/layout/LeftFix";
 import wordListStore from "@/store/wordListStore";
 import { Pagination } from "@/util/Pagination";
+import { useParams } from "react-router-dom";
 
 function Word(){
     // Store 사용
     const {memorization, setMemorization} = Store(state=>state);
+		const { folderId } = useParams();
 		const { setWordList, savePreviousWordList, wordListRestore, preventDisableFunc } = wordListStore(state => state);
 
 		const pageRef = useRef({
@@ -35,6 +37,7 @@ function Word(){
 					page = {
 						current: 0,
 						lastWordId: null,
+						folderId
 					};
 					setPage(page);
 				}
@@ -71,7 +74,10 @@ function Word(){
 						value: page.lastWordId
 				}, {
 					name: "memorization",
-					value: memorization === MEMORIZATION_TYPE.ALL ? null : memorization
+					value: memorization
+				}, {
+					name: "folderId",
+					value: folderId
 				}];
 
 				const query = Pagination.getPageParameter(queryParams);
@@ -97,6 +103,9 @@ function Word(){
 					},{
 						name: "memorization",
 						value: status
+					},{
+						name: "folderId",
+						value: folderId
 					}];
 
 				const query = Pagination.getPageParameter(queryParams);
@@ -118,26 +127,6 @@ function Word(){
                 <button className="search_icon" onClick={handleSearchWord}><i className="xi-search"></i></button>
             </div>
         </div>
-
-				{/* 폴더 추가 컴포넌트 */}
-				<div className="my_word_wrap">
-					<div className="my_user">
-						<div className="my_user_img">
-						<img src={MyDeault_SVG} alt="default" />
-						</div>
-						<span className="my_user_name">유저 네임</span> 님, 오늘도 힘내봐요!
-					</div>
-					<ul className="my_word_list">
-						<li>내 단어장</li>
-						<li>오늘의 문장</li>
-						<li>즐겨찾기한 단어</li>
-						<li>단어 퀴즈</li>
-					</ul>
-				</div>
-				{/* 폴더 추가 컴포넌트 */}
-
-				{/* 내 단어장 클릭시 보여지는 리스트 */}
-        {/* <FolderList></FolderList> */}
 
 				{/* 암기탭 */}
 				<ul className="word_tab flex">

@@ -1,52 +1,156 @@
-import {useEffect,useState} from "react";
+import React, {useEffect,useState} from "react";
+import { useModal } from "@/hook/_hooks";
+import FullModal from "@/components/layout/popup/FullModal";
+import CenterModal from "../layout/popup/CenterModal";
+import CenterModalConfirm from "../layout/popup/CenterModalConfirm";
+import AddDailySentence from "@/components/dailySentence/AddDailySentence";
+import api, { MODE } from "@/services/api";
 
 function DailySentenceView({
-	sentence,
-	smean,
-	sdate
+	idx,
+	dailySentenceList,
+	setDailySentenceList,
+	deleteModalAfterTime,
+	setUpdate
 }){
+	
+	const [editModal] = useModal('edit');
+	const [deleteModal] = useModal('delete');
+	const onClickHandler = api();
+
+	const [disabled, setDisabled] = useState({
+		prev: false,
+		next: false,
+	});
+
+	const [currentSetence, setCurrentSentence] = useState({
+		dailyWords: [],
+		idx: 0,
+	});
+
+	useEffect(() => {
+		if (dailySentenceList) {
+			setCurrentSentence({
+				...dailySentenceList[idx],
+				idx
+			});
+		}
+	},[]);
+
+	useEffect(() => {
+		checkButtonStatus(currentSetence.idx);
+	}, [currentSetence]);
+	
+	const handleEditModal = () => e => {
+		editModal(FullModal, AddDailySentence, {
+			dailySentence: currentSetence,
+			afterEditSentence,
+			setUpdate
+		})
+	}
+
+	const afterEditSentence = () => {
+		deleteModalAfterTime(0);
+	}
+	
+	const handleDeleteModal = (dailySentenceId) => e => {
+		deleteModal(CenterModal, CenterModalConfirm, {
+			title : "신중하게 선택해주세요",
+			content : "오늘의 내 문장을 삭제하시겠습니까?",
+			onClick : () => {
+				onClickHandler(null, MODE.DAILY_SENTENCE_DELETE, dailySentenceId)
+				.then(_ => {
+					deleteModalAfterTime(0);
+					if (setUpdate) {
+						setUpdate(prev => !prev);
+					}
+				})
+			}
+		})
+	}
+
+	const relationWord = currentSetence.dailyWords.map((val, idx) => {
+		return <React.Fragment key={`dailyWords${idx}`}>
+						<li>
+							<p className="daily_sentence_view_relative_word_name">{val.word}</p>
+							<p className="daily_sentence_view_relative_word_mean">{val.mean}</p>
+						</li>
+		</React.Fragment>
+	});
+
+	const onClickNextSentence = e => {
+		const max = dailySentenceList.length;
+		const idx = currentSetence.idx;
+		if (idx >= max-1) {
+			setDisabled(prev => {return {...prev, next: true}});
+			return;
+		}
+
+		const newIdx = idx + 1;
+		setCurrentSentence({
+			...dailySentenceList[newIdx],
+			idx: newIdx
+		});
+	}
+
+	const onClickPreviousSentence = e => {
+		const idx = currentSetence.idx;
+		if (idx === 0) {
+			setDisabled(prev => {return {...prev, prev: true}});
+			return;
+		}
+
+		const newIdx = idx -1;
+		setCurrentSentence({
+			...dailySentenceList[newIdx],
+			idx: newIdx
+		});
+	}
+
+	const checkButtonStatus = (idx) => {
+		const newDisabled = {prev: false, next: false};
+		const max = dailySentenceList.length;	
+
+		if (idx === 0) {
+			newDisabled.prev = true;
+		}
+
+		if (idx >= max-1) {
+			newDisabled.next = true;
+		}
+
+		setDisabled(newDisabled);
+	}
+
 	return(
 		<>
-			<div className="daily_sentence_view_date">{sdate}2024-10-02</div>
+			<div className="daily_sentence_view_head">
+				<div className="daily_sentence_view_date">{currentSetence.year}-{currentSetence.month}-{currentSetence.day}</div>
+				<button className="daily_sentence_view_head_btn" onClick={handleEditModal()}>
+					<i className="edit"></i>
+				</button>
+				<button className="daily_sentence_view_head_btn" onClick={handleDeleteModal(currentSetence.dailySentenceId)}>
+					<i className="xi-close"></i>
+				</button>
+			</div>
 			<div className="daily_sentence_view_area">
 				<p className="daily_sentence_view_sentence">
-					{sentence}
-					The golden rays of the setting sun cascaded through the towering trees, painting the forest floor in hues of amber and bronze, as the gentle rustle of leaves created a symphony that danced in harmony with the whispering breeze
+					{currentSetence.sentence}
 				</p>
 				<p className="daily_sentence_view_mean">
-					{smean}
-					황금빛 석양의 광선이 우뚝 솟은 나무들 사이로 흘러내리며 숲바닥을 호박과 청동빛으로 물들였고, 부드러운 나뭇잎의 바스락거림은 속삭이는 바람과 조화를 이루며 춤추는 교향곡을 만들어냈다.
+					{currentSetence.mean}
 				</p>
 				{/* 연관 단어 */}
 				<div className="daily_sentence_view_relative_word_area">
 					<h3>연관 단어</h3>
 					<ul className="daily_sentence_view_relative_word_grid">
-						<li>
-								<p className="daily_sentence_view_relative_word_name">Pneumonoultramicroscopicsilicovolcanoconiosis</p>
-								<p className="daily_sentence_view_relative_word_mean">폐에 미세한 규산염 입자를 흡입하여 발생하는 질병</p>
-						</li>
-						<li>
-								<p className="daily_sentence_view_relative_word_name">Misunderstanding</p>
-								<p className="daily_sentence_view_relative_word_mean">오해</p>
-						</li>
-						<li>
-								<p className="daily_sentence_view_relative_word_name">Uncharacteristically</p>
-								<p className="daily_sentence_view_relative_word_mean">평소와 다르게</p>
-						</li>
-						<li>
-								<p className="daily_sentence_view_relative_word_name">Uncharacteristically</p>
-								<p className="daily_sentence_view_relative_word_mean">평소와 다르게</p>
-						</li>
-						<li>
-								<p className="daily_sentence_view_relative_word_name">Uncharacteristically</p>
-								<p className="daily_sentence_view_relative_word_mean">평소와 다르게</p>
-						</li>
+						{relationWord}
 					</ul>
 				</div>
 				{/* 연관 단어 */}
 				<div className="modal_full_btn_wrap daily_sentence_view_btn_wrap">
-					<button className="btn-light sizeM">이전문장</button>
-					<button className="btn-fill sizeM">다음문장</button>
+					<button className="btn-light sizeM" disabled={disabled.prev} onClick={onClickPreviousSentence}>이전 문장</button>
+					<button className="btn-fill sizeM" disabled={disabled.next} onClick={onClickNextSentence}>다음 문장</button>
 				</div>
 			</div>
 		</>

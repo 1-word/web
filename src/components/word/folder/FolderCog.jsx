@@ -2,7 +2,7 @@ import Store, {COMM_MODE} from '@/store/store';
 import wordListStore from '@/store/wordListStore';
 import api, {MODE} from '@/services/api';
 import { useModal } from '@/hook/_hooks';
-import Colorpick from '@/components/word/folder/AddFolder';
+import Colorpick from '@/components/word/folder/AddVocaBook';
 import { useState } from 'react';
 
 function FolderCog({folderCog}){
