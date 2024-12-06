@@ -1,7 +1,7 @@
 import HeaderMini from "@/components/layout/header_mini";
 import LeftFix from "@components/layout/left_fix";
 import BottomNav from "@components/layout/bottom_nav";
-import {useEffect,useState} from "react";
+import React, {useEffect,useState} from "react";
 import { useModal } from "@/hook/_hooks";
 import BottomModal from "@/components/layout/popup/BottomModal";
 import BottomModalSelect from "@/components/layout/popup/BottomModalSelect";
@@ -13,6 +13,7 @@ function DailySentence(){
 	const [readTypeModal] = useModal('readType');
 	const [addDailySentenceModal] = useModal('addDailySentence');
 	const [dailySentenceViewModal] = useModal('dailySentenceView');
+	const [update, setUpdate] = useState(false);
 	const handleReadTypeModal = () => e => {
 		readTypeModal(BottomModal,BottomModalSelect,{
 			setting : [
@@ -42,7 +43,6 @@ function DailySentence(){
 	}
 
 	// calendar
-	const nowDate = new Date();
 	const [date, setDate] = useState(
 		{
 			year: '',
@@ -50,38 +50,88 @@ function DailySentence(){
 			week: ''
 		}
 	);
-	useEffect(()=>{
 
+	useEffect(() => {
+		let nowDate;
+		// 처음 달력 초기화
+		if (date.year === "") {
+			nowDate = new Date();
+		} else {	// 달력 변경 시 세팅
+			nowDate = new Date(date.year, date.month-1);
+		}
 		const year = nowDate.getFullYear();
-		// const month = String(nowDate.getMonth()).padStart(2,'0');
-		const month = 1;
+		const month = nowDate.getMonth();
+		// const month = 1;
 		const realMonth = parseInt(month) + 1;
 		const week = new Date(year, month).getDay();
 		//1월부터 12월까지 마지막 일을 배열로 저장
 		let last = [31,28,31,30,31,30,31,31,30,31,30,31];
 	 
 		//윤년 계산
-		if (year % 4 === 0 && year % 100 !==0 || year % 400 === 0) {
+		if ((year % 4 === 0 && year % 100 !==0) || year % 400 === 0) {
 		 last[1] = 29;
-		}	 
+		}
+
 		//현재 월의 마지막 일 정보
 		const lastDate = last[month];
 	
-		console.log(`lastDate: ${lastDate}`);
-
 		setDate({
 			year,
 			month: realMonth,
 			week,
 			lastDate,
 		});
-	},[])
+	},[update]);
 
-	const calcCalendar = Array.from({length: date.lastDate+date?.week}, (v, i) => i+1).map((v, i) => {
-			return <>
-			<li>{i>=date?.week? v-date?.week : ''}</li>
-			</>
+	const changeLeftMonth = e => {
+		changeMonth(-1);
+	}
+
+	const changeRightMonth = e => {
+		changeMonth(+1);
+	}
+	
+	const changeMonth = flag => {
+		setDate(prev => {
+			let month = (prev.month + flag) % 12 === 0? 12 : (prev.month + flag) % 12;
+			let year = prev.year;
+
+			// 다음 년도
+			if (prev.month === 12 && month === 1) {
+				year = prev.year +=1;
+			}
+
+			// 이전 년도
+			if (prev.month === 1 && month === 12) {
+				year = prev.year -=1;
+			}
+
+			return {
+				...prev,
+				month,
+				year
+			}
 		});
+		
+		setTimeout(()=> {
+			setUpdate(!update);
+		}, 100);
+	}
+
+	// 달력 그려주기
+	const calcCalendar = Array.from({length: date.lastDate+date?.week}, (v, i) => i+1).map((v, i) => {
+			return <React.Fragment key={`$calendar${i}`}>
+			<li>{i>=date?.week? v-date?.week : ''}</li>
+			</React.Fragment>
+	});
+
+	// 날짜 클릭했을 때
+	const onCalendarClick = e => {
+		const day = e.target.textContent;
+		if (day < 32 && day !== '') {
+			console.log(day);
+		}
+	}
 
 	return(
 		<div className="wrap">
@@ -92,12 +142,12 @@ function DailySentence(){
 				<div className="daily_sentence_cont">
 					<div className="daily_sentence_callendar_wrap">
 						<div className="daily_sentence_callendar_head">
-							<button className="daily_sentence_callendar_head_btn">
+							<button name="left" className="daily_sentence_callendar_head_btn" onClick={changeLeftMonth}>
 								<i className="xi-angle-left"></i>
 							</button>
-							<div>{date.year}.{date.month}{date.week}</div>
-							<button className="daily_sentence_callendar_head_btn">
-								<i className="xi-angle-right"></i>
+							<div>{date.year}.{date.month}</div>
+							<button name="right" className="daily_sentence_callendar_head_btn">
+								<i className="xi-angle-right" onClick={changeRightMonth}></i>
 							</button>
 							<button className="btn-light sizeS daily_sentence_read_type_btn" onClick={handleReadTypeModal()}>보기</button>
 							<button className="daily_sentence_callendar_head_btn daily_sentence_plus_btn" onClick={handleAddModal()}>
@@ -122,7 +172,7 @@ function DailySentence(){
 								<li>금</li>
 								<li>토</li>
 							</ul>
-							<ul className="daily_sentence_callendar_grid">
+							<ul className="daily_sentence_callendar_grid" onClick={onCalendarClick}>
 								{calcCalendar}
 							</ul>
 						</div>
