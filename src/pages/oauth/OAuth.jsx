@@ -15,7 +15,7 @@ function OAuth() {
       "refreshToken": refreshToken,
     };
     saveToken(data);
-    navigate("/word");
+    navigate("/vocabook");
   }, []);
 
   return(

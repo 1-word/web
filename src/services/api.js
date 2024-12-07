@@ -157,7 +157,7 @@ function useEvntHandler(e, modeType, data, func){
         },
         audio_play(_, data, endFunc){
             const audio = new Audio();
-            const soundUrl = process.env.REACT_APP_HOME_URL + '/data/sound/' + data.sound_path + '.mp3';
+            const soundUrl = process.env.PUBLIC_URL + '/data/sound/' + data.sound_path + '.mp3';
             audio.src = soundUrl;
             audio.onended= endFunc(data.id);
             let playPromise = audio.play();
