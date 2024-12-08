@@ -14,6 +14,7 @@ import OAuth from '@/pages/oauth/OAuth';
 import DailySentence from '@/pages/dailySentence/DailySentence';
 import VocaBook from '@/pages/word/VocaBook';
 import WordQuiz from '@/pages/learn/WordQuiz';
+import ErrorPage from '@/pages/ErrorPage';
 
 
 function App() {
@@ -26,25 +27,26 @@ function App() {
   function Router(){
     return (
     <Routes>
-      <Route path="/" element={<Home></Home>}/>
-      <Route path="/signin" element={<Login></Login>}/>
-      <Route path="/word/:folderId" element={<Word></Word>}/>   
-      <Route path="/signup" element={<Signup></Signup>}/>
-      <Route path="/signup-comp" element={<SignupComplete></SignupComplete>}/>
-			<Route path="/setPw" element={<SetPw></SetPw>}/>
-			<Route path="/authcomplete" element={<AuthNumComp></AuthNumComp>}/>
-      <Route path="/mypage" element={<MyPage></MyPage>}/>
-      <Route path="/oauth/callback" element={<OAuth></OAuth>}/>
-      <Route path="/daily-sentence/main" element={<DailySentence></DailySentence>}/>
-      <Route path="/vocabook" element={<VocaBook></VocaBook>}/>
-      <Route path="/quiz" element={<WordQuiz></WordQuiz>}/>
+      <Route path="/" element={<Home />}/>
+      <Route path="/signin" element={<Login />}/>
+      <Route path="/word/:folderId" element={<Word />}/>   
+      <Route path="/signup" element={<Signup />}/>
+      <Route path="/signup-comp" element={<SignupComplete />}/>
+			<Route path="/setPw" element={<SetPw />}/>
+			<Route path="/authcomplete" element={<AuthNumComp />}/>
+      <Route path="/mypage" element={<MyPage />}/>
+      <Route path="/oauth/callback" element={<OAuth />}/>
+      <Route path="/daily-sentence/main" element={<DailySentence />}/>
+      <Route path="/vocabook" element={<VocaBook />}/>
+      <Route path="/quiz" element={<WordQuiz />}/>
+      <Route path="/*" element={<ErrorPage />}/>
     </Routes> 
     );
   }
   return (<PersistGate>
             <div>
-              <Router/>
-              <Modals></Modals>
+              <Router />
+              <Modals />
             </div>
         </PersistGate>
   );
