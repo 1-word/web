@@ -133,7 +133,7 @@ function useEvntHandler(e, modeType, data, func){
             saveToken(data);
             navigate('/vocabook');
             setUpdateFlag(true);
-            this.userRead(data.accessToken);
+            this.userRead(null, data.accessToken);
         },
         async userRead(_, data) {
             const userRes = await connect('get', 'user', null, data);
