@@ -82,7 +82,7 @@
 					}
 				}
 				&.border{
-					fill: $main-hover-color;
+					fill: transparent;
 				}
 			}
 		}
@@ -119,9 +119,9 @@
 .check_ani{
 	path{
 		transition: all 0.24s ease;
-		strokeWidth:0;
+		stroke-width:0;
 	}
 }
 @keyframes drawCheck {
-  100%{strokeWidth: 2px;}
+  100%{stroke-width: 2px;}
 }
