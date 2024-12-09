@@ -23,7 +23,7 @@
 		}
 		&_en{
 			path{
-				animation: writingSvg 20s 20s linear infinite;
+				animation: writingVocabox 10s 20s linear infinite;
 				fill: $main-accent-color;
 			}
 		}
@@ -42,5 +42,20 @@
 
 	100%{
 		fill: inherit;
+	}
+}
+
+@keyframes writingVocabox {
+	0%{
+		stroke-dashoffset: -100%;
+	}
+
+	50%{
+		stroke-dashoffset: -50%;
+		fill: $main-accent-color;
+	}
+
+	100%{
+		fill: $default-fff;
 	}
 }
