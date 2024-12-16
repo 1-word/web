@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Header from "@components/layout/header";
+import Header from "@components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import Canvas from "@components/main/canvas";
+import Canvas from "@/components/main/Canvas";
 import LeftFix from "@/components/layout/LeftFix";
 
 function Home(){
