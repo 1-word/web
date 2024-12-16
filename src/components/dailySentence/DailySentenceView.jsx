@@ -125,7 +125,7 @@ function DailySentenceView({
 	return(
 		<>
 			<div className="daily_sentence_view_head">
-				<div className="daily_sentence_view_date">{currentSetence.year}-{currentSetence.month}-{currentSetence.day}</div>
+				<div className="daily_sentence_view_date">{currentSetence.year}-{String(currentSetence.month).padStart(2,'0')}-{String(currentSetence.day).padStart(2,'0')}</div>
 				<button className="daily_sentence_view_head_btn" onClick={handleEditModal()}>
 					<i className="edit"></i>
 				</button>
