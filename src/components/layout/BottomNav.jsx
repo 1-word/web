@@ -11,7 +11,7 @@ const BottomNav = (activeClass) => {
 	const [ openModal ] = useModal("add");
 	const topbtnRef = useRef({});
 	const [btnState,setBtnState] = useState(false);
-	const [topBtnState,setTopBtnState] = useState(true);
+	const [topBtnState,setTopBtnState] = useState(false);
 	const { folderId } = useParams();
 
 	const handleModal = e => {
