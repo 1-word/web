@@ -1,15 +1,17 @@
 import Top_SVG from "@images/top.svg";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { Link, useParams } from "react-router-dom";
 import { useModal } from "@/hook/_hooks";
 import Add from "@/components/modal/add/Add";
 import FullModal from "./popup/FullModal";
+import { isYandex } from "react-device-detect";
 
 const BottomNav = (activeClass) => {
 	// 팝업 이벤트
 	const [ openModal ] = useModal("add");
-
+	const topbtnRef = useRef({});
 	const [btnState,setBtnState] = useState(false);
+	const [topBtnState,setTopBtnState] = useState(true);
 	const { folderId } = useParams();
 
 	const handleModal = e => {
@@ -25,10 +27,21 @@ const BottomNav = (activeClass) => {
 		})
 	}
 
+	const isScroll = () => {
+		const scrollPos = window.scrollY;
+		let timer;
+		if(timer) clearTimeout(timer);
+		timer = window.setTimeout(()=>{
+			scrollPos > 100 ? setTopBtnState(true) : setTopBtnState(false)
+		},100);
+	}
+
 	useEffect(()=>{
 		if({...activeClass}.active === "word"){
 			setBtnState(true);
 		}
+		window.addEventListener('scroll', isScroll);
+		return () => window.removeEventListener('scroll', isScroll);
 	},[])
 
 	
@@ -36,9 +49,9 @@ const BottomNav = (activeClass) => {
 <nav className="bottom_nav">
 	{
 		btnState?
-		<div className="bottom_nav_btn_wrap">
+		<div className={topBtnState ? "bottom_nav_btn_wrap" : "bottom_nav_btn_wrap active" }>
 			<button className="bottom_nav_new_word" onClick={handleModal}><i className="xi-plus"></i></button>
-			<button className="bottom_nav_top" onClick={handleToTop}><img src={Top_SVG} alt="top"/></button>
+			<button ref={topbtnRef} className="bottom_nav_top" onClick={handleToTop}><img src={Top_SVG} alt="top"/></button>
 		</div>
 		: ""
 	}

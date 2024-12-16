@@ -89,11 +89,26 @@
 			}
 		}
 	}
-	// 탑 버튼
-	&_top{
+	&_btn_wrap{
 		position: fixed;
 		bottom: 2vw;
 		right: 2vw;
+		transition: all 0.4s ease;
+		&.active{
+			bottom: calc(2vw - 120px);
+			@include deviceMedium(){
+				bottom: calc(100% - 40px);
+			}
+		}
+		@include deviceMedium(){
+			position: absolute;
+			bottom: calc(100% + 20px);
+		}
+	}
+	// 탑 버튼
+	&_top{
+		position: relative;
+		margin-top: 20px;
 		width: 80px;
 		height: 80px;
 		padding: 20px;
@@ -104,8 +119,6 @@
 		background-color: $default-fff;
 		border: 1px solid $default-ddd;
 		@include deviceMedium(){
-			position: absolute;
-			top: -100%;
 			width: 40px;
 			height: 40px;
 			padding: 8px;
@@ -113,9 +126,7 @@
 	}
 	// 단어장 추가 버튼
 	&_new_word{
-		position: fixed;
-		bottom: calc(6% + 80px);
-		right: 2vw;
+		position: relative;
 		width: 80px;
 		height: 80px;
 		background: $main-bg-color;
@@ -125,8 +136,6 @@
 		z-index: 10;
 		overflow: hidden;
 		@include deviceMedium(){
-			position: absolute;
-			top: calc(-100% - 50px);
 			width: 40px;
 			height: 40px;
 		}

@@ -14,6 +14,8 @@ import WordDetailList from "./WordDetailList";
 import { Pagination } from "@/util/Pagination";
 import { useParams } from "react-router-dom";
 import VocabookList from "./folder/VocaBookList";
+import Toast from "../layout/popup/Toast";
+import ListEmpty from "./ListEmpty";
 
 function WordList(props) {
     const { wordList, setWordList, update, setUpdateFlag, addWordList, setPreventDisableFunc } = wordListStore(state => state);
@@ -30,6 +32,7 @@ function WordList(props) {
     const [folderMoveModal] = useModal("foldercog");
     const [moreModal] = useModal("more");
     const [editModal] = useModal("edit");
+		const [memoToast] = useModal("memotoast");
     const obsRef = useRef();
 
     useEffect(() => {
@@ -96,7 +99,7 @@ function WordList(props) {
         moreModal(BottomModal, BottomModalSelect, {
             setting: [
                 {
-                    title: "폴더 이동",
+                    title: "단어장 이동",
                     onClick: () => handleFolderClick(id),
                 },
                 {
@@ -192,6 +195,9 @@ function WordList(props) {
             };
             memo_input.previous = memo_input.value;  //텍스트 저장
             onClickHandler(e, MODE.UPDATE_MEMO, wordId, data);
+						memoToast(Toast,null,{
+							msg: "저장되었습니다"
+						})
             return;
         }
     }
@@ -267,7 +273,7 @@ function WordList(props) {
                         </textarea>
                     </div>
                     <div className="btn_area flex">
-                        <button className="btn-light sizeS cancle_memo" onClick={handleMemoClick(idx, 'CANCLE')}>취소</button>
+                        {/* <button className="btn-light sizeS cancle_memo" onClick={handleMemoClick(idx, 'CANCLE')}>취소</button> */}
                         <button className="btn-fill sizeS save_memo" onClick={handleMemoClick(idx, 'SAVE', data?.wordId)}>저장</button>
                     </div>
                 </div>
@@ -282,8 +288,13 @@ function WordList(props) {
 
     return (
         <div className="word_cont">
-            {dataList}
-            <div ref={obsRef} style={{height:"100px"}}></div>
+					{
+						// 단어 없을 경우 체크
+						dataList.length > 0? '' : 
+						<ListEmpty title={"단어장이"} content={"+ 버튼을 눌러 새 단어를 추가해주세요"} />
+					}
+					{dataList}
+					<div ref={obsRef} style={{height:"100px"}}></div>
         </div>
     );
 }

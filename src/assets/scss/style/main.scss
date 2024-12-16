@@ -6,6 +6,7 @@
 @import "@scss/components/word/new";
 @import "@scss/components/word/list";
 @import "@scss/components/word/tab";
+@import "@scss/components/word/empty";
 
 * {
   margin: 0;
@@ -170,7 +171,7 @@ nav {
 			border-radius: $sub-br;
 			// 화살표
 			&::after{
-				content: url("/assets/images/next.svg");
+				content: url("/src/assets/images/next.svg");
 			}
 		}
 	}

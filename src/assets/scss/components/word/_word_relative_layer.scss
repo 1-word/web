@@ -1,11 +1,15 @@
 .word_relative_wrap{
 	position: relative;
-	&.on{
+	z-index: 1;
+	&.on:has(li){
 		input{
 			border-radius: 8px 8px 0 0;
 			border-bottom: 0;
 		}
 		.word_relative_layer{
+			display: block;
+		}
+		.word_relative_layerfix{
 			display: block;
 		}
 	}
@@ -32,4 +36,12 @@
 			background-color: rgba(74,68,83,0.04);
 		}
 	}
+}
+.word_relative_layerfix{
+	display: none;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	inset: 0;
+	z-index: -1;
 }

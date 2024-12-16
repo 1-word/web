@@ -240,7 +240,7 @@ function DailySentence(){
 		return <React.Fragment key={`dailySentenceList${idx}`}>
 						<li onClick={handleViewModal(val, idx)}>
 							<div className="daily_sentence_mylist_mysentence">
-								<p className="daily_sentence_mylist_date">{val.year}-{val.month}-{val.day}</p>
+								<p className="daily_sentence_mylist_date">{val.year}-{String(val.month).padStart(2,'0')}-{String(val.day).padStart(2,'0')}</p>
 								<p>
 									{val.sentence}
 								</p>
@@ -264,7 +264,7 @@ function DailySentence(){
 							<button name="left" className="daily_sentence_callendar_head_btn" onClick={changeLeftMonth}>
 								<i className="xi-angle-left"></i>
 							</button>
-							<div>{date.year}.{date.month}</div>
+							<div>{date.year}.{String(date.month).padStart(2,'0')}</div>
 							<button name="right" className="daily_sentence_callendar_head_btn">
 								<i className="xi-angle-right" onClick={changeRightMonth}></i>
 							</button>

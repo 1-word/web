@@ -163,7 +163,6 @@ function Add({
 					<div ref={wordRelative} className="input_wrap word_relative_wrap">
 						<span>단어</span>
 						<input name="word" value={saveList?.word} disabled={isEdit} type="text" autoComplete="off" onChange={onChangeInput}
-							// onBlur={onBlurInput}
 						/>
 						<div className="word_relative_layer">
 							<ul className="word_relative_layer_lists" onClick={handleDictClick}>
@@ -176,6 +175,7 @@ function Add({
 								}
 							</ul>
 						</div>
+						<div className="word_relative_layerfix" onClick={handleOnClick}></div>
 					</div>
 					<div className="input_wrap">
 						<span>뜻</span>
@@ -191,7 +191,7 @@ function Add({
 					</div>
 				</div>
 				<div className="new_btn_wrap">
-						<button className="btn-fill sizeM" name="save_btn" onClick={handleSaveClick}>저장</button>                   
+						<button className="btn-fill sizeL" name="save_btn" onClick={handleSaveClick}>저장</button>                   
 				</div>
 			</>
 		);

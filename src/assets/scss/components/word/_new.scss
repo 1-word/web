@@ -40,7 +40,7 @@
 			word-break: auto-phrase;
 			text-wrap: wrap;
 			&::after{
-				content: url("/assets/images/next.svg");
+				content: url("/src/assets/images/next.svg");
 			}
 		}
 	}
@@ -50,7 +50,7 @@
 			// 화살표
 			margin-bottom: 16px;
 			&::after{
-				content: url("/assets/images/next.svg");
+				content: url("/src/assets/images/next.svg");
 			}
 		}
 		&_cont{

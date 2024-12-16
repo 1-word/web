@@ -10,10 +10,10 @@
 	}
 	&_ani{
 		path{
-			strokeWidth: 2px;
+			stroke-width: 2px;
 			stroke-dasharray: 50%;
 			stroke-dashoffset: 0;
-			animation: writingSvg 14s linear;
+			animation: writingSvg 6s linear;
 		}
 		&_ko{
 			path{
@@ -23,7 +23,7 @@
 		}
 		&_en{
 			path{
-				animation: writingSvg 20s 20s linear infinite;
+				animation: writingVocabox 10s 20s linear infinite;
 				fill: $main-accent-color;
 			}
 		}
@@ -32,15 +32,30 @@
 
 @keyframes writingSvg {
 	0%{
-		stroke-dashoffset: 100%;
+		stroke-dashoffset: -100%;
 		fill: none;
 	}
 
 	50%{
-		stroke-dashoffset: -100%;
+		stroke-dashoffset: -50%;
 	}
 
 	100%{
-		fill: auto;
+		fill: inherit;
+	}
+}
+
+@keyframes writingVocabox {
+	0%{
+		stroke-dashoffset: -100%;
+	}
+
+	50%{
+		stroke-dashoffset: -50%;
+		fill: $main-accent-color;
+	}
+
+	100%{
+		fill: $default-fff;
 	}
 }

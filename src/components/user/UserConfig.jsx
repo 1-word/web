@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import api, { MODE } from "@/services/api";
 import authStore from "@/store/authStore";
 
-function MyPage(){
+function MyPage({deleteModalAfterTime}){
 	const [photoConfigModal] = useModal("photoConfig");
 	const uploadRef = useRef(null);
 	const cameraRef = useRef(null);
@@ -77,6 +77,7 @@ function MyPage(){
 		.then(res => {
 			if(res) {
 				setUserInfo(res);
+				deleteModalAfterTime(0);
 			}
 		});
 	}
@@ -84,8 +85,13 @@ function MyPage(){
 	return (
 		<div className="my_page_config_wrap">
 			<div className="my_page_config_name_area">
-				<div className="my_page_config_img_wrap" onClick={handlePhotoConfigModal()}>
-					<img src={thumbnail} className="my_page_config_img" alt="default" />
+				<div className="my_page_config_img_area">
+					<div className="my_page_config_img_wrap" onClick={handlePhotoConfigModal()}>
+						<img src={thumbnail} className="my_page_config_img" alt="default" />
+					</div>
+					<div className="my_page_config_plus_btn" onClick={handlePhotoConfigModal()}>
+						<i className="xi-plus"></i>
+					</div>
 				</div>
 				<div className="my_page_config_email">{userInfo?.email ?? ''}</div>
 			</div>
@@ -96,7 +102,7 @@ function MyPage(){
 				</li>
 			</ul>
 			<div className="my_page_config_btn_wrap">
-				<button className="btn-fill sizeM" onClick={onClickComplete}>확인</button>
+				<button className="btn-fill sizeL" onClick={onClickComplete}>확인</button>
 			</div>
 			<input ref={uploadRef} type="file" accept="image/*" required multiple style={{display: 'none'}} 
 			onChange={onUploadImage}></input>
