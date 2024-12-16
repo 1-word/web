@@ -13,11 +13,9 @@
     "matter-js": "^0.20.0",
     "memfs": "^3.5.2",
     "react": "^17.0.2",
-    "react-app-rewired": "^2.2.1",
     "react-device-detect": "^2.2.3",
     "react-dom": "^17.0.2",
     "react-responsive": "^9.0.0-beta.6",
-    "react-scripts": "^5.0.0",
     "sass": "^1.69.3",
     "swiper": "^11.1.15",
     "web-vitals": "^2.1.4",
@@ -26,9 +24,7 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "vite build",
-    "test": "react-app-rewired test",
-    "eject": "react-scripts eject"
+    "build": "vite build"
   },
   "eslintConfig": {
     "extends": [
