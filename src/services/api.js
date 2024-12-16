@@ -155,8 +155,7 @@ function useEvntHandler(e, modeType, data, func){
         },
         audio_play(_, data, endFunc){
             const audio = new Audio();
-            const host = import.meta.env.VITE_HOST || window.location.host;
-            const soundUrl = host + '/data/sound/' + data.sound_path + '.mp3';
+            const soundUrl = '/data/sound/' + data.sound_path + '.mp3';
             audio.src = soundUrl;
             audio.onended= endFunc(data.id);
             let playPromise = audio.play();
