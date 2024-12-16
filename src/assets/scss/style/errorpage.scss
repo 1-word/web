@@ -39,7 +39,7 @@
 			left: 0;
 			width: 1000%;
 			height: 117px;
-			background-image: url('/assets/images/cactus.svg');
+			background-image: url('/src/assets/images/cactus.svg');
 			animation: goLeft 100s linear infinite;
 			@keyframes goLeft {
 				100%{
@@ -59,7 +59,7 @@
 		height: 150px;
 		position: relative;
 		z-index: 2;
-		background-image: url('/assets/images/dino.svg');
+		background-image: url('/src/assets/images/dino.svg');
 		background-position: 0 0;
 		background-size: calc(150px * $frame_num) 150px;
 		@include deviceSmall(){
