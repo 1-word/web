@@ -1,5 +1,3 @@
-import LOGOTitle_SVG from "@images/logoTitle.svg";
-import { Link } from "react-router-dom";
 import React, { useState, useRef } from "react";
 import api, { MODE } from "@/services/api";
 

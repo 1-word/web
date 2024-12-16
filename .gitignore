@@ -30,3 +30,5 @@ Dockerfile*
 # data file
 /public/pronu/*
 public/data
+
+.vite_cache

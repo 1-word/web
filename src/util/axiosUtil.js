@@ -8,7 +8,7 @@ import axios from "axios";
 */
 
 async function connect(method, uri, data, token){
-        const host = process.env.REACT_APP_HOST;
+        const host = import.meta.env.VITE_APP_HOST;
         const url = `${host}${uri}`;
         const res = await axios({
             method,
