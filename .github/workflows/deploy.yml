@@ -1,9 +1,9 @@
 name: deploy
 # action 트리거 조건
 on:
-  push:
-    branches:
-      - master
+  pull_request:
+    branches: ['master']
+    types: [closed]
 # action 동작
 jobs:
   # OS 환경
