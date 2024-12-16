@@ -79,7 +79,7 @@ function MyPage({deleteModalAfterTime}){
 		.then(res => {
 			if(res) {
 				setUserInfo(res);
-				deleteModalAfterTime(150);
+				deleteModalAfterTime(0);
 			}
 		});
 	}
@@ -104,7 +104,7 @@ function MyPage({deleteModalAfterTime}){
 				</li>
 			</ul>
 			<div className="my_page_config_btn_wrap">
-				<button className="btn-fill sizeM" onClick={onClickComplete}>확인</button>
+				<button className="btn-fill sizeL" onClick={onClickComplete}>확인</button>
 			</div>
 			<input ref={uploadRef} type="file" accept="image/*" required multiple style={{display: 'none'}} 
 			onChange={onUploadImage}></input>

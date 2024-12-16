@@ -191,7 +191,7 @@ function Add({
 					</div>
 				</div>
 				<div className="new_btn_wrap">
-						<button className="btn-fill sizeM" name="save_btn" onClick={handleSaveClick}>저장</button>                   
+						<button className="btn-fill sizeL" name="save_btn" onClick={handleSaveClick}>저장</button>                   
 				</div>
 			</>
 		);

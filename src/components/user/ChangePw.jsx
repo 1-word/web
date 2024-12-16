@@ -87,7 +87,7 @@ function ChangePw({
 				</li>
 			</ul>
 			<div className="my_page_config_btn_wrap">
-				<button className="btn-fill sizeM" disabled={disabled} onClick={onClickComplete}>비밀번호 저장</button>
+				<button className="btn-fill sizeL" disabled={disabled} onClick={onClickComplete}>비밀번호 저장</button>
 			</div>
 		</>
 	);
