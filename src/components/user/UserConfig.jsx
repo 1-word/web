@@ -1,5 +1,3 @@
-import MyDeault_SVG from "@images/myImgDefault.svg";
-
 import { useModal } from "@/hook/_hooks";
 import BottomModalSelect from "@components/layout/popup/BottomModalSelect";
 import BottomModal from "@components/layout/popup/BottomModal";

@@ -29,6 +29,11 @@ const BottomNav = (activeClass) => {
 		if({...activeClass}.active === "word"){
 			setBtnState(true);
 		}
+
+		const scrollPos = window.scrollY;
+		if(scrollPos > 10){
+			console.log(scrollPos ,"스크롤 넘김");
+		}
 	},[])
 
 	

@@ -69,7 +69,6 @@ function useEvntHandler(e, modeType, data, func){
     const {token, saveToken, clearToken, setUserInfo} = authStore(state=>state);
     const navigate = useNavigate();
     const location = useLocation();
-    const app = process.env.REACT_APP_ENV;
 
     const activeToast = (msg) => {
         openModal(Toast, null, {msg}, "toast");
@@ -156,7 +155,8 @@ function useEvntHandler(e, modeType, data, func){
         },
         audio_play(_, data, endFunc){
             const audio = new Audio();
-            const soundUrl = process.env.PUBLIC_URL + '/data/sound/' + data.sound_path + '.mp3';
+            const host = import.meta.env.VITE_HOST || window.location.host;
+            const soundUrl = host + '/data/sound/' + data.sound_path + '.mp3';
             audio.src = soundUrl;
             audio.onended= endFunc(data.id);
             let playPromise = audio.play();

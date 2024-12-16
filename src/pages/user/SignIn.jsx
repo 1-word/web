@@ -50,7 +50,7 @@ function Login(){
 
 	const onClickSocialLogin = (e) => {
 		const service = e.target.dataset.name;
-		const host = process.env.REACT_APP_HOST;
+		const host = import.meta.env.VITE_APP_HOST;
 		const url = `${host}oauth2/authorization/${service}`
 		setLoading(true);
 		window.location.href = url;
