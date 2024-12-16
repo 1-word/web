@@ -62,6 +62,12 @@ export function useModal(id, openAction, closeAction){
         return { index, isfind };
     }
 
+    const addHistory = (length) => {
+        if (length > 0) {
+            window.history.pushState(null, '', window.location.href);
+        }
+    }
+
 		/**
 		 * 모달을 등록한다.
 		 * @param {func} layout 모달 레이아웃(함수)
@@ -75,7 +81,7 @@ export function useModal(id, openAction, closeAction){
 			if (openAction) openAction();
 			//팝업 중복검사 
 			if (findKey(id).isfind){
-					return;
+                return;
 			}
 			const isFirst = isFirstModal(type);
 			addModal({
@@ -86,6 +92,8 @@ export function useModal(id, openAction, closeAction){
 					isFirst: isFirst,
 					isOpened: false,
 			});
+
+            addHistory(openedModals.length + 1);
     }
 
 		const isFirstModal = (type) => {

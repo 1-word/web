@@ -17,6 +17,9 @@ function WordQuiz(){
 	const handleQuizPhaze = () => {
 		nextState({quiz:true});
 	}
+	const handleResultPhaze = () => {
+		nextState({quiz:false,result:true});
+	}
 	return(
 		<div className="wrap">
 			<HeaderMini title="단어 학습"></HeaderMini>
@@ -25,9 +28,9 @@ function WordQuiz(){
 			<div className="word_quiz_wrap">
 				<div className="word_quiz_cont">
 					{
-						(next.quiz) === true ? "" :
+						!next.quiz &&
 						<>
-							<h2 className="word_quiz_title">단어 학습에 사용할 단어장을 선택해주세요</h2>
+							<h2 className="word_quiz_title">퀴즈에 사용할 단어장을 선택해주세요</h2>
 							<ul className="word_quiz_vocabook_lists">
 								<li>
 									단어장1
@@ -37,7 +40,7 @@ function WordQuiz(){
 								</li>
 							</ul>
 							<div className="word_quiz_btn_wrap">
-								<button className="btn-fill sizeM" onClick={handleQuizPhaze}>다음 단계</button>
+								<button className="btn-fill sizeL" onClick={handleQuizPhaze}>다음 단계</button>
 							</div>
 						</>
 					}

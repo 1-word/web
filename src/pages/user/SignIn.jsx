@@ -4,12 +4,14 @@ import React, { useState, useRef, useEffect } from "react";
 import api, { MODE } from "@/services/api";
 import { Link, useNavigate } from "react-router-dom";
 import authStore from "@/store/authStore";
+import ModalStore from "@/store/modalStore";
 
 function Login(){
 	const loginData = useRef(null);
 	const onClickHandler = api();
 	const {token} = authStore();
 	const navigate = useNavigate();
+	const {setLoading} = ModalStore();
 
 	useEffect(() => {
 		if (token.accessToken) {
@@ -50,6 +52,7 @@ function Login(){
 		const service = e.target.dataset.name;
 		const host = import.meta.env.VITE_APP_HOST;
 		const url = `${host}oauth2/authorization/${service}`
+		setLoading(true);
 		window.location.href = url;
 	}
 
