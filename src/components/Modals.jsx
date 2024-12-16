@@ -33,7 +33,7 @@ function Modals(){
 		 */
     const closeTopModal = () => {
         // 최상단 모달은 배열의 가장 끝 데이터가 됨
-        const idx = openedModals.length - 1 ?? 0;
+        const idx = openedModals.length > 0? openedModals.length - 1 : 0;
 				const child = modalWrapRef?.current[idx]?.childNodes[0];
         child.classList.add("off");
 				let ms = getAnimationDuration(child);
