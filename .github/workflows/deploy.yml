@@ -38,7 +38,9 @@ jobs:
         run: npm install
       # 빌드
       - name: Build project
-        run: npm run build
+        run: |
+          export NODE_OPTIONS="--max_old_space_size=1024"
+          npm run build
 
   deploy:
     needs: build
