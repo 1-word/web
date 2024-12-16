@@ -64,8 +64,8 @@ function Login(){
 					<form className="login-area">
 						<legend className="disN">로그인</legend>
 						<div className="login-input-area input_wrap">
-							<label htmlFor="email">아이디</label>
-							<input id="email" name="email" type="text" required spellCheck placeholder="아이디를 입력해 주세요" onChange={setInput} onKeyDown={onKeyDown} />
+							<label htmlFor="email">이메일</label>
+							<input id="email" name="email" type="text" required spellCheck placeholder="이메일을 입력해 주세요" onChange={setInput} onKeyDown={onKeyDown} />
 						</div>
 						<div className="login-input-area input_wrap">
 							<label htmlFor="password">비밀번호</label>
