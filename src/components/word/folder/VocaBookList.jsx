@@ -7,6 +7,7 @@ import AddVocaBook from "@/components/word/folder/AddVocaBook";
 import FullModal from "@components/layout/popup/FullModal";
 import { useNavigate } from "react-router-dom";
 import authStore from "@/store/authStore";
+import ListEmpty from "../ListEmpty";
 
 function VocabookList({
   clickedFolder,
@@ -82,6 +83,11 @@ function VocabookList({
           <button onClick={handleConfigClick}>단어장 관리</button>
 			<button className="voca_book_plus" onClick={handleAddClick()}>새 단어장 만들기<i className="xi-plus"></i></button>
 		</div>
+				{
+					// 단어장 없을 경우 체크
+					folderList[0]? "" : 
+					<ListEmpty title={"단어장이"} content={"+ 버튼을 눌러 새 단어장을 추가해주세요"} />
+				}
         <ul className="voca_book_lists flex">
           {
             folderList?.map(item =>

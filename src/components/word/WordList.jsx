@@ -15,6 +15,7 @@ import { Pagination } from "@/util/Pagination";
 import { useParams } from "react-router-dom";
 import VocabookList from "./folder/VocaBookList";
 import Toast from "../layout/popup/Toast";
+import ListEmpty from "./ListEmpty";
 
 function WordList(props) {
     const { wordList, setWordList, update, setUpdateFlag, addWordList, setPreventDisableFunc } = wordListStore(state => state);
@@ -287,8 +288,13 @@ function WordList(props) {
 
     return (
         <div className="word_cont">
-            {dataList}
-            <div ref={obsRef} style={{height:"100px"}}></div>
+					{
+						// 단어 없을 경우 체크
+						dataList[0]? "" : 
+						<ListEmpty title={"단어장이"} content={"+ 버튼을 눌러 새 단어를 추가해주세요"} />
+					}
+					{dataList}
+					<div ref={obsRef} style={{height:"100px"}}></div>
         </div>
     );
 }
