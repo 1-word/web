@@ -11,7 +11,7 @@ export const WORD_KEY = {
 
 const store = set => ({
     wordList: {
-        words:[],
+        words:[{wordId: -1}],
         page:{
             current: 0
         }

@@ -290,7 +290,7 @@ function WordList(props) {
         <div className="word_cont">
 					{
 						// 단어 없을 경우 체크
-						dataList[0]? "" : 
+						dataList.length > 0? '' : 
 						<ListEmpty title={"단어장이"} content={"+ 버튼을 눌러 새 단어를 추가해주세요"} />
 					}
 					{dataList}

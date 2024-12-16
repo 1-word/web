@@ -140,13 +140,16 @@ function DailySentenceView({
 				<p className="daily_sentence_view_mean">
 					{currentSetence.mean}
 				</p>
-				{/* 연관 단어 */}
-				<div className="daily_sentence_view_relative_word_area">
-					<h3>연관 단어</h3>
-					<ul className="daily_sentence_view_relative_word_grid">
-						{relationWord}
-					</ul>
-				</div>
+
+				{	currentSetence.dailyWords.length > 0 &&
+					// 연관 단어 
+					<div className="daily_sentence_view_relative_word_area">
+						<h3>연관 단어</h3>
+						<ul className="daily_sentence_view_relative_word_grid">
+							{relationWord}
+						</ul>
+					</div>
+				}
 				{/* 연관 단어 */}
 				<div className="modal_full_btn_wrap daily_sentence_view_btn_wrap">
 					<button className="btn-light sizeM" disabled={disabled.prev} onClick={onClickPreviousSentence}>이전 문장</button>
