@@ -11,7 +11,8 @@ import authStore from "@/store/authStore";
 function VocabookList({
   clickedFolder,
   afterCompleteFunc,
-  deleteModalAfterTime
+  deleteModalAfterTime,
+  props
 }){
   const [editState, setEditState] = useState(false);
   const [folderList, setFolderList] = useState([]);
@@ -70,7 +71,7 @@ function VocabookList({
     }
 
     // 클릭된 폴더 데이터 넘겨주기
-    afterCompleteFunc(item);
+    afterCompleteFunc(item, props);
     deleteModalAfterTime(0);
   }
 
@@ -85,7 +86,7 @@ function VocabookList({
           {
             folderList?.map(item =>
                 // 현재 단어장 위치
-            <li className={clickedFolder === item.folders.folderId? "on" : "off"} 
+            <li className={clickedFolder === item.folders.folderId + ''? "on" : "off"} 
                 key={`folders${item.folders.folderId}`}
                 disabled={editState}
                 onClick={onFolderClick(item)}

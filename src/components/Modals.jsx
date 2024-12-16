@@ -3,6 +3,7 @@ import ModalPortal from "@components/modal/ModalPortal";
 import Loading from "./modal/Loading";
 import React, { useEffect, useRef, createElement } from "react";
 import { getAnimationDuration } from "@/util/utils";
+import { useNavigationType } from "react-router-dom";
 
 /**
  * 모달 관리
@@ -11,10 +12,17 @@ function Modals(){
     const { openedModals, deleteModal, loading, setOpenModal, deleteModalById, deleteAllModal } = ModalStore(modal => modal);
     const modalWrapRef = useRef([]);
 
-    useEffect(()=>{
-       if (openedModals.length > 0) {}
-    //    document.body.style = 'position:fixed;overflow:hidden'
-    }, )
+		useEffect(() => {
+			window.addEventListener('popstate', goBack);
+
+			return () => {
+				window.removeEventListener('popstate', goBack);
+			};
+		}, [openedModals]);
+
+		const goBack = () => {
+				deleteModal(openedModals.length - 1 ?? 0);
+		}
 
     /**
 		 * 해당하는 위치(idx)의 모달을 닫는다.
@@ -33,7 +41,7 @@ function Modals(){
 		 */
     const closeTopModal = () => {
         // 최상단 모달은 배열의 가장 끝 데이터가 됨
-        const idx = openedModals.length - 1 ?? 0;
+        const idx = openedModals.length > 0? openedModals.length - 1 : 0;
 				const child = modalWrapRef?.current[idx]?.childNodes[0];
         child.classList.add("off");
 				let ms = getAnimationDuration(child);

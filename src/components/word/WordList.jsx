@@ -13,6 +13,7 @@ import BottomModal from "@components/layout/popup/BottomModal";
 import WordDetailList from "./WordDetailList";
 import { Pagination } from "@/util/Pagination";
 import { useParams } from "react-router-dom";
+import VocabookList from "./folder/VocaBookList";
 
 function WordList(props) {
     const { wordList, setWordList, update, setUpdateFlag, addWordList, setPreventDisableFunc } = wordListStore(state => state);
@@ -112,13 +113,16 @@ function WordList(props) {
 
     // 단어장 변경
     const handleFolderClick = (wordId) => {
-        const config = {
-            wordId: wordId,
-            mode: COMM_MODE.MOVE
-        }
-        folderMoveModal(FullModal, FolderCog, {
-            folderCog: config,
-        })
+        folderMoveModal(FullModal, VocabookList, {
+            clickedFolder: folderId,
+            afterCompleteFunc: afterMoveFolder,
+            props: wordId,
+        });
+    }
+
+    const afterMoveFolder = (item, wordId) => {
+        const folderId = item.folders.folderId;
+        onClickHandler(null, MODE.WORD_FOLDER_UPDATE, {wordId, folderId});
     }
 
     // 단어 삭제

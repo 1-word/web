@@ -15,6 +15,7 @@ export const MODE = {
     SAVE: "save",
     LOGIN: "login",
     SIGNUP: "signup",
+    USER_READ: "userRead",
     OPEN: "open",
     CLOSE: "close",
     PLUS_BTN: "plus_btn",
@@ -62,10 +63,10 @@ export const MODE = {
  */
 function useEvntHandler(e, modeType, data, func){
     
-    const {createWordList, setUpdateFlag, saveListClear, setFolderList} = wordListStore(state => state);
+    const {setUpdateFlag} = wordListStore(state => state);
     const {setLoading} = ModalStore();
     const [ openModal ] = useModal();
-    const {token, save, saveToken, clearToken, setUserInfo} = authStore(state=>state);
+    const {token, saveToken, clearToken, setUserInfo} = authStore(state=>state);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -76,12 +77,7 @@ function useEvntHandler(e, modeType, data, func){
     const handlerMap = {
         async read(_, query){
             const res = await executeSrvConnect("get", `word${query}`, null, {isUpdate: false, returnMsg: false});
-            if (!dataCheck(res)) return;
-            // createWordList(res.words);
             return res;
-        },
-        all(){
-            return executeSrvConnect("get", "word");
         },
         async search(e, query){
             const res = await executeSrvConnect("get", `word/${query}`, null, {isUpdate:false, isLoading: false, returnMsg: false});
@@ -114,8 +110,8 @@ function useEvntHandler(e, modeType, data, func){
         async folderSave(_, data){
             return await executeSrvConnect("post", 'folders', data, {isUpdate: false});
         },
-        async wordFolderUpdate(e, id, data){
-            return await executeSrvConnect("put", id, data);
+        async wordFolderUpdate(_, {wordId, folderId}){
+            return await executeSrvConnect('put', `word/${wordId}/folder/${folderId}`, null);
         },
         async folderDelete(_, folderId){
             return await executeSrvConnect("delete", `folders/${folderId}`, null, {isUpdate: false});
@@ -136,7 +132,10 @@ function useEvntHandler(e, modeType, data, func){
             saveToken(data);
             navigate('/vocabook');
             setUpdateFlag(true);
-            const userRes = await connect('get', 'user', null, data.accessToken);
+            this.userRead(null, data.accessToken);
+        },
+        async userRead(_, data) {
+            const userRes = await connect('get', 'user', null, data);
             setUserInfo(userRes.data);
         },
         async signup(_, user){
@@ -156,8 +155,7 @@ function useEvntHandler(e, modeType, data, func){
         },
         audio_play(_, data, endFunc){
             const audio = new Audio();
-            const host = import.meta.env.VITE_HOST || window.location.host;
-            const soundUrl = host + '/data/sound/' + data.sound_path + '.mp3';
+            const soundUrl = '/data/sound/' + data.sound_path + '.mp3';
             audio.src = soundUrl;
             audio.onended= endFunc(data.id);
             let playPromise = audio.play();
@@ -277,19 +275,7 @@ function useEvntHandler(e, modeType, data, func){
         } catch (error) {
             // accessToken 만료 시 토큰 재발급
             if (error?.response?.status === 401 && token.accessToken !== "") {
-                const response = await connect("post", "auth/reissue", {
-                    accessToken: token.accessToken,
-                    refreshToken: token.refreshToken
-                });
-
-                const data = {
-                    "accessToken": response.data.accessToken,
-                    "refreshToken": response.data.refreshToken,
-                };
-
-                saveToken(data);
-                activeToast("재 로그인되었습니다. 다시 시도해주세요.");
-                throw new Error("재 로그인 되었습니다. 다시 시도해주세요.");
+                await reissueToken();
             }
 
             if (error.response?.data.msg === "로그인이 필요합니다.") {
@@ -307,6 +293,31 @@ function useEvntHandler(e, modeType, data, func){
             //update state변경, 변경 시 useEffect() 실행, 기본값은 항상 업데이트
             if (obj?.isUpdate ?? true) { 
                 setUpdateFlag(true);
+            }
+        }
+    }
+
+    const reissueToken = async() => {
+        try {
+            const response = await connect("post", "auth/reissue", {
+                accessToken: token.accessToken,
+                refreshToken: token.refreshToken
+            });
+
+            const data = {
+                "accessToken": response.data.accessToken,
+                "refreshToken": response.data.refreshToken,
+            };
+
+            saveToken(data);
+            activeToast("재 로그인되었습니다. 다시 시도해주세요.");
+            throw new Error("재 로그인 되었습니다. 다시 시도해주세요.");
+
+        }catch(error) {
+            if (error?.response?.status === 400) {
+                clearToken();
+                navigate('/signin');
+                activeToast('로그인이 필요합니다.');
             }
         }
     }
