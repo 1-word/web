@@ -7,7 +7,7 @@ import LeftFix from "@/components/layout/LeftFix";
 
 
 function Home(){
-
+	const obsref = useRef([])
 
 	useEffect(() => {
 
