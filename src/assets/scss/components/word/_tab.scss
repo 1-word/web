@@ -1,7 +1,13 @@
 .word_tab {
-	padding: $main-p;
-  margin: 24px 0 0;
-  gap: 12px;
+	&_wrap{
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		padding: $main-p;
+		margin: 24px 0 0;
+		gap: 8px;
+	}
+	gap: 12px;
   > li {
     display: flex;
     align-items: center;
@@ -19,4 +25,20 @@
       box-shadow: 0 0 0.25rem $main-accent-color;
     }
   }
+}
+
+.word_tab_view{
+	gap: 12px;
+	> li{
+		display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0.025rem;
+    cursor: pointer;
+		color: $sub-text-color;
+		// 활성화 클래스
+		&.active{
+			color: $main-text-color;
+		}
+	}
 }
