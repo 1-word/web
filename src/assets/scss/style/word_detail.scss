@@ -6,11 +6,11 @@
 	}
 	&_cont{
 		height: 100%;
-		padding: 24px 0 80px;
+		padding: 24px 0;
 	}
 	position: relative;
 	margin: 24px 0 0;
-	height: 80%;
+	height: 100%;
 	border: 1px solid $default-ddd;
 	border-radius: $main-br;
 	padding: 24px;
@@ -30,13 +30,13 @@
 	}
 	&_headset{
 		position: absolute;
-		top: 12px;
+		bottom: 12px;
 		right: 12px;
 		color: $default-666;
-		width: 24px;
-		height: 24px;
+		width: 48px;
+		height: 48px;
 		i{
-			font-size: 18px;
+			font-size: 2em;
 		}
 	}
 	&_mean_wrap{

@@ -1,5 +1,4 @@
 import HeaderMini from "@/components/layout/HeaderMini";
-import BottomNav from "@/components/layout/BottomNav";
 import LeftFix from "@/components/layout/LeftFix";
 import WordDetailList from "@/components/word/WordDetailList";
 function WordDetailView(){
@@ -7,7 +6,6 @@ function WordDetailView(){
 		<>
 			<div className="wrap">
 				<HeaderMini></HeaderMini>
-				<BottomNav active="dailySentence"></BottomNav>
 				<LeftFix></LeftFix>
 				<div className="word_detail_wrap">
 					<div className="word_detail_cont">
