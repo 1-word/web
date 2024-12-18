@@ -1,0 +1,48 @@
+.word_detail{
+	&_wrap{
+		position: relative;
+		height: 94%;
+		padding: $main-p;
+	}
+	&_cont{
+		height: 100%;
+		padding: 24px 0;
+	}
+	position: relative;
+	margin: 24px 0 0;
+	height: 100%;
+	border: 1px solid $default-ddd;
+	border-radius: $main-br;
+	padding: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	gap: 16px;
+	overflow-y: auto;
+	&::-webkit-scrollbar{
+		display: none;
+	}
+	&_top{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	&_headset{
+		position: absolute;
+		bottom: 12px;
+		right: 12px;
+		color: $default-666;
+		width: 48px;
+		height: 48px;
+		i{
+			font-size: 2em;
+		}
+	}
+	&_mean_wrap{
+		margin-top: 0;
+	}
+	&_name{
+		font-size: 20px;
+	}
+}

@@ -21,6 +21,10 @@
     min-height: 30px;
     background: $default-ddd;
   }
+	&::selection{
+		color: $main-accent-color;
+		background-color: $main-bg-color;
+	}
 }
 
 @font-face {
@@ -101,6 +105,7 @@ nav {
 		padding: 0 14px;
 		display: flex;
 		flex-direction: column;
+		align-items: start;
 		gap: 32px;
 		&.left{
 			align-items: flex-end;
@@ -109,6 +114,34 @@ nav {
 		&.center{
 			align-items: center;
 			text-align: center;
+		}
+	}
+	&_btn{
+		display: flex;
+		min-width: 120px;
+	}
+	&_cont_img{
+		height: 350px;
+		background-size: 360px;
+		background-repeat: no-repeat;
+		&.on{
+			animation: goDown 2s ease-in-out alternate;
+		}
+		&_first{
+			background-image: url('/src/assets/images/wordList.png');
+			background-position: right -100px;
+		}
+		&_second{
+			background-image: url('/src/assets/images/autoComplete.gif');
+		}
+		&_third{
+			background-image: url('/src/assets/images/dailySentence.png');
+			background-position: right -50px;
+		}
+		@keyframes goDown {
+			100%{
+				background-position: right -500px;
+			}
 		}
 	}
 	&_title{

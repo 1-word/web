@@ -128,14 +128,21 @@ function Word(){
             </div>
         </div>
 
-				{/* 암기탭 */}
-				<ul className="word_tab flex">
-						<li className= {memorization === MEMORIZATION_TYPE.ALL ? "active" : ''} onClick={handleMemorizeClick(MEMORIZATION_TYPE.ALL)}>전체</li>
-						<li className= {memorization === MEMORIZATION_TYPE.MEMORIZATION_PERIOD ? "active" : ''} 
-									onClick={handleMemorizeClick(MEMORIZATION_TYPE.MEMORIZATION_PERIOD)}>미암기</li>
-						<li className= {memorization === MEMORIZATION_TYPE.MEMORIZATION ? "active" : ''} 
-								onClick={handleMemorizeClick(MEMORIZATION_TYPE.MEMORIZATION)}>암기</li>
-				</ul>
+				<div className="word_tab_wrap">
+					{/* 암기탭 */}
+					<ul className="word_tab flex">
+							<li className= {memorization === MEMORIZATION_TYPE.ALL ? "active" : ''} onClick={handleMemorizeClick(MEMORIZATION_TYPE.ALL)}>전체</li>
+							<li className= {memorization === MEMORIZATION_TYPE.MEMORIZATION_PERIOD ? "active" : ''} 
+										onClick={handleMemorizeClick(MEMORIZATION_TYPE.MEMORIZATION_PERIOD)}>미암기</li>
+							<li className= {memorization === MEMORIZATION_TYPE.MEMORIZATION ? "active" : ''} 
+									onClick={handleMemorizeClick(MEMORIZATION_TYPE.MEMORIZATION)}>암기</li>
+					</ul>
+					{/* 조회 순서 */}
+					<ul className="word_tab_view flex">
+						<li className="active">등록순</li>
+						<li>최신순</li>
+					</ul>
+				</div>
 				
 				{/* 단어 리스트 */}
         <div className="word_wrap">

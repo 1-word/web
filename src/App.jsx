@@ -12,6 +12,7 @@ import MyPage from '@/pages/user/MyPage';
 import Modals from '@/components/Modals';
 import OAuth from '@/pages/oauth/OAuth';
 import DailySentence from '@/pages/dailySentence/DailySentence';
+import WordDetailView from '@/pages/dailySentence/WordDetailView';
 import VocaBook from '@/pages/word/VocaBook';
 import WordQuiz from '@/pages/learn/WordQuiz';
 import ErrorPage from '@/pages/ErrorPage';
@@ -37,6 +38,7 @@ function App() {
       <Route path="/mypage" element={<MyPage />}/>
       <Route path="/oauth/callback" element={<OAuth />}/>
       <Route path="/daily-sentence/main" element={<DailySentence />}/>
+      <Route path="/daily-sentence/view" element={<WordDetailView />}/>
       <Route path="/vocabook" element={<VocaBook />}/>
       <Route path="/quiz" element={<WordQuiz />}/>
       <Route path="/*" element={<ErrorPage />}/>

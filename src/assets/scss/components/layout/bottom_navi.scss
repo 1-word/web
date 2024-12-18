@@ -95,9 +95,13 @@
 		right: 2vw;
 		transition: all 0.4s ease;
 		&.active{
-			bottom: calc(2vw - 120px);
+			bottom: calc(2vw - 100px);
+			.bottom_nav_top{
+				opacity: 0;
+				visibility: hidden;
+			}
 			@include deviceMedium(){
-				bottom: calc(100% - 40px);
+				bottom: calc(100% - 30px);
 			}
 		}
 		@include deviceMedium(){
@@ -118,10 +122,13 @@
 		border-radius: 50%;
 		background-color: $default-fff;
 		border: 1px solid $default-ddd;
+		opacity: 1;
+		visibility: visible;
 		@include deviceMedium(){
 			width: 40px;
 			height: 40px;
 			padding: 8px;
+			margin-top: 10px;
 		}
 	}
 	// 단어장 추가 버튼
