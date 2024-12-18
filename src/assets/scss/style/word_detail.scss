@@ -1,0 +1,48 @@
+.word_detail{
+	&_wrap{
+		position: relative;
+		height: 94%;
+		padding: $main-p;
+	}
+	&_cont{
+		height: 100%;
+		padding: 24px 0 80px;
+	}
+	position: relative;
+	margin: 24px 0 0;
+	height: 80%;
+	border: 1px solid $default-ddd;
+	border-radius: $main-br;
+	padding: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	gap: 16px;
+	overflow-y: auto;
+	&::-webkit-scrollbar{
+		display: none;
+	}
+	&_top{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	&_headset{
+		position: absolute;
+		top: 12px;
+		right: 12px;
+		color: $default-666;
+		width: 24px;
+		height: 24px;
+		i{
+			font-size: 18px;
+		}
+	}
+	&_mean_wrap{
+		margin-top: 0;
+	}
+	&_name{
+		font-size: 20px;
+	}
+}
