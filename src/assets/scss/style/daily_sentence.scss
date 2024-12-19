@@ -147,6 +147,7 @@
 			align-items: center;
 			border-radius: $sub-br;
 			background-color: $main-bg-color;
+			cursor: pointer;
 			&::before{
 				content: "";
 				display: block;
