@@ -12,7 +12,7 @@ import MyPage from '@/pages/user/MyPage';
 import Modals from '@/components/Modals';
 import OAuth from '@/pages/oauth/OAuth';
 import DailySentence from '@/pages/dailySentence/DailySentence';
-import WordDetailView from '@/pages/dailySentence/WordDetailView';
+import WordDetailView from '@/components/dailySentence/WordDetailView';
 import VocaBook from '@/pages/word/VocaBook';
 import WordQuiz from '@/pages/learn/WordQuiz';
 import ErrorPage from '@/pages/ErrorPage';

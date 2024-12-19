@@ -5,6 +5,7 @@ import CenterModal from "../layout/popup/CenterModal";
 import CenterModalConfirm from "../layout/popup/CenterModalConfirm";
 import AddDailySentence from "@/components/dailySentence/AddDailySentence";
 import api, { MODE } from "@/services/api";
+import WordDetailView from "./WordDetailView";
 
 function DailySentenceView({
 	idx,
@@ -16,8 +17,11 @@ function DailySentenceView({
 	
 	const [editModal] = useModal('edit');
 	const [deleteModal] = useModal('delete');
+	const [wordViewModal] = useModal('wordView')
 	const onClickHandler = api();
 	const relationWordRef = useRef({});
+
+	const [dropped, setDropped] = useState(false);
 
 	const [disabled, setDisabled] = useState({
 		prev: false,
@@ -82,9 +86,13 @@ function DailySentenceView({
 		})
 	}
 
+	const handleWordViewModal = () => e => {
+		wordViewModal(FullModal, WordDetailView,{})
+	}
+
 	const relationWord = currentSetence.dailyWords.map((val, idx) => {
 		return <React.Fragment key={`dailyWords${idx}`}>
-						<li ref={el => relationWordRef.current[val.wordId] = el}>
+						<li ref={el => relationWordRef.current[val.wordId] = el} onClick={handleWordViewModal()}>
 							<p className="daily_sentence_view_relative_word_name">{val.word}</p>
 							<p className="daily_sentence_view_relative_word_mean">{val.mean}</p>
 						</li>
@@ -154,16 +162,35 @@ function DailySentenceView({
 		});
 	};
 
+	const toogleDropDown = () => {
+		setDropped(true);
+		dropped ? setDropped(false) : setDropped(true);
+	}
+
 	return(
 		<>
 			<div className="daily_sentence_view_head">
 				<div className="daily_sentence_view_date">{currentSetence.year}-{String(currentSetence.month).padStart(2,'0')}-{String(currentSetence.day).padStart(2,'0')}</div>
-				<button className="daily_sentence_view_head_btn" onClick={handleEditModal()}>
-					<i className="edit"></i>
-				</button>
-				<button className="daily_sentence_view_head_btn" onClick={handleDeleteModal(currentSetence.dailySentenceId)}>
-					<i className="xi-close"></i>
-				</button>
+				<div className="dropdown">
+					<button className="dropdown_toggle" onClick={toogleDropDown}>
+						<i className="xi-ellipsis-v"></i>
+					</button>
+					{
+						dropped ? 
+						<div className="dropdown_wrap" onClick={toogleDropDown}>
+							<div className="dropdown_cont">
+								<button className="dropdown_btn" onClick={handleEditModal()}>
+									수정
+								</button>
+								<button className="dropdown_btn" onClick={handleDeleteModal(currentSetence.dailySentenceId)}>
+									삭제
+								</button>
+							</div>
+							<div className="dropdown_close" onClick={toogleDropDown}></div>
+						</div>
+						: ""
+					}
+				</div>
 			</div>
 			<div className="daily_sentence_view_area">
 				<p className="daily_sentence_view_sentence">
@@ -183,10 +210,14 @@ function DailySentenceView({
 					</div>
 				}
 				{/* 연관 단어 */}
-				<div className="modal_full_btn_wrap daily_sentence_view_btn_wrap">
-					<button className="btn-light sizeM" disabled={disabled.prev} onClick={onClickPreviousSentence}>이전 문장</button>
-					<button className="btn-fill sizeM" disabled={disabled.next} onClick={onClickNextSentence}>다음 문장</button>
-				</div>
+				{
+					disabled.prev === disabled.next ?
+					"" :
+					<div className="modal_full_btn_wrap daily_sentence_view_btn_wrap">
+						<button className="btn-light sizeL" disabled={disabled.prev} onClick={onClickPreviousSentence}>이전 문장</button>
+						<button className="btn-fill sizeL" disabled={disabled.next} onClick={onClickNextSentence}>다음 문장</button>
+					</div>
+				}
 			</div>
 		</>
 	);

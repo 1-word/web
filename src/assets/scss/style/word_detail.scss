@@ -20,6 +20,7 @@
 	flex-direction: column;
 	gap: 16px;
 	overflow-y: auto;
+	background-color: $default-fff;
 	&::-webkit-scrollbar{
 		display: none;
 	}
