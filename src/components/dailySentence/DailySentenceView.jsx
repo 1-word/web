@@ -45,8 +45,10 @@ function DailySentenceView({
 	},[]);
 
 	useEffect(() => {
+		relationWordRef.current = {};
 		if (currentSetence.dailyWords.length !== 0) {
 			checkButtonStatus(currentSetence.idx);
+			const idx = currentSetence.idx;
 			onClickHandler(null, MODE.DAILY_SENTENCE_RELATION_INFO_READ, dailySentenceList[idx].dailySentenceId)
 			.then(res => {
 				const result = res.reduce((acc, { matchedWord, wordId }) => {
@@ -86,13 +88,17 @@ function DailySentenceView({
 		})
 	}
 
-	const handleWordViewModal = () => e => {
-		wordViewModal(FullModal, WordDetailView,{})
+	const handleWordViewModal = wordId => () => {
+		// 연관 단어를 클릭하면 단어의 전체 정보 출력
+		onClickHandler(null, MODE.SINGLE_READ, wordId)
+		.then(res => {
+			wordViewModal(FullModal, WordDetailView, {wordList: res});
+		});
 	}
 
 	const relationWord = currentSetence.dailyWords.map((val, idx) => {
 		return <React.Fragment key={`dailyWords${idx}`}>
-						<li ref={el => relationWordRef.current[val.wordId] = el} onClick={handleWordViewModal()}>
+						<li ref={el => relationWordRef.current[val.wordId] = el} onClick={handleWordViewModal(val.wordId)}>
 							<p className="daily_sentence_view_relative_word_name">{val.word}</p>
 							<p className="daily_sentence_view_relative_word_mean">{val.mean}</p>
 						</li>

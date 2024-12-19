@@ -8,6 +8,7 @@ import Toast from "@/components/layout/popup/Toast"
 
 export const MODE = {
     READ: "read",
+    SINGLE_READ: "singleRead",
     SEARCH_ALL: "all",
     SEARCH: "search",
     DELETE: "delete",
@@ -79,6 +80,9 @@ function useEvntHandler(e, modeType, data, func){
         async read(_, query){
             const res = await executeSrvConnect("get", `word${query}`, null, {isUpdate: false, returnMsg: false});
             return res;
+        },
+        async singleRead(_, id) {
+            return await executeSrvConnect("get", `word/item/${id}`, null, {isUpdate: false, returnMsg: false});
         },
         async search(e, query){
             const res = await executeSrvConnect("get", `word/${query}`, null, {isUpdate:false, isLoading: false, returnMsg: false});
