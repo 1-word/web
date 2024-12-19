@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import MyDeault_SVG from "@images/myImgDefault.svg";
 import WordList from "@components/word/WordList";
 import Store, {MEMORIZATION_TYPE} from "@/store/store";
@@ -15,8 +15,10 @@ function Word(){
     // Store 사용
     const {memorization, setMemorization} = Store(state=>state);
 		const { folderId } = useParams();
-		const { setWordList, savePreviousWordList, wordListRestore, preventDisableFunc } = wordListStore(state => state);
+		const { setWordList, savePreviousWordList, wordListRestore, preventDisableFunc, updateStart } = wordListStore(state => state);
 
+		const [ sort, setSort ] = useState("current");
+		
 		const pageRef = useRef({
 			current: 0,
 			lastWordId: null,
@@ -78,6 +80,9 @@ function Word(){
 				}, {
 					name: "folderId",
 					value: folderId
+				}, {
+					name: "readType",
+					value: sort
 				}];
 
 				const query = Pagination.getPageParameter(queryParams);
@@ -106,6 +111,9 @@ function Word(){
 					},{
 						name: "folderId",
 						value: folderId
+					}, {
+						name: "readType",
+						value: sort
 					}];
 
 				const query = Pagination.getPageParameter(queryParams);
@@ -115,6 +123,11 @@ function Word(){
 					preventDisableFunc();
 				})
     }
+
+		const sortOnClick = type => () => {
+			setSort(type);
+			updateStart();
+		}
 
     return (
     <div className="wrap">
@@ -139,14 +152,14 @@ function Word(){
 					</ul>
 					{/* 조회 순서 */}
 					<ul className="word_tab_view flex">
-						<li className="active">등록순</li>
-						<li>최신순</li>
+						<li className={sort === "current"? "active" : ""} onClick={sortOnClick("current")}>등록순</li>
+						<li className={sort === "update"? "active" : ""} onClick={sortOnClick("update")}>최신순</li>
 					</ul>
 				</div>
 				
 				{/* 단어 리스트 */}
         <div className="word_wrap">
-            <WordList memorization={memorization}></WordList>
+            <WordList memorization={memorization} sort={sort}></WordList>
         </div>
 				<Footer></Footer>
      </div>

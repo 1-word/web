@@ -32,7 +32,7 @@ function WordList(props) {
     const [folderMoveModal] = useModal("foldercog");
     const [moreModal] = useModal("more");
     const [editModal] = useModal("edit");
-		const [memoToast] = useModal("memotoast");
+	const [memoToast] = useModal("memotoast");
     const obsRef = useRef();
 
     useEffect(() => {
@@ -58,6 +58,9 @@ function WordList(props) {
             }, {
                 name: "folderId",
                 value: folderId
+            }, {
+                name: "readType",
+                value: props.sort
             }];
 
             const query = Pagination.getPageParameter(queryParams);
@@ -84,6 +87,9 @@ function WordList(props) {
             }, {
                 name: "folderId",
                 value: folderId
+            }, {
+                name: "readType",
+                value: props.sort
             }];
 
             const query = Pagination.getPageParameter(queryParams);
