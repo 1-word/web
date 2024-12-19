@@ -1,4 +1,4 @@
-import React, {useEffect,useState} from "react";
+import React, {useEffect,useRef,useState} from "react";
 import { useModal } from "@/hook/_hooks";
 import FullModal from "@/components/layout/popup/FullModal";
 import CenterModal from "../layout/popup/CenterModal";
@@ -17,6 +17,7 @@ function DailySentenceView({
 	const [editModal] = useModal('edit');
 	const [deleteModal] = useModal('delete');
 	const onClickHandler = api();
+	const relationWordRef = useRef({});
 
 	const [disabled, setDisabled] = useState({
 		prev: false,
@@ -28,6 +29,8 @@ function DailySentenceView({
 		idx: 0,
 	});
 
+	const [relationWordInfo, setRelationWordInfo] = useState([]);
+
 	useEffect(() => {
 		if (dailySentenceList) {
 			setCurrentSentence({
@@ -38,7 +41,17 @@ function DailySentenceView({
 	},[]);
 
 	useEffect(() => {
-		checkButtonStatus(currentSetence.idx);
+		if (currentSetence.dailyWords.length !== 0) {
+			checkButtonStatus(currentSetence.idx);
+			onClickHandler(null, MODE.DAILY_SENTENCE_RELATION_INFO_READ, dailySentenceList[idx].dailySentenceId)
+			.then(res => {
+				const result = res.reduce((acc, { matchedWord, wordId }) => {
+					acc[matchedWord] = wordId;
+					return acc;
+				}, {});
+				setRelationWordInfo(result);
+			})
+		}
 	}, [currentSetence]);
 	
 	const handleEditModal = () => e => {
@@ -71,7 +84,7 @@ function DailySentenceView({
 
 	const relationWord = currentSetence.dailyWords.map((val, idx) => {
 		return <React.Fragment key={`dailyWords${idx}`}>
-						<li>
+						<li ref={el => relationWordRef.current[val.wordId] = el}>
 							<p className="daily_sentence_view_relative_word_name">{val.word}</p>
 							<p className="daily_sentence_view_relative_word_mean">{val.mean}</p>
 						</li>
@@ -122,6 +135,25 @@ function DailySentenceView({
 		setDisabled(newDisabled);
 	}
 
+	const markTextOnClick = wordId => e => {
+		const relationWords = relationWordRef.current;
+		Object.keys(relationWords).forEach(id => relationWords[id].classList.remove("on"));
+		relationWords[wordId].classList.add("on");
+	}
+
+	// 문자열에서 HTML 태그를 렌더링 가능하도록 변환
+	const createMarkText = (text) => {
+		const regex = /<\/?strong>/g; // 
+		return text?.split(regex)?.map((s, index) => {
+			if (index % 2 === 1) {
+				const wordId = relationWordInfo[s];
+				return <strong key={index} onClick={markTextOnClick(wordId)}>{s}</strong>;
+			} else {
+				return s;
+			}
+		});
+	};
+
 	return(
 		<>
 			<div className="daily_sentence_view_head">
@@ -135,7 +167,7 @@ function DailySentenceView({
 			</div>
 			<div className="daily_sentence_view_area">
 				<p className="daily_sentence_view_sentence">
-					{currentSetence.sentence}
+				{createMarkText(currentSetence.tagSentence)}
 				</p>
 				<p className="daily_sentence_view_mean">
 					{currentSetence.mean}

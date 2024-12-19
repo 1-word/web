@@ -50,6 +50,7 @@ export const MODE = {
     DAILY_SENTENCE_UPDATE: "dailySentenceUpdate",
     DAILY_SENTENCE_DELETE: "dailySentenceDelete",
     DAILY_SENTENCE_DAYS_READ: "dailySentenceDaysRead",
+    DAILY_SENTENCE_RELATION_INFO_READ: "dailySentenceRelationInfoRead",
 }
 
 /**
@@ -236,6 +237,9 @@ function useEvntHandler(e, modeType, data, func){
             await executeSrvConnect('delete', `daily-sentence/${id}`, null, {isUpdate: false});
             activeToast('문장 삭제가 완료되었습니다.');
         },
+        async dailySentenceRelationInfoRead(_, id) {
+            return await executeSrvConnect('get', `daily-sentence/relation/${id}`, null, {isUpdate: false});
+        }
         // 오늘의 내 문장 끝
     }
 

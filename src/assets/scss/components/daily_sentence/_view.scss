@@ -40,6 +40,9 @@
 	}
 	&_sentence{
 		font-weight: bold;
+		strong{
+			color: $main-accent-color;
+		}
 	}
 	&_mean{
 		opacity: 0.8;
