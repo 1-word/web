@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import MyDeault_SVG from "@images/myImgDefault.svg";
 import WordList from "@components/word/WordList";
 import Store, {MEMORIZATION_TYPE} from "@/store/store";
@@ -15,8 +15,10 @@ function Word(){
     // Store 사용
     const {memorization, setMemorization} = Store(state=>state);
 		const { folderId } = useParams();
-		const { setWordList, savePreviousWordList, wordListRestore, preventDisableFunc } = wordListStore(state => state);
+		const { setWordList, savePreviousWordList, wordListRestore, preventDisableFunc, updateStart } = wordListStore(state => state);
 
+		const [ sort, setSort ] = useState("current");
+		
 		const pageRef = useRef({
 			current: 0,
 			lastWordId: null,
@@ -65,22 +67,15 @@ function Word(){
 					setPage(page);	
 				}
 
-				// 페이징 처리
-				const queryParams = [{
-						name: "current",
-						value: page.current ?? 0
-				}, {
-						name: "lastWordId",
-						value: page.lastWordId
-				}, {
-					name: "memorization",
-					value: memorization
-				}, {
-					name: "folderId",
-					value: folderId
-				}];
+				const queryParams = {
+					current: page.current ?? 0,
+					lastWordId: page.lastWordId,
+					memorization,
+					folderId,
+					readType: sort
+				}
 
-				const query = Pagination.getPageParameter(queryParams);
+				const query = Pagination.getQueryParameter(queryParams);
 
         onClickHandler(null, MODE.SEARCH, searchText + query)
 				.then((res => {
@@ -97,24 +92,26 @@ function Word(){
     const handleMemorizeClick = (status) => e => {
         setMemorization(status);
 
-				const queryParams = [{
-					name: "current",
-					value: 0,
-					},{
-						name: "memorization",
-						value: status
-					},{
-						name: "folderId",
-						value: folderId
-					}];
+				const queryParams = {
+					current: 0,
+					memorization: status,
+					folderId,
+					readType: sort
+				}
 
-				const query = Pagination.getPageParameter(queryParams);
+				const query = Pagination.getQueryParameter(queryParams);
+
 				onClickHandler(null, MODE.READ, query)
 				.then(res => {
 					setWordList(res);
 					preventDisableFunc();
 				})
     }
+
+		const sortOnClick = type => () => {
+			setSort(type);
+			updateStart();
+		}
 
     return (
     <div className="wrap">
@@ -139,14 +136,14 @@ function Word(){
 					</ul>
 					{/* 조회 순서 */}
 					<ul className="word_tab_view flex">
-						<li className="active">등록순</li>
-						<li>최신순</li>
+						<li className={sort === "current"? "active" : ""} onClick={sortOnClick("current")}>등록순</li>
+						<li className={sort === "update"? "active" : ""} onClick={sortOnClick("update")}>업데이트순</li>
 					</ul>
 				</div>
 				
 				{/* 단어 리스트 */}
         <div className="word_wrap">
-            <WordList memorization={memorization}></WordList>
+            <WordList memorization={memorization} sort={sort}></WordList>
         </div>
 				<Footer></Footer>
      </div>
