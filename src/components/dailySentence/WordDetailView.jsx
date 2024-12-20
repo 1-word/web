@@ -62,7 +62,7 @@ function WordDetailView({wordList}){
 						<div className="word_card_name word_detail_name">{currentWordList?.word}</div>
 						<div className="word_card_read">{currentWordList?.read}</div>
 						<button className="word_card_headset word_detail_headset">
-							<i ref={headSetRef} className="xi-headset" onClick={headSetBtnOnClick(currentWordList?.soundPath)}></i>
+							<i ref={headSetRef} className="xi-headset listen" onClick={headSetBtnOnClick(currentWordList?.soundPath)}></i>
 						</button>
 						<div className="word_card_mean_wrap word_detail_mean_wrap">
 							{
