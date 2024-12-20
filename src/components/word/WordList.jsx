@@ -267,7 +267,7 @@ function WordList(props) {
                 </div>
                 {/* 메모 */}
                 <div className="word_card_foot">
-                    <div><span>{data?.createTime}</span></div>
+                    <div><span>{props.sort === "update"? data?.updateTime : data?.createTime}</span></div>
                     <button className={memoStatus[idx]?.status === "ON" ? "word_card_memo on" : "word_card_memo"}><i className="xi-comment-o" onClick={handleMemoClick(idx)}></i></button>
                 </div>
             </div>

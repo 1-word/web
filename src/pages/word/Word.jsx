@@ -137,7 +137,7 @@ function Word(){
 					{/* 조회 순서 */}
 					<ul className="word_tab_view flex">
 						<li className={sort === "current"? "active" : ""} onClick={sortOnClick("current")}>등록순</li>
-						<li className={sort === "update"? "active" : ""} onClick={sortOnClick("update")}>최신순</li>
+						<li className={sort === "update"? "active" : ""} onClick={sortOnClick("update")}>업데이트순</li>
 					</ul>
 				</div>
 				
