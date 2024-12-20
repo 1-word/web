@@ -45,25 +45,15 @@ function WordList(props) {
         if (update) {
             setUpdateFlag(false);
 
-            // 처음 데이터 조회이므로 쿼리 파라미터 초기화
-            const queryParams = [{
-                name: "current",
-                value: 0,
-            }, {
-                name: "lastWordId",
-                value: null,
-            }, {
-                name: "memorization",
-                value: memorization, 
-            }, {
-                name: "folderId",
-                value: folderId
-            }, {
-                name: "readType",
-                value: props.sort
-            }];
+            const queryParams = {
+                current: 0,
+                lastWordId: null,
+                memorization,
+                folderId,
+                readType: props.sort
+            }
 
-            const query = Pagination.getPageParameter(queryParams);
+            const query = Pagination.getQueryParameter(queryParams);
 
             onClickHandler(null, MODE.READ, query)
                 .then(res => {
@@ -75,24 +65,16 @@ function WordList(props) {
 
     useEffect(()=> {
         if (obsPage > -1 && wordList.page?.hasNext){
-            const queryParams = [{
-                name: "current",
-                value: wordList.page.current ?? 0
-            }, {
-                name: "lastWordId",
-                value: wordList.page.lastWordId
-            }, {
-                name: "memorization",
-                value: memorization
-            }, {
-                name: "folderId",
-                value: folderId
-            }, {
-                name: "readType",
-                value: props.sort
-            }];
+            const queryParams = {
+                current: wordList.page.current ?? 0,
+                lastWordId: wordList.page.lastWordId,
+                memorization,
+                folderId,
+                readType: props.sort
+            }
 
-            const query = Pagination.getPageParameter(queryParams);
+            const query = Pagination.getQueryParameter(queryParams);
+
             onClickHandler(null, MODE.READ, query)
                 .then(res => {
                     addWordList(res);

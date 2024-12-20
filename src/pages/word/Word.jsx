@@ -67,25 +67,15 @@ function Word(){
 					setPage(page);	
 				}
 
-				// 페이징 처리
-				const queryParams = [{
-						name: "current",
-						value: page.current ?? 0
-				}, {
-						name: "lastWordId",
-						value: page.lastWordId
-				}, {
-					name: "memorization",
-					value: memorization
-				}, {
-					name: "folderId",
-					value: folderId
-				}, {
-					name: "readType",
-					value: sort
-				}];
+				const queryParams = {
+					current: page.current ?? 0,
+					lastWordId: page.lastWordId,
+					memorization,
+					folderId,
+					readType: sort
+				}
 
-				const query = Pagination.getPageParameter(queryParams);
+				const query = Pagination.getQueryParameter(queryParams);
 
         onClickHandler(null, MODE.SEARCH, searchText + query)
 				.then((res => {
@@ -102,21 +92,15 @@ function Word(){
     const handleMemorizeClick = (status) => e => {
         setMemorization(status);
 
-				const queryParams = [{
-					name: "current",
-					value: 0,
-					},{
-						name: "memorization",
-						value: status
-					},{
-						name: "folderId",
-						value: folderId
-					}, {
-						name: "readType",
-						value: sort
-					}];
+				const queryParams = {
+					current: 0,
+					memorization: status,
+					folderId,
+					readType: sort
+				}
 
-				const query = Pagination.getPageParameter(queryParams);
+				const query = Pagination.getQueryParameter(queryParams);
+
 				onClickHandler(null, MODE.READ, query)
 				.then(res => {
 					setWordList(res);

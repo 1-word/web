@@ -1,14 +1,27 @@
 export class Pagination {
-  constructor() {
+  constructor() {}
 
-  }
-
-  static isEnd({page}) {
-    if (page?.hasNext) {
-      return false;
+  static getQueryParameter({current, lastWordId, folderId, searchText, memorization, lang, readType}) {
+    const params = {
+      current,
+      lastWordId,
+      folderId,
+      searchText,
+      memorization,
+      lang,
+      readType
     }
-    return true;
+
+    return Object.keys(params).reduce((acc, key) => {
+      const value = params[key];
+      if (value === undefined || value === null) {
+        return acc;
+      } 
+      const result = `${key}=${value}`;
+      return acc + (acc=== ''? '?' : '&') + result;  
+    }, '');
   }
+
 
   /**
    * 
