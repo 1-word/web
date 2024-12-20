@@ -19,7 +19,7 @@ function DailySentenceView({
 	const [deleteModal] = useModal('delete');
 	const [wordViewModal] = useModal('wordView')
 	const onClickHandler = api();
-	const relationWordRef = useRef({});
+	const relationWordRef = useRef(null);
 
 	const [dropped, setDropped] = useState(false);
 
@@ -45,6 +45,10 @@ function DailySentenceView({
 	},[]);
 
 	useEffect(() => {
+		const relationWords = relationWordRef.current;
+		if (relationWords !== null) {
+			Object.keys(relationWords).forEach(id => relationWords[id]?.classList?.remove("on"));
+		}
 		relationWordRef.current = {};
 		if (currentSetence.dailyWords.length !== 0) {
 			checkButtonStatus(currentSetence.idx);
