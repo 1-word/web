@@ -1,12 +1,52 @@
 import WordDetailList from "@/components/word/WordDetailList";
-function WordDetailView(){
+import api, { MODE } from "@/services/api";
+import { useEffect, useRef, useState } from "react";
+
+function WordDetailView({wordList}){
+	const headSetRef = useRef(null);
+	const onClickHandler = api();
+
+	const [ currentWordList, setCurrentWordList ] = useState({});
+
+	useEffect(() => {
+		setCurrentWordList(wordList);
+	}, []);
+
+	const headSetBtnOnClick = soundPath => e => {
+		const audio_data = {
+			"sound_path": soundPath,
+			"id": 0 
+		}
+
+		headSetRef.current.classList.add("on");
+		onClickHandler(null, MODE.AUDIO_PLAY, audio_data, handleAudioEnd);
+	}
+
+	const handleAudioEnd = () => e => {
+		headSetRef.current.classList.remove("on");
+	}
+
+	const handleCheckClick = (wordId, status) => e => {
+		const current = status === 'Y' ? 'N' : 'Y';
+		onClickHandler(e, MODE.MEMORIZATION, wordId, { memorization: current })
+		.then(() => {
+			setCurrentWordList(prev => {
+				return {
+					...prev,
+					memorization: current
+				}
+			});
+		});
+	}
+
 	return(
 		<>
 			<div className="word_detail_wrap">
 				<div className="word_detail_cont">
 					<div className="word_detail_top">
-						<div className="daily_sentence_view_date">2024-02-25</div>
-						<button className="word_card_check">
+						<div className="daily_sentence_view_date">{currentWordList?.createTime}</div>
+						<button className={currentWordList?.memorization === "Y"? "word_card_check on" : "word_card_check"}
+										onClick={handleCheckClick(currentWordList?.wordId, currentWordList?.memorization)}>
 							<i className="check_ani">
 								<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 									<path className="border" d="M9.91475 0.893067C4.9913 0.952124 1.04788 4.9913 1.10693 9.91475C1.16599 14.8385 5.20516 18.7816 10.1286 18.7226C15.0523 18.6635 18.9955 14.6246 18.9364 9.70088C18.8774 4.77743 14.8385 0.834007 9.91475 0.893067ZM10.1155 17.6258C5.81437 17.6774 2.27287 14.2025 2.22128 9.90134C2.16968 5.60026 5.62703 2.05897 9.92811 2.00738C14.2292 1.95578 17.7705 5.41314 17.8221 9.71421C17.8737 14.0153 14.4165 17.5742 10.1155 17.6258Z" fill="#666666" />
@@ -19,17 +59,19 @@ function WordDetailView(){
 						</button>
 					</div>
 					<div className="word_detail">
-						<div className="word_card_name word_detail_name">apple</div>
-						<div className="word_card_read">[adad]</div>
+						<div className="word_card_name word_detail_name">{currentWordList?.word}</div>
+						<div className="word_card_read">{currentWordList?.read}</div>
 						<button className="word_card_headset word_detail_headset">
-							<i className="xi-headset"></i>
+							<i ref={headSetRef} className="xi-headset" onClick={headSetBtnOnClick(currentWordList?.soundPath)}></i>
 						</button>
 						<div className="word_card_mean_wrap word_detail_mean_wrap">
-							<div className="word_card_mean_list">
-								1. 사과 2.애플
-							</div>
+							{
+								currentWordList?.mean?.split(",")?.map((value, idx) =>
+										<div key={idx} className="word_card_mean_list">{idx + 1}.{value}</div>
+								)
+              }
 						</div>
-						<WordDetailList></WordDetailList>
+						<WordDetailList details={currentWordList?.details}></WordDetailList>
 					</div>
 				</div>
 			</div>

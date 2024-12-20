@@ -32,7 +32,7 @@ function WordList(props) {
     const [folderMoveModal] = useModal("foldercog");
     const [moreModal] = useModal("more");
     const [editModal] = useModal("edit");
-		const [memoToast] = useModal("memotoast");
+	const [memoToast] = useModal("memotoast");
     const obsRef = useRef();
 
     useEffect(() => {
@@ -45,22 +45,15 @@ function WordList(props) {
         if (update) {
             setUpdateFlag(false);
 
-            // 처음 데이터 조회이므로 쿼리 파라미터 초기화
-            const queryParams = [{
-                name: "current",
-                value: 0,
-            }, {
-                name: "lastWordId",
-                value: null,
-            }, {
-                name: "memorization",
-                value: memorization, 
-            }, {
-                name: "folderId",
-                value: folderId
-            }];
+            const queryParams = {
+                current: 0,
+                lastWordId: null,
+                memorization,
+                folderId,
+                readType: props.sort
+            }
 
-            const query = Pagination.getPageParameter(queryParams);
+            const query = Pagination.getQueryParameter(queryParams);
 
             onClickHandler(null, MODE.READ, query)
                 .then(res => {
@@ -72,21 +65,16 @@ function WordList(props) {
 
     useEffect(()=> {
         if (obsPage > -1 && wordList.page?.hasNext){
-            const queryParams = [{
-                name: "current",
-                value: wordList.page.current ?? 0
-            }, {
-                name: "lastWordId",
-                value: wordList.page.lastWordId
-            }, {
-                name: "memorization",
-                value: memorization
-            }, {
-                name: "folderId",
-                value: folderId
-            }];
+            const queryParams = {
+                current: wordList.page.current ?? 0,
+                lastWordId: wordList.page.lastWordId,
+                memorization,
+                folderId,
+                readType: props.sort
+            }
 
-            const query = Pagination.getPageParameter(queryParams);
+            const query = Pagination.getQueryParameter(queryParams);
+
             onClickHandler(null, MODE.READ, query)
                 .then(res => {
                     addWordList(res);
@@ -279,7 +267,7 @@ function WordList(props) {
                 </div>
                 {/* 메모 */}
                 <div className="word_card_foot">
-                    <div><span>{data?.createTime}</span></div>
+                    <div><span>{props.sort === "update"? data?.updateTime : data?.createTime}</span></div>
                     <button className={memoStatus[idx]?.status === "ON" ? "word_card_memo on" : "word_card_memo"}><i className="xi-comment-o" onClick={handleMemoClick(idx)}></i></button>
                 </div>
             </div>
