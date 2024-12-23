@@ -6,9 +6,17 @@ import VocabookList from "@/components/word/folder/VocaBookList";
 import Quiz from "@/components/learn/quiz/Quiz";
 import Result from "@/components/learn/quiz/Result";
 import QuizImg from "@/assets/images/quiz.svg";
-import FlashImg from "@/assets/images/flash.svg"
+import FlashImg from "@/assets/images/flash.svg";
+import { useModal } from "@/hook/_hooks";
+import FullModal from "@/components/layout/popup/FullModal";
+import BeforeLearn from "@/components/learn/BeforeLearn";
 
 function Learn(){
+	const [beforeLearnModal] = useModal('beforeLearnModal');
+
+	const handleBeforeLearnModal = () => e => {
+		beforeLearnModal(FullModal,BeforeLearn,{})
+	}
 	return(
 		<div className="wrap">
 			<HeaderMini title="단어 학습"></HeaderMini>
@@ -18,7 +26,7 @@ function Learn(){
 				<div className="word_learn_cont">
 					<h2 className="word_learn_title">학습 방법을 선택해주세요</h2>
 						<ul className="method_choose_lists">
-							<li className="method_choose_list">
+							<li className="method_choose_list" onClick={handleBeforeLearnModal()}>
 								<div className="method_choose_img">
 									<img src={QuizImg} alt="퀴즈" />
 								</div>

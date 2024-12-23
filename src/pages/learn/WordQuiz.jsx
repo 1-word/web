@@ -25,25 +25,9 @@ function WordQuiz(){
 			<HeaderMini title="단어 학습"></HeaderMini>
 			<LeftFix></LeftFix>
 			<BottomNav active="learn"></BottomNav>
-			<div className="word_quiz_wrap">
-				<div className="word_quiz_cont">
-					{
-						!next.quiz &&
-						<>
-							<h2 className="word_quiz_title">퀴즈에 사용할 단어장을 선택해주세요</h2>
-							<ul className="word_quiz_vocabook_lists">
-								<li>
-									단어장1
-								</li>
-								<li>
-									단어장1
-								</li>
-							</ul>
-							<div className="word_quiz_btn_wrap">
-								<button className="btn-fill sizeL" onClick={handleQuizPhaze}>다음 단계</button>
-							</div>
-						</>
-					}
+			<div className="word_learn_wrap">
+				<div className="word_learn_cont">
+					<Quiz></Quiz>
 					{
 						(next.quiz) === true ? <Quiz></Quiz> :
 						(next.result) === true ? <Result></Result> :
