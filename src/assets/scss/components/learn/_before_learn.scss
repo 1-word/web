@@ -1,0 +1,39 @@
+.before_learn{
+	&_wrap{
+		margin-top: 24px;
+	}
+	&_choose{
+		margin-top: 16px;
+		font-size: 12px;
+	}
+	&_title{
+		font-size: 12px;
+	}
+	&_contents{
+		margin-top: 10px;
+		display: flex;
+		width: 100%;
+	}
+	&_select{
+		flex-direction: column;
+	}
+	&_list{
+		padding: 0 12px;
+		line-height: 44px;
+		border-bottom: 1px solid $default-ddd;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		cursor: pointer;
+		.check_icon{
+			transition: all 0.24s cubic-bezier(0.47, 0, 0.745, 0.715);
+			stroke-dashoffset: 64;
+		}
+		&.on{
+			color: $main-accent-color;
+			.check_icon{
+				stroke-dashoffset: 0;
+			}
+		}
+	}
+}
