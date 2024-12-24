@@ -52,6 +52,7 @@ export const MODE = {
     DAILY_SENTENCE_DELETE: "dailySentenceDelete",
     DAILY_SENTENCE_DAYS_READ: "dailySentenceDaysRead",
     DAILY_SENTENCE_RELATION_INFO_READ: "dailySentenceRelationInfoRead",
+    POST_IMAGE_UPLOAD: "postImageUpload",
 }
 
 /**
@@ -243,8 +244,11 @@ function useEvntHandler(e, modeType, data, func){
         },
         async dailySentenceRelationInfoRead(_, id) {
             return await executeSrvConnect('get', `daily-sentence/relation/${id}`, null, {isUpdate: false});
-        }
+        },
         // 오늘의 내 문장 끝
+        async postImageUpload(_, {path, formData}) {
+            return await executeSrvConnect('post', `files/upload/images/${path}`, formData, {isUpdate: false});
+        },
     }
 
     /**
