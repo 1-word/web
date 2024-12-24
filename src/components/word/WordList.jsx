@@ -47,7 +47,7 @@ function WordList(props) {
 
             const queryParams = {
                 current: 0,
-                lastWordId: null,
+                lastId: null,
                 memorization,
                 folderId,
                 readType: props.sort
@@ -67,7 +67,7 @@ function WordList(props) {
         if (obsPage > -1 && wordList.page?.hasNext){
             const queryParams = {
                 current: wordList.page.current ?? 0,
-                lastWordId: wordList.page.lastWordId,
+                lastId: wordList.page.lastId,
                 memorization,
                 folderId,
                 readType: props.sort

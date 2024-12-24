@@ -21,7 +21,7 @@ function Word(){
 		
 		const pageRef = useRef({
 			current: 0,
-			lastWordId: null,
+			lastId: null,
 		});
 
     const onClickHandler = api();
@@ -38,7 +38,7 @@ function Word(){
 					savePreviousWordList();
 					page = {
 						current: 0,
-						lastWordId: null,
+						lastId: null,
 						folderId
 					};
 					setPage(page);
@@ -62,14 +62,14 @@ function Word(){
 				if (searchText !== previousSearchText) {
 					page = {
 						current: 0,
-						lastWordId: null,
+						lastId: null,
 					};
 					setPage(page);	
 				}
 
 				const queryParams = {
 					current: page.current ?? 0,
-					lastWordId: page.lastWordId,
+					lastId: page.lastId,
 					memorization,
 					folderId,
 					readType: sort
