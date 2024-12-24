@@ -1,10 +1,10 @@
 export class Pagination {
   constructor() {}
 
-  static getQueryParameter({current, lastWordId, folderId, searchText, memorization, lang, readType}) {
+  static getQueryParameter({current, lastId, folderId, searchText, memorization, lang, readType}) {
     const params = {
       current,
-      lastWordId,
+      lastId,
       folderId,
       searchText,
       memorization,
