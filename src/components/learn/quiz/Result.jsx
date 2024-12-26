@@ -5,19 +5,21 @@ function Result(){
 	const [persentState,setPersentState] = useState({
 		score: 0,
 		aniVal: "",
+		aniLength: 0,
 	});
 	const updateAniVal = (newScore) => {
-		const maxAniVal = 72;
+		const maxAniVal = document.querySelector('.vocabox-persent path').getTotalLength();
 		const percentage = 1 - newScore / 100;
 		const calculatedAniVal = maxAniVal * percentage;
 	
 		setPersentState({
 			score: newScore,
 			aniVal: `${maxAniVal};${calculatedAniVal}`,
+			aniLength: maxAniVal
 		});
 	};
 	useEffect(()=>{
-		updateAniVal(40);
+		updateAniVal(50);
 	},[])
 	return(
 		<>
@@ -26,7 +28,7 @@ function Result(){
 				<div className="quiz_result_top">
 					<div className="quiz_result_ani">
 						<div>
-							<svg className="vocabox-persent" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"><path fill="none" stroke="#946CF4" strokeDasharray="64" strokeDashoffset="64" strokeLinejoin="round" strokeWidth="3" d="M3 12c0 -4.97 4.03 -9 9 -9c4.97 0 9 4.03 9 9c0 4.97 -4.03 9 -9 9c-4.97 0 -9 -4.03 -9 -9Z">
+							<svg className="vocabox-persent" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"><path fill="none" stroke="#946CF4" strokeDasharray={persentState.aniLength} strokeDashoffset={persentState.aniLength} strokeLinejoin="round" strokeWidth="3" d="M3 12c0 -4.97 4.03 -9 9 -9c4.97 0 9 4.03 9 9c0 4.97 -4.03 9 -9 9c-4.97 0 -9 -4.03 -9 -9Z">
 								<animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values={persentState.aniVal}/></path>
 							</svg>
 						</div>
