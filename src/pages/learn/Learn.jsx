@@ -14,8 +14,16 @@ import BeforeLearn from "@/components/learn/BeforeLearn";
 function Learn(){
 	const [beforeLearnModal] = useModal('beforeLearnModal');
 
-	const handleBeforeLearnModal = () => e => {
-		beforeLearnModal(FullModal,BeforeLearn,{})
+	const handleModalQuiz = (e) => e => {
+		beforeLearnModal(FullModal,BeforeLearn,{
+			learnType: "quiz",
+		})
+	}
+
+	const handleModalMemorize = (e) => e => {
+		beforeLearnModal(FullModal,BeforeLearn,{
+			learnType: "memorize",
+		})
 	}
 	return(
 		<div className="wrap">
@@ -26,7 +34,7 @@ function Learn(){
 				<div className="word_learn_cont">
 					<h2 className="word_learn_title">학습 방법을 선택해주세요</h2>
 						<ul className="method_choose_lists">
-							<li className="method_choose_list" onClick={handleBeforeLearnModal()}>
+							<li className="method_choose_list" onClick={handleModalQuiz()}>
 								<div className="method_choose_img">
 									<img src={QuizImg} alt="퀴즈" />
 								</div>
@@ -34,7 +42,7 @@ function Learn(){
 								<p className="method_choose_sub_title">퀴즈 형식</p>
 								<p className="method_choose_contents">사지선다로 퀴즈를 낼거에요</p>
 							</li>
-							<li className="method_choose_list">
+							<li className="method_choose_list" onClick={handleModalMemorize()}>
 								<div className="method_choose_img">
 									<img src={FlashImg} alt="플래시" />
 								</div>

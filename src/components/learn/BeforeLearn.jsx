@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
-function BeforeLearn({deleteModalAfterTime}){
+function BeforeLearn({deleteModalAfterTime,learnType}){
 	const selectRef = useRef([]);
 
 	const handleSelectItems = (refIdx,id,e) => {
@@ -89,7 +89,12 @@ function BeforeLearn({deleteModalAfterTime}){
 					</ul>
 				</div>
 				<div className="modal_full_btn_wrap">
-					<Link to="/quiz" className="btn-fill sizeL" onClick={() => deleteModalAfterTime(0)}>학습 시작</Link>
+					{
+						learnType === "quiz" ? 
+						<Link to="/quiz" className="btn-fill sizeL" onClick={() => deleteModalAfterTime(0)}>학습 시작</Link>
+						: 
+						<Link to="/memorize" className="btn-fill sizeL" onClick={() => deleteModalAfterTime(0)}>학습 시작</Link>
+					}
 				</div>
 			</div>
 		</>

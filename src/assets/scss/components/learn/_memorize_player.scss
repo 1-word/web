@@ -1,0 +1,64 @@
+.memorize_player{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 24px 14px 0 14px;
+	gap: 16px;
+	&_list{
+		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 12px 0;
+		cursor: pointer;
+	}
+	i{
+		width: 36px;
+		height: 36px;
+		@include deviceSmall(){
+			width: 24px;
+			height: 24px;
+		}
+	}
+	.check_ani{
+		svg{
+			width: 32px;
+			height: 32px;
+			@include deviceSmall(){
+				width: 20px;
+				height: 20px;
+			}
+		}
+	}
+	&_prev{
+		@include icon(){
+			background-image: icon(prevPlayer);
+		}
+	}
+	&_play{
+		@include icon(){
+			background-image: icon(playPlayer);
+		}
+	}
+	&_stop{
+		@include icon(){
+			background-image: icon(stopPlayer);
+		}
+	}
+	&_next{
+		@include icon(){
+			background-image: icon(prevPlayer);
+			transform: rotateY(180deg);
+		}
+	}
+	&_eye{
+		@include icon(){
+			background-image: icon(eye);
+		}
+	}
+	&_close_eye{
+		@include icon(){
+			background-image: icon(closeEye);
+		}
+	}
+}
