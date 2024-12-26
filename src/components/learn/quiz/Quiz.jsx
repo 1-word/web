@@ -54,8 +54,8 @@ function Quiz(){
 						<div className="quiz_answer_area">
 							<ul className="quiz_answer_lists">
 								<li className="correct" onClick={handleAnswer}>사과</li>
-								<li className="active">바나나</li>
-								<li>맛있겠따</li>
+								<li>바나나</li>
+								<li className="wrong">맛있겠따</li>
 								<li>냠냠</li>
 							</ul>
 						</div>
