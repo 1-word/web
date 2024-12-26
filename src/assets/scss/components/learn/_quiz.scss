@@ -64,15 +64,15 @@
 				justify-content: center;
 				border: 1px solid $default-ddd;
 				border-radius: $sub-br;
+				cursor: pointer;
 				&.correct{
-					border: 1px solid $main-accent-color;
-					background-color: $main-accent-color;
+					border: 1px solid $main-accent-color !important;
+					background-color: $main-accent-color !important;
 					color: $default-fff;
 				}
-				&.active{
-					border-color: transparent;
-					background-color: $main-bg-color;
-					color: $main-accent-color;
+				&.wrong{
+					border-color: $default-error-color;
+					color: $default-error-color;
 				}
 		}
 	}
