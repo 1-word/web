@@ -15,6 +15,7 @@ import DailySentence from '@/pages/dailySentence/DailySentence';
 import WordDetailView from '@/components/dailySentence/WordDetailView';
 import VocaBook from '@/pages/word/VocaBook';
 import WordQuiz from '@/pages/learn/WordQuiz';
+import WordMemorize from '@/pages/learn/WordMemorize';
 import ErrorPage from '@/pages/ErrorPage';
 import Learn from './pages/learn/Learn';
 
@@ -42,6 +43,7 @@ function App() {
       <Route path="/daily-sentence/view" element={<WordDetailView />}/>
       <Route path="/vocabook" element={<VocaBook />}/>
       <Route path="/quiz" element={<WordQuiz />}/>
+      <Route path="/memorize" element={<WordMemorize />}/>
       <Route path="/learn" element={<Learn />}/>
       <Route path="/*" element={<ErrorPage />}/>
     </Routes> 
