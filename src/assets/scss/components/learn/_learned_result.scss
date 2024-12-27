@@ -1,0 +1,45 @@
+.word_learn_result{
+	&_lists{
+		margin: 24px 0;
+	}
+	&_list{
+		padding: 10px 14px;
+		border-bottom: 1px solid $default-ddd;
+		background-color: $default-fff;
+		display: flex;
+		justify-content: space-between;
+		>div{}
+	}
+	&_time{
+		font-size: 12px;
+		color: $sub-text-color;
+	}
+	&_method{
+		margin-top: 10px;
+	}
+	&_persent{
+		width: 40px;
+		height: 40px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 12px;
+		font-weight: bold;
+		border-radius: 50%;
+		background-color: $main-bg-color;
+		border-style: solid;
+		border-width: 1px;
+		border-color: $default-ddd;
+		color: $sub-text-color;
+		&.over{
+			color: $main-accent-color;
+			border-color: $main-accent-color;
+		}
+	}
+	&_score{
+		margin-top: 4px;
+		font-size: 12px;
+		color: $sub-text-color;
+		text-align: center;
+	}
+}
