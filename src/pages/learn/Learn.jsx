@@ -10,6 +10,7 @@ import FlashImg from "@/assets/images/flash.svg";
 import { useModal } from "@/hook/_hooks";
 import FullModal from "@/components/layout/popup/FullModal";
 import BeforeLearn from "@/components/learn/BeforeLearn";
+import LearnedResult from "@/components/learn/LearnedResult";
 
 function Learn(){
 	const [beforeLearnModal] = useModal('beforeLearnModal');
@@ -24,6 +25,10 @@ function Learn(){
 		beforeLearnModal(FullModal,BeforeLearn,{
 			learnType: "memorize",
 		})
+	}
+
+	const handleModalResult = () => e => {
+		beforeLearnModal(FullModal,LearnedResult)
 	}
 	return(
 		<div className="wrap">
@@ -50,7 +55,7 @@ function Learn(){
 								<p className="method_choose_sub_title">타이머 형식</p>
 								<p className="method_choose_contents">카드를 넘겨가며 반복 학습해요</p>
 							</li>
-							<li className="method_choose_list">
+							<li className="method_choose_list" onClick={handleModalResult()}>
 								<h3 className="method_choose_title">결과 보기</h3>
 								<p className="method_choose_contents">오늘 학습한 단어는 어땠나요?</p>
 							</li>
