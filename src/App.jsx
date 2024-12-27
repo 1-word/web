@@ -17,7 +17,8 @@ import VocaBook from '@/pages/word/VocaBook';
 import WordQuiz from '@/pages/learn/WordQuiz';
 import WordMemorize from '@/pages/learn/WordMemorize';
 import ErrorPage from '@/pages/ErrorPage';
-import Learn from './pages/learn/Learn';
+import Learn from '@/pages/learn/Learn';
+import PostList from '@/pages/post/list';
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
       <Route path="/quiz" element={<WordQuiz />}/>
       <Route path="/memorize" element={<WordMemorize />}/>
       <Route path="/learn" element={<Learn />}/>
+      <Route path="/post" element={<PostList />}/>
       <Route path="/*" element={<ErrorPage />}/>
     </Routes> 
     );

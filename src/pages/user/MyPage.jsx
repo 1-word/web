@@ -16,6 +16,7 @@ import FolderList from "@/components/word/folder/VocaBookList";
 import ChangePw from "@/components/user/ChangePw";
 import Store from "@/store/store";
 import authStore from "@/store/authStore";
+import { Link } from "react-router-dom";
 
 function MyPage(){
 	const [userConfigModal] = useModal("userConfig");
@@ -67,6 +68,7 @@ function MyPage(){
 					</li>
 					<li onClick={handleChangePwModal()}>비밀번호 변경</li>
 					<li onClick={handleFolderList()}>내 단어장 관리</li>
+					<li><Link to="/post">공지사항</Link></li>
 					<li onClick={signout}>로그아웃</li>
 					<li onClick={handleDeleteAccountModal()}>계정 삭제</li>
 				</ul>
