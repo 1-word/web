@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import api, { MODE } from "@/services/api";
 
-function Post() {
+function BoardEdit() {
 
   const onClickHandler = api();
   const editorRef = useRef(null);
@@ -43,8 +43,7 @@ function Post() {
 
   return <>
     <div ref={editorRef} id="editor"></div>
-    <button onClick={handleSubmitClick}>hello</button>
   </>
 }
 
-export default Post;
+export default BoardEdit;
