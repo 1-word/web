@@ -129,14 +129,41 @@
 }
 
 .post_edit{
+	.ProseMirror{
+		font-family: "PretendardJP";
+	}
 	.toastui-editor-defaultUI{
+		border-radius: 8px;
 		border: 1px solid $default-ddd;
 	}
 	.toastui-editor-defaultUI-toolbar{
 		border-radius: 8px 8px 0 0;
 		background-color: $main-bg-color;
 	}
+	.toastui-editor-md-mode{
+		+ .toastui-editor-mode-switch{
+			background-color: transparent;
+		}
+	}
+	.toastui-editor-ww-mode{
+		+ .toastui-editor-mode-switch{
+			background-color: $default-fff;
+		}
+	}
 	.toastui-editor-mode-switch{
 		border-radius: 0 0 8px 8px;
+		border: none;
+		.tab-item{
+			margin-top: 0;
+			border: 1px solid $default-ddd;
+			border-radius: 0;
+			background-color: $main-bg-color;
+			&.active{
+				border-top: 1px solid $default-ddd;
+			}
+		}
+	}
+	.toastui-editor-popup{
+		margin-left: auto;
 	}
 }
