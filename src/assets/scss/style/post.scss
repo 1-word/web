@@ -46,6 +46,7 @@
 		width: 572px;
 		background-color: $default-fff;
 		@include deviceSmall(){
+			left: 0;
 			width: 100%;
 		}
 	}
@@ -96,6 +97,7 @@
 		display: flex;
 		align-items: center;
 		gap: 16px;
+		padding-bottom: 12px;
 		font-size: 12px;
 		color: $sub-text-color;
 		margin-left: -4px;
@@ -126,6 +128,15 @@
 	}
 }
 
-.toastui-editor-defaultUI{
-	border-radius: 8px;
+.post_edit{
+	.toastui-editor-defaultUI{
+		border: 1px solid $default-ddd;
+	}
+	.toastui-editor-defaultUI-toolbar{
+		border-radius: 8px 8px 0 0;
+		background-color: $main-bg-color;
+	}
+	.toastui-editor-mode-switch{
+		border-radius: 0 0 8px 8px;
+	}
 }

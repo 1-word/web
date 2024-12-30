@@ -1,8 +1,8 @@
 import HeaderMini from "@/components/layout/HeaderMini";
 import { useModal } from "@/hook/_hooks";
 import { useRef } from "react";
-import Write from "./Write";
 import FullModal from "@/components/layout/popup/FullModal";
+import BoardEdit from "./BoardPost";
 
 function Board(){
 	const postRef = useRef(null);
@@ -19,7 +19,7 @@ function Board(){
 	}
 
 	const handleWriteModal = (e) => e => {
-		writeModal(FullModal,Write,{})
+		writeModal(FullModal,BoardEdit,{})
 	}
 
 	return(
@@ -31,13 +31,13 @@ function Board(){
 						<div className="post_list_head" onClick={(e) => toogleList(0)}>
 							<p>2024-02-15</p>
 							<p className="post_list_title">보카박스 서비스 런칭 안내 안녕하세요 보카박스입니다.안녕하세요 보카박스입니다.안녕하세요 보카박스입니다.안녕하세요 보카박스입니다.</p>
-							<div className="post_list_admin">
-								<span>수정</span>
-								<span>삭제</span>
-							</div>
 							<div className="post_list_toggle">
 								<i className="xi-angle-down"></i>
 							</div>
+						</div>
+						<div className="post_list_admin">
+								<span>수정</span>
+								<span>삭제</span>
 						</div>
 						<div className="post_list_contents">
 							<div className="post_list_contents_inner">
@@ -54,6 +54,10 @@ function Board(){
 								<i className="xi-angle-down"></i>
 							</div>
 						</div>
+						<div className="post_list_admin">
+								<span>수정</span>
+								<span>삭제</span>
+						</div>
 						<div className="post_list_contents">
 							<div className="post_list_contents_inner">
 						안녕하세요 보카박스입니다.
@@ -69,6 +73,10 @@ function Board(){
 								<i className="xi-angle-down"></i>
 							</div>
 						</div>
+						<div className="post_list_admin">
+								<span>수정</span>
+								<span>삭제</span>
+						</div>
 						<div className="post_list_contents">
 							<div className="post_list_contents_inner">
 						안녕하세요 보카박스입니다.
@@ -83,6 +91,10 @@ function Board(){
 							<div className="post_list_toggle">
 								<i className="xi-angle-down"></i>
 							</div>
+						</div>
+						<div className="post_list_admin">
+								<span>수정</span>
+								<span>삭제</span>
 						</div>
 						<div className="post_list_contents">
 							<div className="post_list_contents_inner">
