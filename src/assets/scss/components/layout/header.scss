@@ -35,7 +35,6 @@ header {
     }
   }
 	&.mini{
-		// position: sticky;
 		top: 0;
 		background-color: $main-bg-color;
 		padding: 1rem 14px;
@@ -49,6 +48,10 @@ header {
 		}
 		.close{
 			margin-left: auto;
+		}
+		&.fixed{
+			position: sticky;
+			z-index: 1;
 		}
 	}
 }

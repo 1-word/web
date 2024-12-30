@@ -10,6 +10,31 @@
 		padding-bottom: 100px;
 	}
 	&_list{
+		.post_list_admin{
+			position: absolute;
+			opacity: 0;
+			visibility: hidden;
+			transform: translateY(-10%);
+		}
+		.post_list_contents{
+			display: none;
+		}
+		&.on{
+			.post_list_admin{
+				position: relative;
+				opacity: 1;
+				visibility: visible;
+				transform: translateY(0);
+				transition: all 0.46s;
+			}
+			.post_list_contents{
+				display: block;
+				
+			}
+			.post_list_toggle{
+				transform: translateY(-50%) rotate(180deg);
+			}
+		}
 	}
 	&_btn_wrap{
 		position: fixed;
@@ -30,7 +55,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 8px;
-		cursor: pointer;
+		// cursor: pointer;
 		p{
 			&:first-child{
 				font-size: 12px;
@@ -49,6 +74,7 @@
 		top: 50%;
 		right: 0;
 		transform: translateY(-50%);
+		transition: all 0.46s;
 		i{
 			color: $default-ddd;
 		}
@@ -60,6 +86,39 @@
 			background-color: $main-bg-color;
 			line-height: 20px;
 			border-bottom: 1px solid $default-ddd;
+			transition: all 0.46s;
+		}
+	}
+	&_admin{
+		display: flex;
+		align-items: center;
+		gap: 16px;
+		font-size: 12px;
+		color: $sub-text-color;
+		margin-left: -4px;
+		> span{
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 4px;
+			cursor: pointer;
+			&:first-child{
+				&::before{
+					content: none;
+				}
+			}
+			&::before{
+				content: "";
+				position: absolute;
+				top: 50%;
+				left: -8px;
+				transform: translateY(-50%);
+				display: block;
+				width: 1px;
+				height: 10px;
+				background-color: $default-ddd;
+			}
 		}
 	}
 }
