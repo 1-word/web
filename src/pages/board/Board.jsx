@@ -1,8 +1,12 @@
 import HeaderMini from "@/components/layout/HeaderMini";
+import { useModal } from "@/hook/_hooks";
 import { useRef } from "react";
+import Write from "./Write";
+import FullModal from "@/components/layout/popup/FullModal";
 
-function PostList(){
+function Board(){
 	const postRef = useRef(null);
+	const [writeModal] = useModal('writeModal');
 
 	const toogleList = (e) => {
 		const currentNode = postRef.current;
@@ -13,6 +17,11 @@ function PostList(){
 			}
 		});
 	}
+
+	const handleWriteModal = (e) => e => {
+		writeModal(FullModal,Write,{})
+	}
+
 	return(
 		<div className="wrap">
 			<HeaderMini title="공지사항" fixed={true}></HeaderMini>
@@ -84,10 +93,10 @@ function PostList(){
 					</li>
 				</ul>
 				<div className="post_btn_wrap">
-					<button className="btn-fill sizeL">글쓰기</button>
+					<button className="btn-fill sizeL" onClick={handleWriteModal()}>글쓰기</button>
 				</div>
 			</div>
 		</div>
 	);
 };
-export default PostList;
+export default Board;
