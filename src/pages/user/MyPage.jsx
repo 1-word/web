@@ -17,10 +17,11 @@ import ChangePw from "@/components/user/ChangePw";
 import Store from "@/store/store";
 import authStore from "@/store/authStore";
 import { Link } from "react-router-dom";
+import AddTypeMore from "@/components/modal/add/AddTypeMore";
 
 function MyPage(){
 	const [userConfigModal] = useModal("userConfig");
-	const [folderListModal] = useModal("folderList");
+	const [addTypeMoreModal] = useModal("addTypeMore");
 	const [deleteAccountModal] = useModal("deleteAccount");
 	const [changePwModal] = useModal("changePw");
 	const {userInfo} = authStore(state => state);
@@ -29,8 +30,8 @@ function MyPage(){
 	const handleUserConfig = () => e => {
 		userConfigModal(FullModal,UserConfig)
 	}
-	const handleFolderList = () => e => {
-		folderListModal(FullModal,FolderList)
+	const handleAddTypeMore = () => e => {
+		addTypeMoreModal(FullModal,AddTypeMore)
 	}
 	const handleChangePwModal = () => e => {
 		changePwModal(FullModal,ChangePw)
@@ -67,7 +68,7 @@ function MyPage(){
 						<p className="my_page_email">{userInfo?.email}</p>
 					</li>
 					<li onClick={handleChangePwModal()}>비밀번호 변경</li>
-					<li onClick={handleFolderList()}>내 단어장 관리</li>
+					<li onClick={handleAddTypeMore()}>내 품사 관리</li>
 					<li><Link to="/notice">공지사항</Link></li>
 					<li onClick={signout}>로그아웃</li>
 					<li onClick={handleDeleteAccountModal()}>계정 삭제</li>
