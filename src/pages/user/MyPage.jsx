@@ -68,7 +68,7 @@ function MyPage(){
 					</li>
 					<li onClick={handleChangePwModal()}>비밀번호 변경</li>
 					<li onClick={handleFolderList()}>내 단어장 관리</li>
-					<li><Link to="/post">공지사항</Link></li>
+					<li><Link to="/notice">공지사항</Link></li>
 					<li onClick={signout}>로그아웃</li>
 					<li onClick={handleDeleteAccountModal()}>계정 삭제</li>
 				</ul>
