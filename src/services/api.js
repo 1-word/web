@@ -53,6 +53,7 @@ export const MODE = {
     DAILY_SENTENCE_DAYS_READ: "dailySentenceDaysRead",
     DAILY_SENTENCE_RELATION_INFO_READ: "dailySentenceRelationInfoRead",
     POST_IMAGE_UPLOAD: "postImageUpload",
+    QUIZ_INFO_SAVE: "quizInfoSave",
 }
 
 /**
@@ -248,6 +249,9 @@ function useEvntHandler(e, modeType, data, func){
         // 오늘의 내 문장 끝
         async postImageUpload(_, {path, formData}) {
             return await executeSrvConnect('post', `files/upload/images/${path}`, formData, {isUpdate: false});
+        },
+        async quizInfoSave(_, data) {
+            return await executeSrvConnect('post', 'quiz-info', data, {isUpdate: false});
         },
     }
 

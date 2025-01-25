@@ -1,13 +1,23 @@
-import {useEffect,useState} from "react";
+import { useEffect, useState } from "react";
 import HeaderMini from "@/components/layout/HeaderMini";
 import LeftFix from "@/components/layout/LeftFix";
 import BottomNav from "@/components/layout/BottomNav";
-import VocabookList from "@/components/word/folder/VocaBookList";
 import Quiz from "@/components/learn/quiz/Quiz";
 import Result from "@/components/learn/quiz/Result";
+import { useLocation } from "react-router-dom";
 
 function WordQuiz(){
-	const [next,nextState] = useState(
+
+	const { state } = useLocation();
+	console.log(state);
+
+	useEffect(() => {
+		console.log(quizInfo);
+		// 퀴즈 생성 api 불러오기
+		
+	}, []);
+
+	const [next, nextState] = useState(
 		{
 			quiz : false,
 			result : false
