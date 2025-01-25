@@ -21,7 +21,7 @@ function Modals(){
 		}, [openedModals]);
 
 		const goBack = () => {
-				deleteModal(openedModals.length - 1 ?? 0);
+				deleteModal(openedModals.length - 1);
 		}
 
     /**
