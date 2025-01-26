@@ -48,7 +48,6 @@ function BeforeLearn({deleteModalAfterTime,learnType}){
 					[name]: value
 				}
 
-				console.log(quizInfo.current);
 				el.classList.add('on');
 			}
 		});

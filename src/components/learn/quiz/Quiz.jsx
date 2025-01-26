@@ -2,9 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import IsCorrectAni from "./IsCorrectAni";
 import Result from "./Result";
 import api, { MODE } from "@/services/api";
+import { useNavigate } from "react-router-dom";
 
 function Quiz({allWordData, quizInfoId, quizCount}){
 	const onClickHandler = api();
+
+	const navigate = useNavigate();
 
 	const [currentQuiz, setCurrentQuiz] = useState({
 		quizId: null, 
@@ -24,10 +27,6 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 		hasNext: true
 	});
 
-	const [quizResult, setQuizResult] = useState({
-		end: false,
-		result: null
-	});
 
 	const [progress, setProgress] = useState({
 		now: 30,
@@ -42,16 +41,16 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 		// 퀴즈 조회 api 불러오기
 		let currentPage = pageRef.current.current;
 		if (!pageRef.current.hasNext && quizData.length <= 0) {
-			console.log("모든 퀴즈를 다 푸셨습니다.");
 
 			// 다 푼 문제 제출 및 퀴즈 완료
 			solveQuiz(() => onClickHandler(null, MODE.QUIZ_END, quizInfoId).then(_ => {
 				// 퀴즈 통계 생성
 				onClickHandler(null, MODE.QUIZ_STAT_CREATE, quizInfoId).then(res => {
-					setQuizResult({
-						end: true,
-						result: res,
-					})
+					navigate('/quiz-result', {
+						state: {
+							end: true,
+							result: res,
+						}});
 				});
 			}));
 		}
@@ -87,7 +86,6 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 
 	// 현재 퀴즈 세팅
 	const setCurrent = (quiz) => {
-		// console.log("quiz Length" + quiz.length);
 		if (quiz.length > 0) {
 			const currentQuiz = quiz.pop();
 			const result = createAnswers(currentQuiz);
@@ -103,7 +101,6 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 		for (let i=0; i<3;i ++) {
 			// 랜덤으로 생성
 			const idx = Math.floor(Math.random() * (tmpAllWordData.length - 1));
-			// console.log(`idx: ${idx}, allWordData: ${allWordData[idx]?.wordId}`);
 			// 오답에 정답이 들어갈 수 없음
 			if (tmp.includes(idx) || tmpAllWordData[idx].wordId === currentQuiz.wordId) {
 				i--;
@@ -194,8 +191,6 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 			}
 
 			setIsClicked(clicked);
-
-			console.log(solve.current);
 		}
   };
 
@@ -209,31 +204,26 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 
 	return(
 		<>
-			{
-				quizResult.end ? <Result quizInfoId={quizInfoId} result={quizResult.result}></Result> :
-				<>
-					<div className="quiz_progress_bar"
-							style={{
-								width: progress.width,
-							}}></div>
-					<h2 className="word_quiz_title">빈칸에 알맞은 답을 선택해 주세요</h2>
-					<div className={ !isClicked ? "quiz_wrap" : isCorrect ? "quiz_wrap true" :"quiz_wrap false"}>
-						<div className="quiz_area">
-							{
-								isClicked && <IsCorrectAni isCorrect={isCorrect}></IsCorrectAni>
-							}
-							<div className="quiz_question">{currentQuiz.question}</div>
-							<div className="quiz_correct"></div>
-							<div className="quiz_progress_indicator">{currentNum} / {quizCount}</div>
-						</div>
-						<div className="quiz_answer_area">
-							<ul ref={answerRef} className="quiz_answer_lists" onClick={handleAnswer}>
-								{answerList()}
-							</ul>
-						</div>
-					</div>
-				</>
-			}
+			<div className="quiz_progress_bar"
+					style={{
+						width: progress.width,
+					}}></div>
+			<h2 className="word_quiz_title">빈칸에 알맞은 답을 선택해 주세요</h2>
+			<div className={ !isClicked ? "quiz_wrap" : isCorrect ? "quiz_wrap true" :"quiz_wrap false"}>
+				<div className="quiz_area">
+					{
+						isClicked && <IsCorrectAni isCorrect={isCorrect}></IsCorrectAni>
+					}
+					<div className="quiz_question">{currentQuiz.question}</div>
+					<div className="quiz_correct"></div>
+					<div className="quiz_progress_indicator">{currentNum} / {quizCount}</div>
+				</div>
+				<div className="quiz_answer_area">
+					<ul ref={answerRef} className="quiz_answer_lists" onClick={handleAnswer}>
+						{answerList()}
+					</ul>
+				</div>
+			</div>
 		</>
 	);
 };

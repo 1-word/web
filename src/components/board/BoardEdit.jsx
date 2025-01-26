@@ -37,7 +37,6 @@ function BoardEdit() {
   const handleSubmitClick = e => {
     e.preventDefault();
     const contents = editor.current.getMarkdown();
-    console.log(contents);
   }
 
 
