@@ -1,12 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import IsCorrectAni from "./IsCorrectAni";
 import Result from "./Result";
 import api, { MODE } from "@/services/api";
 
-function Quiz({allWordData, quizInfoId}){
+function Quiz({allWordData, quizInfoId, quizCount}){
 	const onClickHandler = api();
-
-	const [wordData, setWordData] = useState({});
 
 	const [currentQuiz, setCurrentQuiz] = useState({
 		quizId: null, 
@@ -16,47 +14,55 @@ function Quiz({allWordData, quizInfoId}){
 	});
 
 	const answerRef = useRef(null);
-
+	const solve = useRef({datas: []});
 	const [quizData, setQuizData] = useState([]);
-
-	const [currentNum, setCurrentNum] = useState(-1);
+	const [currentNum, setCurrentNum] = useState(1);
 
 	const pageRef = useRef({
-		current: -1,
+		current: 0,
 		next: 0,
 		hasNext: true
+	});
+
+	const [quizResult, setQuizResult] = useState({
+		end: false,
+		result: null
 	});
 
 	const [progress, setProgress] = useState({
 		now: 30,
 		total: 30,
 		width: '0%',
-		result: false,
 	});
 
 	const [isClicked, setIsClicked] = useState(false);
 	const [isCorrect, setIsCorrect] = useState(false);
 
 	useEffect(() => {
-		setWordData({
-			allWordData,
-			quizInfoId
-		})
-	}, []);
-
-	useEffect(() => {
-		console.log('currentNum 변경');
 		// 퀴즈 조회 api 불러오기
 		let currentPage = pageRef.current.current;
 		if (!pageRef.current.hasNext && quizData.length <= 0) {
 			console.log("모든 퀴즈를 다 푸셨습니다.");
-			return;
+
+			// 다 푼 문제 제출 및 퀴즈 완료
+			solveQuiz(() => onClickHandler(null, MODE.QUIZ_END, quizInfoId).then(_ => {
+				// 퀴즈 통계 생성
+				onClickHandler(null, MODE.QUIZ_STAT_CREATE, quizInfoId).then(res => {
+					setQuizResult({
+						end: true,
+						result: res,
+					})
+				});
+			}));
 		}
-		if (30 * (currentPage === 0? 1 : currentPage) <= currentNum || currentNum === -1) {
+
+		setIsClicked(false);
+		setIsCorrect(false);
+
+		if (30 * (currentPage === 0? 1 : currentPage) <= currentNum || currentNum === 1) {
 			onClickHandler(null, MODE.QUIZ_READ, {
 				quizInfoId,
-				// query: `?current=${pageRef.current.next}`
-				query: `?current=0`
+				query: `?current=${pageRef.current.next}`
 			}).then(res => {
 				setQuizData(res.data);
 				pageRef.current = {
@@ -64,7 +70,6 @@ function Quiz({allWordData, quizInfoId}){
 					next: res.next,
 					hasNext: res.hasNext
 				}
-
 				setCurrent(res.data);
 			});
 			
@@ -74,9 +79,15 @@ function Quiz({allWordData, quizInfoId}){
 		
 	}, [currentNum]);
 
+	const solveQuiz = async(callback) => {
+		await onClickHandler(null, MODE.QUIZ_SOLVE, solve.current).then(_ => {
+			callback();
+		});
+	}
+
 	// 현재 퀴즈 세팅
 	const setCurrent = (quiz) => {
-		console.log(quiz);
+		// console.log("quiz Length" + quiz.length);
 		if (quiz.length > 0) {
 			const currentQuiz = quiz.pop();
 			const result = createAnswers(currentQuiz);
@@ -87,14 +98,18 @@ function Quiz({allWordData, quizInfoId}){
 	// 4지선다 생성
 	const createAnswers = (currentQuiz) => {
 		let result = [];
+		let tmpAllWordData = allWordData;
+		let tmp = [];
 		for (let i=0; i<3;i ++) {
 			// 랜덤으로 생성
-			const idx = Math.floor(Math.random() * allWordData.length - 1);
+			const idx = Math.floor(Math.random() * (tmpAllWordData.length - 1));
+			// console.log(`idx: ${idx}, allWordData: ${allWordData[idx]?.wordId}`);
 			// 오답에 정답이 들어갈 수 없음
-			if (allWordData[idx].wordId === currentQuiz.wordId) {
+			if (tmp.includes(idx) || tmpAllWordData[idx].wordId === currentQuiz.wordId) {
 				i--;
 				continue;
 			}
+			tmp.push(idx);
 			result.push(allWordData[idx]);
 		}
 
@@ -127,6 +142,7 @@ function Quiz({allWordData, quizInfoId}){
 		return array;
 	}
 
+	// 제한시간
 	const calcPercent = () => {
 		const total = Number(progress.total);
 		const now = Number(progress.now);
@@ -137,50 +153,64 @@ function Quiz({allWordData, quizInfoId}){
 		})
 	}
 	
+	// 정답 또는 틀린 문제 만들기
 	const handleAnswer = (e) => {
-		// const correctAnswer = true;
-		// setIsClicked(true);
-    // setIsCorrect(false);
-		// if(progress.now === progress.total){
-		// 	setProgress({
-		// 		...progress,
-		// 		result: true
-		// 	})
-		// }
-
-		// 초기화
-		answerRef.current.childNodes.forEach(el => {
-			el.classList.remove('correct');
-			el.classList.remove('wrong');
-		});
+		const correctAnswer = true;
+		const clicked = !isClicked? true: isClicked;
+   
+		if(progress.now === progress.total){
+			setProgress({
+				...progress,
+				result: true
+			})
+		}
 
 		// 선택한 퀴즈 답안 가져오기
 		const selectValue = parseInt(e.target.getAttribute("data-value"));
 
+		let solveValue = true;
+
 		// 정답 확인
 		if (currentQuiz.correctAnswer.wordId === selectValue) {
-			console.log("정답");
 			e.target.classList.add('correct');
 
 			// ~초 이후 다음 퀴즈로 넘어가기
 			setCurrentNum((prev) => ++prev);
 		} else {
 			e.target.classList.add('wrong');
+			solveValue = false;
+		}
+
+		// 처음 답안 작성
+		if (!isClicked) {
+			solve.current = {
+				datas: [
+					...solve.current.datas,
+					{
+						quizId: currentQuiz.quizId,
+						correct: solveValue
+					}
+				]
+			}
+
+			setIsClicked(clicked);
+
+			console.log(solve.current);
 		}
   };
 
 	const answerList = () => {
 		return currentQuiz?.answers.map(v => 
-			<>
-				<li key={v.wordId} data-value={v.wordId} className="quiz_answer">{v.mean}</li>	
-			</>
+			<React.Fragment key={`answer${v.wordId}`}>
+				<li data-value={v.wordId} className="quiz_answer">{v.mean}</li>	
+			</React.Fragment>
 		);
 	}
 
 	return(
 		<>
 			{
-				// progress.result ? <Result></Result> :
+				quizResult.end ? <Result quizInfoId={quizInfoId} result={quizResult.result}></Result> :
 				<>
 					<div className="quiz_progress_bar"
 							style={{
@@ -194,7 +224,7 @@ function Quiz({allWordData, quizInfoId}){
 							}
 							<div className="quiz_question">{currentQuiz.question}</div>
 							<div className="quiz_correct"></div>
-							<div className="quiz_progress_indicator">{progress.now} / {progress.total}</div>
+							<div className="quiz_progress_indicator">{currentNum} / {quizCount}</div>
 						</div>
 						<div className="quiz_answer_area">
 							<ul ref={answerRef} className="quiz_answer_lists" onClick={handleAnswer}>

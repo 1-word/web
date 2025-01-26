@@ -56,6 +56,9 @@ export const MODE = {
     QUIZ_INFO_SAVE: "quizInfoSave",
     QUIZ_CREATE: "quizCreate",
     QUIZ_READ: "quizRead",
+    QUIZ_SOLVE: "quizSolve",
+    QUIZ_END: "quizEnd",
+    QUIZ_STAT_CREATE: "quizStatCreate"
 }
 
 /**
@@ -261,7 +264,16 @@ function useEvntHandler(e, modeType, data, func){
         },
         async quizRead(_, {quizInfoId, query}) {
             return await executeSrvConnect('get', `quiz/${quizInfoId}${query}`, null, {isUpdate: false});
-        }
+        },
+        async quizSolve(_, data) {
+            return await executeSrvConnect('put', `quiz`, data, {isUpdate: false});
+        },
+        async quizEnd(_, quizInfoId) {
+            return await executeSrvConnect('put', `quiz-info/complete/${quizInfoId}`, null, {isUpdate: false});
+        },
+        async quizStatCreate(_, quizInfoId) {
+            return await executeSrvConnect('post', `quiz-stat/${quizInfoId}`, null, {isUpdate: false});
+        },
     }
 
     /**
