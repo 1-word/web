@@ -68,8 +68,11 @@ function Result(){
 							</svg>
 						</div>
 						<div className={persentState.score > 50? "quiz_result_persent over": "quiz_result_persent"}>
-							{persentState.score}
+							{persentState.score}%
 						</div>
+					</div>
+					<div>
+						전체 <span className="quiz_result_count">{state?.result.totalCount ?? 0}</span>
 					</div>
 					<div>
 						정답 <span className="quiz_result_count">{state?.result.correctCount ?? 0}</span>
