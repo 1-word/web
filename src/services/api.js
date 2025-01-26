@@ -61,6 +61,7 @@ export const MODE = {
     QUIZ_STAT_CREATE: "quizStatCreate",
     QUIZ_STAT_READ: "quizStatRead",
     QUIZ_STAT_WORD_READ: "quizStatWordRead",
+    QUIZ_STAT_LIST_READ: "quizStatListRead",
 }
 
 /**
@@ -282,6 +283,9 @@ function useEvntHandler(e, modeType, data, func){
         async quizStatWordRead(_, {quizInfoId, query}) {
             return await executeSrvConnect('get', `quiz/result/${quizInfoId}${query}`, null, {isUpdate: false});
         },
+        async quizStatListRead(_, query) {
+            return await executeSrvConnect('get', `quiz-stat${query}`, null, {isUpdate: false});
+        }
     }
 
     /**
