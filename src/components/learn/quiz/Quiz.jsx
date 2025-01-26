@@ -64,13 +64,14 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 				quizInfoId,
 				query: `?current=${pageRef.current.next}`
 			}).then(res => {
-				setQuizData(res.data);
+				const quiz = res.data.sort((a, b) => b.quizId - a.quizId);
+				setQuizData(quiz);
 				pageRef.current = {
 					current: res.current,
 					next: res.next,
 					hasNext: res.hasNext
 				}
-				setCurrent(res.data);
+				setCurrent(quiz);
 			});
 			
 		} else {
@@ -172,7 +173,7 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 		if (currentQuiz.correctAnswer.wordId === selectValue) {
 			e.target.classList.add('correct');
 			initQuizAnswer();
-			
+
 			//TODO ~초 이후 다음 퀴즈로 넘어가기
 			setCurrentNum((prev) => ++prev);
 		} else {
