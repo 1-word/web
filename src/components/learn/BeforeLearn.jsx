@@ -151,7 +151,7 @@ function BeforeLearn({deleteModalAfterTime,learnType}){
 		if (learnType === "quiz") {
 			const data = {
 				...quizInfo.current,
-				count: slider.value
+				count: parseInt(slider.value)
 			}
 			
 			if (data.folderId === null) {
@@ -160,11 +160,12 @@ function BeforeLearn({deleteModalAfterTime,learnType}){
 			}
 
 			onClickHandler(null, MODE.QUIZ_INFO_SAVE, data).then(res => {
-				const quizInfoId = res.quizInfoId;
+				const quizInfoId = res;
 				navigate("/quiz", {
 					state: {
 						...data,
-						quizInfoId
+						quizInfoId,
+						quizType: "create",
 						}
 				});
 			});

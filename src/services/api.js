@@ -54,6 +54,8 @@ export const MODE = {
     DAILY_SENTENCE_RELATION_INFO_READ: "dailySentenceRelationInfoRead",
     POST_IMAGE_UPLOAD: "postImageUpload",
     QUIZ_INFO_SAVE: "quizInfoSave",
+    QUIZ_CREATE: "quizCreate",
+    QUIZ_READ: "quizRead",
 }
 
 /**
@@ -250,9 +252,16 @@ function useEvntHandler(e, modeType, data, func){
         async postImageUpload(_, {path, formData}) {
             return await executeSrvConnect('post', `files/upload/images/${path}`, formData, {isUpdate: false});
         },
+        // 퀴즈 시작
         async quizInfoSave(_, data) {
             return await executeSrvConnect('post', 'quiz-info', data, {isUpdate: false});
         },
+        async quizCreate(_, quizInfoId) {
+            return await executeSrvConnect('post', `quiz/${quizInfoId}`, null, {isUpdate: false});
+        },
+        async quizRead(_, {quizInfoId, query}) {
+            return await executeSrvConnect('get', `quiz/${quizInfoId}${query}`, null, {isUpdate: false});
+        }
     }
 
     /**
