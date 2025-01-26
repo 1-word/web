@@ -57,10 +57,18 @@ function BeforeLearn({deleteModalAfterTime,learnType}){
 	const handleSelectVocabook = () => {
 		const afterCompleteFunc = (item) => {
 			setFolderInfo(item.folders);
+			console.log(item)
 			quizInfo.current = {
 				...quizInfo.current,
 				folderId: item.folders.folderId
 			}
+
+			// 슬라이드 반영
+			setSlider({
+				...slider,
+				max: item.count,
+				value: item.count,
+			})
 		}
 	
 		// 단어장 선택 모달 열기
@@ -261,7 +269,7 @@ function BeforeLearn({deleteModalAfterTime,learnType}){
 						</span>
 					</span>
 					<div className="before_learn_contents">
-						<input ref={sliderRef} style={{background:(slider.style)}} className="before_learn_range" type="range" min={1} max={100} value={slider.value} onInput={applyFill}/>
+						<input ref={sliderRef} style={{background:(slider.style)}} className="before_learn_range" type="range" min={1} max={slider.max} value={slider.value} onInput={applyFill}/>
 					</div>
 				</div>
 				<div className="modal_full_btn_wrap">
