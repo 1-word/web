@@ -50,6 +50,7 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 						state: {
 							end: true,
 							result: res,
+							quizInfoId
 						}});
 				});
 			}));

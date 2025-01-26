@@ -8,6 +8,8 @@ function Result(){
 	const {state} = useLocation();
 	const onClickHandler = api();
 
+	const [quizInfoId, setQuizInfoId] = useState(0);
+
 	const [persentState,setPersentState] = useState({
 		score: 0,
 		aniVal: "",
@@ -32,7 +34,7 @@ function Result(){
 
 	useEffect(() => {
 		const result = state?.result;
-		// 학습한 단어 목록 가져오기
+		setQuizInfoId(state.quizInfoId);
 
 		if (result) {
 			const percent = Math.floor(result.correctCount / result.totalCount * 100);
@@ -78,7 +80,7 @@ function Result(){
 				</div>
 				<div className="quiz_result_bottom">
 					<p className="quiz_result_bottom_title">학습한 단어 목록이에요</p>
-					<LearnedList></LearnedList>
+					<LearnedList quizInfoId={quizInfoId}></LearnedList>
 				</div>
 			</div>
 		</>
