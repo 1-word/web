@@ -1,12 +1,23 @@
 import { useEffect, useState } from "react";
 import LearnedList from "../LearnedList";
+import { useLocation } from "react-router-dom";
+import api, { MODE } from "@/services/api";
 
+// TODO 페이지로 변경
 function Result(){
+	const {state} = useLocation();
+	const onClickHandler = api();
+
 	const [persentState,setPersentState] = useState({
 		score: 0,
 		aniVal: "",
 		aniLength: 0,
 	});
+
+	/**
+	 * 원 그래프 그리기
+	 * @param {int} newScore 퍼센트
+	 */
 	const updateAniVal = (newScore) => {
 		const maxAniVal = document.querySelector('.vocabox-persent path').getTotalLength();
 		const percentage = 1 - newScore / 100;
@@ -18,9 +29,31 @@ function Result(){
 			aniLength: maxAniVal
 		});
 	};
-	useEffect(()=>{
-		updateAniVal(50);
-	},[])
+
+	useEffect(() => {
+		const result = state?.result;
+		// 학습한 단어 목록 가져오기
+
+		if (result) {
+			const percent = Math.floor(result.correctCount / result.totalCount * 100);
+			updateAniVal(percent);
+			return;
+		}
+
+		if (state?.quizInfoId) {
+			onClickHandler(null, MODE.QUIZ_STAT_READ).then(res => {
+				calcPercent(res);
+			});
+		}
+
+
+	}, []);
+
+	const calcPercent = (result) => {
+		const percent = Math.floor(result.correctCount / result.totalCount * 100);
+		updateAniVal(percent);
+	}
+
 	return(
 		<>
 			<h2 className="word_quiz_title">축하해요! 모든 단어를 학습했어요!</h2>
@@ -37,10 +70,10 @@ function Result(){
 						</div>
 					</div>
 					<div>
-						정답 <span className="quiz_result_count">0</span>
+						정답 <span className="quiz_result_count">{state?.result.correctCount ?? 0}</span>
 					</div>
 					<div>
-						오답 <span className="quiz_result_count">0</span>
+						오답 <span className="quiz_result_count">{state?.result.wrongCount ?? 0}</span>
 					</div>
 				</div>
 				<div className="quiz_result_bottom">

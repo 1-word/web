@@ -19,6 +19,7 @@ import WordMemorize from '@/pages/learn/WordMemorize';
 import ErrorPage from '@/pages/ErrorPage';
 import Learn from '@/pages/learn/Learn';
 import Board from '@/pages/board/Board';
+import Result from './components/learn/quiz/Result';
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
       <Route path="/quiz" element={<WordQuiz />}/>
       <Route path="/memorize" element={<WordMemorize />}/>
       <Route path="/learn" element={<Learn />}/>
+      <Route path="/quiz-result" element={<Result />}/>
       <Route path="/notice" element={<Board />}/>
       <Route path="/*" element={<ErrorPage />}/>
     </Routes> 
