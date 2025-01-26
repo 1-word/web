@@ -153,16 +153,16 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 	
 	// 정답 또는 틀린 문제 만들기
 	const handleAnswer = (e) => {
-		const correctAnswer = true;
+		// const correctAnswer = true;
+		
+		// if(progress.now === progress.total){
+			// 	setProgress({
+				// 		...progress,
+				// 		result: true
+				// 	})
+				// }
+				
 		const clicked = !isClicked? true: isClicked;
-   
-		if(progress.now === progress.total){
-			setProgress({
-				...progress,
-				result: true
-			})
-		}
-
 		// 선택한 퀴즈 답안 가져오기
 		const selectValue = parseInt(e.target.getAttribute("data-value"));
 
@@ -171,15 +171,16 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 		// 정답 확인
 		if (currentQuiz.correctAnswer.wordId === selectValue) {
 			e.target.classList.add('correct');
-
-			// ~초 이후 다음 퀴즈로 넘어가기
+			initQuizAnswer();
+			
+			//TODO ~초 이후 다음 퀴즈로 넘어가기
 			setCurrentNum((prev) => ++prev);
 		} else {
 			e.target.classList.add('wrong');
 			solveValue = false;
 		}
 
-		// 처음 답안 작성
+		// 처음이면 답안 작성
 		if (!isClicked) {
 			solve.current = {
 				datas: [
@@ -190,10 +191,19 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 					}
 				]
 			}
-
 			setIsClicked(clicked);
 		}
-  };
+  }
+
+	// 퀴즈 푼 표시 삭제
+	const initQuizAnswer = () => {
+		if (answerRef.current.childNodes.length > 0) {
+			answerRef.current.childNodes.forEach(el => {
+				el.classList.remove('correct');
+				el.classList.remove('wrong');
+			});
+		}
+	}
 
 	const answerList = () => {
 		return currentQuiz?.answers.map(v => 
@@ -212,9 +222,9 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 			<h2 className="word_quiz_title">빈칸에 알맞은 답을 선택해 주세요</h2>
 			<div className={ !isClicked ? "quiz_wrap" : isCorrect ? "quiz_wrap true" :"quiz_wrap false"}>
 				<div className="quiz_area">
-					{
+					{/* {
 						isClicked && <IsCorrectAni isCorrect={isCorrect}></IsCorrectAni>
-					}
+					} */}
 					<div className="quiz_question">{currentQuiz.question}</div>
 					<div className="quiz_correct"></div>
 					<div className="quiz_progress_indicator">{currentNum} / {quizCount}</div>

@@ -57,7 +57,6 @@ function BeforeLearn({deleteModalAfterTime,learnType}){
 	const handleSelectVocabook = () => {
 		const afterCompleteFunc = (item) => {
 			setFolderInfo(item.folders);
-			console.log(item)
 			quizInfo.current = {
 				...quizInfo.current,
 				folderId: item.folders.folderId
