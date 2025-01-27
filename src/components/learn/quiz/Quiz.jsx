@@ -65,7 +65,6 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 				query: `?current=${pageRef.current.next}`
 			}).then(res => {
 				const quiz = res.data.sort((a, b) => b.quizId - a.quizId);
-				console.log(quiz);
 				setQuizData(quiz);
 				pageRef.current = {
 					current: res.page.current,
@@ -76,7 +75,6 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 			});
 			
 		} else {
-			console.log(quizData);
 			setCurrent(quizData);
 		}
 		
@@ -183,7 +181,6 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 			solveValue = false;
 		}
 
-		console.log(`currentQuizId: ${currentQuiz.quizId}`)
 
 		// 처음이면 답안 작성
 		if (!isClicked) {
