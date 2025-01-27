@@ -35,7 +35,7 @@
 		font-weight: bold;
 	}
 	&_bottom{
-		padding-top: 24px;
+		// padding-top: 24px;
 		position: relative;
 		z-index: 1;
 		background-color: $default-fff;
@@ -67,11 +67,16 @@
 	}
 }
 .vocabox-persent{
-  transform: rotate(-90deg);
+  transform: rotate(90deg) rotateX(180deg);
 }
 
 .quiz_result_bottom{
 	&_title{
-		margin-bottom: 16px;
+		background: $default-fff;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 4px 0;
+		z-index: 1;
 	}
 }
