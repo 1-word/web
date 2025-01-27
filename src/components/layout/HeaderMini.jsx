@@ -8,7 +8,9 @@ return(
 		{
 			(title==="단어장") ?
 			<button></button>
-			: <button className="back xi-angle-left" onClick={() => navigate(-1)}></button>
+			: <button className="back" onClick={() => navigate(-1)}>
+				<i className="xi-angle-left"></i>
+			</button>
 		}
 		
 		<h2 className="title">{title}</h2>
