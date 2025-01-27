@@ -40,8 +40,7 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 	useEffect(() => {
 		// 퀴즈 조회 api 불러오기
 		let currentPage = pageRef.current.current;
-		if (!pageRef.current.hasNext && quizData.length <= 0) {
-
+		if (!pageRef.current.hasNext && currentNum >= quizCount) {
 			// 다 푼 문제 제출 및 퀴즈 완료
 			solveQuiz(() => onClickHandler(null, MODE.QUIZ_END, quizInfoId).then(_ => {
 				// 퀴즈 통계 생성
@@ -54,27 +53,30 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 						}});
 				});
 			}));
+			return;
 		}
 
 		setIsClicked(false);
 		setIsCorrect(false);
 
-		if (30 * (currentPage === 0? 1 : currentPage) <= currentNum || currentNum === 1) {
+		if (2 * (currentPage + 1) < currentNum || currentNum === 1) {
 			onClickHandler(null, MODE.QUIZ_READ, {
 				quizInfoId,
 				query: `?current=${pageRef.current.next}`
 			}).then(res => {
 				const quiz = res.data.sort((a, b) => b.quizId - a.quizId);
+				console.log(quiz);
 				setQuizData(quiz);
 				pageRef.current = {
-					current: res.current,
-					next: res.next,
-					hasNext: res.hasNext
+					current: res.page.current,
+					next: res.page.next,
+					hasNext: res.page.hasNext
 				}
 				setCurrent(quiz);
 			});
 			
 		} else {
+			console.log(quizData);
 			setCurrent(quizData);
 		}
 		
@@ -180,6 +182,8 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 			e.target.classList.add('wrong');
 			solveValue = false;
 		}
+
+		console.log(`currentQuizId: ${currentQuiz.quizId}`)
 
 		// 처음이면 답안 작성
 		if (!isClicked) {
