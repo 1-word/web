@@ -71,8 +71,8 @@
 					color: $default-fff;
 				}
 				&.wrong{
-					border-color: $default-error-color;
-					color: $default-error-color;
+					border-color: $wrong-color;
+					color: $wrong-color;
 				}
 		}
 	}
@@ -80,7 +80,7 @@
 
 .false{
 	.quiz_area,.active{
-		border-color: $default-error-color !important;
+		border-color: $wrong-color !important;
 	}
 }
 .true{

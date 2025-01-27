@@ -35,7 +35,6 @@
 		font-weight: bold;
 	}
 	&_bottom{
-		// padding-top: 24px;
 		position: relative;
 		z-index: 1;
 		background-color: $default-fff;
@@ -60,9 +59,29 @@
 		}
 		.wrongAnswer{
 			h2{
-				color: $default-error-color;
+				color: $wrong-color;
+				&::before{
+					background-color: $wrong-color;
+				}
 			}
-			background-color: #ffe8e8;
+			background-color: $wrong-bg-color;
+		}
+		h2{
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			color: $main-accent-color;
+			&::before{
+				content: "";
+				display: block;
+				width: 4px;
+				height: 4px;
+				border-radius: 50%;
+				background-color: $main-accent-color;
+			}
+		}
+		.word_card_mean_wrap{
+			color: $main-text-color;
 		}
 	}
 }
@@ -72,11 +91,13 @@
 
 .quiz_result_bottom{
 	&_title{
+		position: sticky;
+		top: 0;
+		z-index: 1;
 		background: $default-fff;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: 4px 0;
-		z-index: 1;
+		padding: 0 0 16px;
 	}
 }
