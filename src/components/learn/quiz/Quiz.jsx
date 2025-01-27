@@ -97,12 +97,18 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 		}
 	}
 
-	// 4지선다 생성
+	// 사지선다 생성
 	const createAnswers = (currentQuiz) => {
 		let result = [];
 		let tmpAllWordData = allWordData;
 		let tmp = [];
 		for (let i=0; i<3;i ++) {
+			// 사지선다 데이터를 만들기 위해서는 4개 이상의 데이터가 필요
+			if (allWordData.length < 5) {
+				tmpAllWordData = allWordData.filter(v => v.wordId !== currentQuiz.wordId);
+				result.push(...tmpAllWordData);
+				break;
+			}
 			// 랜덤으로 생성
 			const idx = Math.floor(Math.random() * (tmpAllWordData.length - 1));
 			// 오답에 정답이 들어갈 수 없음
@@ -165,11 +171,11 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 		// 정답 확인
 		if (currentQuiz.correctAnswer.wordId === selectValue) {
 			e.target.classList.add('correct');
-			initQuizAnswer();
-
+			
 			//TODO ~초 이후 다음 퀴즈로 넘어가기
 			setTimeout(() => {
 				setCurrentNum((prev) => ++prev);
+				initQuizAnswer();
 			}, 1500);
 		} else {
 			e.target.classList.add('wrong');
