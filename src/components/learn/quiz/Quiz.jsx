@@ -40,7 +40,7 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 	useEffect(() => {
 		// 퀴즈 조회 api 불러오기
 		let currentPage = pageRef.current.current;
-		if (!pageRef.current.hasNext && currentNum >= quizCount) {
+		if (!pageRef.current.hasNext && currentNum > quizCount) {
 			// 다 푼 문제 제출 및 퀴즈 완료
 			solveQuiz(() => onClickHandler(null, MODE.QUIZ_END, quizInfoId).then(_ => {
 				// 퀴즈 통계 생성
@@ -59,7 +59,7 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 		setIsClicked(false);
 		setIsCorrect(false);
 
-		if (2 * (currentPage + 1) < currentNum || currentNum === 1) {
+		if (30 * (currentPage + 1) < currentNum || currentNum === 1) {
 			onClickHandler(null, MODE.QUIZ_READ, {
 				quizInfoId,
 				query: `?current=${pageRef.current.next}`
@@ -77,6 +77,8 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 		} else {
 			setCurrent(quizData);
 		}
+
+		calcPercent(quizCount, currentNum);
 		
 	}, [currentNum]);
 
@@ -141,10 +143,10 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 		return array;
 	}
 
-	// 제한시간
-	const calcPercent = () => {
-		const total = Number(progress.total);
-		const now = Number(progress.now);
+	// 프로그래스바
+	const calcPercent = (total, now) => {
+		total = Number(total);
+		now = Number(now);
 		const percent = String(Math.floor((now / total) * 100))+"%";
 		setProgress({
 			...progress,
@@ -154,15 +156,6 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 	
 	// 정답 또는 틀린 문제 만들기
 	const handleAnswer = (e) => {
-		// const correctAnswer = true;
-		
-		// if(progress.now === progress.total){
-			// 	setProgress({
-				// 		...progress,
-				// 		result: true
-				// 	})
-				// }
-				
 		const clicked = !isClicked? true: isClicked;
 		// 선택한 퀴즈 답안 가져오기
 		const selectValue = parseInt(e.target.getAttribute("data-value"));
@@ -175,7 +168,9 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 			initQuizAnswer();
 
 			//TODO ~초 이후 다음 퀴즈로 넘어가기
-			setCurrentNum((prev) => ++prev);
+			setTimeout(() => {
+				setCurrentNum((prev) => ++prev);
+			}, 1500);
 		} else {
 			e.target.classList.add('wrong');
 			solveValue = false;
