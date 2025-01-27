@@ -27,7 +27,8 @@ function BeforeLearn({deleteModalAfterTime,learnType}){
 		persent: 0,
 		fill: "rgb(148 108 244)",
 		bg: "rgba(233 229 229 / 22%)",
-		style: ""
+		style: "",
+		max: 10,
 	})
 	const [disabled,setDisabled] = useState({
 		prev: false,
@@ -64,8 +65,10 @@ function BeforeLearn({deleteModalAfterTime,learnType}){
 			// 슬라이드 반영
 			setSlider({
 				...slider,
+				persent: 100,
 				max: item.count,
 				value: item.count,
+				style: `linear-gradient(90deg, rgb(148, 108, 244) 100%, rgba(233, 229, 229, 0.22) 100.1%)`
 			})
 		}
 	
