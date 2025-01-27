@@ -225,11 +225,12 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 			<h2 className="word_quiz_title">빈칸에 알맞은 답을 선택해 주세요</h2>
 			<div className={ !isClicked ? "quiz_wrap" : isCorrect ? "quiz_wrap true" :"quiz_wrap false"}>
 				<div className="quiz_area">
-					{/* {
+					{
 						isClicked && <IsCorrectAni isCorrect={isCorrect}></IsCorrectAni>
-					} */}
+					}
 					<div className="quiz_question">{currentQuiz.question}</div>
-					<div className="quiz_correct"></div>
+					{/* <div className="quiz_correct_bg"></div> */}
+					<div className="quiz_correct">시시한 싸움, 티격태격, 언쟁</div>
 					<div className="quiz_progress_indicator">{currentNum} / {quizCount}</div>
 				</div>
 				<div className="quiz_answer_area">
