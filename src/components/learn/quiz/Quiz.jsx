@@ -36,6 +36,7 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 
 	const [isClicked, setIsClicked] = useState(false);
 	const [isCorrect, setIsCorrect] = useState(false);
+	const [isSolved, setIsSolved] = useState(false);
 
 	useEffect(() => {
 		// 퀴즈 조회 api 불러오기
@@ -171,11 +172,12 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 		// 정답 확인
 		if (currentQuiz.correctAnswer.wordId === selectValue) {
 			e.target.classList.add('correct');
-			
-			//TODO ~초 이후 다음 퀴즈로 넘어가기
+			console.log(currentQuiz.correctAnswer)
+			setIsSolved(true);	
 			setTimeout(() => {
 				setCurrentNum((prev) => ++prev);
 				initQuizAnswer();
+				setIsSolved(false);
 			}, 1500);
 		} else {
 			e.target.classList.add('wrong');
@@ -195,6 +197,7 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 				]
 			}
 			setIsClicked(clicked);
+			setIsCorrect(solveValue);
 		}
   }
 
@@ -226,11 +229,13 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 			<div className={ !isClicked ? "quiz_wrap" : isCorrect ? "quiz_wrap true" :"quiz_wrap false"}>
 				<div className="quiz_area">
 					{
-						isClicked && <IsCorrectAni isCorrect={isCorrect}></IsCorrectAni>
+						isSolved && <IsCorrectAni isCorrect={isCorrect}></IsCorrectAni>
 					}
 					<div className="quiz_question">{currentQuiz.question}</div>
-					{/* <div className="quiz_correct_bg"></div> */}
-					<div className="quiz_correct">시시한 싸움, 티격태격, 언쟁</div>
+					{
+						!isSolved? <div className="quiz_correct_bg"></div>
+						:<div className="quiz_correct">{currentQuiz.correctAnswer.mean}</div>
+					}
 					<div className="quiz_progress_indicator">{currentNum} / {quizCount}</div>
 				</div>
 				<div className="quiz_answer_area">
