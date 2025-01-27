@@ -5,9 +5,14 @@
 		flex-direction: column;
 		gap: 12px;
 		height: 100%;
+		overflow-y: auto;
+		&::-webkit-scrollbar{
+			display: none;
+		}
 	}
 	&_list{
 		flex: 1;
+		min-height: 150px;
 		padding: 10px 14px;
 		display: flex;
 		flex-direction: column;
@@ -23,13 +28,16 @@
 				transform: scale(1.2);
 			}
 		}
+		&:nth-child(2){
+			border: 1px solid $main-accent-color;
+		}
 	}
 	&_img{
 		display: flex;
 		transition: transform 0.24s cubic-bezier(0.47, 0, 0.745, 0.715);
 	}
 	&_title{
-		font-size: 24px;
+		font-size: 1.6em;
 	}
 	&_sub_title{
 		color: $main-accent-color;

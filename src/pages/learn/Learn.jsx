@@ -47,6 +47,12 @@ function Learn(){
 								<p className="method_choose_sub_title">퀴즈 형식</p>
 								<p className="method_choose_contents">사지선다로 퀴즈를 낼거에요</p>
 							</li>
+							{/* 이어하기 데이터가 있을경우에만 나타남 */}
+							<li className="method_choose_list">
+								<h3 className="method_choose_sub_title">퀴즈 이어하기</h3>
+								<p className="method_choose_contents">중단한 퀴즈를 이어할 수 있어요</p>
+							</li>
+							{/* 이어하기 데이터가 있을경우에만 나타남 */}
 							<li className="method_choose_list" onClick={handleModalMemorize()}>
 								<div className="method_choose_img">
 									<img src={FlashImg} alt="플래시" />
