@@ -60,8 +60,8 @@ function AddDailySentence({
 				<div className="textarea-box">
 					<textarea ref={el => dailySentenceRef.current.sentence = el} 
 					defaultValue={dailySentence?.sentence || ''} 
-					onChange={onChangeText} maxLength={255}
-					placeholder="문장을 입력해 주세요 (최대 255문자)"></textarea>
+					onChange={onChangeText} maxLength={1000}
+					placeholder="문장을 입력해 주세요 (최대 1000문자)"></textarea>
 
 				</div>
 			</div>

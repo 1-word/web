@@ -53,6 +53,14 @@ export const MODE = {
     DAILY_SENTENCE_DAYS_READ: "dailySentenceDaysRead",
     DAILY_SENTENCE_RELATION_INFO_READ: "dailySentenceRelationInfoRead",
     POST_IMAGE_UPLOAD: "postImageUpload",
+    QUIZ_INFO_SAVE: "quizInfoSave",
+    QUIZ_CREATE: "quizCreate",
+    QUIZ_READ: "quizRead",
+    QUIZ_SOLVE: "quizSolve",
+    QUIZ_END: "quizEnd",
+    QUIZ_STAT_CREATE: "quizStatCreate",
+    QUIZ_STAT_READ: "quizStatRead",
+    QUIZ_STAT_WORD_READ: "quizStatWordRead",
 }
 
 /**
@@ -248,6 +256,31 @@ function useEvntHandler(e, modeType, data, func){
         // 오늘의 내 문장 끝
         async postImageUpload(_, {path, formData}) {
             return await executeSrvConnect('post', `files/upload/images/${path}`, formData, {isUpdate: false});
+        },
+        // 퀴즈 시작
+        async quizInfoSave(_, data) {
+            return await executeSrvConnect('post', 'quiz-info', data, {isUpdate: false});
+        },
+        async quizCreate(_, quizInfoId) {
+            return await executeSrvConnect('post', `quiz/${quizInfoId}`, null, {isUpdate: false});
+        },
+        async quizRead(_, {quizInfoId, query}) {
+            return await executeSrvConnect('get', `quiz/${quizInfoId}${query}`, null, {isUpdate: false});
+        },
+        async quizSolve(_, data) {
+            return await executeSrvConnect('put', `quiz`, data, {isUpdate: false});
+        },
+        async quizEnd(_, quizInfoId) {
+            return await executeSrvConnect('put', `quiz-info/complete/${quizInfoId}`, null, {isUpdate: false});
+        },
+        async quizStatCreate(_, quizInfoId) {
+            return await executeSrvConnect('post', `quiz-stat/${quizInfoId}`, null, {isUpdate: false});
+        },
+        async quizStatRead(_, quizInfoId) {
+            return await executeSrvConnect('get', `quiz-stat/${quizInfoId}`, null, {isUpdate: false});
+        },
+        async quizStatWordRead(_, {quizInfoId, query}) {
+            return await executeSrvConnect('get', `quiz/result/${quizInfoId}${query}`, null, {isUpdate: false});
         },
     }
 

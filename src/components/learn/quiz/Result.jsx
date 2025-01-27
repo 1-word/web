@@ -1,12 +1,34 @@
 import { useEffect, useState } from "react";
 import LearnedList from "../LearnedList";
+<<<<<<< HEAD
+=======
+import { useLocation } from "react-router-dom";
+import api, { MODE } from "@/services/api";
+>>>>>>> c28c76a3ae65d63a208d4350a11382ebe24d9ebe
 
+// TODO 페이지로 변경
 function Result(){
+<<<<<<< HEAD
+=======
+	const {state} = useLocation();
+	const onClickHandler = api();
+
+	const [quizInfoId, setQuizInfoId] = useState(0);
+
+>>>>>>> c28c76a3ae65d63a208d4350a11382ebe24d9ebe
 	const [persentState,setPersentState] = useState({
 		score: 0,
 		aniVal: "",
 		aniLength: 0,
 	});
+<<<<<<< HEAD
+=======
+
+	/**
+	 * 원 그래프 그리기
+	 * @param {int} newScore 퍼센트
+	 */
+>>>>>>> c28c76a3ae65d63a208d4350a11382ebe24d9ebe
 	const updateAniVal = (newScore) => {
 		const maxAniVal = document.querySelector('.vocabox-persent path').getTotalLength();
 		const percentage = 1 - newScore / 100;
@@ -18,9 +40,37 @@ function Result(){
 			aniLength: maxAniVal
 		});
 	};
+<<<<<<< HEAD
 	useEffect(()=>{
 		updateAniVal(50);
 	},[])
+=======
+
+	useEffect(() => {
+		const result = state?.result;
+		setQuizInfoId(state.quizInfoId);
+
+		if (result) {
+			const percent = Math.floor(result.correctCount / result.totalCount * 100);
+			updateAniVal(percent);
+			return;
+		}
+
+		if (state?.quizInfoId) {
+			onClickHandler(null, MODE.QUIZ_STAT_READ).then(res => {
+				calcPercent(res);
+			});
+		}
+
+
+	}, []);
+
+	const calcPercent = (result) => {
+		const percent = Math.floor(result.correctCount / result.totalCount * 100);
+		updateAniVal(percent);
+	}
+
+>>>>>>> c28c76a3ae65d63a208d4350a11382ebe24d9ebe
 	return(
 		<>
 			<h2 className="word_quiz_title">축하해요! 모든 단어를 학습했어요!</h2>
@@ -33,6 +83,7 @@ function Result(){
 							</svg>
 						</div>
 						<div className={persentState.score > 50? "quiz_result_persent over": "quiz_result_persent"}>
+<<<<<<< HEAD
 							{persentState.score}
 						</div>
 					</div>
@@ -41,11 +92,28 @@ function Result(){
 					</div>
 					<div>
 						오답 <span className="quiz_result_count">0</span>
+=======
+							{persentState.score}%
+						</div>
+					</div>
+					<div>
+						전체 <span className="quiz_result_count">{state?.result.totalCount ?? 0}</span>
+					</div>
+					<div>
+						정답 <span className="quiz_result_count">{state?.result.correctCount ?? 0}</span>
+					</div>
+					<div>
+						오답 <span className="quiz_result_count">{state?.result.wrongCount ?? 0}</span>
+>>>>>>> c28c76a3ae65d63a208d4350a11382ebe24d9ebe
 					</div>
 				</div>
 				<div className="quiz_result_bottom">
 					<p className="quiz_result_bottom_title">학습한 단어 목록이에요</p>
+<<<<<<< HEAD
 					<LearnedList></LearnedList>
+=======
+					<LearnedList quizInfoId={quizInfoId}></LearnedList>
+>>>>>>> c28c76a3ae65d63a208d4350a11382ebe24d9ebe
 				</div>
 			</div>
 		</>

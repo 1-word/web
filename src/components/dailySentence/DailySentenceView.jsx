@@ -50,7 +50,7 @@ function DailySentenceView({
 			Object.keys(relationWords).forEach(id => relationWords[id]?.classList?.remove("on"));
 		}
 		relationWordRef.current = {};
-		if (currentSetence.dailyWords.length !== 0) {
+		if (currentSetence.dailyWords?.length !== 0) {
 			checkButtonStatus(currentSetence.idx);
 			const idx = currentSetence.idx;
 			onClickHandler(null, MODE.DAILY_SENTENCE_RELATION_INFO_READ, dailySentenceList[idx].dailySentenceId)
@@ -100,7 +100,7 @@ function DailySentenceView({
 		});
 	}
 
-	const relationWord = currentSetence.dailyWords.map((val, idx) => {
+	const relationWord = currentSetence?.dailyWords?.map((val, idx) => {
 		return <React.Fragment key={`dailyWords${idx}`}>
 						<li ref={el => relationWordRef.current[val.wordId] = el} onClick={handleWordViewModal(val.wordId)}>
 							<p className="daily_sentence_view_relative_word_name">{val.word}</p>
@@ -210,7 +210,7 @@ function DailySentenceView({
 					{currentSetence.mean}
 				</p>
 
-				{	currentSetence.dailyWords.length > 0 &&
+				{	currentSetence.dailyWords?.length > 0 &&
 					// 연관 단어 
 					<div className="daily_sentence_view_relative_word_area">
 						<h3>연관 단어</h3>
