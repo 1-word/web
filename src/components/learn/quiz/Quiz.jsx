@@ -4,7 +4,7 @@ import Result from "./Result";
 import api, { MODE } from "@/services/api";
 import { useNavigate } from "react-router-dom";
 
-function Quiz({allWordData, quizInfoId, quizCount}){
+function Quiz({allWordData, quizInfoId, quizCount, quizType}){
 	const onClickHandler = api();
 
 	const navigate = useNavigate();
@@ -13,7 +13,8 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 		quizId: null, 
 		question: null,
 		correctAnswer: null, 
-		answers: []
+		answers: [],
+		quizType: '',
 	});
 
 	const answerRef = useRef(null);
@@ -131,11 +132,20 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 		// 랜덤으로 섞기
 		result = shuffleArray(result);
 
+		// 퀴즈 타입 지정
+		let type = quizType;
+		if (type === 'random') {
+			const quizTypes = ['word', 'mean'];
+			const idx = Math.floor(Math.random() * 2);
+			type = quizTypes[idx];
+		}
+
 		const answers = {
 			quizId: currentQuiz.quizId,
-			question: currentQuiz.word,
+			question: type === 'word'? currentQuiz.mean : currentQuiz.word,
 			correctAnswer: {...currentQuiz},
-			answers: result
+			answers: result,
+			quizType: type
 		};
 
 		return answers;
@@ -210,10 +220,10 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 		}
 	}
 
-	const answerList = () => {
+	const answerList = (quizType) => {
 		return currentQuiz?.answers.map(v => 
 			<React.Fragment key={`answer${v.wordId}`}>
-				<li data-value={v.wordId} className="quiz_answer">{v.mean}</li>	
+				<li data-value={v.wordId} className="quiz_answer">{quizType === 'word'? v.word : v.mean}</li>	
 			</React.Fragment>
 		);
 	}
@@ -233,13 +243,13 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 					<div className="quiz_question">{currentQuiz.question}</div>
 					{
 						!isSolved? <div className="quiz_correct_bg"></div>
-						:<div className="quiz_correct">{currentQuiz.correctAnswer.mean}</div>
+						:<div className="quiz_correct">{currentQuiz.quizType === 'word'? currentQuiz.correctAnswer.word : currentQuiz.correctAnswer.mean}</div>
 					}
 					<div className="quiz_progress_indicator">{currentNum} / {quizCount}</div>
 				</div>
 				<div className="quiz_answer_area">
 					<ul ref={answerRef} className="quiz_answer_lists" onClick={handleAnswer}>
-						{answerList()}
+						{answerList(currentQuiz.quizType)}
 					</ul>
 				</div>
 			</div>

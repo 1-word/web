@@ -16,6 +16,7 @@ function WordQuiz(){
 	const [quiz, setQuiz] = useState(<></>);
 	const [openModal] = useModal();
 	const navigate = useNavigate();
+
 	useEffect(() => {
 		// 퀴즈 생성 api 불러오기
 		if (state?.quizType === "create") {
@@ -32,23 +33,15 @@ function WordQuiz(){
 
 	// 퀴즈 데이터 생성 이후 퀴즈 문제 조회
 	const startQuiz = (allWordData) => {
-		const result = <Quiz allWordData={allWordData} quizInfoId={state?.quizInfoId} quizCount={state?.count}></Quiz>
+		const result = <Quiz 
+										allWordData={allWordData} 
+										quizInfoId={state?.quizInfoId} 
+										quizCount={state?.count}
+										quizType={state?.type}>
+									</Quiz>
 		setQuiz(result);
 	}
 
-	const [next, nextState] = useState(
-		{
-			quiz : false,
-			result : false
-		}
-	);
-
-	const handleQuizPhaze = () => {
-		nextState({quiz:true});
-	}
-	const handleResultPhaze = () => {
-		nextState({quiz:false,result:true});
-	}
 	return(
 		<div className="wrap">
 			<HeaderMini title="단어 학습"></HeaderMini>
@@ -57,11 +50,6 @@ function WordQuiz(){
 			<div className="word_learn_wrap">
 				<div className="word_learn_cont">
 					{quiz}
-					{
-						(next.quiz) === true ? <Quiz></Quiz> :
-						(next.result) === true ? <Result></Result> :
-						""
-					}
 				</div>
 			</div>
 		</div>
