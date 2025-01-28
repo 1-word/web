@@ -1,13 +1,15 @@
-import { useObserver } from "@/hook/_hooks";
+import { useModal, useObserver } from "@/hook/_hooks";
 import { useEffect, useRef, useState } from "react";
 import api, { MODE } from "@/services/api";
 import { Pagination } from "@/util/Pagination";
+import FullModal from "../layout/popup/FullModal";
+import WordDetailView from "../dailySentence/WordDetailView";
 
-// TODO 단어 카드 선택 시 전체 단어 정보 보여주는 팝업 출력
 function LearnedList({quizInfoId, option}){
 	const [obsPage, obsInit, isEnd, preventDisable] = useObserver();
 	const obsRef = useRef();
 	const onClickHandler = api();
+	const [wordViewModal] = useModal('wordView');
 
 	const [wordList, setWordList] = useState({
 		page: {
@@ -52,8 +54,16 @@ function LearnedList({quizInfoId, option}){
 		}
 	},[obsPage]);
 
+	const handleWordViewModal = wordId => () => {
+		// 연관 단어를 클릭하면 단어의 전체 정보 출력
+		onClickHandler(null, MODE.SINGLE_READ, wordId)
+		.then(res => {
+			wordViewModal(FullModal, WordDetailView, {wordList: res});
+		});
+	}
+
 	const wordCard = wordList?.data.map((data, i) => {
-		return <div key={`wordCard${data.quizId}${i}`} className={data.correct? 'word_card' : 'word_card wrongAnswer'}>
+		return <div key={`wordCard${data.quizId}${i}`} className={data.correct? 'word_card' : 'word_card wrongAnswer'} onClick={handleWordViewModal(data?.wordId)}>
 						<div className="word_card_top">
 							<h2 className="word_card_name">{data?.word}</h2>
 							<span className="word_card_read">{data?.read}</span>
