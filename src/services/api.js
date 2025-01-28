@@ -31,6 +31,7 @@ export const MODE = {
     FOLDER_UPDATE: "folderUpdate",
     FOLDER_SAVE: "folderSave",
     FOLDER_DELETE: "folderDelete",
+    FOLDER_COUNT_READ: "folderCountRead",
     MEMORIZATION: "memorization",
     WORD_FOLDER_UPDATE: "wordFolderUpdate",
     SIGNOUT: "signout",
@@ -131,7 +132,9 @@ function useEvntHandler(e, modeType, data, func){
         async folderDelete(_, folderId){
             return await executeSrvConnect("delete", `folders/${folderId}`, null, {isUpdate: false});
         },
-
+        async folderCountRead(_, {folderId, query}){
+            return await executeSrvConnect("get", `folders/${folderId}${query}`, null, {isUpdate: false});
+        },
         open(){
 
         },

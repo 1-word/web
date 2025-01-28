@@ -172,7 +172,6 @@ function Quiz({allWordData, quizInfoId, quizCount}){
 		// 정답 확인
 		if (currentQuiz.correctAnswer.wordId === selectValue) {
 			e.target.classList.add('correct');
-			console.log(currentQuiz.correctAnswer)
 			setIsSolved(true);	
 			setTimeout(() => {
 				setCurrentNum((prev) => ++prev);
