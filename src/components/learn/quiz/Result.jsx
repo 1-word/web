@@ -12,6 +12,7 @@ function Result(){
 	const onClickHandler = api();
 
 	const [quizInfoId, setQuizInfoId] = useState(0);
+	const [resultFilter, setResultFilter] = useState('');
 
 	const [persentState,setPersentState] = useState({
 		score: 0,
@@ -59,6 +60,11 @@ function Result(){
 		updateAniVal(percent);
 	}
 
+	const handlerSearchFilter = e => {
+		const value = e.target.getAttribute('data-value');
+		setResultFilter(value);
+	}
+
 	return(
 		<div className="wrap">
 			<HeaderMini title="단어 학습"></HeaderMini>
@@ -92,13 +98,13 @@ function Result(){
 						<div className="quiz_result_bottom">
 							<div className="quiz_result_bottom_title">
 								<p>학습한 단어 목록이에요</p>
-								<ul className="word_tab flex">
-									<li>전체</li>
-									<li>정답</li>
-									<li>오답</li>
+								<ul className="word_tab flex" onClick={handlerSearchFilter}>
+									<li data-value='' className={resultFilter === ''? 'active' : ''}>전체</li>
+									<li data-value='correct' className={resultFilter === 'correct'? 'active' : ''}>정답</li>
+									<li data-value='wrong' className={resultFilter === 'wrong'? 'active' : ''}>오답</li>
 								</ul>
 							</div>
-							<LearnedList quizInfoId={quizInfoId}></LearnedList>
+							{quizInfoId !== 0 && <LearnedList quizInfoId={quizInfoId} option={resultFilter}></LearnedList>}
 						</div>
 					</div>
 				</div>

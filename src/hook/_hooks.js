@@ -166,7 +166,6 @@ export function useObserver(){
         //옵저버 중복 실행 방지
         // isIntersecting: 화면에 감지된 경우
         if(!endRef.current && target.isIntersecting && !preventRef.current){
-            // console.log(`hooks prevent: ${preventRef.current}`);
             preventRef.current = true;
             setPage(prev => prev+1);    //페이지 값 증가
         }
@@ -177,8 +176,9 @@ export function useObserver(){
      * @param {*} obsRef 옵저빙할 컴포넌트
      */
     const obsInitialization = (obsRef) => {
-        if(obsRef.current) 
+        if(obsRef.current) {
             observer.observe(obsRef.current);
+        }
     }
 
     /**

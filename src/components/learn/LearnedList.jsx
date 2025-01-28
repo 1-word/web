@@ -4,21 +4,31 @@ import api, { MODE } from "@/services/api";
 import { Pagination } from "@/util/Pagination";
 
 // TODO 단어 카드 선택 시 전체 단어 정보 보여주는 팝업 출력
-function LearnedList({quizInfoId}){
+function LearnedList({quizInfoId, option}){
 	const [obsPage, obsInit, isEnd, preventDisable] = useObserver();
 	const obsRef = useRef();
 	const onClickHandler = api();
 
 	const [wordList, setWordList] = useState({
 		page: {
-			hasNext: true,
+			hasNext: false,
 		},
 		data: [],
 	});
-
+	
 	useEffect(() => {
 		obsInit(obsRef);
 	},[]);
+
+	// search 옵션이 변경될 때마다 실행
+	useEffect(() => {
+		const value = option === "correct"? true : option === "wrong"? false : "";
+		const correctQuery = value !== ""? `&correct=${value}` : "";
+		onClickHandler(null, MODE.QUIZ_STAT_WORD_READ, {quizInfoId, query: `?current=0${correctQuery}`}).then(res => {
+			setWordList(res);
+			preventDisable();
+		})
+	}, [option]);	
 
 	useEffect(()=> {
 		if (obsPage > -1 && wordList?.page?.hasNext){
@@ -27,8 +37,10 @@ function LearnedList({quizInfoId}){
 			}
 
 			const query = Pagination.getQueryParameter(queryParams);
+			const value = option === "correct"? true : option === "wrong"? false : "";
+			const correctQuery = value !== ""? `&correct=${value}` : "";
 
-			onClickHandler(null, MODE.QUIZ_STAT_WORD_READ, {quizInfoId, query}).then(res => {
+			onClickHandler(null, MODE.QUIZ_STAT_WORD_READ, {quizInfoId, query: query + correctQuery}).then(res => {
 				setWordList(prev => {
 					return {
 									data: [...prev.data, ...res.data],
