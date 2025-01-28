@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
 import LearnedList from "../LearnedList";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import api, { MODE } from "@/services/api";
 import BottomNav from "@/components/layout/BottomNav";
 import HeaderMini from "@/components/layout/HeaderMini";
 import LeftFix from "@/components/layout/LeftFix";
+import { useModal } from "@/hook/_hooks";
+import Toast from "@/components/layout/popup/Toast";
 
 // TODO 페이지로 변경
 function Result(){
 	const {state} = useLocation();
 	const onClickHandler = api();
+	const navigate = useNavigate();
+	const [openModal] = useModal();
 
 	const [quizInfoId, setQuizInfoId] = useState(0);
 	const [resultFilter, setResultFilter] = useState('');
@@ -37,6 +41,12 @@ function Result(){
 	};
 
 	useEffect(() => {
+		if (state?.quizInfoId === undefined) {
+			openModal(Toast, null, {msg: "퀴즈 정보가 올바르지 않습니다."}, "toast");
+			navigate('/learn', {replace: true});
+			return;
+		}
+		
 		const result = state?.result;
 		setQuizInfoId(state.quizInfoId);
 
