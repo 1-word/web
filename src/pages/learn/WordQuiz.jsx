@@ -25,6 +25,10 @@ function WordQuiz(){
 			onClickHandler(null, MODE.QUIZ_CREATE, state?.quizInfoId).then(res => {
 				startQuiz(res);
 			});
+		} else if(state?.quizType === "continue") {
+			onClickHandler(null, MODE.QUIZ_WORD_READ, state?.folderId).then(res => {
+				startQuiz(res);
+			});
 		} else {
 			openModal(Toast, null, {msg: "퀴즈 정보가 올바르지 않아 퀴즈 선택으로 돌아갑니다."}, "toast");
 			navigate("/learn", {replace: true});
@@ -39,7 +43,8 @@ function WordQuiz(){
 										allWordData={allWordData} 
 										quizInfoId={state?.quizInfoId} 
 										quizCount={state?.count}
-										quizType={state?.type}>
+										quizType={state?.type}
+										isContinue={state?.quizType === "continue"? true : false}>
 									</Quiz>
 		setQuiz(result);
 	}

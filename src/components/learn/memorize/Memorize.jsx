@@ -7,7 +7,6 @@ function Memorize(){
 
 	useEffect(() => {
 		if (isSpeakingAllowed) {
-		console.log('asdf')
 		const utter = new SpeechSynthesisUtterance('Hello, World!');
 		window.speechSynthesis.speak(utter);
 		// getSpeech('단어장')

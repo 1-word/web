@@ -21,6 +21,7 @@ function BeforeLearn({deleteModalAfterTime,learnType}){
 		count: 1
 	});
 
+	
 	const [LearnVocabookModal] = useModal('LearnVocabookModal');
 	const [slider,setSlider] = useState({
 		value: 1,

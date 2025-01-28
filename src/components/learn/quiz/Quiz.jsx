@@ -3,11 +3,15 @@ import IsCorrectAni from "./IsCorrectAni";
 import Result from "./Result";
 import api, { MODE } from "@/services/api";
 import { useNavigate } from "react-router-dom";
+import { useModal } from "@/hook/_hooks";
+import Toast from "@/components/layout/popup/Toast";
 
-function Quiz({allWordData, quizInfoId, quizCount, quizType}){
+function Quiz({allWordData, quizInfoId, quizCount, quizType, isContinue}){
 	const onClickHandler = api();
 
 	const navigate = useNavigate();
+	
+	const [openModal] = useModal();
 
 	const [currentQuiz, setCurrentQuiz] = useState({
 		quizId: null, 
@@ -40,6 +44,10 @@ function Quiz({allWordData, quizInfoId, quizCount, quizType}){
 	const [isSolved, setIsSolved] = useState(false);
 
 	useEffect(() => {
+		return () => { solveQuiz(() =>  openModal(Toast, null, {msg: "퀴즈 진행 상황이 저장되었어요."}, "toast")) }
+	}, []);
+
+	useEffect(() => {
 		// 퀴즈 조회 api 불러오기
 		let currentPage = pageRef.current.current;
 		if (!pageRef.current.hasNext && currentNum > quizCount) {
@@ -65,7 +73,7 @@ function Quiz({allWordData, quizInfoId, quizCount, quizType}){
 		if (30 * (currentPage + 1) < currentNum || currentNum === 1) {
 			onClickHandler(null, MODE.QUIZ_READ, {
 				quizInfoId,
-				query: `?current=${pageRef.current.next}`
+				query: `?current=${pageRef.current.next}&continue=${isContinue}`
 			}).then(res => {
 				const quiz = res.data.sort((a, b) => b.quizId - a.quizId);
 				setQuizData(quiz);
@@ -81,14 +89,17 @@ function Quiz({allWordData, quizInfoId, quizCount, quizType}){
 			setCurrent(quizData);
 		}
 
-		calcPercent(quizCount, currentNum);
-		
+		calcPercent(quizCount, currentNum);		
 	}, [currentNum]);
 
 	const solveQuiz = async(callback) => {
-		await onClickHandler(null, MODE.QUIZ_SOLVE, solve.current).then(_ => {
-			callback();
-		});
+		if (solve.current.datas.length > 0) {
+			const data = [...solve.current.datas];
+			solve.current.datas = [];
+			await onClickHandler(null, MODE.QUIZ_SOLVE, {datas: data}).then(_ => {
+				callback();
+			});
+		}
 	}
 
 	// 현재 퀴즈 세팅

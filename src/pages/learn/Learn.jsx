@@ -1,19 +1,43 @@
-import {useEffect,useState} from "react";
+import {useEffect, useState} from "react";
 import HeaderMini from "@/components/layout/HeaderMini";
 import LeftFix from "@/components/layout/LeftFix";
 import BottomNav from "@/components/layout/BottomNav";
-import VocabookList from "@/components/word/folder/VocaBookList";
-import Quiz from "@/components/learn/quiz/Quiz";
-import Result from "@/components/learn/quiz/Result";
 import QuizImg from "@/assets/images/quiz.svg";
 import FlashImg from "@/assets/images/flash.svg";
 import { useModal } from "@/hook/_hooks";
 import FullModal from "@/components/layout/popup/FullModal";
 import BeforeLearn from "@/components/learn/BeforeLearn";
+import api, { MODE } from "@/services/api";
 import LearnedResult from "@/components/learn/LearnedResult";
+import { useNavigate } from "react-router-dom";
 
 function Learn(){
+
+	const onClickHandler = api();
 	const [beforeLearnModal] = useModal('beforeLearnModal');
+	const [inCompleteQuiz, setInCompleteQuiz] = useState({});
+	const navigate = useNavigate();
+		
+	// 퀴즈 이어하기 데이터 조회
+	useEffect(() => {
+		// 퀴즈 저장 이후 바로 조회 시 count 갱신이 안되는 문제가 있어 시간 조정
+		setTimeout(() => {
+			onClickHandler(null, MODE.INCOMPLETE_QUIZ_READ).then(res => {
+				if (res?.folderId !== null) {
+					setInCompleteQuiz(res);
+				}
+			})
+		}, 100);
+	}, []);
+
+	const handleContinueQuiz = () => {
+		navigate("/quiz", {
+			state: {
+				...inCompleteQuiz,
+				quizType: "continue",
+				}
+		});
+	}
 
 	const handleModalQuiz = (e) => e => {
 		beforeLearnModal(FullModal,BeforeLearn,{
@@ -30,6 +54,7 @@ function Learn(){
 	const handleModalResult = () => e => {
 		beforeLearnModal(FullModal,LearnedResult)
 	}
+
 	return(
 		<div className="wrap">
 			<HeaderMini title="단어 학습"></HeaderMini>
@@ -48,10 +73,13 @@ function Learn(){
 								<p className="method_choose_contents">사지선다로 퀴즈를 낼거에요</p>
 							</li>
 							{/* 이어하기 데이터가 있을경우에만 나타남 */}
-							<li className="method_choose_list">
-								<h3 className="method_choose_sub_title">퀴즈 이어하기</h3>
-								<p className="method_choose_contents">중단한 퀴즈를 이어할 수 있어요</p>
-							</li>
+							{
+								inCompleteQuiz?.quizInfoId && 
+								<li className="method_choose_list" onClick={handleContinueQuiz}>
+									<h3 className="method_choose_sub_title">퀴즈 이어하기</h3>
+									<p className="method_choose_contents">중단한 퀴즈를 이어할 수 있어요</p>
+								</li>
+							}
 							{/* 이어하기 데이터가 있을경우에만 나타남 */}
 							<li className="method_choose_list" onClick={handleModalMemorize()}>
 								<div className="method_choose_img">

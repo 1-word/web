@@ -63,6 +63,8 @@ export const MODE = {
     QUIZ_STAT_READ: "quizStatRead",
     QUIZ_STAT_WORD_READ: "quizStatWordRead",
     QUIZ_STAT_LIST_READ: "quizStatListRead",
+    INCOMPLETE_QUIZ_READ: "incompleteQuizRead",
+    QUIZ_WORD_READ: "quizWordRead",
 }
 
 /**
@@ -288,7 +290,13 @@ function useEvntHandler(e, modeType, data, func){
         },
         async quizStatListRead(_, query) {
             return await executeSrvConnect('get', `quiz-stat${query}`, null, {isUpdate: false});
-        }
+        },
+        async [MODE.INCOMPLETE_QUIZ_READ](_) {
+            return await executeSrvConnect('get', `quiz-info/incomplete`, null, {isUpdate: false});
+        },
+        async [MODE.QUIZ_WORD_READ](_, folderId) {
+            return await executeSrvConnect('get', `quiz/${folderId}/words`, null, {isUpdate: false});
+        },
     }
 
     /**
