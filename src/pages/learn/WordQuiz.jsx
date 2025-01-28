@@ -18,6 +18,8 @@ function WordQuiz(){
 	const navigate = useNavigate();
 
 	useEffect(() => {
+		// state 초기화
+		navigate(window.location.pathname, { replace: true, state: null });
 		// 퀴즈 생성 api 불러오기
 		if (state?.quizType === "create") {
 			onClickHandler(null, MODE.QUIZ_CREATE, state?.quizInfoId).then(res => {
@@ -25,7 +27,7 @@ function WordQuiz(){
 			});
 		} else {
 			openModal(Toast, null, {msg: "퀴즈 정보가 올바르지 않아 퀴즈 선택으로 돌아갑니다."}, "toast");
-			navigate("/learn");
+			navigate("/learn", {replace: true});
 		}
 
 		state?.quizType === "";

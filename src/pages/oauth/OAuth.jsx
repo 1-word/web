@@ -17,7 +17,7 @@ function OAuth() {
 
     if (accessToken === "" || accessToken === undefined) {
       openModal(Toast, null, {msg: "소셜 로그인 도중 오류가 발생했습니다. 다시 시도해주세요."}, "toast");
-      navigate('/signin');
+      navigate('/signin', {replace: true});
       return;
     }
 
@@ -29,7 +29,7 @@ function OAuth() {
     saveToken(data);
     // 소셜 로그인 시 프로필 정보 가져오기
     onClickHandler(null, MODE.USER_READ, data.accessToken);
-    navigate('/vocabook');
+    navigate('/vocabook', {replace: true});
   }, []);
 
   return(
