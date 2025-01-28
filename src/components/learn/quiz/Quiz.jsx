@@ -48,6 +48,7 @@ function Quiz({allWordData, quizInfoId, quizCount, quizType}){
 				// 퀴즈 통계 생성
 				onClickHandler(null, MODE.QUIZ_STAT_CREATE, quizInfoId).then(res => {
 					navigate('/quiz-result', {
+						replace: true,
 						state: {
 							end: true,
 							result: res,
