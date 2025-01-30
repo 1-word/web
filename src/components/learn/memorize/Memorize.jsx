@@ -90,10 +90,6 @@ function Memorize(){
 					words: [...wordList.words, ...res.words]
 				});
 				setCurrentWord(res.words[0]);
-				currentRef.current = {
-					...currentRef.current,
-					wordId: res.words[0].wordId
-				}
 			});
 
 			return;
@@ -101,10 +97,6 @@ function Memorize(){
 
 		setCurrentWord(wordList.words[index])
 		if (!currentRef.current.isStop && wordList.words.length > 0) {
-			currentRef.current = {
-				...currentRef.current,
-				wordId: wordList.words[index].wordId
-			}
 			speechStart(wordList.words[index]);
 			calcPercent(count, index);
 		}
@@ -118,6 +110,11 @@ function Memorize(){
 
 		if (currentRef.current.isStop) {
 			currentRef.current.isStop = false;
+		}
+
+		currentRef.current = {
+			...currentRef.current,
+			wordId: wordList.words[index].wordId
 		}
 
 		audioPlay(currentWord);
