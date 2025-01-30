@@ -166,10 +166,10 @@ function Memorize(){
 		}
 	}
 
-	// web speak tts 이용
+	// web speech tts 이용
 	const speech = (txt, {lang, voiceName, endFunc}) => {
 		const voices = voiceRef.current;
-		const utterThis = new SpeechSynthesisUtterance(txt);
+		const utterThis = new SpeechSynthesisUtterance(txt + '...');
 		// 기본 값 설정
 		lang = lang ?? 'ko-KR';
 		utterThis.lang = lang;
