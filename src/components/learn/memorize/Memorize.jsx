@@ -16,7 +16,9 @@ function Memorize(){
 	const [wordList, setWordList] = useState({
 		page: {
 			current: 0,
-			hasNext: true
+			next: 0,
+			hasNext: true,
+			isFirst: true
 		},
 		words: []
 	});
@@ -25,6 +27,9 @@ function Memorize(){
 
 	const [sortType, setSortType] = useState('');
 	const [index, setIndex] = useState(0);
+
+
+	const PAGE_SIZE = 30;
 
 	const currentRef = useRef({
 		seed: null,
@@ -36,30 +41,14 @@ function Memorize(){
 		setSortType(sort);
 
 		let seed = null;
+		// 시드 생성
 		if (sort === 'random') {
 			seed = uuidv4()
 			currentRef.current = {
 				...currentRef.current,
-				seed: seed
+				seed: sort === 'random'? seed : ''
 			}
 		}
-
-		const queryParams = {
-			current: 0,
-			lastId: null,
-			memorization: memorization === ''? null : memorization,
-			folderId,
-			sort,
-			seed: sort === 'random'? seed : ''
-		}
-
-		const query = Pagination.getQueryParameter(queryParams);
-
-		onClickHandler(null, MODE.READ, query)
-				.then(res => {
-						setWordList(res);
-						setCurrentWord(res.words[0])
-		});
 
 		//디바이스에 내장된 voice를 가져온다.
 		const setVoiceList = () => {
@@ -81,6 +70,30 @@ function Memorize(){
 	}, []);
 
 	useEffect(() => {
+		const currentPage = wordList.page.current;
+		if (wordList.page.hasNext && (PAGE_SIZE * (currentPage + 1) < index+1) || wordList.page.isFirst) {
+			const queryParams = {
+				current: wordList.page.next,
+				lastId: wordList.page.lastId ?? null,
+				memorization: memorization === ''? null : memorization,
+				folderId,
+				sort,
+				seed: currentRef.current.seed
+			}
+	
+			const query = Pagination.getQueryParameter(queryParams);
+	
+			onClickHandler(null, MODE.READ, query).then(res => {
+				setWordList({
+					page: res.page,
+					words: [...wordList.words, ...res.words]
+				});
+				setCurrentWord(res.words[0])
+			});
+
+			return;
+		}
+
 		setCurrentWord(wordList.words[index])
 		if (!currentRef.current.isStop && wordList.words.length > 0) {
 			speechStart(wordList.words[index]);
@@ -212,7 +225,6 @@ function Memorize(){
 			style={{
 				width: progress.width,
 			}}></div>
-			<div onClick={e => speechStart(currentWord)}>aaaaaa</div>
 			<WordDetailView wordList={currentWord}></WordDetailView>
 			<MemorizePlayer 
 				startFunc={() => speechStart(currentWord)}
