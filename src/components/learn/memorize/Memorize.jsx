@@ -82,7 +82,7 @@ function Memorize(){
 
 	useEffect(() => {
 		setCurrentWord(wordList.words[index])
-		if (wordList.words.length > 0) {
+		if (!currentRef.current.isStop && wordList.words.length > 0) {
 			speechStart(wordList.words[index]);
 			calcPercent(count, index);
 		}
@@ -175,17 +175,17 @@ function Memorize(){
 	}
 
 	const nextFunc = () => {
+		setIndex(prev => (prev + 1) % count);
 		if (!currentRef.current.isStop) {
 			speechStop();
-			setIndex(prev => (prev + 1) % count);
 		}
 	}
 
 	const prevFunc = () => {
+		const newIndex = index === 0? count : index;
+		setIndex((newIndex -1) % count);
 		if (!currentRef.current.isStop) {
 			speechStop();
-			const newIndex = index === 0? count : index;
-			setIndex((newIndex -1) % count);
 		}
 	}
 
