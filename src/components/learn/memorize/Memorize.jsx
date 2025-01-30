@@ -35,6 +35,7 @@ function Memorize(){
 		seed: null,
 		audio: null,
 		isStop: true,
+		wordId: null,
 	});
 
 	useEffect(() => {
@@ -88,7 +89,11 @@ function Memorize(){
 					page: res.page,
 					words: [...wordList.words, ...res.words]
 				});
-				setCurrentWord(res.words[0])
+				setCurrentWord(res.words[0]);
+				currentRef.current = {
+					...currentRef.current,
+					wordId: res.words[0].wordId
+				}
 			});
 
 			return;
@@ -96,6 +101,10 @@ function Memorize(){
 
 		setCurrentWord(wordList.words[index])
 		if (!currentRef.current.isStop && wordList.words.length > 0) {
+			currentRef.current = {
+				...currentRef.current,
+				wordId: wordList.words[index].wordId
+			}
 			speechStart(wordList.words[index]);
 			calcPercent(count, index);
 		}
@@ -123,12 +132,13 @@ function Memorize(){
 	
 	// 자동 시작
 	const audioPlay = (currentWord) => {
-		const means = currentWord?.mean?.split(',');
+		const word = {...currentWord};
 
 		// web speech api 완료 시
 		const endSpeech = () => e => {
 			setTimeout(() => {
-				if (!currentRef.current.isStop) {
+				// 이전, 다음으로 이동 시 이전에 실행된 단어는 실행되면 안됨
+				if (!currentRef.current.isStop && word.wordId === currentRef.current.wordId) {
 					setIndex(prev => (prev + 1) % count);
 				}
 			}, 3000);
@@ -136,6 +146,7 @@ function Memorize(){
 
 		// audio 객체 완료 시
 		const endFunc = () => e => {
+			const means = word?.mean?.split(',');
 			// 마지막 뜻 문자열일 때 callback함수 실행
 			means.forEach((mean, i) => speech(mean, {
 				endFunc: i === means.length-1? endSpeech : null,
@@ -145,7 +156,7 @@ function Memorize(){
 
 		const audio = onClickHandler(null, MODE.AUDIO_PLAY, {
 			id: 0,
-			sound_path: currentWord.soundPath
+			sound_path: word.soundPath
 		}, endFunc);
 		
 		// audio 객체를 pause()하기 위해 저장
@@ -188,18 +199,20 @@ function Memorize(){
 	}
 
 	const nextFunc = () => {
-		setIndex(prev => (prev + 1) % count);
 		if (!currentRef.current.isStop) {
 			speechStop();
+			currentRef.current.isStop = false;
 		}
+		setIndex(prev => (prev + 1) % count);
 	}
 
 	const prevFunc = () => {
-		const newIndex = index === 0? count : index;
-		setIndex((newIndex -1) % count);
 		if (!currentRef.current.isStop) {
 			speechStop();
+			currentRef.current.isStop = false;
 		}
+		const newIndex = index === 0? count : index;
+		setIndex((newIndex -1) % count);
 	}
 
 	const [progress, setProgress] = useState({
