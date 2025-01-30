@@ -17,7 +17,7 @@ function Word(){
 		const { folderId } = useParams();
 		const { setWordList, savePreviousWordList, wordListRestore, preventDisableFunc, updateStart } = wordListStore(state => state);
 
-		const [ sort, setSort ] = useState("current");
+		const [ sort, setSort ] = useState("created");
 		
 		const pageRef = useRef({
 			current: 0,
@@ -72,7 +72,7 @@ function Word(){
 					lastId: page.lastId,
 					memorization,
 					folderId,
-					readType: sort
+					sort: sort
 				}
 
 				const query = Pagination.getQueryParameter(queryParams);
@@ -96,7 +96,7 @@ function Word(){
 					current: 0,
 					memorization: status,
 					folderId,
-					readType: sort
+					sort: sort
 				}
 
 				const query = Pagination.getQueryParameter(queryParams);
@@ -136,8 +136,8 @@ function Word(){
 					</ul>
 					{/* 조회 순서 */}
 					<ul className="word_tab_view flex">
-						<li className={sort === "current"? "active" : ""} onClick={sortOnClick("current")}>등록순</li>
-						<li className={sort === "update"? "active" : ""} onClick={sortOnClick("update")}>업데이트순</li>
+						<li className={sort === "created"? "active" : ""} onClick={sortOnClick("created")}>등록순</li>
+						<li className={sort === "updated"? "active" : ""} onClick={sortOnClick("updated")}>업데이트순</li>
 					</ul>
 				</div>
 				

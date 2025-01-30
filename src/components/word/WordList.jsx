@@ -50,7 +50,7 @@ function WordList(props) {
                 lastId: null,
                 memorization,
                 folderId,
-                readType: props.sort
+                sort: props.sort
             }
 
             const query = Pagination.getQueryParameter(queryParams);
@@ -70,7 +70,7 @@ function WordList(props) {
                 lastId: wordList.page.lastId,
                 memorization,
                 folderId,
-                readType: props.sort
+                sort: props.sort
             }
 
             const query = Pagination.getQueryParameter(queryParams);
@@ -267,7 +267,7 @@ function WordList(props) {
                 </div>
                 {/* 메모 */}
                 <div className="word_card_foot">
-                    <div><span>{props.sort === "update"? data?.updateTime : data?.createTime}</span></div>
+                    <div><span>{props.sort === "updated"? data?.updateTime : data?.createTime}</span></div>
                     <button className={memoStatus[idx]?.status === "ON" ? "word_card_memo on" : "word_card_memo"}><i className="xi-comment-o" onClick={handleMemoClick(idx)}></i></button>
                 </div>
             </div>

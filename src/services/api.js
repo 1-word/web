@@ -184,6 +184,7 @@ function useEvntHandler(e, modeType, data, func){
                     
                 }).finally(()=>endFunc(data.id))
             }
+            return audio;
         },
         async code(_, {type, email}) {
             const res = await executeSrvConnect("post", `auth/code/${type}`, {email}, {isUpdate: false});

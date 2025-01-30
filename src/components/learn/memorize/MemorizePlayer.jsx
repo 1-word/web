@@ -1,13 +1,20 @@
 import { useState } from "react";
 
-function MemorizePlayer(){
+function MemorizePlayer({startFunc, stopFunc}){
 	const [player, setPlayer] = useState({
-		play: true,
+		play: false,
 		eye: true,
 	});
+
 	const togglePlayerStart = (e) => {
 		!player.play? setPlayer({...player,play:true}) : setPlayer({...player,play:false});
+		if (!player.play) {
+			startFunc();
+		} else {
+			stopFunc();
+		}
 	}
+
 	const toggleEye = (e) => {
 		!player.eye? setPlayer({...player,eye:true}) : setPlayer({...player,eye:false});
 	}
@@ -29,7 +36,7 @@ function MemorizePlayer(){
 			</li>
 			<li className="memorize_player_list" onClick={togglePlayerStart}>
 				<i className={
-					player.play? "memorize_player_play" : "memorize_player_stop"
+					player.play? "memorize_player_stop" : "memorize_player_play"
 				}/>
 			</li>
 			<li className="memorize_player_list">

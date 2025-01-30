@@ -10,7 +10,7 @@ function WordDetailView({wordList}){
 
 	useEffect(() => {
 		setCurrentWordList(wordList);
-	}, []);
+	}, [wordList]);
 
 	const headSetBtnOnClick = soundPath => e => {
 		const audio_data = {

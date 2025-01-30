@@ -174,18 +174,18 @@ function BeforeLearn({deleteModalAfterTime,learnType}){
 		}
 	}
 
-	const handleSubmit = () => {
-		if (learnType === "quiz") {
-			const data = {
-				...quizInfo.current,
-				count: parseInt(slider.value)
-			}
-			
-			if (data.folderId === null) {
-				openModal(Toast, null, {msg: "단어장을 선택해주세요"}, "toast");
-				return;
-			}
+	const handleSubmit = () => {			
+		const data = {
+			...quizInfo.current,
+			count: parseInt(slider.value)
+		}
 
+		if (data.folderId === null) {
+			openModal(Toast, null, {msg: "단어장을 선택해주세요"}, "toast");
+			return;
+		}
+
+		if (learnType === "quiz") {
 			onClickHandler(null, MODE.QUIZ_INFO_SAVE, data).then(res => {
 				const quizInfoId = res;
 				navigate("/quiz", {
@@ -197,7 +197,12 @@ function BeforeLearn({deleteModalAfterTime,learnType}){
 				});
 			});
 		} else {
-			navigate("/memorize");
+			navigate("/memorize", {
+				state: {
+					...data,
+					count: parseInt(slider.value),
+				}
+			});
 		}
 		deleteModalAfterTime(0);
 	}
