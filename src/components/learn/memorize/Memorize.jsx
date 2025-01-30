@@ -72,9 +72,11 @@ function Memorize(){
 			window.speechSynthesis.onvoiceschanged = setVoiceList;
 		}
 
+		calcPercent(count, 0);
+
 		return () => {
 			window.speechSynthesis.onvoiceschanged = null;
-			window.speechSynthesis.cancel();
+			speechStop();
 		}
 	}, []);
 
@@ -82,6 +84,7 @@ function Memorize(){
 		setCurrentWord(wordList.words[index])
 		if (wordList.words.length > 0) {
 			speechStart(wordList.words[index]);
+			calcPercent(count, index);
 		}
 	}, [index]);
 
@@ -171,6 +174,21 @@ function Memorize(){
 		window.speechSynthesis.speak(utterThis);
 	}
 
+	const nextFunc = () => {
+		if (!currentRef.current.isStop) {
+			speechStop();
+			setIndex(prev => (prev + 1) % count);
+		}
+	}
+
+	const prevFunc = () => {
+		if (!currentRef.current.isStop) {
+			speechStop();
+			const newIndex = index === 0? count : index;
+			setIndex((newIndex -1) % count);
+		}
+	}
+
 	const [progress, setProgress] = useState({
 		now: 30,
 		total: 30,
@@ -178,9 +196,9 @@ function Memorize(){
 		result: false,
 	});
 
-	const calcPercent = () => {
-		const total = Number(progress.total);
-		const now = Number(progress.now);
+	const calcPercent = (total, now) => {
+		total = Number(total);
+		now = Number(now);
 		const percent = String(Math.floor((now / total) * 100))+"%";
 		setProgress({
 			...progress,
@@ -198,7 +216,9 @@ function Memorize(){
 			<WordDetailView wordList={currentWord}></WordDetailView>
 			<MemorizePlayer 
 				startFunc={() => speechStart(currentWord)}
-				stopFunc={speechStop}></MemorizePlayer>
+				stopFunc={speechStop}
+				nextFunc={nextFunc}
+				prevFunc={prevFunc}></MemorizePlayer>
 		</>
 	);
 };

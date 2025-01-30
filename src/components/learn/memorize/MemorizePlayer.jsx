@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function MemorizePlayer({startFunc, stopFunc}){
+function MemorizePlayer({startFunc, stopFunc, prevFunc, nextFunc}){
 	const [player, setPlayer] = useState({
 		play: false,
 		eye: true,
@@ -32,7 +32,7 @@ function MemorizePlayer({startFunc, stopFunc}){
 				</i>
 			</li>
 			<li className="memorize_player_list">
-				<i className="memorize_player_prev" />
+				<i className="memorize_player_prev" onClick={prevFunc}/>
 			</li>
 			<li className="memorize_player_list" onClick={togglePlayerStart}>
 				<i className={
@@ -40,7 +40,7 @@ function MemorizePlayer({startFunc, stopFunc}){
 				}/>
 			</li>
 			<li className="memorize_player_list">
-				<i className="memorize_player_next" />
+				<i className="memorize_player_next" onClick={nextFunc} />
 			</li>
 			<li className="memorize_player_list" onClick={toggleEye}>
 				<i className={
