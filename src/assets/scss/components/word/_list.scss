@@ -58,7 +58,7 @@
 		font-weight: bold;
 	}
 	&_read{
-		font-size: 0.7em;
+		font-size: min(0.9em, 13px);
 	}
 	&_headset{
 		color: $default-666;

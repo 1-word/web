@@ -9,7 +9,7 @@
 		padding: 24px 0;
 	}
 	position: relative;
-	margin: 24px 0 0;
+	margin: 12px 0 0;
 	height: 100%;
 	border: 1px solid $default-ddd;
 	border-radius: $main-br;
@@ -28,6 +28,10 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		.word_card_check svg{
+			width: 28px;
+			height: 28px;
+		}
 	}
 	&_headset{
 		position: absolute;
@@ -42,8 +46,11 @@
 	}
 	&_mean_wrap{
 		margin-top: 0;
+		justify-content: center;
 	}
 	&_name{
-		font-size: 20px;
+		font-size: clamp(1.8em, 24px, 2vw);
+    word-break: break-word;
+    text-align: center;
 	}
 }

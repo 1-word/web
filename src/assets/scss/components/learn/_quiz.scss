@@ -40,9 +40,10 @@
 		line-height: 1.5;
 	}
 	&_question{
-		font-size: 24px;
+		font-size: clamp(1.2em, 24px, 2vw);
 		font-weight: bold;
 		word-break: keep-all;
+		text-align: center;
 	}
 	&_correct{
 		font-size: 1em;

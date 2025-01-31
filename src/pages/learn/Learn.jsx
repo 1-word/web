@@ -64,6 +64,16 @@ function Learn(){
 				<div className="word_learn_cont">
 					<h2 className="word_learn_title">학습 방법을 선택해주세요</h2>
 						<ul className="method_choose_lists">
+							{/* 이어하기 데이터가 있을경우에만 나타남 
+							첫 번째로 옮김*/}
+							{
+								inCompleteQuiz?.quizInfoId && 
+								<li className="method_choose_list_incomp" onClick={handleContinueQuiz}>
+									<h3 className="method_choose_sub_title">퀴즈 이어하기</h3>
+									<p className="method_choose_contents">중단한 퀴즈를 이어할 수 있어요</p>
+								</li>
+							}
+							{/* 이어하기 데이터가 있을경우에만 나타남 */}
 							<li className="method_choose_list" onClick={handleModalQuiz()}>
 								<div className="method_choose_img">
 									<img src={QuizImg} alt="퀴즈" />
@@ -72,15 +82,6 @@ function Learn(){
 								<p className="method_choose_sub_title">퀴즈 형식</p>
 								<p className="method_choose_contents">사지선다로 퀴즈를 낼거에요</p>
 							</li>
-							{/* 이어하기 데이터가 있을경우에만 나타남 */}
-							{
-								inCompleteQuiz?.quizInfoId && 
-								<li className="method_choose_list" onClick={handleContinueQuiz}>
-									<h3 className="method_choose_sub_title">퀴즈 이어하기</h3>
-									<p className="method_choose_contents">중단한 퀴즈를 이어할 수 있어요</p>
-								</li>
-							}
-							{/* 이어하기 데이터가 있을경우에만 나타남 */}
 							<li className="method_choose_list" onClick={handleModalMemorize()}>
 								<div className="method_choose_img">
 									<img src={FlashImg} alt="플래시" />

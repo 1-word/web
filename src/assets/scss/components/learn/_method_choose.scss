@@ -28,7 +28,8 @@
 				transform: scale(1.2);
 			}
 		}
-		&:nth-child(2){
+		&_incomp{
+			@extend .method_choose_list;
 			border: 1px solid $main-accent-color;
 		}
 	}
