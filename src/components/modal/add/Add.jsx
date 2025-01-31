@@ -178,6 +178,9 @@ function Add({
 						<div className="word_relative_layerfix" onClick={handleOnClick}></div>
 					</div>
 					<div className="input_wrap">
+						<button className="btn-light sizeS">단어 연동</button>
+					</div>
+					<div className="input_wrap">
 						<span>뜻</span>
 						<input name="mean" type="text" value={saveList?.mean} onChange={onChangeInput}/>
 					</div>
