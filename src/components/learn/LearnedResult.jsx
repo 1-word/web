@@ -37,13 +37,19 @@ function LearnedResult(){
 	const resultItems = (items) => {
 		return items.map((v, i) => 
 				<li key={`ritems${i}`} className="word_learn_result_list">
-						<div>
-							<p className="word_learn_result_time">{v.createTime?.split(' ')[1]}</p>
-							<p className="word_learn_result_method">단어 퀴즈</p>
+						<div className="word_learn_result_list_top">
+							<div>
+								<p className="word_learn_result_time">{v.createTime?.split(' ')[1]}</p>
+								<button className="word_learn_result_btn">결과보기</button>
+							</div>
+							<p className="word_learn_result_method">단어장 이름</p>
 						</div>
 						<div>
 							{/* 51 넘으면 over class 부여 */}
-							<div className="word_learn_result_persent over">{Math.floor(v.correctCount / v.totalCount * 100)}</div>
+							<div className={
+								Math.floor(v.correctCount / v.totalCount * 100) <= 51 ?
+								"word_learn_result_persent":"word_learn_result_persent over"
+								}>{Math.floor(v.correctCount / v.totalCount * 100)}</div>
 							<div className="word_learn_result_score">{`${v.correctCount}/${v.totalCount}`}</div>
 						</div>
 				</li>
@@ -61,6 +67,7 @@ function LearnedResult(){
 
 	return(
 		<>
+			<p className="word_learn_result_warn">7일 이전의 학습 데이터만 결과를 볼 수 있어요</p>
 			{learnedResult}
 		</>
 	);

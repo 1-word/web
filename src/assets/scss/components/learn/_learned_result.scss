@@ -1,4 +1,13 @@
 .word_learn_result{
+	&_warn{
+		width: fit-content;
+		margin: 0 auto 24px;
+		padding: 4px 8px;
+		background-color: $default-fff;
+		color: $sub-text-color;
+		text-align: center;
+		border-radius: $sub-br;
+	}
 	&_lists{
 		margin: 24px 0;
 	}
@@ -8,7 +17,18 @@
 		background-color: $default-fff;
 		display: flex;
 		justify-content: space-between;
-		>div{}
+		&_top >div{
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+	}
+	&_btn{
+		padding: 4px 8px;
+		background-color: $main-accent-color;
+		color: $default-fff;
+		border-radius: $sub-br;
+		font-size: 12px;
 	}
 	&_time{
 		font-size: 12px;
