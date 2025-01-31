@@ -10,11 +10,14 @@ import BeforeLearn from "@/components/learn/BeforeLearn";
 import api, { MODE } from "@/services/api";
 import LearnedResult from "@/components/learn/LearnedResult";
 import { useNavigate } from "react-router-dom";
+import CenterModal from "@/components/layout/popup/CenterModal";
+import CenterModalConfirm from "@/components/layout/popup/CenterModalConfirm";
 
 function Learn(){
 
 	const onClickHandler = api();
 	const [beforeLearnModal] = useModal('beforeLearnModal');
+	const [continueQuizPop] = useModal('continueQuizPop');
 	const [inCompleteQuiz, setInCompleteQuiz] = useState({});
 	const navigate = useNavigate();
 		
@@ -55,6 +58,16 @@ function Learn(){
 		beforeLearnModal(FullModal,LearnedResult)
 	}
 
+	// 이어하기 퀴즈 팝업 추가
+	const handleContinueQuizPop = (e) => e => {
+		continueQuizPop(CenterModal, CenterModalConfirm, {
+			title: "잠깐만요!",
+			content: "퀴즈 이어하기 데이터가 남아 있어요. 이전 데이터가 사라져도 괜찮다면 확인을 눌러주세요.",
+			onClick: handleModalQuiz(),
+			}
+		)
+	}
+
 	return(
 		<div className="wrap">
 			<HeaderMini title="단어 학습"></HeaderMini>
@@ -74,7 +87,7 @@ function Learn(){
 								</li>
 							}
 							{/* 이어하기 데이터가 있을경우에만 나타남 */}
-							<li className="method_choose_list" onClick={handleModalQuiz()}>
+							<li className="method_choose_list" onClick={inCompleteQuiz? handleContinueQuizPop() : handleModalQuiz()}>
 								<div className="method_choose_img">
 									<img src={QuizImg} alt="퀴즈" />
 								</div>
