@@ -325,7 +325,7 @@ function Memorize(){
 
 	const calcPercent = (total, now) => {
 		total = Number(total);
-		now = Number(now);
+		now = Number(now) + 1;
 		const percent = String(Math.floor((now / total) * 100))+"%";
 		setProgress({
 			...progress,
