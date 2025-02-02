@@ -25,9 +25,7 @@ function Memorize(){
 
 	const [currentWord, setCurrentWord] = useState({});
 
-	const [sortType, setSortType] = useState('');
 	const [index, setIndex] = useState(0);
-
 
 	const PAGE_SIZE = 30;
 
@@ -36,20 +34,14 @@ function Memorize(){
 		audio: null,
 		isStop: true,
 		wordId: null,
+		isMute: false,
+		sort: null,
+		currentMuteClicked: false,
 	});
 
 	useEffect(() => {
-		setSortType(sort);
-
-		let seed = null;
 		// 시드 생성
-		if (sort === 'random') {
-			seed = uuidv4()
-			currentRef.current = {
-				...currentRef.current,
-				seed: sort === 'random'? seed : ''
-			}
-		}
+		initParam();
 
 		//디바이스에 내장된 voice를 가져온다.
 		const setVoiceList = () => {
@@ -71,6 +63,12 @@ function Memorize(){
 	}, []);
 
 	useEffect(() => {
+		if (index < 0) {
+			return;
+		}
+
+		currentRef.current.currentMuteClicked = false;
+
 		const currentPage = wordList.page.current;
 		if (wordList.page.hasNext && (PAGE_SIZE * (currentPage + 1) < index+1) || wordList.page.isFirst) {
 			const queryParams = {
@@ -78,7 +76,7 @@ function Memorize(){
 				lastId: wordList.page.lastId ?? null,
 				memorization: memorization === ''? null : memorization,
 				folderId,
-				sort,
+				sort: currentRef.current.sort,
 				seed: currentRef.current.seed
 			}
 	
@@ -95,12 +93,20 @@ function Memorize(){
 			return;
 		}
 
-		setCurrentWord(wordList.words[index])
+		setCurrentWord(wordList.words[index]);
+		calcPercent(count, index);
 		if (!currentRef.current.isStop && wordList.words.length > 0) {
 			speechStart(wordList.words[index]);
-			calcPercent(count, index);
 		}
 	}, [index]);
+
+	const initParam = () => {
+		currentRef.current = {
+			...currentRef.current,
+			sort,
+			seed: sort === 'random'? uuidv4() : null 
+		}
+	}
 
 	// 음성 start
 	const speechStart = (currentWord) => {		
@@ -123,7 +129,9 @@ function Memorize(){
 	// 음성 stop
 	const speechStop = () => {
 		window.speechSynthesis.cancel();
-		currentRef.current.audio.pause();
+		if (currentRef.current.audio) {
+			currentRef.current.audio.pause();
+		}
 		currentRef.current.isStop = true;
 	}
 	
@@ -131,8 +139,7 @@ function Memorize(){
 	const audioPlay = (currentWord) => {
 		const word = {...currentWord};
 
-		// web speech api 완료 시
-		const endSpeech = () => e => {
+		const nextIndex = () => {
 			setTimeout(() => {
 				// 이전, 다음으로 이동 시 이전에 실행된 단어는 실행되면 안됨
 				if (!currentRef.current.isStop && word.wordId === currentRef.current.wordId) {
@@ -141,13 +148,26 @@ function Memorize(){
 			}, 3000);
 		}
 
+		// web speech api 완료 시
+		const endSpeech = () => e => {
+			nextIndex();
+		}
+
+		const pauseSpeech = () => e => {
+			if (!currentRef.current.currentMuteClicked) {
+				nextIndex();
+				currentRef.current.currentMuteClicked = true;
+			}
+		}
+
 		// audio 객체 완료 시
 		const endFunc = () => e => {
 			const means = word?.mean?.split(',');
 			// 마지막 뜻 문자열일 때 callback함수 실행
 			means.forEach((mean, i) => speech(mean, {
 				endFunc: i === means.length-1? endSpeech : null,
-				index: i
+				index: i,
+				pauseFunc: pauseSpeech
 			}));
 		}
 
@@ -155,6 +175,14 @@ function Memorize(){
 			id: 0,
 			sound_path: word.soundPath
 		}, endFunc);
+
+		if (currentRef.current.isMute) {
+			audio.volume = 0;
+		} else {
+			audio.volume = 1;
+		}
+
+		audio.pause = pauseSpeech();
 		
 		// audio 객체를 pause()하기 위해 저장
 		currentRef.current = {
@@ -164,15 +192,26 @@ function Memorize(){
 	}
 
 	// web speech tts 이용
-	const speech = (txt, {lang, voiceName, endFunc}) => {
+	const speech = (txt, {lang, voiceName, endFunc, pauseFunc}) => {
 		const voices = voiceRef.current;
 		const utterThis = new SpeechSynthesisUtterance(txt + '...');
 		// 기본 값 설정
 		lang = lang ?? 'ko-KR';
 		utterThis.lang = lang;
 		utterThis.rate = 1;
+
+		if (currentRef.current.isMute) {
+			utterThis.volume = 0;
+		} else {
+			utterThis.volume = 1;
+		}
+
 		if (endFunc) {
 			utterThis.onend = endFunc();
+		}
+
+		if (pauseFunc) {
+			utterThis.onerror = pauseFunc();
 		}
 
 		/*  voice 찾기
@@ -212,6 +251,52 @@ function Memorize(){
 		setIndex((newIndex -1) % count);
 	}
 
+	const speakStartFunc = () => {
+		currentRef.current.isMute = false;
+		const stop = currentRef.current.isStop;
+		speechStop();
+		currentRef.current.isStop = stop;
+	}
+
+	const speakStopFunc = () => {
+		currentRef.current.isMute = true;
+		const stop = currentRef.current.isStop;
+		speechStop();
+		currentRef.current.isStop = stop;
+	}
+
+	const shuffleStartFunc = () => {
+		currentRef.current.sort = 'random';
+		currentRef.current.seed = uuidv4();
+
+		shuffleInit();
+	}
+
+	const shuffleStopFunc = () => {
+		currentRef.current.sort = 'created';
+		shuffleInit();
+	}
+
+	const shuffleInit = () => {
+		setWordList({
+			page: {
+				current: 0,
+				next: 0,
+				hasNext: true,
+				isFirst: true
+			},
+			words: []
+		});
+
+		setIndex(-1);
+
+		calcPercent(count, 0);
+
+		setTimeout(() => {
+			setIndex(0)
+		}, 100);
+	}
+
 	const [progress, setProgress] = useState({
 		now: 30,
 		total: 30,
@@ -240,7 +325,11 @@ function Memorize(){
 				startFunc={() => speechStart(currentWord)}
 				stopFunc={speechStop}
 				nextFunc={nextFunc}
-				prevFunc={prevFunc}></MemorizePlayer>
+				prevFunc={prevFunc}
+				shuffleStartFunc={shuffleStartFunc}
+				shuffleStopFunc={shuffleStopFunc}
+				speakStartFunc={speakStartFunc}
+				speakStopFunc={speakStopFunc}></MemorizePlayer>
 		</>
 	);
 };
