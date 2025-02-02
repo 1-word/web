@@ -43,7 +43,7 @@ function MemorizePlayer({startFunc, stopFunc, prevFunc, nextFunc}){
 			</li>
 			<li className="memorize_player_list" onClick={toggleEye}>
 				<i className={
-					player.eye? "memorize_player_eye" : "memorize_player_close_eye"
+					player.eye? "memorize_player_speak" : "memorize_player_mute"
 				} />
 			</li>
 		</ul>
