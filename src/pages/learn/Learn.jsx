@@ -42,31 +42,37 @@ function Learn(){
 		});
 	}
 
-	const handleModalQuiz = (e) => e => {
-		beforeLearnModal(FullModal,BeforeLearn,{
-			learnType: "quiz",
-		})
-	}
-
+	
 	const handleModalMemorize = (e) => e => {
 		beforeLearnModal(FullModal,BeforeLearn,{
 			learnType: "memorize",
 		})
 	}
-
+	
 	const handleModalResult = () => e => {
 		beforeLearnModal(FullModal,LearnedResult)
 	}
-
+	
+	const handleModalQuiz = () => {
+		beforeLearnModal(FullModal,BeforeLearn,{
+			learnType: "quiz",
+		})
+	}
+	
 	// 이어하기 퀴즈 팝업 추가
-	const handleContinueQuizPop = (e) => e => {
+	const handleContinueQuizPop = () => {
 		continueQuizPop(CenterModal, CenterModalConfirm, {
 			title: "잠깐만요!",
 			content: "퀴즈 이어하기 데이터가 남아 있어요. 이전 데이터가 사라져도 괜찮다면 확인을 눌러주세요.",
-			onClick: handleModalQuiz(),
+			onClick: () => {
+				onClickHandler(null, MODE.QUIZ_DELETE, inCompleteQuiz.quizInfoId).then(res => {
+					setInCompleteQuiz({});
+					handleModalQuiz();
+				});
 			}
-		)
-	}
+		}
+	)
+}
 
 	return(
 		<div className="wrap">
@@ -87,7 +93,7 @@ function Learn(){
 								</li>
 							}
 							{/* 이어하기 데이터가 있을경우에만 나타남 */}
-							<li className="method_choose_list" onClick={inCompleteQuiz? handleContinueQuizPop() : handleModalQuiz()}>
+							<li className="method_choose_list" onClick={inCompleteQuiz?.quizInfoId? handleContinueQuizPop : handleModalQuiz}>
 								<div className="method_choose_img">
 									<img src={QuizImg} alt="퀴즈" />
 								</div>
