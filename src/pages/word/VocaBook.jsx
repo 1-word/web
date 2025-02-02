@@ -3,13 +3,17 @@ import Footer from "@/components/layout/Footer";
 import BottomNav from "@/components/layout/BottomNav";
 import LeftFix from "@/components/layout/LeftFix";
 import VocabookList from "@/components/word/folder/VocaBookList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function VocaBook(){
 	const [tutorialState,setTutorialState] = useState(false);
 	const closeTutorial = () => {
 		setTutorialState(true);
 	}
+// 튜토리얼 임의삭제 코드
+	useEffect(()=>{
+		setTutorialState(true);
+	},[])
 	return(
 		<div className="wrap">
 				<HeaderMini title="단어장"></HeaderMini>
