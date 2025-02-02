@@ -170,7 +170,7 @@ function Memorize(){
 		// 기본 값 설정
 		lang = lang ?? 'ko-KR';
 		utterThis.lang = lang;
-		utterThis.rate = 0.5;
+		utterThis.rate = 1;
 		if (endFunc) {
 			utterThis.onend = endFunc();
 		}
