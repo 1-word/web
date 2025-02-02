@@ -2,7 +2,7 @@ import WordDetailList from "@/components/word/WordDetailList";
 import api, { MODE } from "@/services/api";
 import { useEffect, useRef, useState } from "react";
 
-function WordDetailView({wordList}){
+function WordDetailView({wordList, setMemorization}){
 	const headSetRef = useRef(null);
 	const onClickHandler = api();
 
@@ -37,6 +37,9 @@ function WordDetailView({wordList}){
 					memorization: current
 				}
 			});
+			if (setMemorization) {
+				setMemorization(wordId, current);
+			}
 		});
 	}
 

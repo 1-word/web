@@ -297,6 +297,22 @@ function Memorize(){
 		}, 100);
 	}
 
+	// 암기 여부 업데이트
+	const setMemorization = (wordId, status) => {
+		setWordList(prev => {
+			const newWords = prev.words.map(words => {
+				if (words.wordId === wordId) {
+					words.memorization = status
+				}
+				return words;
+			})
+			return {
+				page: prev.page,
+				words: newWords
+			}
+		})
+	}
+
 	const [progress, setProgress] = useState({
 		now: 30,
 		total: 30,
@@ -320,7 +336,7 @@ function Memorize(){
 			style={{
 				width: progress.width,
 			}}></div>
-			<WordDetailView wordList={currentWord}></WordDetailView>
+			<WordDetailView wordList={currentWord} setMemorization={setMemorization}></WordDetailView>
 			<MemorizePlayer 
 				startFunc={() => speechStart(currentWord)}
 				stopFunc={speechStop}
