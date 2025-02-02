@@ -34,11 +34,11 @@ return(
 					</Link>
 				</li> */}
 				{/* 알림 있는 경우 */}
-				<li>
+				{/* <li>
 					<Link to="/notice">
 						<i className="ring"></i>
 					</Link>
-				</li>
+				</li> */}
 				{loginStatus?
 					<li className="btn">
 						<button className="btn-fill sizeM" onClick={handleSignout}>로그아웃</button>
