@@ -27,11 +27,12 @@ return(
 	<nav>
 		<ul className="flex">
 				{/* 알림 없는 경우 */}
-				<li>
+				{/* 임시 삭제 */}
+				{/* <li>
 					<Link to="/notice">
 						<i className="bell"></i>
 					</Link>
-				</li>
+				</li> */}
 				{/* 알림 있는 경우 */}
 				<li>
 					<Link to="/notice">
