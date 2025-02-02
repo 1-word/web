@@ -28,6 +28,7 @@ function Add({
 		const [folderName, setFolderName] = useState('');
 		const {storeFolderList} = authStore(state => state);
 		const [wordRelativeList, setwordRelativeList] = useState([]);
+		const wordInputRef = useRef(null);
 
     const onClickHandler = api();
 		const [vocaBookListModal] = useModal("vocaBookList");
@@ -140,7 +141,7 @@ function Add({
 		}
 
 		const handleDictClick = async(e) => {
-			const word = e.target.textContent;
+			const word = wordInputRef.current.value;
 			const res = await onClickHandler(null, MODE.WORD_DICT, word);
 			if (res.mean !== null) {
 				setWordList({
@@ -162,7 +163,7 @@ function Add({
 					</div>
 					<div ref={wordRelative} className="input_wrap word_relative_wrap">
 						<span>단어</span>
-						<input name="word" value={saveList?.word} disabled={isEdit} type="text" autoComplete="off" onChange={onChangeInput}
+						<input ref={wordInputRef} name="word" value={saveList?.word} disabled={isEdit} type="text" autoComplete="off" onChange={onChangeInput}
 						/>
 						<div className="word_relative_layer">
 							<ul className="word_relative_layer_lists" onClick={handleDictClick}>
@@ -178,7 +179,7 @@ function Add({
 						<div className="word_relative_layerfix" onClick={handleOnClick}></div>
 					</div>
 					<div className="input_wrap">
-						<button className="btn-light sizeS">단어 연동</button>
+						<button className="btn-light sizeS" onClick={handleDictClick}>"{saveList?.word}" 사전 연동</button>
 					</div>
 					<div className="input_wrap">
 						<span>뜻</span>
