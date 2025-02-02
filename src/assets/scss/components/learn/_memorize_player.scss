@@ -52,14 +52,15 @@
 			transform: rotateY(180deg);
 		}
 	}
-	&_eye{
+	&_speak{
 		@include icon(){
-			background-image: icon(eye);
+			background-image: icon(speak);
 		}
 	}
-	&_close_eye{
+	&_mute{
 		@include icon(){
-			background-image: icon(closeEye);
+			background-image: icon(mute);
 		}
 	}
+
 }

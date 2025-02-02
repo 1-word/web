@@ -59,12 +59,16 @@ function WordDetailView({wordList}){
 						</button>
 					</div>
 					<div className="word_detail">
+						{/* 가릴때  word_detail_close 로 변경*/}
+						{/* 예시 <div className="word_detail_close"></div> */}
 						<div className="word_card_name word_detail_name">{currentWordList?.word}</div>
 						<div className="word_card_read">{currentWordList?.read}</div>
 						<button className="word_card_headset word_detail_headset">
 							<i ref={headSetRef} className="xi-headset listen" onClick={headSetBtnOnClick(currentWordList?.soundPath)}></i>
 						</button>
-						<div className="word_card_mean_wrap word_detail_mean_wrap">
+						{/* 가릴때  word_detail_close 로 변경*/}
+						{/* 예시 <div className="word_detail_close"></div> */}
+						<div className="word_card_mean_wrap word_detail_mean_wrap word_detail_close">
 							{
 								currentWordList?.mean?.split(",")?.map((value, idx) =>
 										<div key={idx} className="word_card_mean_list">{idx + 1}.{value}</div>
