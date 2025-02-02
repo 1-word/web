@@ -1,8 +1,12 @@
 import api, { MODE } from "@/services/api";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function LearnedResult(){
+function LearnedResult({
+	deleteModalAfterTime
+}){
 	const onClickHandler = api();
+	const navigate = useNavigate();
 
 	const [quizResult, setQuizResult] = useState([]);
 
@@ -34,15 +38,25 @@ function LearnedResult(){
 		}, []);
 	}
 
+	const handleResult = (quizStat) => e => {
+		navigate('/quiz-result', {
+			replace: true,
+			state: {
+				end: true,
+				result: quizStat,
+				quizInfoId: quizStat.quizStatId
+			}});
+			deleteModalAfterTime(300);
+	}
+
 	const resultItems = (items) => {
 		return items.map((v, i) => 
-				<li key={`ritems${i}`} className="word_learn_result_list">
+				<li key={`ritems${i}`} className="word_learn_result_list" onClick={handleResult(v)}>
 						<div className="word_learn_result_list_top">
 							<div>
 								<p className="word_learn_result_time">{v.createTime?.split(' ')[1]}</p>
-								<button className="word_learn_result_btn">결과보기</button>
 							</div>
-							<p className="word_learn_result_method">단어장 이름</p>
+							<p className="word_learn_result_method">{v.folderName}</p>
 						</div>
 						<div>
 							{/* 51 넘으면 over class 부여 */}
