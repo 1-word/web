@@ -21,7 +21,9 @@ function FullModal({
 	return (
 		<div ref={full_wrap} className="modal_full_wrap">
 			<header className="mini flex">
-				<button className="back xi-angle-left" onClick={() => deleteModal(full_wrap.current)}></button>
+				<button className="back" onClick={() => deleteModal(full_wrap.current)}>
+					<i className="xi-angle-left"></i>
+				</button>
 				<h2 className="title"></h2>
 			</header>
 			<div className="modal_full_cont">

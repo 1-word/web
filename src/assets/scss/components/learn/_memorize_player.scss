@@ -1,0 +1,66 @@
+.memorize_player{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 54px 14px 0 14px;
+	gap: 16px;
+	&_list{
+		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 12px 0;
+		cursor: pointer;
+	}
+	i{
+		width: 36px;
+		height: 36px;
+		@include deviceSmall(){
+			width: 7vw;
+			height: 7vw;
+		}
+	}
+
+	&_shuffle{
+		@include icon(){
+			background-image: icon(shuffle, 946CF4);
+		}
+	}
+	&_shuffle_none{
+		@include icon(){
+			background-image: icon(shuffle, 666);
+		}
+	}
+	&_prev{
+		@include icon(){
+			background-image: icon(prevPlayer);
+		}
+	}
+	&_play{
+		@include icon(){
+			background-image: icon(playPlayer);
+		}
+	}
+	&_stop{
+		@include icon(){
+			background-image: icon(stopPlayer);
+		}
+	}
+	&_next{
+		@include icon(){
+			background-image: icon(prevPlayer);
+			transform: rotateY(180deg);
+		}
+	}
+	&_speak{
+		@include icon(){
+			background-image: icon(speak);
+		}
+	}
+	&_mute{
+		@include icon(){
+			background-image: icon(mute);
+		}
+	}
+
+}

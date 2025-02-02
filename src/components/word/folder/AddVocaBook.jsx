@@ -68,12 +68,10 @@ function AddFolder({
         if (prevFolder){
             const res = await onClickHandler(e, MODE.FOLDER_UPDATE, prevFolder.folderId, folderData);
             setFolderList(prev => {
-                return setFolderList(prev => 
-                    prev.map(folder => folder.folders.folderId === prevFolder.folderId 
+                    return prev.map(folder => folder.folders.folderId === prevFolder.folderId 
                         ? { ...folder, folders: { ...res } } 
                         : folder
                     )
-                );
             });
             deleteModalAfterTime(0);
             return;

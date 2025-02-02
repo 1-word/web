@@ -1,15 +1,15 @@
 .word_detail{
 	&_wrap{
 		position: relative;
-		height: 94%;
+		height: 77dvh;
 		padding: $main-p;
 	}
 	&_cont{
 		height: 100%;
-		padding: 24px 0;
+		padding: 0 0 24px;
 	}
 	position: relative;
-	margin: 24px 0 0;
+	margin: 12px 0 0;
 	height: 100%;
 	border: 1px solid $default-ddd;
 	border-radius: $main-br;
@@ -28,22 +28,71 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		.word_card_check svg{
+			width: 28px;
+			height: 28px;
+		}
 	}
 	&_headset{
 		position: absolute;
 		bottom: 12px;
 		right: 12px;
 		color: $default-666;
-		width: 48px;
-		height: 48px;
+		width: min(36px, 7vw);
+		height: min(36px, 7vw);
 		i{
-			font-size: 2em;
+			font-size: min(2em, 7vw);
+		}
+	}
+	&_eye i{
+		@include icon(){
+			background-image: icon(eye);
+			width: 36px;
+			height: 36px;
+			@include deviceSmall(){
+				width: 7vw;
+				height: 7vw;
+			}
+		}
+	}
+	&_close_eye i{
+		@include icon(){
+			background-image: icon(closeEye);
+			width: 36px;
+			height: 36px;
+			@include deviceSmall(){
+				width: 7vw;
+				height: 7vw;
+			}
 		}
 	}
 	&_mean_wrap{
 		margin-top: 0;
+		justify-content: center;
+		cursor: pointer;
 	}
 	&_name{
-		font-size: 20px;
+		font-size: clamp(1.8em, 24px, 2vw);
+    word-break: break-word;
+    text-align: center;
+		cursor: pointer;
+	}
+	&_close{
+		position: relative;
+		visibility: hidden;
+		&::before{
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 50%;
+			transform: translate(-50%);
+			visibility: visible;
+			cursor: pointer;
+			@include icon(){
+				background-image: icon(closeEye);
+				width: min(36px, 7vw);
+				height: min(36px, 7vw);
+			}
+		}
 	}
 }

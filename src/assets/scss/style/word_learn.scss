@@ -1,7 +1,11 @@
 @import "@scss/components/learn/quiz.scss";
 @import "@scss/components/learn/result.scss";
+@import "@scss/components/learn/method_choose.scss";
+@import "@scss/components/learn/before_learn.scss";
+@import "@scss/components/learn/memorize_player.scss";
+@import "@scss/components/learn/learned_result.scss";
 
-.word_quiz{
+.word_learn{
 	&_wrap{
 		position: relative;
 		height: 92%;
@@ -11,6 +15,10 @@
 	&_cont{
 		height: 100%;
 		padding-bottom: 80px;
+
+		.word_detail_cont{
+			padding: 0;
+		}
 	}
 	&_vocabook_lists{
 		margin-top: 24px;

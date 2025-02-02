@@ -7,6 +7,7 @@
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
+    "@toast-ui/editor": "^3.2.2",
     "axios": "^0.26.1",
     "classnames": "^2.3.1",
     "http-proxy-middleware": "^2.0.6",
@@ -24,7 +25,8 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "eslintConfig": {
     "extends": [
@@ -48,6 +50,7 @@
     "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^4.3.4",
     "react-router-dom": "^6.3.0",
-    "vite": "^6.0.3"
+    "vite": "^6.0.3",
+    "vite-plugin-pwa": "^0.21.1"
   }
 }

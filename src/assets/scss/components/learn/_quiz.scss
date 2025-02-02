@@ -16,7 +16,8 @@
 	}
 	&_ani{
 		position: absolute;
-		background-color: $default-fff;
+		top: 0;
+		transform: scale(0.7);
 	}
 	&_wrap{
 		height: 100%;
@@ -35,16 +36,26 @@
 		align-items: center;
 		justify-content: center;
 		gap: 16px;
+		padding: 24px;
+		line-height: 1.5;
 	}
 	&_question{
-		font-size: 24px;
+		font-size: clamp(1.2em, 24px, 2vw);
 		font-weight: bold;
+		word-break: keep-all;
+		text-align: center;
 	}
 	&_correct{
-		width: 100px;
-		height: 32px;
-		border: 1px solid $main-accent-color;
-		border-radius: $sub-br;
+		font-size: 1em;
+		font-weight: bold;
+		color: $main-accent-color;
+		word-break: keep-all;
+		&_bg{
+			width: 100px;
+			height: 32px;
+			border: 1px solid $main-accent-color;
+			border-radius: $sub-br;
+		}
 	}
 }
 
@@ -58,21 +69,22 @@
 		flex-direction: column;
 		gap: 12px;
 		li{
+			padding: 0 14px;
 				flex: 1;
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				border: 1px solid $default-ddd;
 				border-radius: $sub-br;
+				cursor: pointer;
 				&.correct{
-					border: 1px solid $main-accent-color;
-					background-color: $main-accent-color;
+					border: 1px solid $main-accent-color !important;
+					background-color: $main-accent-color !important;
 					color: $default-fff;
 				}
-				&.active{
-					border-color: transparent;
-					background-color: $main-bg-color;
-					color: $main-accent-color;
+				&.wrong{
+					border-color: $wrong-color;
+					color: $wrong-color;
 				}
 		}
 	}
@@ -80,7 +92,7 @@
 
 .false{
 	.quiz_area,.active{
-		border-color: $default-error-color !important;
+		border-color: $wrong-color !important;
 	}
 }
 .true{

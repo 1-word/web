@@ -1,7 +1,7 @@
 
 header {
   padding: 0 14px;
-  gap: 2rem;
+  gap: 1rem;
   align-items: center;
   justify-content: space-between;
 
@@ -31,11 +31,29 @@ header {
 				a{
 					transition: 0.26s ease;
 				}
+				i.bell{
+					@include icon(){
+						background-image: icon(bell);
+						width: 24px;
+						height: 24px;
+					}
+				}
+				i.ring{
+					@include icon(){
+						background-image: icon(bellRing);
+						width: 24px;
+						height: 24px;
+					}
+				}
       }
     }
   }
+	.btn *{
+		padding-left: 22px;
+		padding-right: 22px;
+	}
+
 	&.mini{
-		// position: sticky;
 		top: 0;
 		background-color: $main-bg-color;
 		padding: 1rem 14px;
@@ -49,6 +67,10 @@ header {
 		}
 		.close{
 			margin-left: auto;
+		}
+		&.fixed{
+			position: sticky;
+			z-index: 1;
 		}
 	}
 }

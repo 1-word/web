@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import ModalStore, { ALERT_TYPE } from "@/store/modalStore";
 
-function uuidv4() {
+export function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
     var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
     return v.toString(16);
@@ -166,7 +166,6 @@ export function useObserver(){
         //옵저버 중복 실행 방지
         // isIntersecting: 화면에 감지된 경우
         if(!endRef.current && target.isIntersecting && !preventRef.current){
-            // console.log(`hooks prevent: ${preventRef.current}`);
             preventRef.current = true;
             setPage(prev => prev+1);    //페이지 값 증가
         }
@@ -177,8 +176,9 @@ export function useObserver(){
      * @param {*} obsRef 옵저빙할 컴포넌트
      */
     const obsInitialization = (obsRef) => {
-        if(obsRef.current) 
+        if(obsRef.current) {
             observer.observe(obsRef.current);
+        }
     }
 
     /**

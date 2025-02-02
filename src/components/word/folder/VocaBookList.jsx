@@ -48,7 +48,11 @@ function VocabookList({
   }
 
   const onDeleteClick = (id) => e => {
-    onClickHandler(null, MODE.FOLDER_DELETE, id);
+    onClickHandler(null, MODE.FOLDER_DELETE, id).then(_ => {
+      setFolderList(prev => {
+        return prev.filter(folder => folder.folders.folderId !== id)
+      })
+    });
   }
 
   const onFolderClick = (item) => e => {

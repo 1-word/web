@@ -31,6 +31,7 @@ export const MODE = {
     FOLDER_UPDATE: "folderUpdate",
     FOLDER_SAVE: "folderSave",
     FOLDER_DELETE: "folderDelete",
+    FOLDER_COUNT_READ: "folderCountRead",
     MEMORIZATION: "memorization",
     WORD_FOLDER_UPDATE: "wordFolderUpdate",
     SIGNOUT: "signout",
@@ -52,6 +53,19 @@ export const MODE = {
     DAILY_SENTENCE_DELETE: "dailySentenceDelete",
     DAILY_SENTENCE_DAYS_READ: "dailySentenceDaysRead",
     DAILY_SENTENCE_RELATION_INFO_READ: "dailySentenceRelationInfoRead",
+    POST_IMAGE_UPLOAD: "postImageUpload",
+    QUIZ_INFO_SAVE: "quizInfoSave",
+    QUIZ_CREATE: "quizCreate",
+    QUIZ_READ: "quizRead",
+    QUIZ_SOLVE: "quizSolve",
+    QUIZ_END: "quizEnd",
+    QUIZ_DELETE: "quizDelete",
+    QUIZ_STAT_CREATE: "quizStatCreate",
+    QUIZ_STAT_READ: "quizStatRead",
+    QUIZ_STAT_WORD_READ: "quizStatWordRead",
+    QUIZ_STAT_LIST_READ: "quizStatListRead",
+    INCOMPLETE_QUIZ_READ: "incompleteQuizRead",
+    QUIZ_WORD_READ: "quizWordRead",
 }
 
 /**
@@ -121,7 +135,9 @@ function useEvntHandler(e, modeType, data, func){
         async folderDelete(_, folderId){
             return await executeSrvConnect("delete", `folders/${folderId}`, null, {isUpdate: false});
         },
-
+        async folderCountRead(_, {folderId, query}){
+            return await executeSrvConnect("get", `folders/${folderId}${query}`, null, {isUpdate: false});
+        },
         open(){
 
         },
@@ -169,6 +185,7 @@ function useEvntHandler(e, modeType, data, func){
                     
                 }).finally(()=>endFunc(data.id))
             }
+            return audio;
         },
         async code(_, {type, email}) {
             const res = await executeSrvConnect("post", `auth/code/${type}`, {email}, {isUpdate: false});
@@ -243,8 +260,48 @@ function useEvntHandler(e, modeType, data, func){
         },
         async dailySentenceRelationInfoRead(_, id) {
             return await executeSrvConnect('get', `daily-sentence/relation/${id}`, null, {isUpdate: false});
-        }
+        },
         // 오늘의 내 문장 끝
+        async postImageUpload(_, {path, formData}) {
+            return await executeSrvConnect('post', `files/upload/images/${path}`, formData, {isUpdate: false});
+        },
+        // 퀴즈 시작
+        async quizInfoSave(_, data) {
+            return await executeSrvConnect('post', 'quiz-info', data, {isUpdate: false});
+        },
+        async quizCreate(_, quizInfoId) {
+            return await executeSrvConnect('post', `quiz/${quizInfoId}`, null, {isUpdate: false});
+        },
+        async quizRead(_, {quizInfoId, query}) {
+            return await executeSrvConnect('get', `quiz/${quizInfoId}${query}`, null, {isUpdate: false});
+        },
+        async quizSolve(_, data) {
+            return await executeSrvConnect('put', `quiz`, data, {isUpdate: false});
+        },
+        async [MODE.QUIZ_DELETE](_, quizInfoId) {
+            return await executeSrvConnect('delete', `quiz-info/${quizInfoId}`, null, {isUpdate: false});
+        },
+        async quizEnd(_, quizInfoId) {
+            return await executeSrvConnect('put', `quiz-info/complete/${quizInfoId}`, null, {isUpdate: false});
+        },
+        async quizStatCreate(_, quizInfoId) {
+            return await executeSrvConnect('post', `quiz-stat/${quizInfoId}`, null, {isUpdate: false});
+        },
+        async quizStatRead(_, quizInfoId) {
+            return await executeSrvConnect('get', `quiz-stat/${quizInfoId}`, null, {isUpdate: false});
+        },
+        async quizStatWordRead(_, {quizInfoId, query}) {
+            return await executeSrvConnect('get', `quiz/result/${quizInfoId}${query}`, null, {isUpdate: false});
+        },
+        async quizStatListRead(_, query) {
+            return await executeSrvConnect('get', `quiz-stat${query}`, null, {isUpdate: false});
+        },
+        async [MODE.INCOMPLETE_QUIZ_READ](_) {
+            return await executeSrvConnect('get', `quiz-info/incomplete`, null, {isUpdate: false});
+        },
+        async [MODE.QUIZ_WORD_READ](_, folderId) {
+            return await executeSrvConnect('get', `quiz/${folderId}/words`, null, {isUpdate: false});
+        },
     }
 
     /**

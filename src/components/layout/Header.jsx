@@ -26,9 +26,22 @@ return(
 	<h1><Link to="/">VOCABOX<img src={LOGOTitle_SVG} alt="VOCABOX" /></Link></h1>
 	<nav>
 		<ul className="flex">
+				{/* 알림 없는 경우 */}
+				{/* 임시 삭제 */}
+				{/* <li>
+					<Link to="/notice">
+						<i className="bell"></i>
+					</Link>
+				</li> */}
+				{/* 알림 있는 경우 */}
+				{/* <li>
+					<Link to="/notice">
+						<i className="ring"></i>
+					</Link>
+				</li> */}
 				{loginStatus?
-					<li>
-						<div className="btn-fill sizeM" onClick={handleSignout}>로그아웃</div>
+					<li className="btn">
+						<button className="btn-fill sizeM" onClick={handleSignout}>로그아웃</button>
 					</li>
 				: <>
 						<li>

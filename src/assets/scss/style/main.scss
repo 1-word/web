@@ -7,6 +7,7 @@
 @import "@scss/components/word/list";
 @import "@scss/components/word/tab";
 @import "@scss/components/word/empty";
+@import "@scss/components/word/tutorial";
 
 * {
   margin: 0;
@@ -119,24 +120,41 @@ nav {
 	&_btn{
 		display: flex;
 		min-width: 120px;
+		*{
+			padding-left: 22px;
+			padding-right: 22px;
+		}
 	}
 	&_cont_img{
 		height: 350px;
 		background-size: 360px;
 		background-repeat: no-repeat;
+		@include deviceSmall(){
+			background-size: 90%;
+		}
 		&.on{
 			animation: goDown 2s ease-in-out alternate;
 		}
 		&_first{
 			background-image: url('/src/assets/images/wordList.png');
 			background-position: right -100px;
+			@include deviceSmall(){
+				background-size: cover;
+				background-position: center -100px;
+			}
 		}
 		&_second{
 			background-image: url('/src/assets/images/autoComplete.gif');
+			@include deviceSmall(){
+				background-position: center;
+			}
 		}
 		&_third{
 			background-image: url('/src/assets/images/dailySentence.png');
 			background-position: right -50px;
+			@include deviceSmall(){
+				background-position: center -50px;
+			}
 		}
 		@keyframes goDown {
 			100%{

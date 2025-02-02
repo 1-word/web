@@ -1,0 +1,108 @@
+$range-handle-size: 16px;
+
+.before_learn{
+	&_wrap{
+		margin-top: 24px;
+	}
+	&_choose{
+		margin-top: 16px;
+		font-size: 12px;
+	}
+	&_title{
+		display: flex;
+		justify-content: space-between;
+		font-size: 14px;
+		font-weight: bold;
+	}
+	&_contents{
+		margin-top: 10px;
+		display: flex;
+		width: 100%;
+	}
+	&_select{
+		flex-direction: column;
+	}
+	&_list{
+		padding: 0 12px;
+		line-height: 44px;
+		border-bottom: 1px solid $default-ddd;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		cursor: pointer;
+		.check_icon{
+			transition: all 0.24s cubic-bezier(0.47, 0, 0.745, 0.715);
+			stroke-dashoffset: 64;
+		}
+		&.on{
+			color: $main-accent-color;
+			.check_icon{
+				stroke-dashoffset: 0;
+			}
+		}
+	}
+	&_stepper{
+		display: flex;
+		align-items: center;
+		flex-shrink: 0;
+		gap: 24px;
+		color: $main-accent-color;
+		&_btn{
+			width: 24px;
+			height: 24px;
+			flex-shrink: 0;
+			i{
+				color: $main-accent-color;
+			}
+			&:disabled{
+				i{
+					color: $default-ddd;
+					cursor: default;
+				}
+			}
+		}
+		&_length{
+			min-width: 50px;
+			text-align: center;
+		}
+	}
+	&_range{
+		-webkit-appearance: none;
+		display: block;
+		width: 99%;
+		height: 4px;
+		outline: none;
+		padding: 0;
+		margin: auto;
+		margin-top: 24px;
+		background: #e9e5e538;
+		cursor: pointer;
+		// Range Handle
+		&::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			width: $range-handle-size;
+			height: $range-handle-size;
+			border-radius: 50%;
+			background: $main-accent-color;
+			cursor: pointer;
+			transition: all 0.15s ease-in-out;
+			&:hover {
+				background: $main-hover-color;
+				transform: scale(1.2);
+			}
+		}
+		&::-moz-range-thumb {
+			width: $range-handle-size;
+			height: $range-handle-size;
+			border: 0;
+			border-radius: 50%;
+			background: $main-accent-color;
+			cursor: pointer;
+			transition: background 0.15s ease-in-out;
+			&:hover {
+				background: $main-hover-color;
+			}
+		}
+
+	}
+}
