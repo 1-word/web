@@ -37,6 +37,7 @@ function Memorize(){
 		isMute: false,
 		sort: null,
 		currentMuteClicked: false,
+		prevSort: null,
 	});
 
 	useEffect(() => {
@@ -104,7 +105,8 @@ function Memorize(){
 		currentRef.current = {
 			...currentRef.current,
 			sort,
-			seed: sort === 'random'? uuidv4() : null 
+			seed: sort === 'random'? uuidv4() : null,
+			prevSort: sort
 		}
 	}
 
@@ -273,7 +275,8 @@ function Memorize(){
 	}
 
 	const shuffleStopFunc = () => {
-		currentRef.current.sort = 'created';
+		currentRef.current.sort = currentRef.current.prevSort;
+		currentRef.current.seed = null;
 		shuffleInit();
 	}
 
