@@ -26,7 +26,7 @@ export default {
           }
         ],
         "theme_color": "#ffffff",
-        "background_color": "#8758f7",
+        "background_color": "#4A4453",
         "display": "standalone",
         },
         workbox: {
