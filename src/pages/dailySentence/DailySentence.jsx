@@ -268,7 +268,8 @@ function DailySentence(){
 							<button name="right" className="daily_sentence_callendar_head_btn">
 								<i className="xi-angle-right" onClick={changeRightMonth}></i>
 							</button>
-							<button className="btn-light sizeS daily_sentence_read_type_btn" onClick={handleReadTypeModal()}>보기</button>
+							{/* 미구현 임시 none처리 */}
+							<button className="btn-light sizeS daily_sentence_read_type_btn disN" onClick={handleReadTypeModal()}>보기</button>
 							<button className="daily_sentence_callendar_head_btn daily_sentence_plus_btn" onClick={handleAddModal()}>
 								<i className="xi-plus"></i>
 							</button>

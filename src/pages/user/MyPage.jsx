@@ -69,7 +69,8 @@ function MyPage(){
 					</li>
 					<li onClick={handleChangePwModal()}>비밀번호 변경</li>
 					<li onClick={handleAddTypeMore()}>내 품사 관리</li>
-					<li><Link to="/notice">공지사항</Link></li>
+					{/* 미구현 임시 none처리 */}
+					<li className="disN"><Link to="/notice">공지사항</Link></li>
 					<li onClick={signout}>로그아웃</li>
 					<li onClick={handleDeleteAccountModal()}>계정 삭제</li>
 				</ul>
