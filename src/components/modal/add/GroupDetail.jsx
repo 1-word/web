@@ -103,7 +103,9 @@ function GroupDetail({
 		return <React.Fragment key={`groupDetail${idx}`}>
 			<li className="add_list">
 						<input type="text" value={group.title || ''} onChange={handleOnChangeInput(idx)}/>
-						<button className="xi-close" onClick={handleClickDelete(idx)}></button>
+						<button onClick={handleClickDelete(idx)}>
+							<i className="xi-close"></i>
+						</button>
 			</li>
 		</React.Fragment>
 	});
