@@ -130,7 +130,7 @@
 
 .post_edit{
 	.ProseMirror{
-		font-family: "PretendardJP";
+		font-family: "PretendardJP", sans-serif;
 	}
 	.toastui-editor-defaultUI{
 		border-radius: 8px;
@@ -143,6 +143,9 @@
 	.toastui-editor-md-mode{
 		+ .toastui-editor-mode-switch{
 			background-color: transparent;
+		}
+		.toastui-editor-md-container{
+			background-color: $default-fff;
 		}
 	}
 	.toastui-editor-ww-mode{
