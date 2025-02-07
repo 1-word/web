@@ -31,7 +31,15 @@ export default {
         },
         workbox: {
           maximumFileSizeToCacheInBytes: 7000000, // 7MB로 설정 (필요한 크기에 맞게 조절)
-        },
+          navigateFallback: null, // 리디렉트 방지
+          navigateFallbackDenylist: [
+              /manifest\.json/, 
+              /^https:\/\/.*\.com\/oauth\//,  // OAuth 로그인 URL 자동 예외 처리
+              /^https:\/\/accounts\.google\.com\//,
+              /^https:\/\/kauth\.kakao\.com\//,
+              /^https:\/\/nid\.naver\.com\//
+          ]
+        }
       })
 ],
   assetsInclude: ['**/*.lottie'],
