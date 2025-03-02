@@ -1,11 +1,11 @@
 import HeaderMini from "@/components/layout/HeaderMini";
 import authStore from "@/store/authStore"
 import { useModal } from "@/hook/_hooks";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import FullModal from "@/components/layout/popup/FullModal";
-import BoardEdit from "./BoardPost";
+import BoardPost from "./BoardPost";
 import api, { MODE } from "@/services/api";
-import parse from "html-react-parser";
+import { Viewer } from '@toast-ui/react-editor';
 
 function Board(){
 	const [post, setPost] = useState();
@@ -14,7 +14,7 @@ function Board(){
   const onClickHandler = api();
 
 	useEffect(async () => {
-		const res = await onClickHandler(null, MODE.NOTICE_LIST_READ, '');
+		const res = await onClickHandler(null, MODE.NOTICE_LIST_READ, '?page=0&size=100');
 		setPost(res);
 	}, []);
 
@@ -31,7 +31,21 @@ function Board(){
 	}
 
 	const handleWriteModal = () => (e) => {
-		writeModal(FullModal, BoardEdit, {});
+		writeModal(FullModal, BoardPost, {});
+	}
+
+	const handleDeletePost = (id) => async (e) => {
+		await onClickHandler(null, MODE.NOTICE_DELETE, id);
+		const postData = post?.data?.filter((v) => v.postId !== id);
+		setPost({
+			page: post.page,
+			data: postData,
+		});
+	}
+
+	const handleUpdatePost = (post) => e => {
+		console.log(post);
+		writeModal(FullModal, BoardPost, {post});
 	}
 
 	const postList = post?.data?.map((v, i) => 
@@ -45,14 +59,17 @@ function Board(){
 			</div>
 			{ userInfo?.authorities?.includes('ROLE_ADMIN') &&
 				<div className="post_list_admin">
-						<span>수정</span>
-						<span>삭제</span>
+						<span onClick={handleUpdatePost(v)}>수정</span>
+						<span onClick={handleDeletePost(v?.postId)}>삭제</span>
 				</div>
 			}
 			<div className="post_list_contents">
-				<div className="post_list_contents_inner">
-					{parse(v?.content ?? '')}
-				</div>
+				{
+						v?.content &&
+					<div className="post_list_contents_inner">
+						<Viewer initialValue={v.content}/>
+					</div>
+				}
 			</div>
 		</li>
 	);

@@ -68,6 +68,9 @@ export const MODE = {
     QUIZ_WORD_READ: "quizWordRead",
     NOTICE_LIST_READ: "noticeListRead",
     NOTICE_READ: "noticeRead",
+    NOTICE_UPDATE: "noticeUpdate",
+    NOTICE_CREATE: "noticeCreate",
+    NOTICE_DELETE: "noticeDelete",
 }
 
 /**
@@ -310,6 +313,15 @@ function useEvntHandler(e, modeType, data, func){
         },
         async [MODE.NOTICE_READ](_, postId) {
             return await executeSrvConnect('get', `posts/${postId}`, null, {isUpdate: false});
+        },
+        async [MODE.NOTICE_CREATE](_, postData) {
+            return await executeSrvConnect('post', `posts`, postData, {isUpdate: false});
+        },
+        async [MODE.NOTICE_UPDATE](_, {postId, postData}) {
+            return await executeSrvConnect('put', `posts/${postId}`, postData, {isUpdate: false});
+        },
+        async [MODE.NOTICE_DELETE](_, postId) {
+            return await executeSrvConnect('delete', `posts/${postId}`, null, {isUpdate: false});
         },
     }
 
