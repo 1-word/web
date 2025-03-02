@@ -3,8 +3,10 @@ import { useEffect, useRef } from 'react';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import api, { MODE } from "@/services/api";
 
-function BoardEdit() {
-
+function BoardEdit({
+  content,
+  setParentEditor
+}) {
   const onClickHandler = api();
   const editorRef = useRef(null);
   const editor = useRef(null);
@@ -19,6 +21,7 @@ function BoardEdit() {
       height: '500px',
       initialEditType: 'markdown',
       previewStyle: 'vertical',
+      initialValue: content?? '',
       hooks: {
         addImageBlobHook: (blob, callback) => {
           const formData = new FormData();
@@ -32,11 +35,7 @@ function BoardEdit() {
         }
       }
     });
-  }
-
-  const handleSubmitClick = e => {
-    e.preventDefault();
-    const contents = editor.current.getMarkdown();
+    setParentEditor(editor);
   }
 
 

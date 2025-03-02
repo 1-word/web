@@ -1,112 +1,91 @@
 import HeaderMini from "@/components/layout/HeaderMini";
+import authStore from "@/store/authStore"
 import { useModal } from "@/hook/_hooks";
-import { useRef } from "react";
+import { useEffect, useState } from "react";
 import FullModal from "@/components/layout/popup/FullModal";
-import BoardEdit from "./BoardPost";
+import BoardPost from "./BoardPost";
+import api, { MODE } from "@/services/api";
+import { Viewer } from '@toast-ui/react-editor';
 
 function Board(){
-	const postRef = useRef(null);
+	const [post, setPost] = useState();
+	const {userInfo} = authStore(state => state);
 	const [writeModal] = useModal('writeModal');
+  const onClickHandler = api();
 
-	const toogleList = (e) => {
-		const currentNode = postRef.current;
-		const lists = currentNode.querySelectorAll('.post_list_head');
-		lists.forEach((list,index) => {
-			if(e === index){
-				list.parentNode.classList.toggle('on');
-			}
+	useEffect(async () => {
+		const res = await onClickHandler(null, MODE.NOTICE_LIST_READ, '?page=0&size=100');
+		setPost(res);
+	}, []);
+
+	const toggleList = (postId, i) => async (e) => {
+		// content가 없을 때만 가져옴
+		if (!post?.data[i]?.content) {
+			const res = await onClickHandler(null, MODE.NOTICE_READ, postId);
+			let newPost = {...post};
+			newPost.data[i] = res;
+			setPost(newPost);
+		}
+		const el = e.target.closest('li');
+		el.classList.toggle('on');
+	}
+
+	const handleWriteModal = () => (e) => {
+		writeModal(FullModal, BoardPost, {});
+	}
+
+	const handleDeletePost = (id) => async (e) => {
+		await onClickHandler(null, MODE.NOTICE_DELETE, id);
+		const postData = post?.data?.filter((v) => v.postId !== id);
+		setPost({
+			page: post.page,
+			data: postData,
 		});
 	}
 
-	const handleWriteModal = (e) => e => {
-		writeModal(FullModal,BoardEdit,{})
+	const handleUpdatePost = (post) => e => {
+		console.log(post);
+		writeModal(FullModal, BoardPost, {post});
 	}
+
+	const postList = post?.data?.map((v, i) => 
+		<li key={`notice${i}`} className="post_list">
+			<div className="post_list_head" onClick={toggleList(v?.postId, i)}>
+				<p>{v?.updateTime}</p>
+				<p className="post_list_title">{v?.title}</p>
+				<div className="post_list_toggle">
+					<i className="xi-angle-down"></i>
+				</div>
+			</div>
+			{ userInfo?.authorities?.includes('ROLE_ADMIN') &&
+				<div className="post_list_admin">
+						<span onClick={handleUpdatePost(v)}>수정</span>
+						<span onClick={handleDeletePost(v?.postId)}>삭제</span>
+				</div>
+			}
+			<div className="post_list_contents">
+				{
+						v?.content &&
+					<div className="post_list_contents_inner">
+						<Viewer initialValue={v.content}/>
+					</div>
+				}
+			</div>
+		</li>
+	);
 
 	return(
 		<div className="wrap">
 			<HeaderMini title="공지사항" fixed={true}></HeaderMini>
 			<div className="post_wrap">
-				<ul ref={postRef} className="post_lists">
-					<li className="post_list">
-						<div className="post_list_head" onClick={(e) => toogleList(0)}>
-							<p>2024-02-15</p>
-							<p className="post_list_title">보카박스 서비스 런칭 안내 안녕하세요 보카박스입니다.안녕하세요 보카박스입니다.안녕하세요 보카박스입니다.안녕하세요 보카박스입니다.</p>
-							<div className="post_list_toggle">
-								<i className="xi-angle-down"></i>
-							</div>
-						</div>
-						<div className="post_list_admin">
-								<span>수정</span>
-								<span>삭제</span>
-						</div>
-						<div className="post_list_contents">
-							<div className="post_list_contents_inner">
-						안녕하세요 보카박스입니다.
-						한 여름밤의 산책은 항상 마음을 편안하게 해준다. 시원한 바람이 뺨을 스칠 때마다 하루의 피로가 서서히 풀리는 기분이다. 하늘을 올려다보면 어두운 밤하늘에 별들이 반짝이며 저마다의 이야기를 속삭이고 있는 것 같다. 주변에서는 귀뚜라미 소리가 은은하게 들리고, 나무 사이로는 달빛이 부드럽게 스며든다. 발 아래에서 느껴지는 흙과 자갈의 감촉은 자연과 한몸이 되는 듯한 느낌을 준다. 산책로 끝에는 작은 연못이 있는데, 그곳에서는 달빛에 반사된 물결이 은빛으로 일렁인다. 그곳에 서 있으면 모든 걱정과 고민이 사라지는 듯하다. 가끔씩 지나가는 바람에 나뭇잎이 흔들리며 내는 소리는 마치 자연이 보내는 위로의 메시지 같다. 이 모든 것이 조화를 이루며 마음 깊은 곳에 평온함을 선사한다. 그래서 나는 이런 밤 산책을 통해 내일을 위한 새로운 에너지를 얻곤 한다.
-							</div>
-						</div>
-					</li>
-					<li className="post_list">
-						<div className="post_list_head" onClick={(e) => toogleList(1)}>
-							<p>2024-02-15</p>
-							<p className="post_list_title">보카박스 서비스 런칭 안내 안녕하세요 보카박스입니다.안녕하세요 보카박스입니다.안녕하세요 보카박스입니다.안녕하세요 보카박스입니다.</p>
-							<div className="post_list_toggle">
-								<i className="xi-angle-down"></i>
-							</div>
-						</div>
-						<div className="post_list_admin">
-								<span>수정</span>
-								<span>삭제</span>
-						</div>
-						<div className="post_list_contents">
-							<div className="post_list_contents_inner">
-						안녕하세요 보카박스입니다.
-						한 여름밤의 산책은 항상 마음을 편안하게 해준다. 시원한 바람이 뺨을 스칠 때마다 하루의 피로가 서서히 풀리는 기분이다. 하늘을 올려다보면 어두운 밤하늘에 별들이 반짝이며 저마다의 이야기를 속삭이고 있는 것 같다. 주변에서는 귀뚜라미 소리가 은은하게 들리고, 나무 사이로는 달빛이 부드럽게 스며든다. 발 아래에서 느껴지는 흙과 자갈의 감촉은 자연과 한몸이 되는 듯한 느낌을 준다. 산책로 끝에는 작은 연못이 있는데, 그곳에서는 달빛에 반사된 물결이 은빛으로 일렁인다. 그곳에 서 있으면 모든 걱정과 고민이 사라지는 듯하다. 가끔씩 지나가는 바람에 나뭇잎이 흔들리며 내는 소리는 마치 자연이 보내는 위로의 메시지 같다. 이 모든 것이 조화를 이루며 마음 깊은 곳에 평온함을 선사한다. 그래서 나는 이런 밤 산책을 통해 내일을 위한 새로운 에너지를 얻곤 한다.
-							</div>
-						</div>
-					</li>
-					<li className="post_list">
-						<div className="post_list_head" onClick={(e) => toogleList(2)}>
-							<p>2024-02-15</p>
-							<p className="post_list_title">보카박스 서비스 런칭 안내 안녕하세요 보카박스입니다.안녕하세요 보카박스입니다.안녕하세요 보카박스입니다.안녕하세요 보카박스입니다.</p>
-							<div className="post_list_toggle">
-								<i className="xi-angle-down"></i>
-							</div>
-						</div>
-						<div className="post_list_admin">
-								<span>수정</span>
-								<span>삭제</span>
-						</div>
-						<div className="post_list_contents">
-							<div className="post_list_contents_inner">
-						안녕하세요 보카박스입니다.
-						한 여름밤의 산책은 항상 마음을 편안하게 해준다. 시원한 바람이 뺨을 스칠 때마다 하루의 피로가 서서히 풀리는 기분이다. 하늘을 올려다보면 어두운 밤하늘에 별들이 반짝이며 저마다의 이야기를 속삭이고 있는 것 같다. 주변에서는 귀뚜라미 소리가 은은하게 들리고, 나무 사이로는 달빛이 부드럽게 스며든다. 발 아래에서 느껴지는 흙과 자갈의 감촉은 자연과 한몸이 되는 듯한 느낌을 준다. 산책로 끝에는 작은 연못이 있는데, 그곳에서는 달빛에 반사된 물결이 은빛으로 일렁인다. 그곳에 서 있으면 모든 걱정과 고민이 사라지는 듯하다. 가끔씩 지나가는 바람에 나뭇잎이 흔들리며 내는 소리는 마치 자연이 보내는 위로의 메시지 같다. 이 모든 것이 조화를 이루며 마음 깊은 곳에 평온함을 선사한다. 그래서 나는 이런 밤 산책을 통해 내일을 위한 새로운 에너지를 얻곤 한다.
-							</div>
-						</div>
-					</li>
-					<li className="post_list">
-						<div className="post_list_head" onClick={(e) => toogleList(3)}>
-							<p>2024-02-15</p>
-							<p className="post_list_title">보카박스 서비스 런칭 안내 안녕하세요 보카박스입니다.안녕하세요 보카박스입니다.안녕하세요 보카박스입니다.안녕하세요 보카박스입니다.</p>
-							<div className="post_list_toggle">
-								<i className="xi-angle-down"></i>
-							</div>
-						</div>
-						<div className="post_list_admin">
-								<span>수정</span>
-								<span>삭제</span>
-						</div>
-						<div className="post_list_contents">
-							<div className="post_list_contents_inner">
-						안녕하세요 보카박스입니다.
-						한 여름밤의 산책은 항상 마음을 편안하게 해준다. 시원한 바람이 뺨을 스칠 때마다 하루의 피로가 서서히 풀리는 기분이다. 하늘을 올려다보면 어두운 밤하늘에 별들이 반짝이며 저마다의 이야기를 속삭이고 있는 것 같다. 주변에서는 귀뚜라미 소리가 은은하게 들리고, 나무 사이로는 달빛이 부드럽게 스며든다. 발 아래에서 느껴지는 흙과 자갈의 감촉은 자연과 한몸이 되는 듯한 느낌을 준다. 산책로 끝에는 작은 연못이 있는데, 그곳에서는 달빛에 반사된 물결이 은빛으로 일렁인다. 그곳에 서 있으면 모든 걱정과 고민이 사라지는 듯하다. 가끔씩 지나가는 바람에 나뭇잎이 흔들리며 내는 소리는 마치 자연이 보내는 위로의 메시지 같다. 이 모든 것이 조화를 이루며 마음 깊은 곳에 평온함을 선사한다. 그래서 나는 이런 밤 산책을 통해 내일을 위한 새로운 에너지를 얻곤 한다.
-							</div>
-						</div>
-					</li>
+				<ul className="post_lists">
+					{postList}
 				</ul>
-				<div className="post_btn_wrap">
-					<button className="btn-fill sizeL" onClick={handleWriteModal()}>글쓰기</button>
-				</div>
+				{ userInfo?.authorities?.includes('ROLE_ADMIN') &&
+					<div className="post_btn_wrap">
+						<button className="btn-fill sizeL" onClick={handleWriteModal()}>글쓰기</button>
+					</div>
+				}
 			</div>
 		</div>
 	);
