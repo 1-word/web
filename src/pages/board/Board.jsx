@@ -1,4 +1,5 @@
 import HeaderMini from "@/components/layout/HeaderMini";
+import authStore from "@/store/authStore"
 import { useModal } from "@/hook/_hooks";
 import { useEffect, useRef, useState } from "react";
 import FullModal from "@/components/layout/popup/FullModal";
@@ -8,6 +9,7 @@ import parse from "html-react-parser";
 
 function Board(){
 	const [post, setPost] = useState();
+	const {userInfo} = authStore(state => state);
 	const [writeModal] = useModal('writeModal');
   const onClickHandler = api();
 
@@ -28,8 +30,8 @@ function Board(){
 		el.classList.toggle('on');
 	}
 
-	const handleWriteModal = (e) => () => {
-		writeModal(FullModal,BoardEdit,{})
+	const handleWriteModal = () => (e) => {
+		writeModal(FullModal, BoardEdit, {});
 	}
 
 	const postList = post?.data?.map((v, i) => 
@@ -41,11 +43,12 @@ function Board(){
 					<i className="xi-angle-down"></i>
 				</div>
 			</div>
-			{/* 어드민일 때만 보여주어야 함 */}
-			<div className="post_list_admin">
-					<span>수정</span>
-					<span>삭제</span>
-			</div>
+			{ userInfo?.authorities?.includes('ROLE_ADMIN') &&
+				<div className="post_list_admin">
+						<span>수정</span>
+						<span>삭제</span>
+				</div>
+			}
 			<div className="post_list_contents">
 				<div className="post_list_contents_inner">
 					{parse(v?.content ?? '')}
@@ -61,9 +64,11 @@ function Board(){
 				<ul className="post_lists">
 					{postList}
 				</ul>
-				<div className="post_btn_wrap">
-					<button className="btn-fill sizeL" onClick={handleWriteModal()}>글쓰기</button>
-				</div>
+				{ userInfo?.authorities?.includes('ROLE_ADMIN') &&
+					<div className="post_btn_wrap">
+						<button className="btn-fill sizeL" onClick={handleWriteModal()}>글쓰기</button>
+					</div>
+				}
 			</div>
 		</div>
 	);
