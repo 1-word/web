@@ -141,7 +141,7 @@ function Add({
 		}
 
 		const handleDictClick = async(e) => {
-			const word = wordInputRef.current.value;
+			const word = e.target.textContent;
 			const res = await onClickHandler(null, MODE.WORD_DICT, word);
 			if (res.mean !== null) {
 				setWordList({
