@@ -123,10 +123,7 @@ function Add({
 			saveWordList(name, value);
 			if(name === "word" && value !== ""){
 				wordRelative.current.classList.add('on');
-				onClickHandler(null, MODE.WORD_RELATIVE_READ, value)
-				.then(res => {
-					setwordRelativeList(res);
-				});
+				setDictListData(value);
 			}else{
 				wordRelative.current.classList.remove('on');
 			}
@@ -140,17 +137,44 @@ function Add({
 			wordRelative.current.classList.remove('on');
 		}
 
-		const handleDictClick = async(e) => {
-			const word = e.target.textContent;
+		const setDictListData = async (word) => {
+			const res = await onClickHandler(null, MODE.WORD_RELATIVE_READ, word)
+			setwordRelativeList(res);
+		}
+
+		const setDictData = async (word) => {
 			const res = await onClickHandler(null, MODE.WORD_DICT, word);
 			if (res.mean !== null) {
 				setWordList({
 					...saveList,
 					mean: res.mean,
 					word: word,
-				})
+				});
 			}
+			// 데이터를 찾고 자동완성 리스트를 업데이트
+			setDictListData(word);
+		}
+
+		const handleDictClick = async () => {
+			const word = wordInputRef.current.value;
 			wordRelative.current.classList.remove('on');
+			await setDictData(word);
+		}
+
+		const handleRelativeClick = async (e) => {
+			if (e.target.id !== "relative_list") {
+				return;
+			}
+			const word = e.target.textContent;
+			wordRelative.current.classList.remove('on');
+			wordInputRef.current.value = word;
+			await setDictData(word)
+		}
+
+		const onClickInput = e => {
+			if (wordRelativeList.length > 0) {
+				wordRelative.current.classList.add('on');
+			}
 		}
 
     // 영어 add
@@ -163,14 +187,16 @@ function Add({
 					</div>
 					<div ref={wordRelative} className="input_wrap word_relative_wrap">
 						<span>단어</span>
-						<input ref={wordInputRef} name="word" value={saveList?.word} disabled={isEdit} type="text" autoComplete="off" onChange={onChangeInput}
+						<input ref={wordInputRef} name="word" value={saveList?.word} disabled={isEdit} type="text" autoComplete="off" 
+							onChange={onChangeInput}
+							onClick={onClickInput}
 						/>
 						<div className="word_relative_layer">
-							<ul className="word_relative_layer_lists" onClick={handleDictClick}>
+							<ul className="word_relative_layer_lists" onClick={handleRelativeClick}>
 								{
 									wordRelativeList.map((val, idx) => 
 										<React.Fragment key={`wordRelative${idx}`}>
-											<li className="word_relative_layer_list">{val.word}</li>
+											<li id="relative_list" className="word_relative_layer_list">{val.word}</li>
 										</React.Fragment>
 									)
 								}
