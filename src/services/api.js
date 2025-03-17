@@ -243,7 +243,7 @@ function useEvntHandler(e, modeType, data, func){
             return await executeSrvConnect('get', `dict/list/${word}`, null, {isUpdate: false, isLoading: false});
         },
         async wordDict(_, word) {
-            return await executeSrvConnect('get', `dict/${word}`, null, {isUpdate: false, isLoading: false});
+            return await executeSrvConnect('get', `dict/${word}`, null, {isUpdate: false, isLoading: true});
         },
 
         // 오늘의 내 문장
