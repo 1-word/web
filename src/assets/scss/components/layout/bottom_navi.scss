@@ -52,6 +52,11 @@
 				background-image: icon(search);
 			}
 		}
+		.lounge{
+			@include icon(){
+			background-image: icon(lounge);
+			}
+		}
 		.wordbook{
 			@include icon(){
 				background-image: icon(wordbook);
@@ -86,6 +91,11 @@
 		&[active="dailySentence"]{
 			.calendar{
 				background-image: icon(calendar,$accentColor);
+			}
+		}
+		&[active="lounge"]{
+			.lounge{
+				background-image: icon(lounge,$accentColor);
 			}
 		}
 	}
