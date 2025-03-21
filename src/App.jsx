@@ -20,6 +20,7 @@ import ErrorPage from '@/pages/ErrorPage';
 import Learn from '@/pages/learn/Learn';
 import Board from '@/pages/board/Board';
 import Result from './components/learn/quiz/Result';
+import Lounge from './pages/lounge/Lounge';
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
       <Route path="/learn" element={<Learn />}/>
       <Route path="/quiz-result" element={<Result />}/>
       <Route path="/notice" element={<Board />}/>
+      <Route path="/lounge" element={<Lounge />}/> 
       <Route path="/*" element={<ErrorPage />}/>
     </Routes> 
     );
