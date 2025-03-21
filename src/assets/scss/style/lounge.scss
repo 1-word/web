@@ -1,0 +1,22 @@
+@import "@scss/components/lounge/tab.scss";
+
+.lounge{
+  &-wrap{
+    padding: 16px 0;
+    padding-bottom: 80px;
+    height: 88dvh;
+    @include deviceSmall(){
+      overflow-y: auto;
+    }
+  }
+  &-cont{
+    margin-top: 32px;
+    @include cardToogle;
+  }
+  &-list-title{
+    @include cardTitle;
+  }
+  &-list-title-sub{
+    @include cardSubTitle;
+  }
+}
