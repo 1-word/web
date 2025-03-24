@@ -1,22 +1,36 @@
 @import "@scss/components/lounge/tab.scss";
+@import "@scss/components/lounge/permission.scss";
 
-.lounge{
-  &-wrap{
+.lounge {
+  &-wrap {
     padding: 16px 0;
     padding-bottom: 80px;
     height: 88dvh;
-    @include deviceSmall(){
+    @include deviceSmall() {
       overflow-y: auto;
     }
   }
-  &-cont{
+  &-cont {
     margin-top: 32px;
     @include cardToogle;
   }
-  &-list-title{
+  &-list-title {
     @include cardTitle;
   }
-  &-list-title-sub{
+  &-list-title-sub {
     @include cardSubTitle;
+  }
+  &-list-title-dot {
+    @include cardDot;
+  }
+  &-list-toggle-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    > div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
   }
 }

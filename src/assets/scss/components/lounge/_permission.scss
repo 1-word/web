@@ -1,0 +1,14 @@
+.permission {
+  margin-top: 24px;
+  &-lists {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  &-list {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
