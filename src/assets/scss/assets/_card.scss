@@ -3,6 +3,9 @@
   ul {
     padding: $main-p;
     font-size: 14px;
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
     li {
       // default값
       position: relative;
@@ -78,4 +81,11 @@
   margin-top: 12px;
   font-size: 10px;
   color: $sub-text-color;
+  @content;
+}
+
+@mixin cardAccent {
+  color: $main-accent-color;
+  @content;
+	@include fontSize(m);
 }
