@@ -1,0 +1,13 @@
+@mixin fontSize($size) {
+  @if ($size == "s") {
+    font-size: clamp(.75rem, 1.5vw, 1rem);
+		font-weight: 400;
+  } @else if($size == 'm') {
+		font-size: clamp(.875rem, 1.8vw, 1rem);
+		font-weight: 400;
+	} @else if($size == 'l') {
+		font-size: clamp(1.5rem, 2vw, 2rem);
+		font-weight: 600;
+	}
+	@content;
+}

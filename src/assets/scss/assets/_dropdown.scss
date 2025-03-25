@@ -9,6 +9,7 @@
 	&_wrap{
 		width: 100px;
 		position: absolute;
+		top: 20px;
 		right: 0;
 		background-color: $default-fff;
 		border-radius: $main-br;
@@ -24,10 +25,11 @@
 		width: 100%;
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
+		justify-content: center;
 		padding: 8px 12px;
 		color: $default-666;
 		border-bottom: 1px solid $default-ddd;
+		text-align: center;
 		&:last-child{
 			border-bottom: 0;
 		}
