@@ -1,7 +1,15 @@
+import { useModal } from "@/hook/_hooks";
+import FullModal from "@components/layout/popup/FullModal";
+import SaveWordBook from "@components/lounge/SaveWordBook";
+
 const EveryList = () => {
+  const [SaveWordBookModal] = useModal("saveWordBook");
+  const handleSaveWordBookModal = () => (e) => {
+    SaveWordBookModal(FullModal, SaveWordBook);
+  };
   return (
     <li>
-      <div>
+      <div onClick={handleSaveWordBookModal()}>
         <div className="lounge-list-title">
           {/* 단어장 색깔 넣어주기 */}
           <div

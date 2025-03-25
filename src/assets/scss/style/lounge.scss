@@ -33,4 +33,11 @@
       justify-content: space-between;
     }
   }
+  &-list-mean {
+    @include cardAccent;
+    margin-top: 8px;
+  }
+  &-btn-fix {
+    @include btnFix;
+  }
 }
