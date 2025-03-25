@@ -1,14 +1,43 @@
 .permission {
+  min-height: 60dvh;
   margin-top: 24px;
+  scroll-padding: 4px;
   &-lists {
+    margin-top: 24px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 10px;
+    * {
+      @include fontSize(s);
+    }
   }
   &-list {
-    padding: 10px;
+    padding: 10px 0;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 8px;
+    i {
+      color: $sub-text-color;
+    }
+  }
+  &-img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    overflow: hidden;
+    img {
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+  &-btn {
+    margin-left: auto;
+    > button {
+      padding-right: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: $default-666;
+    }
   }
 }
