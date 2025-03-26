@@ -83,6 +83,15 @@ nav {
 	background-color: $default-fff;
 }
 
+.inner{
+	padding-bottom: 40px;
+	min-height: 86dvh;
+	height: auto;
+	@include deviceSmall() {
+		overflow-y: auto;
+	}
+}
+
 .modal-fix {
   position: fixed;
   width: 100%;

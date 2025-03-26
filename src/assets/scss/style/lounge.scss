@@ -4,11 +4,6 @@
 .lounge {
   &-wrap {
     padding: 16px 0;
-    padding-bottom: 80px;
-    height: 88dvh;
-    @include deviceSmall() {
-      overflow-y: auto;
-    }
   }
   &-cont {
     margin-top: 32px;

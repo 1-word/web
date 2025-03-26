@@ -1,7 +1,5 @@
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
-import BottomNav from "@/components/layout/BottomNav";
-import HeaderMini from "@/components/layout/HeaderMini";
 import EveryList from "@/components/lounge/EveryList";
 import UserList from "@/components/lounge/UserList";
 
@@ -22,9 +20,7 @@ const Lounge = () => {
     })
   }
   return(
-    <Layout>
-      <HeaderMini title="라운지" />
-      <BottomNav active="lounge" />
+    <Layout title="라운지" active="lounge">
       <div className="lounge-wrap">
         <ul className="lounge-tab">
           <li 
