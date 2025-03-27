@@ -142,6 +142,8 @@ function DailySentenceView({
 		const newDisabled = {prev: false, next: false};
 		const max = dailySentenceList.length;	
 
+		console.log(`max: ${max}, idx: ${idx}`)
+
 		if (idx === 0) {
 			newDisabled.prev = true;
 		}
@@ -221,7 +223,7 @@ function DailySentenceView({
 				}
 				{/* 연관 단어 */}
 				{
-					disabled.prev === disabled.next ?
+					disabled.prev && disabled.next ?
 					"" :
 					<div className="modal_full_btn_wrap daily_sentence_view_btn_wrap">
 						<button className="btn-light sizeL" disabled={disabled.prev} onClick={onClickPreviousSentence}>이전 문장</button>
