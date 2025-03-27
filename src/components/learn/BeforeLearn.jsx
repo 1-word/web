@@ -9,12 +9,12 @@ import api, { MODE } from "@/services/api";
 function BeforeLearn({deleteModalAfterTime,learnType}){
 	const selectRef = useRef([]);
 	const sliderRef = useRef(null);
-	const [folderInfo, setFolderInfo] = useState({folderName: "단어장을 선택해주세요"});
+	const [folderInfo, setFolderInfo] = useState({name: "단어장을 선택해주세요"});
 	const navigate = useNavigate();
 	const [ openModal ] = useModal();
 	const onClickHandler = api();
 	const quizInfo = useRef({
-		folderId: null,
+		wordBookId: null,
 		type: "word",
 		sort: "created",
 		memorization: "",
@@ -41,27 +41,22 @@ function BeforeLearn({deleteModalAfterTime,learnType}){
 		const name = currentNode[refIdx].getAttribute('name');
 
 		if (name === "memorization") {
-			if (quizInfo.current.folderId === null) {
+			
+			if (quizInfo.current.wordBookId === null) {
 				openModal(Toast, null, {msg: "단어장을 선택해주세요"}, "toast");
 				return;
 			}
 
 			let value = e.target.getAttribute("data-value");
-			value = value === "Y"? true : value === "N"? false : "";
-			const query = value !== ""? `?memorization=${value}` : "";
-			onClickHandler(null, MODE.FOLDER_COUNT_READ, {
-				folderId: quizInfo.current.folderId, 
-				query
-			}).then(count => {
-						// 슬라이드 반영
-					setSlider({
-						...slider,
-						persent: 100,
-						max: count,
-						value: count,
-						style: `linear-gradient(90deg, rgb(148, 108, 244) 100%, rgba(233, 229, 229, 0.22) 100.1%)`
-					});
-			});
+			const count = value === "Y"? quizInfo.current.memorizedCount : value === "N"? quizInfo.current.unMemorizedCount : quizInfo.current.totalCount;
+				// 슬라이드 반영
+				setSlider({
+					...slider,
+					persent: 100,
+					max: count,
+					value: count,
+					style: `linear-gradient(90deg, rgb(148, 108, 244) 100%, rgba(233, 229, 229, 0.22) 100.1%)`
+				});
 		}
 
 		currentNode[refIdx].childNodes.forEach((el, idx) => {
@@ -82,24 +77,28 @@ function BeforeLearn({deleteModalAfterTime,learnType}){
 	// 단어장 선택
 	const handleSelectVocabook = () => {	
 		const afterCompleteFunc = (item) => {
-			setFolderInfo(item.folders);
+			
+			setFolderInfo(item);
 			quizInfo.current = {
 				...quizInfo.current,
-				folderId: item.folders.folderId
+				wordBookId: item.wordBookId,
+				totalCount: item.totalCount,
+				memorizedCount: item.memorizedCount,
+				unMemorizedCount: item.unMemorizedCount,
 			}
 	
 			// 슬라이드 반영
 			setSlider({
 				...slider,
 				persent: 100,
-				max: item.count,
-				value: item.count,
+				max: item.totalCount,
+				value: item.totalCount,
 				style: `linear-gradient(90deg, rgb(148, 108, 244) 100%, rgba(233, 229, 229, 0.22) 100.1%)`
 			});
 		}
 		// 단어장 선택 모달 열기
 		LearnVocabookModal(FullModal, VocabookList, {
-			clickedFolder: folderInfo?.folderId,
+			clickedFolder: folderInfo?.wordBookId,
 			afterCompleteFunc
 		});
 	}
@@ -185,7 +184,7 @@ function BeforeLearn({deleteModalAfterTime,learnType}){
 			count: parseInt(slider.value)
 		}
 
-		if (data.folderId === null) {
+		if (data.wordBookId === null) {
 			openModal(Toast, null, {msg: "단어장을 선택해주세요"}, "toast");
 			return;
 		}
@@ -219,7 +218,7 @@ function BeforeLearn({deleteModalAfterTime,learnType}){
 				<div className="before_learn_choose">
 					<span className="before_learn_title">단어장 선택</span>
 					<div className="before_learn_contents">
-						<button className="btn-light sizeM" onClick={handleSelectVocabook}>{folderInfo.folderName}</button>
+						<button className="btn-light sizeM" onClick={handleSelectVocabook}>{folderInfo.name}</button>
 					</div>
 				</div>
 				{learnType === 'quiz' && <div className="before_learn_choose">

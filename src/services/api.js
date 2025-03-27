@@ -97,51 +97,51 @@ function useEvntHandler(e, modeType, data, func){
 
     const handlerMap = {
         async read(_, query){
-            const res = await executeSrvConnect("get", `word${query}`, null, {isUpdate: false, returnMsg: false});
+            const res = await executeSrvConnect("get", `v2/words${query}`, null, {isUpdate: false, returnMsg: false});
             return res;
         },
         async singleRead(_, id) {
-            return await executeSrvConnect("get", `word/item/${id}`, null, {isUpdate: false, returnMsg: false});
+            return await executeSrvConnect("get", `v2/words/${id}`, null, {isUpdate: false, returnMsg: false});
         },
         async search(e, query){
-            const res = await executeSrvConnect("get", `word/${query}`, null, {isUpdate:false, isLoading: false, returnMsg: false});
+            const res = await executeSrvConnect("get", `v2/words/search/${query}`, null, {isUpdate:false, isLoading: false, returnMsg: false});
             return res;
         },
         async delete(_, wordId){
-            await executeSrvConnect("delete", `word/${wordId}`);
+            await executeSrvConnect("delete", `v2/words/${wordId}`);
         },
         async update(e, wordId, data){
-            return await executeSrvConnect("put", `word/all/${wordId}`, data);
+            return await executeSrvConnect("put", `v2/words/${wordId}/all`, data);
         },
         async updateMemo(e, id, data){
-            return await executeSrvConnect("put", `word/memo/${id}`, data, {isUpdate: false});
+            return await executeSrvConnect("put", `v2/words/${id}/memo`, data, {isUpdate: false});
         },
         async memorization(e, wordId, data){
-            return await executeSrvConnect("put", `word/memorization/${wordId}`, data);
+            return await executeSrvConnect("put", `v2/words/${wordId}/memorization`, data);
         },
         async save(_, type, data){
-            const res = await executeSrvConnect("post", `word/${type}`, data);
+            const res = await executeSrvConnect("post", `v2/words/${type}`, data);
             return res;
         },
         // 폴더
         async folderRead(_){
-            const res = await executeSrvConnect('get', `folders`, null, {isUpdate: false});
+            const res = await executeSrvConnect('get', `wordbooks`, null, {isUpdate: false});
             return res;
         },
-        async folderUpdate(_, folderId, data){
-            return await executeSrvConnect("put", `folders/${folderId}`, data, {isUpdate: false});
+        async folderUpdate(_, wordBookId, data){
+            return await executeSrvConnect("put", `wordbooks/${wordBookId}`, data, {isUpdate: false});
         },
         async folderSave(_, data){
-            return await executeSrvConnect("post", 'folders', data, {isUpdate: false});
+            return await executeSrvConnect("post", 'wordbooks', data, {isUpdate: false});
         },
-        async wordFolderUpdate(_, {wordId, folderId}){
-            return await executeSrvConnect('put', `word/${wordId}/folder/${folderId}`, null);
+        async wordFolderUpdate(_, {wordId, wordBookId}){
+            return await executeSrvConnect('put', `v2/words/${wordId}/wordbook/${wordBookId}`, null);
         },
-        async folderDelete(_, folderId){
-            return await executeSrvConnect("delete", `folders/${folderId}`, null, {isUpdate: false});
+        async folderDelete(_, wordBookId){
+            return await executeSrvConnect("delete", `wordbooks/${wordBookId}`, null, {isUpdate: false});
         },
-        async folderCountRead(_, {folderId, query}){
-            return await executeSrvConnect("get", `folders/${folderId}${query}`, null, {isUpdate: false});
+        async folderCountRead(_, {wordBookId, query}){
+            return await executeSrvConnect("get", `wordbooks/${wordBookId}${query}`, null, {isUpdate: false});
         },
         open(){
 
@@ -304,8 +304,8 @@ function useEvntHandler(e, modeType, data, func){
         async [MODE.INCOMPLETE_QUIZ_READ](_) {
             return await executeSrvConnect('get', `quiz-info/incomplete`, null, {isUpdate: false});
         },
-        async [MODE.QUIZ_WORD_READ](_, folderId) {
-            return await executeSrvConnect('get', `quiz/${folderId}/words`, null, {isUpdate: false});
+        async [MODE.QUIZ_WORD_READ](_, wordBookId) {
+            return await executeSrvConnect('get', `quiz/${wordBookId}/words`, null, {isUpdate: false});
         },
         // 공지사항
         async [MODE.NOTICE_LIST_READ](_, query) {

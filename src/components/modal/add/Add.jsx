@@ -12,7 +12,7 @@ import wordListStore from "@/store/wordListStore";
 import authStore from "@/store/authStore";
 
 function Add({
-	folderId,
+	wordBookId,
 	word,
 	isEdit,
 	deleteModalAfterTime
@@ -25,7 +25,7 @@ function Add({
 				details: []
 			});
 		const wordRelative = useRef([]);
-		const [folderName, setFolderName] = useState('');
+		const [name, setname] = useState('');
 		const {storeFolderList} = authStore(state => state);
 		const [wordRelativeList, setwordRelativeList] = useState([]);
 		const wordInputRef = useRef(null);
@@ -33,24 +33,26 @@ function Add({
     const onClickHandler = api();
 		const [vocaBookListModal] = useModal("vocaBookList");
 
+		
+
 		const handleVocaBookListModal = () => e => {
 			vocaBookListModal(FullModal, VocabookList, {
-				clickedFolder: folderId,
+				clickedFolder: wordBookId,
 				afterCompleteFunc
 			})
 		}
 
 		const afterCompleteFunc = (item) => {
-			const id = item.folders.folderId;
-			setFolderName(item.folders.folderName);
-			saveWordList('folderId', id);
+			const id = item.wordBookId;
+			setname(item.name);
+			saveWordList('wordBookId', id);
 		}
 
 		useEffect(() => {
 			if (isEdit) {
 				setWordList(word);
 			}
-			setFolderName(storeFolderList.folderName);
+			setname(storeFolderList.name);
 		},[]);
 
 		const handleMoreModal = () => e => {
@@ -73,7 +75,7 @@ function Add({
 
     const handleSaveClick = (e) => {
 			const result = {
-				folderId: saveList.folderId ?? storeFolderList.folderId,
+				wordBookId: saveList.wordBookId ?? storeFolderList.wordBookId,
 				word: saveList.word,
 				mean: saveList.mean,
 				read: saveList.read,
@@ -87,6 +89,8 @@ function Add({
 					}))
 				)
 			};
+
+			
 
 			if (isEdit) {
 				onClickHandler(null, MODE.UPDATE, saveList.wordId, result)
@@ -183,7 +187,7 @@ function Add({
 				<div className="new_cont">
 					<div className="new_location">
 						현재 단어장 위치
-						<div className="btn-light new_location_name" onClick={handleVocaBookListModal()}>{folderName || ''}</div>
+						<div className="btn-light new_location_name" onClick={handleVocaBookListModal()}>{name || ''}</div>
 					</div>
 					<div ref={wordRelative} className="input_wrap word_relative_wrap">
 						<span>단어</span>

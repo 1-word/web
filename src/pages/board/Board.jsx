@@ -44,7 +44,7 @@ function Board(){
 	}
 
 	const handleUpdatePost = (post) => e => {
-		console.log(post);
+		
 		writeModal(FullModal, BoardPost, {post});
 	}
 

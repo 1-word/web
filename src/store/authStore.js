@@ -39,11 +39,14 @@ const store = persist({
         },
         storeFolderList: [
             {
-                "folderId" : null,
-                "folder_name": "",
+                "wordBookId": 0,
+                "name": "",
                 "background": "",
                 "color": "",
-                "memo": ""
+                "memo": "",
+                "totalCount": 0,
+                "memorizedCount": 0,
+                "unMemorizedCount": 0,
             }
         ],
         setStoreFolderList: (folderListRequest) => set(state => ({

@@ -15,7 +15,7 @@ function FolderCog({folderCog}){
   
     const onClickHandler = api();
 
-    const handleFolderNameClick = (folder_id) => e => {
+    const handlenameClick = (folder_id) => e => {
         setClickedFolderId({
             folder_id: folder_id
         });
@@ -48,7 +48,7 @@ function FolderCog({folderCog}){
             <ul className="add-area folder-lists">
                 {
                     folderList.map((item, idx) => 
-                        <li key={'fl'+item.folder_id} className="folder-list flex" onClick={handleFolderNameClick(item.folder_id)}>
+                        <li key={'fl'+item.folder_id} className="folder-list flex" onClick={handlenameClick(item.folder_id)}>
                             <span className="folder-color" style={{background: item.background}}></span>
                             <h3>{item.folder_name}</h3>
                             <div className='icon-area flex'>

@@ -34,7 +34,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Home />}/>
       <Route path="/signin" element={<Login />}/>
-      <Route path="/word/:folderId" element={<Word />}/>   
+      <Route path="/word/:wordBookId" element={<Word />}/>   
       <Route path="/signup" element={<Signup />}/>
       <Route path="/signup-comp" element={<SignupComplete />}/>
 			<Route path="/setPw" element={<SetPw />}/>
