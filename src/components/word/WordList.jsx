@@ -20,7 +20,7 @@ import ListEmpty from "./ListEmpty";
 function WordList(props) {
     const { wordList, setWordList, update, setUpdateFlag, addWordList, setPreventDisableFunc } = wordListStore(state => state);
     const {memorization, setMemorization} = Store(state=>state);
-    const {folderId} = useParams();
+    const {wordBookId} = useParams();
 
     const [ memoStatus, setMemoStatusState ] = useState({
         0: { "status": "OFF" }
@@ -49,7 +49,7 @@ function WordList(props) {
                 current: 0,
                 lastId: null,
                 memorization,
-                folderId,
+                wordBookId,
                 sort: props.sort
             }
 
@@ -66,10 +66,10 @@ function WordList(props) {
     useEffect(()=> {
         if (obsPage > -1 && wordList.page?.hasNext){
             const queryParams = {
-                current: wordList.page.current ?? 0,
+                current: wordList.page.next ?? 0,
                 lastId: wordList.page.lastId,
                 memorization,
-                folderId,
+                wordBookId,
                 sort: props.sort
             }
 
@@ -105,15 +105,15 @@ function WordList(props) {
     // 단어장 변경
     const handleFolderClick = (wordId) => {
         folderMoveModal(FullModal, VocabookList, {
-            clickedFolder: folderId,
+            clickedFolder: wordBookId,
             afterCompleteFunc: afterMoveFolder,
             props: wordId,
         });
     }
 
     const afterMoveFolder = (item, wordId) => {
-        const folderId = item.folders.folderId;
-        onClickHandler(null, MODE.WORD_FOLDER_UPDATE, {wordId, folderId});
+        const wordBookId = item.wordBookId;
+        onClickHandler(null, MODE.WORD_FOLDER_UPDATE, {wordId, wordBookId});
     }
 
     // 단어 삭제
@@ -130,7 +130,7 @@ function WordList(props) {
         editModal(FullModal, Edit, {
             word,
             isEdit: true,
-            folderId 
+            wordBookId 
         });
     }
 
@@ -218,7 +218,7 @@ function WordList(props) {
         });
     }
 
-    const dataList = wordList?.words.map((data, idx) => {
+    const dataList = wordList?.data.map((data, idx) => {
         return (
             <div className="word_card" key={data?.wordId}>
                 <div className="word_card_top">

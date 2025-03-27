@@ -8,7 +8,7 @@ import { uuidv4 } from "@/hook/_hooks";
 
 function Memorize(){
 	const [isSpeakingAllowed, setIsSpeakingAllowed] = useState(false);
-	const {folderId, memorization, sort, type, count} = useLocation().state;
+	const {wordBookId, memorization, sort, type, count} = useLocation().state;
 
 	const onClickHandler = api();
 	const voiceRef = useRef(null);
@@ -20,7 +20,7 @@ function Memorize(){
 			hasNext: true,
 			isFirst: true
 		},
-		words: []
+		data: []
 	});
 
 	const [currentWord, setCurrentWord] = useState({});
@@ -76,7 +76,7 @@ function Memorize(){
 				current: wordList.page.next,
 				lastId: wordList.page.lastId ?? null,
 				memorization: memorization === ''? null : memorization,
-				folderId,
+				wordBookId,
 				sort: currentRef.current.sort,
 				seed: currentRef.current.seed
 			}
@@ -86,18 +86,18 @@ function Memorize(){
 			onClickHandler(null, MODE.READ, query).then(res => {
 				setWordList({
 					page: res.page,
-					words: [...wordList.words, ...res.words]
+					data: [...wordList.data, ...res.data]
 				});
-				setCurrentWord(res.words[0]);
+				setCurrentWord(res.data[0]);
 			});
 
 			return;
 		}
 
-		setCurrentWord(wordList.words[index]);
+		setCurrentWord(wordList.data[index]);
 		calcPercent(count, index);
-		if (!currentRef.current.isStop && wordList.words.length > 0) {
-			speechStart(wordList.words[index]);
+		if (!currentRef.current.isStop && wordList.data.length > 0) {
+			speechStart(wordList.data[index]);
 		}
 	}, [index]);
 
@@ -122,7 +122,7 @@ function Memorize(){
 
 		currentRef.current = {
 			...currentRef.current,
-			wordId: wordList.words[index].wordId
+			wordId: wordList.data[index].wordId
 		}
 
 		audioPlay(currentWord);
@@ -288,7 +288,7 @@ function Memorize(){
 				hasNext: true,
 				isFirst: true
 			},
-			words: []
+			data: []
 		});
 
 		setIndex(-1);
@@ -303,7 +303,7 @@ function Memorize(){
 	// 암기 여부 업데이트
 	const setMemorization = (wordId, status) => {
 		setWordList(prev => {
-			const newWords = prev.words.map(words => {
+			const newWords = prev.data.map(words => {
 				if (words.wordId === wordId) {
 					words.memorization = status
 				}
@@ -311,7 +311,7 @@ function Memorize(){
 			})
 			return {
 				page: prev.page,
-				words: newWords
+				data: newWords
 			}
 		})
 	}

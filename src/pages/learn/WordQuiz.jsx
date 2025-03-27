@@ -26,7 +26,7 @@ function WordQuiz(){
 				startQuiz(res);
 			});
 		} else if(state?.quizType === "continue") {
-			onClickHandler(null, MODE.QUIZ_WORD_READ, state?.folderId).then(res => {
+			onClickHandler(null, MODE.QUIZ_WORD_READ, state?.wordBookId).then(res => {
 				startQuiz(res);
 			});
 		} else {
