@@ -8,13 +8,11 @@
 .word_learn{
 	&_wrap{
 		position: relative;
-		height: 92%;
 		margin-top: 24px;
 		padding: $main-p;
 	}
 	&_cont{
-		height: 100%;
-		padding-bottom: 80px;
+
 
 		.word_detail_cont{
 			padding: 0;

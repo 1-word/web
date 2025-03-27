@@ -1,7 +1,7 @@
 .word_detail{
 	&_wrap{
 		position: relative;
-		height: 77dvh;
+		height: 70dvh;
 		padding: $main-p;
 	}
 	&_cont{
@@ -29,8 +29,8 @@
 		align-items: center;
 		justify-content: space-between;
 		.word_card_check svg{
-			width: 28px;
-			height: 28px;
+			width: 24px;
+			height: 24px;
 		}
 	}
 	&_headset{
@@ -72,10 +72,16 @@
 		cursor: pointer;
 	}
 	&_name{
-		font-size: clamp(1.8em, 24px, 2vw);
+		@include fontSize(l);
     word-break: break-word;
     text-align: center;
 		cursor: pointer;
+	}
+	// 커스텀 가운데 조정
+	.word_type_list,
+	.word_type_cont li{
+		justify-content: center;
+		flex-wrap: wrap;
 	}
 	&_close{
 		position: relative;

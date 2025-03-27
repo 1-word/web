@@ -34,7 +34,7 @@
 }
 
 html body {
-  font-family: "PretendardJP";
+  font-family: "PretendardJP", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   color: $main-text-color;
 }
 
@@ -256,8 +256,6 @@ nav {
 }
 // 마이 단어장 폴더
 
-/*단어장 내용부분*/
-
 /* 단어 형태사 컴포넌트 */
 
 .word_type{
@@ -287,6 +285,7 @@ nav {
     gap: 0.69rem;
 		li{
 			display: flex;
+			flex-wrap: wrap;
 			gap: 8px;
 		}
 		&_title{
@@ -297,126 +296,6 @@ nav {
 		}
 	}
 }
-
-// 영단어 컴포넌트
-
-.word-e {
-	// 분사
-  .e-vn {
-		flex-wrap: wrap;
-    gap: 0.1875rem;
-		span{
-			width: auto;
-			margin: 0;
-			background: none;
-			&:last-child {
-				color: #999;
-			}
-		}
-  }
-}
-
-
-/* 영어 에딧 컴포넌트 */
-
-.e-edit.edit .synonym_wrap .e-vn span {
-  width: 40%;
-  margin: 0;
-  display: flex;
-}
-
-// 상단
-.top_area {
-	justify-content: space-between;
-
-	// 전체폰트사이즈
-	span {
-    font-size: 24px;
-  }
-	// 발음
-  .read {
-    font-weight: 400;
-    font-size: 1rem;
-    margin-left: 0.25rem;
-  }
-	// 체크아이콘
-	.check {
-    margin: 0;
-    margin-right: 11px;
-		&.on{
-			content: "\e92b";
-			i::before {
-				content: "\e92b";
-			}
-		}
-  }
-
-  .xi-headset {
-    cursor: pointer;
-    &::before {
-      font-size: 24px;
-    }
-		&.on{
-			color: $main-accent-color;
-		}
-  }
-}
-// 중복되면 지움
-.listen.on {
-  color: $main-accent-color;
-}
-
-// 상단 단어랩(안튀게)
-.top_word_wrap {
-  word-break: break-all;
-}
-
-// 중간(뜻)
-.mid_area {
-	margin-top: 12px;
-}
-
-.mean_wrap {
-  color: $main-accent-color;
-}
-
-//// 중간(뜻)
-
-// 유의어
-
-.synonym_wrap {
-	margin-top: 16px;
-  gap: 11px;
-}
-
-.synonym_cont {
-  align-items: center;
-  justify-content: center;
-	gap: 20px;
-}
-
-//// 유의어
-
-/*단어장 아랫부분*/
-
-.foot_area {
-	margin-top: 16px;
-  justify-content: space-between;
-	.icon {
-		cursor: pointer;
-		font-size: 1.5em;
-		transition: 0.36s ease;
-		margin-left: 1em;
-		transition: color 0.3s ease;
-		&:first-child{
-			margin-left: 0;
-		}
-		&:hover, &:focus, &.on {
-			color: $main-accent-color;
-		}
-	}
-}
-
 
 /*메모칸*/
 .memo{
@@ -507,63 +386,5 @@ nav {
 }
 // 더하기 나오는 컴포넌트
 
-/* edit 모드 */
-
-.edit {
-	&.word{
-		background: $sub-bg-color;
-	}
-	// 단어
-  .top_area {
-    color: $main-accent-color;
-		margin-bottom: 24px;
-		// 탑에리어에서 헤드셋 삭제
-		.headset{
-			display: none;
-		}
-    span {
-      font-size: 1.5em;
-			font-weight: 600;
-    }
-  }
-
-	// 단어 형태 박스
-	.word_type_wrap{
-		flex-direction: row;
-		align-items: center;
-		>span{
-			flex: 60px 0 0;
-		}
-		>div{
-			flex: 1;
-		}
-	}
-	&_foot{
-		margin-top: 24px;
-		justify-content: flex-end;
-		gap: 1rem;
-		button{
-			max-width: 100px;
-			@include deviceSmall(){
-				max-width: 62px;
-			}
-		}
-	}
-
-  .check {
-    color: #03CDBF;
-  }
-
-  .book-clip {
-    display: none;
-  }
-}
-
-.e.edit, .e-edit{
-	// 영어
-	.e-vn{
-		align-items: center;
-	}
-}
 
 /*# sourceMappingURL=wordPaper.css.map */

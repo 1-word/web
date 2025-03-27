@@ -20,7 +20,7 @@
 		transform: scale(0.7);
 	}
 	&_wrap{
-		height: 100%;
+		height: calc(100dvh - 206px);
 		margin-top: 24px;
 		display: flex;
 		flex-direction: column;
@@ -40,13 +40,13 @@
 		line-height: 1.5;
 	}
 	&_question{
-		font-size: clamp(1.2em, 24px, 2vw);
+		@include fontSize(lFix);
 		font-weight: bold;
 		word-break: keep-all;
 		text-align: center;
 	}
 	&_correct{
-		font-size: 1em;
+		@include fontSize(lFix);
 		font-weight: bold;
 		color: $main-accent-color;
 		word-break: keep-all;
