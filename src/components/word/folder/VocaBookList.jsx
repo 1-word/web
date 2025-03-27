@@ -15,7 +15,7 @@ function VocabookList({
   props
 }){
   const [editState, setEditState] = useState(false);
-  const [folderList, setFolderList] = useState([{folderId: -1}]);
+  const [folderList, setFolderList] = useState([{id: -1}]);
   const [addFolderModal] = useModal("addFolder");
   const { updateStart } = wordListStore(state => state);
   const {setStoreFolderList} = authStore(state => state);
@@ -50,13 +50,13 @@ function VocabookList({
   const onDeleteClick = (id) => e => {
     onClickHandler(null, MODE.FOLDER_DELETE, id).then(_ => {
       setFolderList(prev => {
-        return prev.filter(folder => folder.folders.folderId !== id)
+        return prev.filter(folder => folder.wordBookId !== id)
       })
     });
   }
 
   const onFolderClick = (item) => e => {
-    const id = item.folders.folderId;
+    const id = item.wordBookId;
     e.preventDefault();
 
     if (editState) {
@@ -67,7 +67,7 @@ function VocabookList({
     if (!afterCompleteFunc) {
       navigate(`/word/${id}`);
       updateStart();
-      setStoreFolderList(item.folders)
+      setStoreFolderList(item)
       if(deleteModalAfterTime) {
         deleteModalAfterTime(0);
       }
@@ -95,27 +95,27 @@ function VocabookList({
           {
             folderList?.map(item =>
                 // 현재 단어장 위치
-            <li className={clickedFolder === item?.folders?.folderId + ''? "on" : "off"} 
-                key={`folders${item?.folders?.folderId}`}
+            <li className={clickedFolder === item?.wordBookId + ''? "on" : "off"} 
+                key={`folders${item?.wordBookId}`}
                 disabled={editState}
                 onClick={onFolderClick(item)}
             >
             <div className="voca_book_list_area">
 							<div className="voca_book_color"
-									style={{ backgroundColor: item?.folders?.background || '#946CF4'}}>
+									style={{ backgroundColor: item?.background || '#946CF4'}}>
 							</div>
-            <p className="voca_book_list_name">{item?.folders?.folderName}</p>
+            <p className="voca_book_list_name">{item?.name}</p>
               { editState &&
                 <div className="voca_book_list_btn_area">
                     {/* 수정 */}
-                  <button onClick={onEditClick(item?.folders)}><i className="edit"></i></button>
+                  <button onClick={onEditClick(item)}><i className="edit"></i></button>
                     {/* 삭제 */}
-                  <button onClick={onDeleteClick(item?.folders?.folderId)}><i className="xi-close"></i></button>
+                  <button onClick={onDeleteClick(item?.wordBookId)}><i className="xi-close"></i></button>
                 </div>       
               }
                 </div>
                 <div className="voca_book_list_wordamount">
-                    총 단어 갯수 : {item?.count}개
+                    총 단어 갯수 : {item?.totalCount}개
                 </div>
           </li>
             )

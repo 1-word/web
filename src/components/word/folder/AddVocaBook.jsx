@@ -16,7 +16,7 @@ function AddFolder({
         }
     }, []);
 
-    const folderNameInput = useRef();
+    const nameInput = useRef();
 
     const onClickHandler = api();
 
@@ -61,15 +61,15 @@ function AddFolder({
     const handleConfirmClick = () => async(e) => {
         const folderData = {
             ...folderInfo,
-            folderName: folderNameInput.current.value
+            name: nameInput.current.value
         }
         
         // 수정
         if (prevFolder){
-            const res = await onClickHandler(e, MODE.FOLDER_UPDATE, prevFolder.folderId, folderData);
+            const res = await onClickHandler(e, MODE.FOLDER_UPDATE, prevFolder.wordBookId, folderData);
             setFolderList(prev => {
-                    return prev.map(folder => folder.folders.folderId === prevFolder.folderId 
-                        ? { ...folder, folders: { ...res } } 
+                    return prev.map(folder => folder.wordBookId === prevFolder.wordBookId 
+                        ? res
                         : folder
                     )
             });
@@ -80,10 +80,7 @@ function AddFolder({
         // 신규
         const res = await onClickHandler(e, MODE.FOLDER_SAVE, folderData);
         setFolderList(prev => {
-            return [...prev, {
-                count: 0,
-                folders:res
-            }]
+            return [...prev, res]
         });
         deleteModalAfterTime(0);
     }
@@ -104,7 +101,7 @@ function AddFolder({
                     <h3>이름 (10글자 이내로 적어주세요)</h3>
                 </div>
                 <div>
-                    <input ref={folderNameInput} type="text" maxLength="10" defaultValue={folderInfo?.folderName}/>
+                    <input ref={nameInput} type="text" maxLength="10" defaultValue={folderInfo?.name}/>
                 </div>
             </div>
             <div className="color-pick-area color-list">

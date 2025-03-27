@@ -26,7 +26,7 @@ function Learn(){
 		// 퀴즈 저장 이후 바로 조회 시 count 갱신이 안되는 문제가 있어 시간 조정
 		setTimeout(() => {
 			onClickHandler(null, MODE.INCOMPLETE_QUIZ_READ).then(res => {
-				if (res?.folderId !== null) {
+				if (res?.wordBookId !== null) {
 					setInCompleteQuiz(res);
 				}
 			})

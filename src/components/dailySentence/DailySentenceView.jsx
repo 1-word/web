@@ -221,7 +221,7 @@ function DailySentenceView({
 				}
 				{/* 연관 단어 */}
 				{
-					disabled.prev === disabled.next ?
+					disabled.prev && disabled.next ?
 					"" :
 					<div className="modal_full_btn_wrap daily_sentence_view_btn_wrap">
 						<button className="btn-light sizeL" disabled={disabled.prev} onClick={onClickPreviousSentence}>이전 문장</button>

@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import MyDeault_SVG from "@images/myImgDefault.svg";
 import WordList from "@components/word/WordList";
 import Store, {MEMORIZATION_TYPE} from "@/store/store";
 import api, { MODE } from "@/services/api";
@@ -14,7 +13,7 @@ import { useParams } from "react-router-dom";
 function Word(){
     // Store 사용
     const {memorization, setMemorization} = Store(state=>state);
-		const { folderId } = useParams();
+		const { wordBookId } = useParams();
 		const { setWordList, savePreviousWordList, wordListRestore, preventDisableFunc, updateStart } = wordListStore(state => state);
 
 		const [ sort, setSort ] = useState("created");
@@ -39,7 +38,7 @@ function Word(){
 					page = {
 						current: 0,
 						lastId: null,
-						folderId
+						wordBookId
 					};
 					setPage(page);
 				}
@@ -71,7 +70,7 @@ function Word(){
 					current: page.current ?? 0,
 					lastId: page.lastId,
 					memorization,
-					folderId,
+					wordBookId,
 					sort: sort
 				}
 
@@ -95,7 +94,7 @@ function Word(){
 				const queryParams = {
 					current: 0,
 					memorization: status,
-					folderId,
+					wordBookId,
 					sort: sort
 				}
 

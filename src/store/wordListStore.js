@@ -11,7 +11,7 @@ export const WORD_KEY = {
 
 const store = set => ({
     wordList: {
-        words:[{wordId: -1}],
+        data:[{wordId: -1}],
         page:{
             current: 0
         }
@@ -61,12 +61,12 @@ const store = set => ({
 
     /**
      * 단어 데이터를 추가한다.
-     * @param {*} wordList {words: [], page: {}}
+     * @param {*} wordList {data: [], page: {}}
      */
     addWordList: (wordList) => {
         set((state) => ({
             wordList: {
-                words: [...state.wordList.words, ...wordList.words],
+                data: [...state.wordList.data, ...wordList.data],
                 page: wordList.page,
             }
         }))
@@ -80,7 +80,7 @@ const store = set => ({
      */
 
     updateWordList: (wordId, wordListRequest) => set(state => ({
-        wordList: state.wordList.words.map(item =>
+        wordList: state.wordList.data.map(item =>
             item.word_id === wordId
             ? {
                 ...wordListRequest 
@@ -96,7 +96,7 @@ const store = set => ({
      */
 
     deleteWordList: (wordId) => set (state => ({
-        wordList: state.wordList.words.filter(item => item.word_id !== wordId)
+        wordList: state.wordList.data.filter(item => item.word_id !== wordId)
     })),
 
     saveWordList: (saveListRequest) => set(state => ({

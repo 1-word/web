@@ -13,6 +13,7 @@ function LearnedResult({
 	useEffect(() => {
 		onClickHandler(null, MODE.QUIZ_STAT_LIST_READ, '').then(res => {
 			const result = createResultGroup(res).sort((a, b) => new Date(b.time) - new Date(a.time));
+			
 			setQuizResult(result);			
 		})
 	}, []);
@@ -56,7 +57,7 @@ function LearnedResult({
 							<div>
 								<p className="word_learn_result_time">{v.createTime?.split(' ')[1]}</p>
 							</div>
-							<p className="word_learn_result_method">{v.folderName}</p>
+							<p className="word_learn_result_method">{v.wordBookName}</p>
 						</div>
 						<div>
 							{/* 51 넘으면 over class 부여 */}

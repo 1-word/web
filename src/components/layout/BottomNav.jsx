@@ -12,11 +12,11 @@ const BottomNav = (activeClass) => {
 	const topbtnRef = useRef({});
 	const [btnState,setBtnState] = useState(false);
 	const [topBtnState,setTopBtnState] = useState(false);
-	const { folderId } = useParams();
+	const { wordBookId } = useParams();
 
 	const handleModal = e => {
 		openModal(FullModal, Add, {
-			folderId
+			wordBookId
 		});
 	}
 
