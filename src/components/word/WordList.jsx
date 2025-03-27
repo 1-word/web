@@ -212,7 +212,7 @@ function WordList(props) {
             if (res) {
                 // 완료 후 상태 업데이트
                 const result = {...wordList};
-                result.words[idx].memorization = current;
+                result.data[idx].memorization = current;
                 setWordList(result);
             }
         });
