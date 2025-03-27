@@ -142,8 +142,6 @@ function DailySentenceView({
 		const newDisabled = {prev: false, next: false};
 		const max = dailySentenceList.length;	
 
-		console.log(`max: ${max}, idx: ${idx}`)
-
 		if (idx === 0) {
 			newDisabled.prev = true;
 		}
