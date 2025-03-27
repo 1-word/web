@@ -125,3 +125,19 @@
     width: calc(100% - 28px);
   }
 }
+
+// 옆에 화살표 붙는 버튼
+@mixin btnNext($content) {
+  display: inline-flex;
+  width: auto;
+  padding: 8px;
+  gap: 8px;
+  word-break: auto-phrase;
+  text-wrap: wrap;
+	@if ($content == 'next'){
+		&::after {
+			content: url("/src/assets/images/next.svg");
+		}
+	}
+	@content;
+}
