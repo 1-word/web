@@ -1,104 +1,106 @@
-.word_detail{
-	&_wrap{
-		position: relative;
-		height: 70dvh;
-		padding: $main-p;
-	}
-	&_cont{
-		height: 100%;
-		padding: 0 0 24px;
-	}
-	position: relative;
-	margin: 12px 0 0;
-	height: 100%;
-	border: 1px solid $default-ddd;
-	border-radius: $main-br;
-	padding: 24px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	gap: 16px;
-	overflow-y: auto;
-	background-color: $default-fff;
-	&::-webkit-scrollbar{
-		display: none;
-	}
-	&_top{
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		.word_card_check svg{
-			width: 24px;
-			height: 24px;
-		}
-	}
-	&_headset{
-		position: absolute;
-		bottom: 12px;
-		right: 12px;
-		color: $default-666;
-		width: min(36px, 7vw);
-		height: min(36px, 7vw);
-		i{
-			font-size: min(2em, 7vw);
-		}
-	}
-	&_eye i{
-		@include icon(){
-			background-image: icon(eye);
-			width: 36px;
-			height: 36px;
-			@include deviceSmall(){
-				width: 7vw;
-				height: 7vw;
-			}
-		}
-	}
-	&_close_eye i{
-		@include icon(){
-			background-image: icon(closeEye);
-			width: 36px;
-			height: 36px;
-			@include deviceSmall(){
-				width: 7vw;
-				height: 7vw;
-			}
-		}
-	}
-	&_mean_wrap{
-		margin-top: 0;
-		justify-content: center;
-		cursor: pointer;
-	}
-	&_name{
-		@include fontSize(l);
-    word-break: break-word;
+.word_detail {
+  &_wrap {
+    position: relative;
+    height: 70dvh;
+    padding: $main-p;
+  }
+  &_cont {
+    height: 100%;
+    padding: 0 0 24px;
+  }
+  position: relative;
+  margin: 12px 0 0;
+  height: 100%;
+  border: 1px solid $default-ddd;
+  border-radius: $main-br;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+  background-color: $default-fff;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  &_top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .word_card_check svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+  &_headset {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    color: $default-666;
+    width: min(36px, 7vw);
+    height: min(36px, 7vw);
+    i {
+      font-size: min(2em, 7vw);
+    }
+  }
+  &_eye i {
+    @include icon() {
+      background-image: icon(eye);
+      width: 36px;
+      height: 36px;
+      @include deviceSmall() {
+        width: 7vw;
+        height: 7vw;
+      }
+    }
+  }
+  &_close_eye i {
+    @include icon() {
+      background-image: icon(closeEye);
+      width: 36px;
+      height: 36px;
+      @include deviceSmall() {
+        width: 7vw;
+        height: 7vw;
+      }
+    }
+  }
+  &_mean_wrap {
+    margin-top: 0;
+    justify-content: center;
     text-align: center;
-		cursor: pointer;
-	}
-	// 커스텀 가운데 조정
-	.word_type_list,
-	.word_type_cont li{
-		justify-content: center;
-		flex-wrap: wrap;
-	}
-	&_close{
-		position: relative;
-		visibility: hidden;
-		&::before{
-			content: "";
-			position: absolute;
-			top: 0;
-			left: 50%;
-			transform: translate(-50%);
-			visibility: visible;
-			cursor: pointer;
-			@include icon(){
-				background-image: icon(closeEye);
-				width: min(36px, 7vw);
-				height: min(36px, 7vw);
-			}
-		}
-	}
+		text-wrap: balance;
+    cursor: pointer;
+  }
+  &_name {
+    @include fontSize(l);
+		@include textBreak;
+    text-align: center;
+    cursor: pointer;
+  }
+  // 커스텀 가운데 조정
+  .word_type_list,
+  .word_type_cont li {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  &_close {
+    position: relative;
+    visibility: hidden;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%);
+      visibility: visible;
+      cursor: pointer;
+      @include icon() {
+        background-image: icon(closeEye);
+        width: min(36px, 7vw);
+        height: min(36px, 7vw);
+      }
+    }
+  }
 }

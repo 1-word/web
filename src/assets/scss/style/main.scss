@@ -12,9 +12,9 @@
 * {
   margin: 0;
   padding: 0;
-	box-sizing: border-box;
-	// 전체 스크롤바 디자인
-	&::-webkit-scrollbar {
+  box-sizing: border-box;
+  // 전체 스크롤바 디자인
+  &::-webkit-scrollbar {
     width: 6px;
     background: $main-bg-color;
   }
@@ -22,10 +22,10 @@
     min-height: 30px;
     background: $default-ddd;
   }
-	&::selection{
-		color: $main-accent-color;
-		background-color: $main-bg-color;
-	}
+  &::selection {
+    color: $main-accent-color;
+    background-color: $main-bg-color;
+  }
 }
 
 @font-face {
@@ -34,33 +34,35 @@
 }
 
 html body {
-  font-family: "PretendardJP", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: "PretendardJP", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+    sans-serif;
   color: $main-text-color;
 }
 
-body{
-	font-size: 16px;
-	background: $default-fff;
+body {
+  font-size: 16px;
+  background: $default-fff;
   &::-webkit-scrollbar {
     width: 8px;
   }
-	&::-webkit-scrollbar-thumb {
+  &::-webkit-scrollbar-thumb {
     background: linear-gradient(to bottom, #81b5fd 0%, $main-accent-color 100%);
   }
-	@include deviceSmall(){
-		font-size: 14px;
-		&::-webkit-scrollbar {
-			display: none;
-		}
-	}
+  @include deviceSmall() {
+    font-size: 14px;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }
 
-html,body, body > #root,
-#root > div{
-	width: 100%;
-	height: 100%;
-	min-height: 100vh;
-	padding-bottom: 63px;
+html,
+body,
+body > #root,
+#root > div {
+  width: 100%;
+  min-height: 100vh;
 }
 
 .disN {
@@ -76,17 +78,17 @@ nav {
 }
 
 .wrap {
-	width: 100%;
+  width: 100%;
   max-width: $device_small;
-	height: auto;
+  height: auto;
   margin: 0 auto;
-	background-color: $default-fff;
+  background-color: $default-fff;
 }
 
-.inner{
-	padding-bottom: 40px;
-	min-height: 86dvh;
-	height: auto;
+.inner {
+  padding-bottom: 63px;
+  min-height: calc(100dvh - 114px);
+  height: auto;
 }
 
 .modal-fix {
@@ -97,291 +99,293 @@ nav {
 }
 
 // 메인 인덱스
-.vb_canvas_wrap{
-	overflow: hidden;
+.vb_canvas_wrap {
+  overflow: hidden;
 }
 
-.vb_main{
-	&_wrap{
-		margin-top: 10px;
-		display: flex;
-		flex-direction: column;
-		gap: 70px;
-	}
-	&_cont{
-		padding: 0 14px;
-		display: flex;
-		flex-direction: column;
-		align-items: start;
-		gap: 32px;
-		&.left{
-			align-items: flex-end;
-			text-align: end;
-		}
-		&.center{
-			align-items: center;
-			text-align: center;
-		}
-	}
-	&_btn{
-		display: flex;
-		min-width: 120px;
-		*{
-			padding-left: 22px;
-			padding-right: 22px;
-		}
-	}
-	&_cont_img{
-		height: 350px;
-		background-size: 360px;
-		background-repeat: no-repeat;
-		@include deviceSmall(){
-			background-size: 90%;
-		}
-		&.on{
-			animation: goDown 2s ease-in-out alternate;
-		}
-		&_first{
-			background-image: url('/src/assets/images/wordList.png');
-			background-position: right -100px;
-			@include deviceSmall(){
-				background-size: cover;
-				background-position: center -100px;
-			}
-		}
-		&_second{
-			background-image: url('/src/assets/images/autoComplete.gif');
-			@include deviceSmall(){
-				background-position: center;
-			}
-		}
-		&_third{
-			background-image: url('/src/assets/images/dailySentence.png');
-			background-position: right -50px;
-			@include deviceSmall(){
-				background-position: center -50px;
-			}
-		}
-		@keyframes goDown {
-			100%{
-				background-position: right -500px;
-			}
-		}
-	}
-	&_title{
-		font-size: 1.5em;
-		line-height: 1.2em;
-		font-weight: bold;
-	}
-	&_contents{
-		font-size: 1em;
-		line-height: 1.2em;
-	}
-	&_introduce_grid{
-		width: 100%;
-		display: grid;
-		grid-template-columns: repeat(3,1fr);
-		grid-auto-rows: minmax(150px,1fr);
-		gap: 30px;
-		@include deviceSmall(){
-			grid-template-columns: repeat(2,1fr);
-		}
-		li{
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-			gap: 10px;
-			padding: 14px;
-			background-color: $main-bg-color;
-			border-radius: $sub-br;
-		}
-		&_num{
-			font-size: 2em;
-			color: $main-accent-color;
-		}
-		&_title{
-			font-size: 1em;
-			line-height: 1.2em;
-		}
-	}
+.vb_main {
+  &_wrap {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 70px;
+  }
+  &_cont {
+    padding: 0 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 32px;
+    &.left {
+      align-items: flex-end;
+      text-align: end;
+    }
+    &.center {
+      align-items: center;
+      text-align: center;
+    }
+  }
+  &_btn {
+    display: flex;
+    min-width: 120px;
+    * {
+      padding-left: 22px;
+      padding-right: 22px;
+    }
+  }
+  &_cont_img {
+    height: 350px;
+    background-size: 360px;
+    background-repeat: no-repeat;
+    @include deviceSmall() {
+      background-size: 90%;
+    }
+    &.on {
+      animation: goDown 2s ease-in-out alternate;
+    }
+    &_first {
+      background-image: url("/src/assets/images/wordList.png");
+      background-position: right -100px;
+      @include deviceSmall() {
+        background-size: cover;
+        background-position: center -100px;
+      }
+    }
+    &_second {
+      background-image: url("/src/assets/images/autoComplete.gif");
+      @include deviceSmall() {
+        background-position: center;
+      }
+    }
+    &_third {
+      background-image: url("/src/assets/images/dailySentence.png");
+      background-position: right -50px;
+      @include deviceSmall() {
+        background-position: center -50px;
+      }
+    }
+    @keyframes goDown {
+      100% {
+        background-position: right -500px;
+      }
+    }
+  }
+  &_title {
+    font-size: 1.5em;
+    line-height: 1.2em;
+    font-weight: bold;
+  }
+  &_contents {
+    font-size: 1em;
+    line-height: 1.2em;
+  }
+  &_introduce_grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: minmax(150px, 1fr);
+    gap: 30px;
+    @include deviceSmall() {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    li {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px;
+      background-color: $main-bg-color;
+      border-radius: $sub-br;
+    }
+    &_num {
+      font-size: 2em;
+      color: $main-accent-color;
+    }
+    &_title {
+      font-size: 1em;
+      line-height: 1.2em;
+    }
+  }
 }
 // 메인 인덱스
 
 // 마이 단어장 폴더
-.my_word{
-	&_wrap{
-		margin: 24px 0;
-		padding: $main-p;
-	}
-	&_list{
-		font-size: 12px;
-		display: flex;
-		flex-direction: column;
-		gap: 8px;
-		li{
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			padding: 12px;
-			background-color: $main-bg-color;
-			border-radius: $sub-br;
-			// 화살표
-			&::after{
-				content: url("/src/assets/images/next.svg");
-			}
-		}
-	}
+.my_word {
+  &_wrap {
+    margin: 24px 0;
+    padding: $main-p;
+  }
+  &_list {
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px;
+      background-color: $main-bg-color;
+      border-radius: $sub-br;
+      // 화살표
+      &::after {
+        content: url("/src/assets/images/next.svg");
+      }
+    }
+  }
 }
 // 마이 유저
-.my_user{
-	margin: 14px 0;
-	display: flex;
-	align-items: center;
-	font-size: 18px;
-	&_img{
-		margin-right: 8px;
-		flex: 32px 0 0;
-		width: 32px;
-		height: 32px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		border-radius: 50%;
-		overflow: hidden;
-	}
+.my_user {
+  margin: 14px 0;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  &_img {
+    margin-right: 8px;
+    flex: 32px 0 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    overflow: hidden;
+  }
 }
 // 마이 단어장 폴더
 
 /* 단어 형태사 컴포넌트 */
 
-.word_type{
-	&_wrap{
-		margin-top: 16px;
-		flex-direction: column;
-		gap: 0.75rem;
-	}
-	&_title{
-		flex-shrink: 0;
+.word_type {
+  &_wrap {
+    margin-top: 16px;
+    flex-direction: column;
+    gap: 0.75rem;
+		text-wrap: balance;
+		word-break: break-all;
+  }
+  &_title {
+    flex-shrink: 0;
     padding: 5px 7px;
-		font-size: 0.825em;
+    font-size: 0.825em;
     border-radius: $main-br;
     background: $sub-hover-color;
-		@include deviceSmall(){
-			align-self: flex-start;
-		}
-	}
-	&_list{
+    @include deviceSmall() {
+      align-self: flex-start;
+    }
+  }
+  &_list {
     gap: 0.69rem;
-		align-items: center;
-
-	}
-	&_cont{
-		align-items: center;
+    align-items: center;
+  }
+  &_cont {
+    align-items: center;
     justify-content: flex-start;
     gap: 0.69rem;
-		li{
-			display: flex;
-			flex-wrap: wrap;
-			gap: 8px;
-		}
-		&_title{
-			color: $sub-text-color;
-		}
-		@include deviceSmall(){
-			flex-wrap: wrap;
-		}
-	}
+    li {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    &_title {
+      color: $sub-text-color;
+    }
+    @include deviceSmall() {
+      flex-wrap: wrap;
+    }
+  }
 }
 
 /*메모칸*/
-.memo{
-	&_area {
-		width: 100%;
-		max-height: 0;
-		overflow: hidden;
-		transition: 0.4s ease;
-		margin-bottom: 24px;
-		&.on {
-			margin-top: 24px;
-			max-height: 200px;
-		}
-	}
+.memo {
+  &_area {
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    transition: 0.4s ease;
+    margin-bottom: 24px;
+    &.on {
+      margin-top: 24px;
+      max-height: 200px;
+    }
+  }
 }
 
 .memo_area .btn_area {
   justify-content: end;
   margin: 16px auto;
   gap: 1rem;
-	button{
-		max-width: 100px;
-		@include deviceSmall(){
-			max-width: 62px;
-		}
-	}
+  button {
+    max-width: 100px;
+    @include deviceSmall() {
+      max-width: 62px;
+    }
+  }
 }
 
 // 더하기 나오는 컴포넌트
-.add{
-	&_wrap{
-		span {
-			display: block;
-			margin-bottom: 8px;
-			margin-left: 8px;
-			padding: 0;
-			background: 0;
-			font-size: 0.825em;
-			color: $default-666;
-			font-weight: 300;
-		}
-	}
-	&_cont{
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		justify-items: stretch;
-		gap: 1rem;
-		row-gap: 10px;
-		@include deviceSmall(){
-			grid-template-columns: repeat(1, 1fr);
-			column-gap: 0;
-		}
-	}
-	&_list{
-		width: 100%;
-		display: flex;
-		align-items: center;
-		input{
-			padding-right: 32px;
-		}
-		// 삭제버튼
-		button{
-			margin-left: -28px;
-			height: 1em;
-			font-size: 1em;
-			transition: 0.4s;
-			&:hover, &:focus-visible {
-				opacity: 0.5;
-			}
-		}
-	}
-	&_plus{
-		display: flex;
-		justify-content: center;
-		width: 100%;
-		height: 36px;
-		line-height: 36px;
-		font-size: 20px;
-		background: $main-bg-color;
-		cursor: pointer;
-		border-radius: $sub-br;
-		transition: 0.4s;
-		color: $main-accent-color;
-		&:hover, &:focus {
-			opacity: 0.7;
-		}
-	}
+.add {
+  &_wrap {
+    span {
+      display: block;
+      margin-bottom: 8px;
+      margin-left: 8px;
+      padding: 0;
+      background: 0;
+      font-size: 0.825em;
+      color: $default-666;
+      font-weight: 300;
+    }
+  }
+  &_cont {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: stretch;
+    gap: 1rem;
+    row-gap: 10px;
+    @include deviceSmall() {
+      grid-template-columns: repeat(1, 1fr);
+      column-gap: 0;
+    }
+  }
+  &_list {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    input {
+      padding-right: 32px;
+    }
+    // 삭제버튼
+    button {
+      margin-left: -28px;
+      height: 1em;
+      font-size: 1em;
+      transition: 0.4s;
+      &:hover,
+      &:focus-visible {
+        opacity: 0.5;
+      }
+    }
+  }
+  &_plus {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 36px;
+    line-height: 36px;
+    font-size: 20px;
+    background: $main-bg-color;
+    cursor: pointer;
+    border-radius: $sub-br;
+    transition: 0.4s;
+    color: $main-accent-color;
+    &:hover,
+    &:focus {
+      opacity: 0.7;
+    }
+  }
 }
 // 더하기 나오는 컴포넌트
-
 
 /*# sourceMappingURL=wordPaper.css.map */
