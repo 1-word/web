@@ -1,55 +1,15 @@
-@mixin card {
-  padding-bottom: 80px;
-  ul {
-    padding: $main-p;
-    font-size: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    li {
-      // default값
-      position: relative;
-      padding: 16px 14px;
-      background-color: $main-bg-color;
-      border-radius: $sub-br;
-      cursor: pointer;
-      &.on,
-      &:hover,
-      &:focus-visible {
-        background: #fff;
-        color: $main-accent-color;
-        box-shadow: 0 0 0.25rem $main-accent-color;
-      }
-    }
-  }
-  @content;
-}
-
-@mixin cardList($bg, $border) {
-  position: relative;
-  padding: 16px 14px;
+// book, word 공통
+@mixin card($bg, $border) {
   background-color: $bg;
-	border: 1px solid $border;
+  border: 1px solid $border;
   border-radius: $sub-br;
-  z-index: 0;
-  cursor: pointer;
-  &.on,
-  &:hover,
-  &:focus-visible {
-    background: #fff;
-    color: $main-accent-color;
-    box-shadow: 0 0 0.25rem $main-accent-color;
-  }
   &_top {
     position: relative;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 12px;
     padding-right: 24px;
-    text-wrap: balance;
-    word-break: break-all;
-    line-height: 1.2;
+    @include textBreak;
     button {
       width: 20px;
       height: 20px;
@@ -69,8 +29,76 @@
     right: 0;
     z-index: 1;
   }
+  @content;
+}
+
+@mixin bookList($bg, $border) {
+  @include card($bg, $border);
+  position: relative;
+  padding: 16px 14px;
+  z-index: 0;
+  cursor: pointer;
+  &.on,
+  &:hover,
+  &:focus-visible {
+    background: #fff;
+    color: $main-accent-color;
+    box-shadow: 0 0 0.25rem $main-accent-color;
+  }
+  &_top {
+    gap: 12px;
+    line-height: 1.2;
+  }
+  &_name {
+    font-weight: 400;
+  }
   &_dot {
     @include cardDot();
+  }
+  @content;
+}
+
+@mixin wordList($bg, $border) {
+  @include card($bg, $border);
+
+  &_top {
+    gap: 4px;
+    font-size: 1.2em;
+  }
+  &_read {
+    @include cardRead();
+  }
+  &_headset {
+    @include headset();
+  }
+  &_check {
+    @include check();
+  }
+  &_mean {
+    @include cardMean();
+  }
+  &_foot {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.8em;
+    color: $default-666;
+    button {
+      width: 20px;
+      height: 20px;
+      font-size: 1em;
+      color: $default-666;
+    }
+  }
+  &_memo {
+    margin-left: auto;
+    &.on {
+      color: $main-accent-color;
+    }
+    i {
+      font-size: 1.4em;
+    }
   }
   @content;
 }
@@ -139,3 +167,22 @@
   @content;
   @include fontSize(m);
 }
+
+@mixin cardRead {
+  font-size: min(0.9em, 13px);
+  @content;
+}
+
+@mixin cardMean {
+  margin-top: 1em;
+  color: $main-accent-color;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  &_list {
+    line-height: 1.5;
+    @include textBreak;
+  }
+  @content;
+}
+
