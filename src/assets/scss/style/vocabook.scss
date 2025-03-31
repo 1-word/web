@@ -1,0 +1,7 @@
+.vocabook {
+  &-tab {
+    @include tab(border) {
+      margin-top: 16px;
+    }
+  }
+}
