@@ -1,6 +1,6 @@
 @mixin fontSize($size) {
   @if ($size == "s") {
-    font-size: clamp(0.75rem, 1.5vw, 1rem);
+    font-size: clamp(0.75rem, 1.5vw, 0.875rem);
     font-weight: 400;
   } @else if($size == "m") {
     font-size: clamp(0.875rem, 1.8vw, 1rem);

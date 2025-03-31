@@ -4,6 +4,8 @@ import wordListStore from "@/store/wordListStore";
 import { useModal } from "@/hook/_hooks";
 import AddVocaBook from "@/components/word/folder/AddVocaBook";
 import FullModal from "@components/layout/popup/FullModal";
+import BottomModalSelect from "@components/layout/popup/BottomModalSelect";
+import BottomModal from "@components/layout/popup/BottomModal";
 import { useNavigate } from "react-router-dom";
 import authStore from "@/store/authStore";
 import ListEmpty from "../ListEmpty";
@@ -22,6 +24,28 @@ function VocabookList({
   const navigate = useNavigate();
 
   const onClickHandler = api();
+
+  const [moreModal] = useModal("more");
+
+  const handleMoreModal = (item) => (e) => {
+    moreModal(BottomModal, BottomModalSelect, {
+      setting: [
+        {
+          title: "내 단어장 공유",
+          onClick: () => {},
+        },
+        {
+          title: "수정",
+          onClick: onEditClick(item),
+        },
+        {
+          title: "삭제",
+          onClick: onDeleteClick(item?.wordBookId),
+        },
+      ],
+    });
+    e.stopPropagation();
+  };
 
   useEffect(() => {
     onClickHandler(null, MODE.FOLDER_READ).then((res) => {
@@ -82,13 +106,6 @@ function VocabookList({
     <div className="voca_book_wrap">
       <div className="voca_book_cont">
         <div className="voca_book_top flex">
-          <button
-            className={editState ? "btn-fill sizeS" : "btn-light sizeS"}
-            onClick={handleConfigClick}
-          >
-						<i className="xi-cog"></i>
-            단어장 관리
-          </button>
           <button className="btn-fill sizeS" onClick={handleAddClick()}>
             새 단어장 만들기<i className="xi-plus"></i>
           </button>
@@ -108,31 +125,29 @@ function VocabookList({
           {folderList?.map((item) => (
             // 현재 단어장 위치
             <li
-              className={clickedFolder === item?.wordBookId + "" ? "on" : "off"}
+              className={
+                clickedFolder === item?.wordBookId + ""
+                  ? "voca_book_list on"
+                  : "voca_book_list off"
+              }
               key={`folders${item?.wordBookId}`}
               disabled={editState}
               onClick={onFolderClick(item)}
             >
-              <div className="voca_book_list_area">
+              <div className="voca_book_list_top">
                 <div
-                  className="voca_book_color"
+                  className="voca_book_list_dot"
                   style={{ backgroundColor: item?.background || "#946CF4" }}
                 ></div>
                 <p className="voca_book_list_name">{item?.name}</p>
-                {editState && (
-                  <div className="voca_book_list_btn_area">
-                    {/* 수정 */}
-                    <button onClick={onEditClick(item)}>
-                      <i className="edit"></i>
-                    </button>
-                    {/* 삭제 */}
-                    <button onClick={onDeleteClick(item?.wordBookId)}>
-                      <i className="xi-close"></i>
-                    </button>
-                  </div>
-                )}
+                <button
+                  className="voca_book_list_more"
+                  onClick={handleMoreModal()}
+                >
+                  <i className="xi-ellipsis-v"></i>
+                </button>
               </div>
-              <div className="voca_book_list_wordamount">
+              <div className="voca_book_list_sub">
                 총 단어 갯수 : {item?.totalCount}개
               </div>
             </li>

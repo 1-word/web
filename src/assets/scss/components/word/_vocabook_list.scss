@@ -1,84 +1,28 @@
-.modal_wrap{
-	.voca_book_wrap{
-		margin-top: 0;
-	}
+.modal_wrap {
+  .voca_book_wrap {
+    margin-top: 0;
+  }
 }
-.voca_book{
-	&_color{
-		width: 8px;
-		height: 8px;
-		flex-shrink: 0;
-		border-radius: 50%;
-	}
-	&_wrap{
-		margin-top: 24px;
-	}
-	&_cont{
-		padding-bottom: 80px;
-		ul{
-			padding: $main-p;
-			font-size: 14px;
-			li {
-				// default값
-				position: relative;
-				padding: 16px 14px;
-				background-color: $main-bg-color;
-				border-radius: $sub-br;
-				cursor: pointer;
-				&.on, &:hover, &:focus-visible {
-					background: #fff;
-					color: $main-accent-color;
-					box-shadow: 0 0 0.25rem $main-accent-color;
-				}
-			}
-		}
-	}
-	&_top{
-		padding: 0 12px;
-		justify-content: space-between;
-		button{
-			@include btnNext(cog);
-		}
-	}
-	&_lists{
-		margin-top: 14px;
-		flex-direction: column;
-		flex-wrap: wrap;
-		gap: 14px;
-		
-	}
-	&_list_area{
-		display: flex;
-		align-items: center;
-		gap: 12px;
-		button{
-			width: 24px;
-			font-size: 0;
-		}
-	}
-	&_list_btn_area{
-		position: absolute;
-		bottom: 12px;
-		right: 12px;
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		.edit{
-			@include icon(){
-				background-image: icon(edit,989393)
-			}
-		}
-		.xi-close{
-			font-size: 18px;
-			color: #989393;
-		}
-	}
-	&_list_name{
-		line-height: 18px;
-	}
-	&_list_wordamount{
-		margin-top: 12px;
-		font-size: 10px;
-		color: $sub-text-color;
-	}
+.voca_book {
+	@include layoutDefault();
+  &_top {
+    padding: 0 12px;
+    justify-content: flex-end;
+    button {
+      @include btnNext(cog);
+    }
+  }
+  &_lists {
+    padding: 0 14px;
+    margin-top: 14px;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  &_list {
+    @include cardList($default-fff, $main-bg-color);
+    &_name {
+      font-weight: 400;
+    }
+  }
 }

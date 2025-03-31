@@ -3,9 +3,9 @@
   ul {
     padding: $main-p;
     font-size: 14px;
-		display: flex;
-		flex-direction: column;
-		gap: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     li {
       // default값
       position: relative;
@@ -21,6 +21,56 @@
         box-shadow: 0 0 0.25rem $main-accent-color;
       }
     }
+  }
+  @content;
+}
+
+@mixin cardList($bg, $border) {
+  position: relative;
+  padding: 16px 14px;
+  background-color: $bg;
+	border: 1px solid $border;
+  border-radius: $sub-br;
+  z-index: 0;
+  cursor: pointer;
+  &.on,
+  &:hover,
+  &:focus-visible {
+    background: #fff;
+    color: $main-accent-color;
+    box-shadow: 0 0 0.25rem $main-accent-color;
+  }
+  &_top {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-right: 24px;
+    text-wrap: balance;
+    word-break: break-all;
+    line-height: 1.2;
+    button {
+      width: 20px;
+      height: 20px;
+      font-size: 1em;
+      color: $default-666;
+    }
+  }
+  &_name {
+    @include cardTitle();
+  }
+  &_sub {
+    @include cardSubTitle();
+  }
+  &_more {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+  }
+  &_dot {
+    @include cardDot();
   }
   @content;
 }
@@ -60,11 +110,11 @@
 
 @mixin cardTitle {
   font-weight: bold;
-  line-height: 18px;
+  line-height: 1.2;
   display: flex;
   align-items: center;
   gap: 12px;
-  word-break: keep-all;
+  word-break: auto-phrase;
   text-wrap: balance;
   @content;
 }
@@ -79,7 +129,7 @@
 
 @mixin cardSubTitle {
   margin-top: 12px;
-  font-size: 10px;
+  @include fontSize(s);
   color: $sub-text-color;
   @content;
 }
@@ -87,5 +137,5 @@
 @mixin cardAccent {
   color: $main-accent-color;
   @content;
-	@include fontSize(m);
+  @include fontSize(m);
 }
