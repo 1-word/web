@@ -20,9 +20,6 @@
     gap: 12px;
   }
   &_list {
-    @include cardList($default-fff, $main-bg-color);
-    &_name {
-      font-weight: 400;
-    }
+    @include bookList($default-fff, $main-bg-color);
   }
 }

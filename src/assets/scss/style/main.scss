@@ -1,13 +1,4 @@
 @charset "UTF-8";
-@import "@scss/components/word/search_bar";
-@import "@scss/components/word/langselect";
-@import "@scss/components/word/vocabook_list";
-@import "@scss/components/word/colorpick";
-@import "@scss/components/word/new";
-@import "@scss/components/word/list";
-@import "@scss/components/word/tab";
-@import "@scss/components/word/empty";
-@import "@scss/components/word/tutorial";
 
 * {
   margin: 0;
@@ -254,75 +245,6 @@ nav {
   }
 }
 // 마이 단어장 폴더
-
-/* 단어 형태사 컴포넌트 */
-
-.word_type {
-  &_wrap {
-    margin-top: 16px;
-    flex-direction: column;
-    gap: 0.75rem;
-		text-wrap: balance;
-		word-break: break-all;
-  }
-  &_title {
-    flex-shrink: 0;
-    padding: 5px 7px;
-    font-size: 0.825em;
-    border-radius: $main-br;
-    background: $sub-hover-color;
-    @include deviceSmall() {
-      align-self: flex-start;
-    }
-  }
-  &_list {
-    gap: 0.69rem;
-    align-items: center;
-  }
-  &_cont {
-    align-items: center;
-    justify-content: flex-start;
-    gap: 0.69rem;
-    li {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    &_title {
-      color: $sub-text-color;
-    }
-    @include deviceSmall() {
-      flex-wrap: wrap;
-    }
-  }
-}
-
-/*메모칸*/
-.memo {
-  &_area {
-    width: 100%;
-    max-height: 0;
-    overflow: hidden;
-    transition: 0.4s ease;
-    margin-bottom: 24px;
-    &.on {
-      margin-top: 24px;
-      max-height: 200px;
-    }
-  }
-}
-
-.memo_area .btn_area {
-  justify-content: end;
-  margin: 16px auto;
-  gap: 1rem;
-  button {
-    max-width: 100px;
-    @include deviceSmall() {
-      max-width: 62px;
-    }
-  }
-}
 
 // 더하기 나오는 컴포넌트
 .add {

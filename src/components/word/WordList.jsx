@@ -256,13 +256,13 @@ function WordList(props) {
           </button>
         </div>
         {/* 뜻 여러개인 경우 :: 한 개일 경우에도 이 안에 넣으면 됨 */}
-        <div className="word_card_mean_wrap">
+        <ul className="word_card_mean">
           {data?.mean?.split(",")?.map((value, idx) => (
-            <div key={idx} className="word_card_mean_list">
+            <li key={idx} className="word_card_mean_list">
               {idx + 1}.{value}
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
         {/* 품사 영역 */}
         <WordDetailList details={data?.details}></WordDetailList>
         {/* 품사 영역 */}
