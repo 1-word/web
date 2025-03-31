@@ -1,6 +1,7 @@
 import VocabookList from "@/components/word/folder/VocaBookList";
 import { useEffect, useState } from "react";
 import Layout from "@/components/layout/Layout";
+import ShareBookList from "@/components/word/folder/ShareBookList";
 
 function VocaBook() {
   const [tutorialState, setTutorialState] = useState(false);
@@ -43,7 +44,10 @@ function VocaBook() {
           공유된 단어장
         </li>
       </ul>
-      <>{tabState.my && <VocabookList />}</>
+      <>
+        {tabState.my && <VocabookList />}
+        {tabState.user && <ShareBookList />}
+      </>
       {!tutorialState ? (
         <div className="tutorial">
           <div className="tutorial_fixed"></div>
