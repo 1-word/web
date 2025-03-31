@@ -4,6 +4,22 @@ import Layout from "@/components/layout/Layout";
 
 function VocaBook() {
   const [tutorialState, setTutorialState] = useState(false);
+  const [tabState, setTabState] = useState({
+    my: true,
+    user: false,
+  });
+
+  const handleTabClick = (e) => () => {
+    e === "my"
+      ? setTabState({
+          my: true,
+          user: false,
+        })
+      : setTabState({
+          my: false,
+          user: true,
+        });
+  };
   const closeTutorial = () => {
     setTutorialState(true);
   };
@@ -13,7 +29,21 @@ function VocaBook() {
   }, []);
   return (
     <Layout title="단어장" active="word">
-      <VocabookList></VocabookList>
+      <ul className="vocabook-tab">
+        <li
+          onClick={handleTabClick("my")}
+          className={tabState.my ? "active" : ""}
+        >
+          내 단어장
+        </li>
+        <li
+          onClick={handleTabClick("user")}
+          className={tabState.user ? "active" : ""}
+        >
+          공유된 단어장
+        </li>
+      </ul>
+      <>{tabState.my && <VocabookList />}</>
       {!tutorialState ? (
         <div className="tutorial">
           <div className="tutorial_fixed"></div>
