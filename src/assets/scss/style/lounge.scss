@@ -7,7 +7,7 @@
   }
   &-cont {
     margin-top: 32px;
-    @include cardToogle;
+    @include cardToogle(transparent, $main-bg-color);
   }
   &-list-title {
     @include cardTitle;
@@ -28,6 +28,9 @@
       justify-content: space-between;
     }
   }
+	&-list{
+		@include wordList($default-fff, $main-bg-color);
+	}
   &-list-mean {
     @include cardAccent;
     margin-top: 8px;
