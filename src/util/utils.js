@@ -30,5 +30,5 @@ export function textTypeCheck(text){
         return TEXT_TYPE.KO;
     }
 
-    return TEXT_TYPE.JP
+    return TEXT_TYPE.EN
 }

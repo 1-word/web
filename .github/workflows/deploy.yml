@@ -14,10 +14,6 @@ jobs:
   # OS 환경
   build: 
     runs-on: self-hosted
-    # Nodejs 런타임 정보 설정
-    strategy:
-      matrix:
-        node-version: [22.x]
 
     steps:
       # 레포지토리 체크아웃
@@ -57,10 +53,10 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PASSWORD }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           source: "./build/*"
-          target: "/data/container/WordApp/web/"
+          target: "/data/vocabox/web/"
 
   # 자동 release
   release:
