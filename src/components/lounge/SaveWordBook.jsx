@@ -5,10 +5,10 @@ const SaveWordBook = () => {
         <p>단어장 이름</p>
         <div className="lounge-cont">
           <ul className="lounge-lists">
-            <li>
+            <li className="lounge-list">
               <div>
-                <p className="lounge-list-title">단어</p>
-                <p className="lounge-list-mean">뜻</p>
+                <p className="lounge-list_name">단어</p>
+                <p className="lounge-list_mean">뜻</p>
               </div>
             </li>
           </ul>

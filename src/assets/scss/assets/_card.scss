@@ -103,7 +103,7 @@
   @content;
 }
 
-@mixin cardToogle {
+@mixin cardToogle($bg, $border) {
   padding-bottom: 80px;
   ul {
     padding: $main-p;
@@ -114,7 +114,8 @@
       > div:first-child {
         position: relative;
         padding: 16px 14px;
-        background-color: $main-bg-color;
+        background-color: $bg;
+				border: 1px solid $border;
         border-radius: $sub-br;
         .toggle {
           position: absolute;
