@@ -84,6 +84,8 @@
   .word_type_cont li {
     justify-content: center;
     flex-wrap: wrap;
+		text-align: center;
+		@include textBreak;
   }
   &_close {
     position: relative;

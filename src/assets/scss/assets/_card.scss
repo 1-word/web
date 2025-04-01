@@ -142,7 +142,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  word-break: auto-phrase;
+  word-break: break-word;
   text-wrap: balance;
   @content;
 }
