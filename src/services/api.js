@@ -97,31 +97,31 @@ function useEvntHandler(e, modeType, data, func){
     }
 
     const handlerMap = {
-        async read(_, query){
-            const res = await executeSrvConnect("get", `v2/words${query}`, null, {isUpdate: false, returnMsg: false});
+        async [MODE.READ](_, wordBookId, query){
+            const res = await executeSrvConnect("get", `v3/wordbooks/${wordBookId}/words${query}`, null, {isUpdate: false, returnMsg: false});
             return res;
         },
-        async singleRead(_, id) {
-            return await executeSrvConnect("get", `v2/words/${id}`, null, {isUpdate: false, returnMsg: false});
+        async [MODE.SINGLE_READ](_, {wordId, wordBookId}) {
+            return await executeSrvConnect("get", `v3/wordbooks/${wordBookId}/words/${wordId}`, null, {isUpdate: false, returnMsg: false});
         },
-        async search(e, query){
-            const res = await executeSrvConnect("get", `v2/words/search/${query}`, null, {isUpdate:false, isLoading: false, returnMsg: false});
+        async [MODE.SEARCH](e, query){
+            const res = await executeSrvConnect("get", `v3/wordbooks/${wordBookId}/words/search/${query}`, null, {isUpdate:false, isLoading: false, returnMsg: false});
             return res;
         },
-        async delete(_, wordId){
-            await executeSrvConnect("delete", `v2/words/${wordId}`, {isUpdate: true});
+        async [MODE.DELETE](_, {wordId, wordBookId}){
+            await executeSrvConnect("delete", `v3/wordbooks/${wordBookId}/words/${wordId}`, {isUpdate: true});
         },
-        async update(e, wordId, data){
-            return await executeSrvConnect("put", `v2/words/${wordId}/all`, data, {isUpdate: true});
+        async [MODE.UPDATE](e, {wordId, wordBookId}, data){
+            return await executeSrvConnect("put", `v3/wordbooks/${wordBookId}/words/${wordId}/all`, data, {isUpdate: true});
         },
-        async updateMemo(e, id, data){
-            return await executeSrvConnect("put", `v2/words/${id}/memo`, data, {isUpdate: false});
+        async [MODE.UPDATE_MEMO](e, {wordId, wordBookId}, data){
+            return await executeSrvConnect("put", `v3/wordbooks/${wordBookId}/words/${wordId}/memo`, data, {isUpdate: false});
         },
-        async memorization(e, wordId, data){
-            return await executeSrvConnect("put", `v2/words/${wordId}/memorization`, data, {isUpdate: true});
+        async [MODE.MEMORIZATION](e, {wordId, wordBookId}, data){
+            return await executeSrvConnect("put", `v3/wordbooks/${wordBookId}/words/${wordId}/memorization`, data, {isUpdate: true});
         },
-        async save(_, type, data){
-            const res = await executeSrvConnect("post", `v2/words/${type}`, data, {isUpdate: true});
+        async [MODE.SAVE](_, {type, wordBookId}, data){
+            const res = await executeSrvConnect("post", `v3/wordbooks/${wordBookId}/words/${type}`, data, {isUpdate: true});
             return res;
         },
         // 폴더
@@ -135,8 +135,8 @@ function useEvntHandler(e, modeType, data, func){
         async folderSave(_, data){
             return await executeSrvConnect("post", 'wordbooks', data, {isUpdate: false});
         },
-        async wordFolderUpdate(_, {wordId, wordBookId}){
-            return await executeSrvConnect('put', `v2/words/${wordId}/wordbook/${wordBookId}`, null, {isUpdate: true});
+        async wordFolderUpdate(_, {wordId, wordBookId}, data){
+            return await executeSrvConnect('put', `v3/wordbooks/${wordBookId}/words/${wordId}/move`, data, {isUpdate: true});
         },
         async folderDelete(_, wordBookId){
             return await executeSrvConnect("delete", `wordbooks/${wordBookId}`, null, {isUpdate: false});
