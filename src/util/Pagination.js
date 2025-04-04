@@ -1,7 +1,7 @@
 export class Pagination {
   constructor() {}
 
-  static getQueryParameter({current, lastId, wordBookId, searchText, memorization, lang, sort, seed}) {
+  static getQueryParameter({current, lastId, wordBookId, searchText, memorization, lang, sort, seed, limit}) {
     const params = {
       current,
       lastId,
@@ -11,7 +11,8 @@ export class Pagination {
       memorization,
       lang,
       sort,
-      seed
+      seed,
+      limit
     }
 
     return Object.keys(params).reduce((acc, key) => {
