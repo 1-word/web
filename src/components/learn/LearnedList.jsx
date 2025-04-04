@@ -61,9 +61,9 @@ function LearnedList({ quizInfoId, option }) {
     }
   }, [obsPage]);
 
-  const handleWordViewModal = (wordId) => () => {
+  const handleWordViewModal = ({wordId, wordBookId}) => () => {
     // 연관 단어를 클릭하면 단어의 전체 정보 출력
-    onClickHandler(null, MODE.SINGLE_READ, wordId).then((res) => {
+    onClickHandler(null, MODE.SINGLE_READ, {wordId, wordBookId}).then((res) => {
       wordViewModal(FullModal, WordDetailView, { wordList: res });
     });
   };
@@ -73,7 +73,7 @@ function LearnedList({ quizInfoId, option }) {
       <div
         key={`wordCard${data.quizId}${i}`}
         className={data.correct ? "word_card" : "word_card wrongAnswer"}
-        onClick={handleWordViewModal(data?.wordId)}
+        onClick={handleWordViewModal({wordId: data?.wordId, wordBookId: data?.wordBookId})}
       >
         <div className="word_card_top">
           <h2 className="word_card_name">{data?.word}</h2>

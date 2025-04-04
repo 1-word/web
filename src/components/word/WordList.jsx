@@ -63,7 +63,7 @@ function WordList(props) {
 
       const query = Pagination.getQueryParameter(queryParams);
 
-      onClickHandler(null, MODE.READ, query).then((res) => {
+      onClickHandler(null, MODE.READ, wordBookId, query).then((res) => {
         setWordList(res);
         preventDisable();
       });
@@ -82,7 +82,7 @@ function WordList(props) {
 
       const query = Pagination.getQueryParameter(queryParams);
 
-      onClickHandler(null, MODE.READ, query).then((res) => {
+      onClickHandler(null, MODE.READ, wordBookId, query).then((res) => {
         addWordList(res);
         preventDisable();
       });
@@ -94,15 +94,15 @@ function WordList(props) {
       setting: [
         {
           title: "단어장 이동",
-          onClick: () => handleFolderClick(id),
+          onClick: () => handleFolderClick({wordId: id, wordBookId}),
         },
         {
           title: "수정",
-          onClick: () => HandleEditWord(id, word),
+          onClick: () => HandleEditWord({wordId: id, wordBookId}, word),
         },
         {
           title: "삭제",
-          onClick: () => handleDeleteWord(id),
+          onClick: () => handleDeleteWord({wordId: id, wordBookId}),
         },
       ],
     });
@@ -117,9 +117,9 @@ function WordList(props) {
     });
   };
 
-  const afterMoveFolder = (item, wordId) => {
-    const wordBookId = item.wordBookId;
-    onClickHandler(null, MODE.WORD_FOLDER_UPDATE, { wordId, wordBookId });
+  const afterMoveFolder = (item, updateWordInfo) => {
+    const targetWordBookId = item.wordBookId;
+    onClickHandler(null, MODE.WORD_FOLDER_UPDATE, { wordId: updateWordInfo.wordId, wordBookId }, {targetWordBookId});
   };
 
   // 단어 삭제
@@ -187,7 +187,7 @@ function WordList(props) {
         memo: memo_input.value,
       };
       memo_input.previous = memo_input.value; //텍스트 저장
-      onClickHandler(e, MODE.UPDATE_MEMO, wordId, data);
+      onClickHandler(e, MODE.UPDATE_MEMO, {wordId, wordBookId}, data);
       memoToast(Toast, null, {
         msg: "저장되었습니다",
       });
@@ -211,7 +211,7 @@ function WordList(props) {
 
   const handleCheckClick = (idx, wordId, status) => (e) => {
     const current = status === "Y" ? "N" : "Y";
-    onClickHandler(e, MODE.MEMORIZATION, wordId, {
+    onClickHandler(e, MODE.MEMORIZATION, {wordBookId, wordId}, {
       memorization: current,
     }).then((res) => {
       if (res) {

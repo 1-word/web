@@ -28,9 +28,9 @@ function WordDetailView({ wordList, setMemorization }) {
     headSetRef.current.classList.remove("on");
   };
 
-  const handleCheckClick = (wordId, status) => (e) => {
+  const handleCheckClick = ({wordId, wordBookId}, status) => (e) => {
     const current = status === "Y" ? "N" : "Y";
-    onClickHandler(e, MODE.MEMORIZATION, wordId, {
+    onClickHandler(e, MODE.MEMORIZATION, {wordId, wordBookId}, {
       memorization: current,
     }).then(() => {
       setCurrentWordList((prev) => {
@@ -76,7 +76,7 @@ function WordDetailView({ wordList, setMemorization }) {
                   : "word_card_check"
               }
               onClick={handleCheckClick(
-                currentWordList?.wordId,
+                {wordId: currentWordList?.wordId, wordBookId: currentWordList?.wordBookId},
                 currentWordList?.memorization
               )}
             >
