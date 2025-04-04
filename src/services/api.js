@@ -71,6 +71,7 @@ export const MODE = {
     NOTICE_UPDATE: "noticeUpdate",
     NOTICE_CREATE: "noticeCreate",
     NOTICE_DELETE: "noticeDelete",
+    SHAREROOM_READ: "shareroomRead",
 }
 
 /**
@@ -108,19 +109,19 @@ function useEvntHandler(e, modeType, data, func){
             return res;
         },
         async delete(_, wordId){
-            await executeSrvConnect("delete", `v2/words/${wordId}`);
+            await executeSrvConnect("delete", `v2/words/${wordId}`, {isUpdate: true});
         },
         async update(e, wordId, data){
-            return await executeSrvConnect("put", `v2/words/${wordId}/all`, data);
+            return await executeSrvConnect("put", `v2/words/${wordId}/all`, data, {isUpdate: true});
         },
         async updateMemo(e, id, data){
             return await executeSrvConnect("put", `v2/words/${id}/memo`, data, {isUpdate: false});
         },
         async memorization(e, wordId, data){
-            return await executeSrvConnect("put", `v2/words/${wordId}/memorization`, data);
+            return await executeSrvConnect("put", `v2/words/${wordId}/memorization`, data, {isUpdate: true});
         },
         async save(_, type, data){
-            const res = await executeSrvConnect("post", `v2/words/${type}`, data);
+            const res = await executeSrvConnect("post", `v2/words/${type}`, data, {isUpdate: true});
             return res;
         },
         // 폴더
@@ -135,7 +136,7 @@ function useEvntHandler(e, modeType, data, func){
             return await executeSrvConnect("post", 'wordbooks', data, {isUpdate: false});
         },
         async wordFolderUpdate(_, {wordId, wordBookId}){
-            return await executeSrvConnect('put', `v2/words/${wordId}/wordbook/${wordBookId}`, null);
+            return await executeSrvConnect('put', `v2/words/${wordId}/wordbook/${wordBookId}`, null, {isUpdate: true});
         },
         async folderDelete(_, wordBookId){
             return await executeSrvConnect("delete", `wordbooks/${wordBookId}`, null, {isUpdate: false});
@@ -323,6 +324,10 @@ function useEvntHandler(e, modeType, data, func){
         async [MODE.NOTICE_DELETE](_, postId) {
             return await executeSrvConnect('delete', `posts/${postId}`, null, {isUpdate: false});
         },
+        // 라운지
+        async [MODE.SHAREROOM_READ](_, query) {
+            return await executeSrvConnect('get', `share-rooms${query}`, null, {isUpdate: false});
+        },
     }
 
     /**
@@ -376,8 +381,8 @@ function useEvntHandler(e, modeType, data, func){
             // 데이터 불러온 후 로딩 false처리
             setLoading(false);
 
-            //update state변경, 변경 시 useEffect() 실행, 기본값은 항상 업데이트
-            if (obj?.isUpdate ?? true) { 
+            //update state변경, 변경 시 useEffect() 실행, 기본값은 업데이트 하지 않음
+            if (obj?.isUpdate ?? false) { 
                 setUpdateFlag(true);
             }
         }
