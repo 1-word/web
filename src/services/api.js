@@ -72,6 +72,7 @@ export const MODE = {
     NOTICE_CREATE: "noticeCreate",
     NOTICE_DELETE: "noticeDelete",
     SHAREROOM_READ: "shareroomRead",
+    MY_SHAREROOM_READ: "MyshareroomRead",
 }
 
 /**
@@ -328,6 +329,9 @@ function useEvntHandler(e, modeType, data, func){
         async [MODE.SHAREROOM_READ](_, query) {
             return await executeSrvConnect('get', `share-rooms${query}`, null, {isUpdate: false});
         },
+        async [MODE.MY_SHAREROOM_READ](_) {
+            return await executeSrvConnect('get', 'share-rooms/my');
+        }
     }
 
     /**
