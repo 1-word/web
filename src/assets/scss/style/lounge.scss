@@ -2,23 +2,25 @@
 @import "@scss/components/lounge/permission.scss";
 
 .lounge {
-  &-wrap {
-    padding: 16px 0;
-  }
-  &-cont {
-    margin-top: 32px;
+  @include layoutDefault;
+  &_cont {
     @include cardToogle(transparent, $main-bg-color);
   }
-  &-list-title {
+  &_title {
+    margin-bottom: 24px;
+    padding: 0 14px;
+    @include fontSize(m);
+  }
+  &_list-title {
     @include cardTitle;
   }
-  &-list-title-sub {
+  &_list-title-sub {
     @include cardSubTitle;
   }
-  &-list-title-dot {
+  &_list-title-dot {
     @include cardDot;
   }
-  &-list-toggle-wrap {
+  &_list-toggle-wrap {
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -28,14 +30,14 @@
       justify-content: space-between;
     }
   }
-	&-list{
-		@include wordList($default-fff, $main-bg-color);
-	}
-  &-list-mean {
+  &_list {
+    @include wordList($default-fff, $main-bg-color);
+  }
+  &_list-mean {
     @include cardAccent;
     margin-top: 8px;
   }
-  &-btn-fix {
+  &_btn-fix {
     @include btnFix;
   }
 }

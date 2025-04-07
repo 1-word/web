@@ -1,54 +1,25 @@
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import EveryList from "@/components/lounge/EveryList";
-import UserList from "@/components/lounge/UserList";
 
 const Lounge = () => {
   const [tabState, setTabState] = useState({
     every: true,
-    user: false
+    user: false,
   });
 
-  const handleTabClick = (e) => () => {
-    e === "every" ? 
-    setTabState({
-      every: true,
-      user: false
-    }) : setTabState({
-      every: false,
-      user: true
-    })
-  }
-  return(
+  return (
     <Layout title="라운지" active="lounge">
-      <div className="lounge-wrap">
-        <ul className="lounge-tab">
-          <li 
-          onClick={handleTabClick("every")}
-          className={
-            tabState.every ? "active" : ""
-          }
-          >모두의 단어장</li>
-          <li onClick={handleTabClick("user")}
-          className={
-            tabState.user ? "active" : ""
-          }>내가 공유한 단어장</li>
-        </ul>
-        <div className="lounge-cont">
+      <div className="lounge_wrap">
+        <div className="lounge_cont">
+          <h2 className="lounge_title">모두의 단어장</h2>
           <ul>
-          {
-            tabState.every &&
             <EveryList />
-          }
-          {
-            tabState.user &&
-            <UserList />
-          }
           </ul>
         </div>
       </div>
     </Layout>
-  )
-}
+  );
+};
 
 export default Lounge;
