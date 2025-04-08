@@ -6,6 +6,7 @@ import AddVocaBook from "@/components/word/folder/AddVocaBook";
 import FullModal from "@components/layout/popup/FullModal";
 import BottomModalSelect from "@components/layout/popup/BottomModalSelect";
 import BottomModal from "@components/layout/popup/BottomModal";
+import WordBookPermission from "@components/lounge/WordBookPermission";
 import { useNavigate } from "react-router-dom";
 import authStore from "@/store/authStore";
 import ListEmpty from "../ListEmpty";
@@ -24,7 +25,12 @@ function ShareBookList({
 
   const onClickHandler = api();
 
+  const [permissionModal] = useModal("wordbookPermission");
   const [moreModal] = useModal("more");
+
+  const handlePermissionModal = () => (e) => {
+    permissionModal(FullModal, WordBookPermission);
+  };
 
   const handleMoreModal = (item) => (e) => {
     moreModal(BottomModal, BottomModalSelect, {
@@ -34,8 +40,8 @@ function ShareBookList({
           onClick: onEditClick(item),
         },
         {
-          title: "삭제",
-          onClick: onDeleteClick(item?.wordBookId),
+          title: "멤버 설정",
+          onClick: handlePermissionModal(),
         },
       ],
     });
@@ -52,14 +58,6 @@ function ShareBookList({
     addFolderModal(FullModal, AddVocaBook, {
       setFolderList,
       prevFolder: folder,
-    });
-  };
-
-  const onDeleteClick = (id) => (e) => {
-    onClickHandler(null, MODE.FOLDER_DELETE, id).then((_) => {
-      setFolderList((prev) => {
-        return prev.filter((folder) => folder.wordBookId !== id);
-      });
     });
   };
 

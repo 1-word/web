@@ -6,12 +6,12 @@ const PermissionList = () => {
     setDropDown(!isDropDown);
   };
   return (
-    <li className="permission-list">
-      <div className="permission-img">
+    <li className="permission_list">
+      <div className="permission_img">
         <img src="/myImgDefault.svg" alt="전체" />
       </div>
       <p>전체</p>
-      <div className="dropdown permission-btn">
+      <div className="dropdown permission_btn">
         <button onClick={handleDropDown}>
           can view
           <i className="xi-angle-down"></i>

@@ -2,7 +2,7 @@
   min-height: 60dvh;
   margin-top: 24px;
   scroll-padding: 4px;
-  &-lists {
+  &_lists {
     margin-top: 24px;
     display: flex;
     flex-direction: column;
@@ -11,7 +11,7 @@
       @include fontSize(s);
     }
   }
-  &-list {
+  &_list {
     padding: 10px 0;
     display: flex;
     align-items: center;
@@ -20,7 +20,7 @@
       color: $sub-text-color;
     }
   }
-  &-img {
+  &_img {
     width: 24px;
     height: 24px;
     border-radius: 50%;
@@ -30,7 +30,7 @@
       object-position: center;
     }
   }
-  &-btn {
+  &_btn {
     margin-left: auto;
     > button {
       padding-right: 4px;
@@ -39,5 +39,45 @@
       gap: 8px;
       color: $default-666;
     }
+  }
+  &_relative {
+    position: relative;
+    z-index: 1;
+    &.on:has(li) {
+      input {
+        border-radius: 8px 8px 0 0;
+        border-bottom: 0;
+      }
+      .permission_relative_layer {
+        display: block;
+      }
+      .permission_relative_layerfix {
+        display: block;
+      }
+    }
+  }
+
+  &_relative_layer {
+    @include dropDownInput() {
+      width: calc(100% - 86px);
+      &_list {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      &_img {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        overflow: hidden;
+        img {
+          object-fit: cover;
+          object-position: center;
+        }
+      }
+    }
+  }
+  &_relative_layerfix {
+    @include dropdownLayerFix;
   }
 }

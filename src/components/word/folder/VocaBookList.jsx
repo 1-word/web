@@ -6,6 +6,7 @@ import AddVocaBook from "@/components/word/folder/AddVocaBook";
 import FullModal from "@components/layout/popup/FullModal";
 import BottomModalSelect from "@components/layout/popup/BottomModalSelect";
 import BottomModal from "@components/layout/popup/BottomModal";
+import WordBookPermission from "@components/lounge/WordBookPermission";
 import { useNavigate } from "react-router-dom";
 import authStore from "@/store/authStore";
 import ListEmpty from "../ListEmpty";
@@ -26,14 +27,15 @@ function VocabookList({
   const onClickHandler = api();
 
   const [moreModal] = useModal("more");
+  const [permissionModal] = useModal("wordbookPermission");
+
+  const handlePermissionModal = () => (e) => {
+    permissionModal(FullModal, WordBookPermission);
+  };
 
   const handleMoreModal = (item) => (e) => {
     moreModal(BottomModal, BottomModalSelect, {
       setting: [
-        {
-          title: "내 단어장 공유",
-          onClick: () => {},
-        },
         {
           title: "수정",
           onClick: onEditClick(item),
@@ -41,6 +43,10 @@ function VocabookList({
         {
           title: "삭제",
           onClick: onDeleteClick(item?.wordBookId),
+        },
+        {
+          title: "공유 설정",
+          onClick: handlePermissionModal(),
         },
       ],
     });
