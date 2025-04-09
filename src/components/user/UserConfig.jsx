@@ -87,6 +87,7 @@ function MyPage({ deleteModalAfterTime }) {
 
   const signout = (e) => {
     onClickHandler(null, MODE.SIGNOUT);
+    deleteModalAfterTime(0);
   };
 
   const handleDeleteAccountModal = () => (e) => {
@@ -96,6 +97,7 @@ function MyPage({ deleteModalAfterTime }) {
         "계정 삭제시 이메일, 닉네임, 계정사진 및 모든 저장 사항이 삭제되어요. 그래도 진행하실 건가요?",
       onClick: () => {
         onClickHandler(null, MODE.USER_DELETE);
+        deleteModalAfterTime(0);
       },
     });
   };
