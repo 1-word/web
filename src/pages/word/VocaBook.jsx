@@ -2,8 +2,12 @@ import VocabookList from "@/components/word/folder/VocaBookList";
 import { useEffect, useState } from "react";
 import Layout from "@/components/layout/Layout";
 import ShareBookList from "@/components/word/folder/ShareBookList";
+import api, { MODE } from "@/services/api";
+import authStore from "../../store/authStore";
 
 function VocaBook() {
+  const onClickHandler = api();
+  const {userInfo} = authStore(state=>state);
   const [tutorialState, setTutorialState] = useState(false);
   const [tabState, setTabState] = useState({
     my: true,
@@ -21,13 +25,16 @@ function VocaBook() {
           user: true,
         });
   };
+
   const closeTutorial = () => {
-    setTutorialState(true);
+    onClickHandler(null, MODE.USER_TUTORIAL_COMPLETE).then(() => setTutorialState(false));
   };
-  // 튜토리얼 임의삭제 코드
+  
   useEffect(() => {
-    setTutorialState(true);
+    const isOnboardingFinished = userInfo?.isOnboardingFinished ?? false;
+    setTutorialState(!isOnboardingFinished);
   }, []);
+
   return (
     <Layout title="단어장" active="word">
       <ul className="vocabook-tab">
@@ -48,7 +55,7 @@ function VocaBook() {
         {tabState.my && <VocabookList />}
         {tabState.user && <ShareBookList />}
       </>
-      {!tutorialState ? (
+      {tutorialState ? (
         <div className="tutorial">
           <div className="tutorial_fixed"></div>
           <button className="tutorial_close" onClick={closeTutorial}>

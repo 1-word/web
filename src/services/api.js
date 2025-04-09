@@ -73,6 +73,7 @@ export const MODE = {
     NOTICE_DELETE: "noticeDelete",
     SHAREROOM_READ: "shareroomRead",
     MY_SHAREROOM_READ: "MyshareroomRead",
+    USER_TUTORIAL_COMPLETE: "userTutorialComplete",
 }
 
 /**
@@ -89,7 +90,7 @@ function useEvntHandler(e, modeType, data, func){
     const {setUpdateFlag} = wordListStore(state => state);
     const {setLoading} = ModalStore();
     const [ openModal ] = useModal();
-    const {token, saveToken, clearToken, setUserInfo} = authStore(state=>state);
+    const {token, saveToken, clearToken, setUserInfo, completeUserTutorial} = authStore(state=>state);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -158,9 +159,9 @@ function useEvntHandler(e, modeType, data, func){
                 "refreshToken": res.refreshToken,
             };
             saveToken(data);
+            await this.userRead(null, data.accessToken);
             navigate('/vocabook');
             setUpdateFlag(true);
-            this.userRead(null, data.accessToken);
         },
         async userRead(_, data) {
             const userRes = await connect('get', 'user', null, data);
@@ -175,6 +176,10 @@ function useEvntHandler(e, modeType, data, func){
                 password
             }
             this.login(null, loginRes);
+        },
+        async [MODE.USER_TUTORIAL_COMPLETE](_) {
+            await executeSrvConnect("patch", "user/onboarding/complete");
+            completeUserTutorial();
         },
         async signout(_) {
             const res = await executeSrvConnect("delete", "auth");
