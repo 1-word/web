@@ -54,7 +54,11 @@ const EveryList = () => {
             <div className="lounge_list-title">
               <div
                 className="lounge_list-title-dot"
-                style={{ backgroundColor: item?.background || "#946CF4" }}
+                style={{
+                  backgroundColor: item?.background || "#946CF4",
+                  border:
+                    item?.background === "#fff" ? "1px solid #666666" : "",
+                }}
               ></div>
 
               <p>{item?.name}</p>

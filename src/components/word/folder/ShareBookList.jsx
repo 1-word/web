@@ -111,7 +111,11 @@ function ShareBookList({
               <div className="voca_book_list_top">
                 <div
                   className="voca_book_list_dot"
-                  style={{ backgroundColor: item?.background || "#946CF4" }}
+                  style={{
+                    backgroundColor: item?.background || "#946CF4",
+                    border:
+                      item?.background === "#fff" ? "1px solid #666666" : "",
+                  }}
                 ></div>
                 <p className="voca_book_list_name">{item?.name}</p>
                 <button
