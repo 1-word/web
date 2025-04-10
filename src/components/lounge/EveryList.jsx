@@ -72,7 +72,7 @@ const EveryList = () => {
           </div>
         </li>
       ))}
-      <div ref={obsRef} style={{ height: "100px" }}></div>
+      <li ref={obsRef} style={{ height: "100px" }}></li>
     </>
   );
 };

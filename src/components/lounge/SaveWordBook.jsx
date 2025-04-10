@@ -4,14 +4,33 @@ const SaveWordBook = () => {
       <div>
         <p>단어장 이름</p>
         <div className="lounge_cont">
-          <ul className="lounge_lists">
-            <li className="lounge_list">
-              <div>
-                <p className="lounge_list_name">단어</p>
-                <p className="lounge_list_mean">뜻</p>
-              </div>
+				<div className="word_card" key={data?.wordId}>
+        <div className="word_card_top">
+          <h2 className="word_card_name">{data?.word}</h2>
+          <span className="word_card_read">
+            {data?.read ?? "" !== "" ? "[" + data?.read + "]" : ""}
+          </span>
+        </div>
+        {/* 뜻 여러개인 경우 :: 한 개일 경우에도 이 안에 넣으면 됨 */}
+        <ul className="word_card_mean">
+          {data?.mean?.split(",")?.map((value, idx) => (
+            <li key={idx} className="word_card_mean_list">
+              {idx + 1}.{value}
             </li>
-          </ul>
+          ))}
+        </ul>
+        {/* 품사 영역 */}
+        <WordDetailList details={data?.details}></WordDetailList>
+        {/* 품사 영역 */}
+
+        <div className="word_card_foot">
+          <div>
+            <span>
+              {props.sort === "updated" ? data?.updateTime : data?.createTime}
+            </span>
+          </div>
+        </div>
+      </div>
         </div>
       </div>
       <div className="lounge_btn-fix">

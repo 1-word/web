@@ -6,10 +6,21 @@
   &_cont {
     @include cardToogle(transparent, $main-bg-color);
   }
+	&_sect{
+		margin-top: 24px;
+		&:first-of-type{
+			margin-top: 0;
+		}
+	}
   &_title {
-    margin-bottom: 24px;
+		margin-top: 24px;
+		margin-bottom: 16px;
     padding: 0 14px;
     @include fontSize(m);
+		&-center{
+			text-align: center;
+			color: $sub-text-color;
+		}
   }
   &_list-title {
     @include cardTitle;
@@ -38,6 +49,14 @@
     margin-top: 8px;
   }
   &_btn-fix {
-    @include btnFix;
+		@include btnFix;
+		position: sticky;
+		bottom: 80px;
+		padding: 16px 120px;
+		width: 600px;
+		margin: auto;
+		@include deviceSmall(){
+			padding: 16px 48px;
+		}
   }
 }
