@@ -7,7 +7,6 @@ import { Pagination } from "@/util/Pagination";
 
 const BestList = () => {
 	const onClickHandler = api();
-	const [obsPage, obsInit, isEnd, preventDisable] = useObserver();
 	const [SaveWordBookModal] = useModal("saveWordBook");
 	const [shareWordBook, setShareWordBook] = useState({ page: {}, data: [] });
 	const handleSaveWordBookModal = () => (e) => {
@@ -16,6 +15,7 @@ const BestList = () => {
 
 	return (
 		<>
+		<div className="" onClick={handleSaveWordBookModal()}>모달</div>
 			{shareWordBook?.data.map((item, idx) => (
 				<li key={`shareWordBook${item?.id}`}>
 					<div onClick={handleSaveWordBookModal()}>

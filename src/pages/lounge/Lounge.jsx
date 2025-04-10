@@ -38,7 +38,7 @@ const Lounge = () => {
           <h2 className="lounge_title-center">
             내 단어장을 모두에게 공유해보세요
           </h2>
-          <div className="lounge_btn-fix">
+          <div className="lounge_btn">
             <button className="btn-fill sizeL" onClick={handleShareModal()}>
               단어장 공유하기
             </button>

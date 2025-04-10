@@ -6,22 +6,35 @@
   &_cont {
     @include cardToogle(transparent, $main-bg-color);
   }
-	&_sect{
-		margin-top: 24px;
-		&:first-of-type{
-			margin-top: 0;
-		}
-	}
+  &_sect {
+    margin-top: 24px;
+    &:first-of-type {
+      margin-top: 0;
+    }
+  }
   &_title {
-		margin-top: 24px;
-		margin-bottom: 16px;
+    margin-top: 24px;
+    margin-bottom: 16px;
     padding: 0 14px;
     @include fontSize(m);
-		&-center{
-			text-align: center;
-			color: $sub-text-color;
-		}
+    &-center {
+      text-align: center;
+      color: $sub-text-color;
+    }
   }
+	&_title-flex{
+		margin-bottom: 16px;
+		padding: 0 14px;
+		@include fontSize(m);
+		@include textBreak;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		button{
+			width: auto;
+			flex-shrink: 0;
+		}
+	}
   &_list-title {
     @include cardTitle;
   }
@@ -48,15 +61,18 @@
     @include cardAccent;
     margin-top: 8px;
   }
+  &_btn {
+    @include btnFix;
+    position: sticky;
+    bottom: 80px;
+    padding: 16px 120px;
+    width: 600px;
+    margin: auto;
+    @include deviceSmall() {
+      padding: 16px 48px;
+    }
+  }
   &_btn-fix {
-		@include btnFix;
-		position: sticky;
-		bottom: 80px;
-		padding: 16px 120px;
-		width: 600px;
-		margin: auto;
-		@include deviceSmall(){
-			padding: 16px 48px;
-		}
+    @include btnFix;
   }
 }
