@@ -48,13 +48,21 @@ const WordBookPermission = () => {
         </div>
       </div>
       <div className="permission">
-        <h2>접근 권한 목록</h2>
-        {/* li로 복제 */}
-        <ul className="permission_lists">
-          <PermissionList></PermissionList>
-          <PermissionList></PermissionList>
-          <PermissionList></PermissionList>
-        </ul>
+        <section className="permission_sect">
+          <h2>기본 설정</h2>
+          {/* li로 복제 */}
+          <ul className="permission_lists">
+            <PermissionList standard="whole"></PermissionList>
+            <PermissionList standard="group"></PermissionList>
+          </ul>
+        </section>
+        <section className="permission_sect">
+          <h2>멤버 설정</h2>
+          {/* li로 복제 */}
+          <ul className="permission_lists">
+            <PermissionList></PermissionList>
+          </ul>
+        </section>
       </div>
     </>
   );

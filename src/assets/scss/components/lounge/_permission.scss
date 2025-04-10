@@ -2,6 +2,9 @@
   min-height: 60dvh;
   margin-top: 24px;
   scroll-padding: 4px;
+	&_sect{
+		margin-top: 24px;
+	}
   &_lists {
     margin-top: 24px;
     display: flex;

@@ -7,7 +7,7 @@ import authStore from "../../store/authStore";
 
 function VocaBook() {
   const onClickHandler = api();
-  const {userInfo} = authStore(state=>state);
+  const { userInfo } = authStore((state) => state);
   const [tutorialState, setTutorialState] = useState(false);
   const [tabState, setTabState] = useState({
     my: true,
@@ -27,9 +27,11 @@ function VocaBook() {
   };
 
   const closeTutorial = () => {
-    onClickHandler(null, MODE.USER_TUTORIAL_COMPLETE).then(() => setTutorialState(false));
+    onClickHandler(null, MODE.USER_TUTORIAL_COMPLETE).then(() =>
+      setTutorialState(false)
+    );
   };
-  
+
   useEffect(() => {
     const isOnboardingFinished = userInfo?.isOnboardingFinished ?? false;
     setTutorialState(!isOnboardingFinished);
@@ -48,7 +50,7 @@ function VocaBook() {
           onClick={handleTabClick("user")}
           className={tabState.user ? "active" : ""}
         >
-          공유된 단어장
+          그룹 단어장
         </li>
       </ul>
       <>
