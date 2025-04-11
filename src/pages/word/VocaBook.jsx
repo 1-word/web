@@ -1,7 +1,8 @@
-import VocabookList from "@/components/word/folder/VocaBookList";
 import { useEffect, useState } from "react";
 import Layout from "@/components/layout/Layout";
+import VocabookList from "@/components/word/folder/VocaBookList";
 import ShareBookList from "@/components/word/folder/ShareBookList";
+import Tutorial from "../Tutorial";
 import api, { MODE } from "@/services/api";
 import authStore from "../../store/authStore";
 
@@ -57,25 +58,7 @@ function VocaBook() {
         {tabState.my && <VocabookList />}
         {tabState.user && <ShareBookList />}
       </>
-      {tutorialState ? (
-        <div className="tutorial">
-          <div className="tutorial_fixed"></div>
-          <button className="tutorial_close" onClick={closeTutorial}>
-            <i className="xi-close-thin"></i>
-          </button>
-          <div className="tutorial_title tutorial_1">
-            단어장을 수정 및 삭제할 수 있어요
-          </div>
-          <div className="tutorial_title tutorial_2">
-            새 단어장을 만들 수 있는 버튼이에요
-          </div>
-          <div className="tutorial_title tutorial_3">
-            새 단어를 추가하는 버튼이에요
-          </div>
-        </div>
-      ) : (
-        ""
-      )}
+      {!tutorialState && <Tutorial func={closeTutorial} />}
     </Layout>
   );
 }
