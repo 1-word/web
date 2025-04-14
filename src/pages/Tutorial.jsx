@@ -1,14 +1,15 @@
-import HeaderMini from "@/components/layout/HeaderMini.jsx";
+import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
-import { useEffect, useState } from "react";
+import api, { MODE } from "@/services/api";
 
 const Tutorial = ({ func }) => {
   const [isSwiperOver, setSwiperOver] = useState(false);
+  const onClickHandler = api();
 
-  useEffect(() => {
-    console.log(func);
-  }, []);
+  const closeTutorial = () => {
+    onClickHandler(null, MODE.USER_TUTORIAL_COMPLETE).then(() => func());
+  };
 
   return (
     <div className="tutorial">
@@ -19,7 +20,7 @@ const Tutorial = ({ func }) => {
             보카박스에는
             <br />
             이런 기능이 있어요
-            <button className="tutorial_skip">
+            <button className="tutorial_skip" onClick={closeTutorial}>
               <i className="xi-angle-right"></i>
             </button>
           </h2>
@@ -86,7 +87,7 @@ const Tutorial = ({ func }) => {
             <button
               disabled={!isSwiperOver}
               className="btn-fill sizeL"
-              onClick={func}
+              onClick={closeTutorial}
             >
               다음
             </button>

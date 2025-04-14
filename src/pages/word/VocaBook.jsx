@@ -3,11 +3,9 @@ import Layout from "@/components/layout/Layout";
 import VocabookList from "@/components/word/folder/VocaBookList";
 import ShareBookList from "@/components/word/folder/ShareBookList";
 import Tutorial from "../Tutorial";
-import api, { MODE } from "@/services/api";
 import authStore from "../../store/authStore";
 
 function VocaBook() {
-  const onClickHandler = api();
   const { userInfo } = authStore((state) => state);
   const [tutorialState, setTutorialState] = useState(false);
   const [tabState, setTabState] = useState({
@@ -25,12 +23,6 @@ function VocaBook() {
           my: false,
           user: true,
         });
-  };
-
-  const closeTutorial = () => {
-    onClickHandler(null, MODE.USER_TUTORIAL_COMPLETE).then(() =>
-      setTutorialState(false)
-    );
   };
 
   useEffect(() => {
@@ -58,7 +50,7 @@ function VocaBook() {
         {tabState.my && <VocabookList />}
         {tabState.user && <ShareBookList />}
       </>
-      {!tutorialState && <Tutorial func={closeTutorial} />}
+      {tutorialState && <Tutorial func={() => setTutorialState(false)} />}
     </Layout>
   );
 }
