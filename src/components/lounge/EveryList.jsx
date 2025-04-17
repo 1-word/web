@@ -5,7 +5,7 @@ import api, { MODE } from "@/services/api";
 import { useEffect, useRef, useState } from "react";
 import { Pagination } from "@/util/Pagination";
 
-const EveryList = () => {
+const EveryList = ({update}) => {
   const onClickHandler = api();
   const [obsPage, obsInit, isEnd, preventDisable] = useObserver();
   const [SaveWordBookModal] = useModal("saveWordBook");
@@ -17,11 +17,15 @@ const EveryList = () => {
 
   useEffect(() => {
     obsInit(obsRef);
-    onClickHandler(null, MODE.SHAREROOM_READ, "").then((res) => {
+
+  }, []);
+
+  useEffect(() => {
+    onClickHandler(null, MODE.SHAREROOM_READ, '').then((res) => {
       setShareWordBook(res);
       preventDisable();
-    });
-  }, []);
+  });
+  }, [update]);
 
   useEffect(() => {
     if (obsPage > -1 && shareWordBook.page?.hasNext) {
