@@ -1,0 +1,23 @@
+@mixin fontSize($size) {
+  @if ($size == "s") {
+    font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+    font-weight: 400;
+  } @else if($size == "m") {
+    font-size: clamp(0.875rem, 1.8vw, 1rem);
+    font-weight: 400;
+  } @else if($size == "l") {
+    font-size: clamp(1.5rem, 2vw, 2rem);
+    font-weight: 600;
+  } @else if($size == "lFix") {
+    // 최대 24px로 고정
+    font-size: clamp(1.3rem, 2vw, 1.5rem);
+  }
+  @content;
+}
+
+@mixin textBreak {
+  text-wrap: balance;
+  word-break: break-all;
+  line-height: 1.2;
+  @content;
+}

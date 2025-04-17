@@ -1,46 +1,82 @@
-.dropdown{
-	position: relative;
-	&_toggle{
-		width: 24px;
-		height: 24px;
-		font-size: 20px;
-		color: $default-666;
-	}
-	&_wrap{
-		width: 100px;
-		position: absolute;
-		right: 0;
-		background-color: $default-fff;
-		border-radius: $main-br;
-		border: 1px solid $default-ddd;
-		overflow: hidden;
-		z-index: 10;
-	}
-	&_cont{
-		position: relative;
-		z-index: 10;
-	}
-	&_btn{
-		width: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding: 8px 12px;
-		color: $default-666;
-		border-bottom: 1px solid $default-ddd;
-		&:last-child{
-			border-bottom: 0;
-		}
-		&:hover{
-			background-color: $default-ddd;
-		}
-	}
-	&_close{
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		z-index: 1;
-	}
+.dropdown {
+  position: relative;
+  &_toggle {
+    width: 24px;
+    height: 24px;
+    font-size: 20px;
+    color: $default-666;
+  }
+  &_wrap {
+    width: 100px;
+    position: absolute;
+    top: 20px;
+    right: 0;
+    background-color: $default-fff;
+    border-radius: $main-br;
+    border: 1px solid $default-ddd;
+    overflow: hidden;
+    z-index: 10;
+  }
+  &_cont {
+    position: relative;
+    z-index: 10;
+  }
+  &_btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    color: $default-666;
+    border-bottom: 1px solid $default-ddd;
+    text-align: center;
+    &:last-child {
+      border-bottom: 0;
+    }
+    &:hover {
+      background-color: $default-ddd;
+    }
+  }
+  &_close {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+}
+
+@mixin dropDownInput() {
+  display: none;
+  position: absolute;
+  top: 57px;
+  left: 0;
+  width: 100%;
+  &_lists {
+    padding: 12px 0;
+    background-color: $default-fff;
+    border: 1px solid $default-ddd;
+    border-radius: 0 0 8px 8px;
+  }
+  &_list {
+    padding: 6px 12px;
+    font-size: 14px;
+    color: $main-text-color;
+    cursor: pointer;
+    &:hover {
+      background-color: rgba(74, 68, 83, 0.04);
+    }
+  }
+  @content;
+}
+
+@mixin dropdownLayerFix() {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  z-index: -1;
+  @content;
 }

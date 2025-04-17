@@ -1,0 +1,75 @@
+@mixin tab($type) {
+  display: flex;
+  align-items: center;
+  text-wrap: balance;
+  word-break: keep-all;
+  @if ($type == "border") {
+    padding: 0 14px;
+    > li {
+      position: relative;
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      font-weight: bold;
+      color: $default-ddd;
+      cursor: pointer;
+      overflow: hidden;
+      &::after {
+        position: absolute;
+        top: calc(100% - 1px);
+        left: 0;
+        content: "";
+        width: 100%;
+        height: 1px;
+        background-color: $main-accent-color;
+        transform: translateX(-100%);
+        transition: transform 0.34s cubic-bezier(0.075, 0.82, 0.165, 1);
+      }
+      &:first-child {
+        &::after {
+          transform: translateX(100%);
+        }
+      }
+      &.active {
+        color: $main-text-color;
+        &::after {
+          transform: translateX(0);
+        }
+      }
+    }
+  } @else if($type == "btn") {
+    gap: 12px;
+    > li {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3.4375rem;
+      padding: 0.5rem 0;
+      cursor: pointer;
+      background: $main-bg-color;
+      border-radius: $main-br;
+      transition: background 0.2s ease;
+      // 탭 활성화 스타일
+      &.active {
+        font-weight: bold;
+        background: $default-fff;
+        box-shadow: 0 0 0.25rem $main-accent-color;
+      }
+    }
+  } @else if($type == "text") {
+    gap: 12px;
+    > li {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem 0.025rem;
+      cursor: pointer;
+      color: $sub-text-color;
+      // 활성화 클래스
+      &.active {
+        color: $main-text-color;
+      }
+    }
+  }
+  @content;
+}

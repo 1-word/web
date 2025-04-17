@@ -38,7 +38,8 @@
 		transition: transform 0.24s cubic-bezier(0.47, 0, 0.745, 0.715);
 	}
 	&_title{
-		font-size: 1.6em;
+		@include fontSize(l);
+		font-weight: 400;
 	}
 	&_sub_title{
 		color: $main-accent-color;

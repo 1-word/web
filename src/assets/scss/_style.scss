@@ -4,6 +4,8 @@
 // @import url("../fonts/xeicon.min.css");
 
 // assets
+@import "@scss/assets/layout";
+@import "@scss/assets/font";
 @import "@scss/assets/color";
 @import "@scss/assets/radius";
 @import "@scss/assets/button";
@@ -11,6 +13,10 @@
 @import "@scss/assets/padding";
 @import "@scss/assets/icon";
 @import "@scss/assets/dropdown";
+@import "@scss/assets/wordtype";
+@import "@scss/assets/card";
+@import "@scss/assets/switch";
+@import "@scss/assets/tab";
 
 // pages
 @import "@scss/style/load";
@@ -20,11 +26,14 @@
 @import "@scss/style/signup_comp";
 @import "@scss/style/set_pw";
 @import "@scss/style/mypage";
+@import "@scss/style/vocabook";
+@import "@scss/style/word";
 @import "@scss/style/confirm";
 @import "@scss/style/daily_sentence";
 @import "@scss/style/word_detail";
 @import "@scss/style/word_learn";
 @import "@scss/style/post";
+@import "@scss/style/lounge";
 
 // components
 @import "@scss/components/layout/popup/modal";
@@ -36,7 +45,3 @@
 @import "@scss/components/layout/left_fix";
 @import "@scss/components/layout/header";
 @import "@scss/components/layout/footer";
-
-
-
-

@@ -1,0 +1,89 @@
+@import "@scss/components/lounge/tab.scss";
+@import "@scss/components/lounge/permission.scss";
+
+.lounge {
+  @include layoutDefault;
+  &_cont {
+		padding-bottom: 80px;
+	}
+  &_sect {
+		margin-top: 24px;
+  }
+  &_lists {
+		@include cardToogle(transparent, $main-bg-color);
+    > li {
+      margin-top: 16px;
+      &:first-of-type {
+        margin-top: 0;
+      }
+			.voca_book_list_more{
+				font-size: 20px;
+				color: $sub-text-color;
+			}
+    }
+  }
+  &_title {
+    margin-top: 48px;
+    margin-bottom: 16px;
+    padding: 0 14px;
+    @include fontSize(lFix);
+    &-center {
+      text-align: center;
+      color: $sub-text-color;
+    }
+  }
+  &_title-flex {
+    margin-bottom: 16px;
+    padding: 0 14px;
+    @include fontSize(m);
+    @include textBreak;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    button {
+      width: auto;
+      flex-shrink: 0;
+    }
+  }
+  &_list-title {
+    @include cardTitle;
+		position: relative;
+  }
+  &_list-title-sub {
+    @include cardSubTitle;
+  }
+  &_list-title-dot {
+    @include cardDot;
+  }
+  &_list-toggle-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    > div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+  &_list {
+    @include wordList($default-fff, $main-bg-color);
+  }
+  &_list-mean {
+    @include cardAccent;
+    margin-top: 8px;
+  }
+  &_btn {
+    @include btnFix;
+    position: sticky;
+    bottom: 80px;
+    padding: 16px 120px;
+    width: 600px;
+    margin: auto;
+    @include deviceSmall() {
+      padding: 16px 48px;
+    }
+  }
+  &_btn-fix {
+    @include btnFix;
+  }
+}

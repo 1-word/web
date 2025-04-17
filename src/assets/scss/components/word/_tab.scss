@@ -7,38 +7,9 @@
 		margin: 24px 0 0;
 		gap: 8px;
 	}
-	gap: 12px;
-  > li {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 3.4375rem;
-    padding: 0.5rem 0;
-    cursor: pointer;
-    background: $main-bg-color;
-    border-radius: $main-br;
-    transition: background 0.2s ease;
-		// 탭 활성화 스타일
-    &.active {
-      font-weight: bold;
-      background: $default-fff;
-      box-shadow: 0 0 0.25rem $main-accent-color;
-    }
-  }
+	@include tab(btn);
 }
 
 .word_tab_view{
-	gap: 12px;
-	> li{
-		display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem 0.025rem;
-    cursor: pointer;
-		color: $sub-text-color;
-		// 활성화 클래스
-		&.active{
-			color: $main-text-color;
-		}
-	}
+	@include tab(text);
 }

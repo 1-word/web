@@ -33,8 +33,6 @@ function Add({
     const onClickHandler = api();
 		const [vocaBookListModal] = useModal("vocaBookList");
 
-		
-
 		const handleVocaBookListModal = () => e => {
 			vocaBookListModal(FullModal, VocabookList, {
 				clickedFolder: wordBookId,
@@ -90,10 +88,8 @@ function Add({
 				)
 			};
 
-			
-
 			if (isEdit) {
-				onClickHandler(null, MODE.UPDATE, saveList.wordId, result)
+				onClickHandler(null, MODE.UPDATE, {wordBookId, wordId: word.wordId}, result)
 				.then(res => {
 					if (res){
 						deleteModalAfterTime(0, "ALL");
@@ -104,7 +100,7 @@ function Add({
 			
 			const type = textTypeCheck(saveList.word);
 
-			onClickHandler(null, MODE.SAVE, type, result)
+			onClickHandler(null, MODE.SAVE, {type, wordBookId}, result)
 			.then(res => {
 				if (res) {
 					deleteModalAfterTime(0);

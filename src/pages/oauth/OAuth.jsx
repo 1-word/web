@@ -28,8 +28,9 @@ function OAuth() {
 
     saveToken(data);
     // 소셜 로그인 시 프로필 정보 가져오기
-    onClickHandler(null, MODE.USER_READ, data.accessToken);
-    navigate('/vocabook', {replace: true});
+    onClickHandler(null, MODE.USER_READ, data.accessToken).then(()=> {
+      navigate('/vocabook', {replace: true});
+    })
   }, []);
 
   return(

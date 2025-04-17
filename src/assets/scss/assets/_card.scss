@@ -1,0 +1,187 @@
+// book, word 공통
+@mixin card($bg, $border) {
+  background-color: $bg;
+  border: 1px solid $border;
+  border-radius: $sub-br;
+  &_top {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-right: 24px;
+    @include textBreak;
+    button {
+      width: 20px;
+      height: 20px;
+      font-size: 1em;
+      color: $default-666;
+    }
+  }
+  &_name {
+    @include cardTitle();
+  }
+  &_sub {
+    @include cardSubTitle();
+  }
+  &_more {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+  }
+  @content;
+}
+
+@mixin bookList($bg, $border) {
+  @include card($bg, $border);
+  position: relative;
+  padding: 16px 14px;
+  z-index: 0;
+  cursor: pointer;
+  &.on,
+  &:hover,
+  &:focus-visible {
+    background: #fff;
+    color: $main-accent-color;
+    box-shadow: 0 0 0.25rem $main-accent-color;
+  }
+  &_top {
+    gap: 12px;
+    line-height: 1.2;
+  }
+  &_name {
+    font-weight: 400;
+  }
+  &_dot {
+    @include cardDot();
+  }
+  @content;
+}
+
+@mixin wordList($bg, $border) {
+  @include card($bg, $border);
+
+  &_top {
+    gap: 4px;
+    font-size: 1.2em;
+  }
+  &_read {
+    @include cardRead();
+  }
+  &_headset {
+    @include headset();
+  }
+  &_check {
+    @include check();
+  }
+  &_mean {
+    @include cardMean();
+  }
+  &_foot {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.8em;
+    color: $default-666;
+    button {
+      width: 20px;
+      height: 20px;
+      font-size: 1em;
+      color: $default-666;
+    }
+  }
+  &_memo {
+    margin-left: auto;
+    &.on {
+      color: $main-accent-color;
+    }
+    i {
+      font-size: 1.4em;
+    }
+  }
+  @content;
+}
+
+@mixin cardToogle($bg, $border) {
+	padding: $main-p;
+	font-size: 14px;
+	li {
+		// default값
+		cursor: pointer;
+		> div:first-child {
+			position: relative;
+			padding: 16px 14px;
+			background-color: $bg;
+			border: 1px solid $border;
+			border-radius: $sub-br;
+			.toggle {
+				position: absolute;
+				top: 50%;
+				right: 14px;
+				transform: translateY(-50%);
+				i {
+					color: $sub-text-color;
+				}
+			}
+		}
+		> div:nth-child(2) {
+			> div {
+				padding: 16px 14px;
+			}
+		}
+	}
+
+  @content;
+}
+
+@mixin cardTitle {
+  font-weight: bold;
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  word-break: break-word;
+  text-wrap: balance;
+  @content;
+}
+
+@mixin cardDot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  @content;
+}
+
+@mixin cardSubTitle {
+  margin-top: 12px;
+  @include fontSize(s);
+  color: $sub-text-color;
+  @content;
+}
+
+@mixin cardAccent {
+  color: $main-accent-color;
+  @content;
+  @include fontSize(m);
+}
+
+@mixin cardRead {
+  font-size: min(0.9em, 13px);
+  @content;
+}
+
+@mixin cardMean {
+  margin-top: 1em;
+  color: $main-accent-color;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  &_list {
+    line-height: 1.5;
+    @include textBreak;
+  }
+  @content;
+}
+

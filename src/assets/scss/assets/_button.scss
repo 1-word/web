@@ -1,114 +1,143 @@
 @mixin main-btn {
-    position: relative;
+  position: relative;
+  width: 100%;
+  display: flex;
+  padding: 11px 0;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  cursor: pointer;
+  background: $default-fff;
+  z-index: 1;
+  transition: color 0.26s linear;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  &:hover,
+  &:focus {
+    color: $main-accent-color;
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    display: flex;
-    padding: 11px 0;
-    justify-content: center;
-    align-items: center;
-    border-radius: 30px;
-    cursor: pointer;
-    background: $default-fff;
-    z-index: 1;
-    transition: color 0.26s linear;
-    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
-    &:hover, &:focus {
-        color: $main-accent-color;
-    }
-
-    &::after {
-        content: "";
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border-radius: 20px;
-        background: $main-bg-color;
-        transition: -webkit-clipPath 0.1s linear;
-        transition: clipPath 0.1s linear;
-        transition: clipPath 0.1s linear, -webkit-clipPath 0.1s linear;
-        -webkit-clipPath: inset(5% 50% 15% 50%);
-        clipPath: inset(5% 50% 15% 50%);
-        z-index: -1;
-    }
-    &:hover::after{
-        -webkit-clipPath: inset(0 0 0 0);
-        clipPath: inset(0 0 0 0);
-    }
+    height: 100%;
+    border-radius: 20px;
+    background: $main-bg-color;
+    transition: -webkit-clipPath 0.1s linear;
+    transition: clipPath 0.1s linear;
+    transition: clipPath 0.1s linear, -webkit-clipPath 0.1s linear;
+    -webkit-clippath: inset(5% 50% 15% 50%);
+    clippath: inset(5% 50% 15% 50%);
+    z-index: -1;
+  }
+  &:hover::after {
+    -webkit-clippath: inset(0 0 0 0);
+    clippath: inset(0 0 0 0);
+  }
 }
 
-@mixin changeColor($color){
-	@keyframes changeColor {
-		from{
-			background-color: $color;
-		}
-	}
-	@content;
+@mixin changeColor($color) {
+  @keyframes changeColor {
+    from {
+      background-color: $color;
+    }
+  }
+  @content;
 }
 
-@mixin btn($textColor,$bgColor){
-	appearance: none;
-	-webkit-appearance: none;
-	outline: transparent;
-	cursor: pointer;
-	width: 100%;
-	padding: 0 8px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	border-radius: $main-br;
-	font-size: 14px;
-	font-family: 'PretendardJP';
-	text-wrap: nowrap;
-	transition: 0.3s ease;
-	color: $textColor;
-	background-color: $bgColor;
-	border: 1px solid $textColor;
-	&:disabled{
-		background: $default-ddd;
-		color: $default-fff;
-		border-color: transparent;
-		cursor: default;
-	}
-	@content;
+@mixin btn($textColor, $bgColor) {
+  appearance: none;
+  -webkit-appearance: none;
+  outline: transparent;
+  cursor: pointer;
+  width: 100%;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $main-br;
+  font-size: 14px;
+  font-family: "PretendardJP";
+  text-wrap: nowrap;
+  transition: 0.3s ease;
+  color: $textColor;
+  background-color: $bgColor;
+  border: 1px solid $textColor;
+  &:disabled {
+    background: $default-ddd;
+    color: $default-fff;
+    border-color: transparent;
+    cursor: default;
+  }
+  @content;
 }
 
-[class^="btn"]{
-		// size
-		&.sizeS{
-			height: 32px;
-			border-radius: $sub-br;
-		}
-		&.sizeM{
-			height: 40px;
-		}
-		&.sizeL{
-			height: 50px;
-			font-size: 16px;
-		}
-	}
+[class^="btn"] {
+  // size
+  &.sizeS {
+    height: 32px;
+    border-radius: $sub-br;
+  }
+  &.sizeM {
+    height: 40px;
+  }
+  &.sizeL {
+    height: 50px;
+    font-size: 16px;
+  }
+}
 
 // style
-.btn{
-	&-fill{
-		@include btn($default-fff,$main-accent-color){
-			font-weight: 500;
-			&:focus,&:focus-visible{
-				@include changeColor($main-hover-color){
-					animation: changeColor 0.5s ease;
-				}
-			}
-		}
-	}
-	&-light{
-		@include btn($main-accent-color,$default-fff){
-			&:focus,&:focus-visible{
-				@include changeColor($sub-hover-color){
-					animation: changeColor 0.5s ease;
-				}
-			}
-		}
-	}
+.btn {
+  &-fill {
+    @include btn($default-fff, $main-accent-color) {
+      font-weight: 500;
+      &:focus,
+      &:focus-visible {
+        @include changeColor($main-hover-color) {
+          animation: changeColor 0.5s ease;
+        }
+      }
+    }
+  }
+  &-light {
+    @include btn($main-accent-color, $default-fff) {
+      &:focus,
+      &:focus-visible {
+        @include changeColor($sub-hover-color) {
+          animation: changeColor 0.5s ease;
+        }
+      }
+    }
+  }
 }
 
+@mixin btnFix {
+  position: fixed;
+  bottom: 0;
+  padding: 14px 14px 32px 14px;
+  width: 572px;
+  @content;
+  @include deviceSmall() {
+    width: calc(100% - 28px);
+  }
+}
+
+// 옆에 화살표 붙는 버튼
+@mixin btnNext($content) {
+  display: inline-flex;
+  width: auto;
+  padding: 8px;
+  gap: 8px;
+  word-break: auto-phrase;
+  text-wrap: wrap;
+	@if ($content == 'next'){
+		&::after {
+			content: url("/src/assets/images/next.svg");
+		}
+	}
+	@content;
+}

@@ -24,7 +24,7 @@ function ErrorPage({content}){
 		<>
 			<div className="ep_wrap">
 				<h1 className="ep_title">Oops!</h1>
-				<p className="ep_content">{content}나메코가 귀여워서 에러</p>
+				<p className="ep_content">{content}잠시 후에 다시 시도해주세요</p>
 				<div className="ep_ani">
 					<div ref={dinoBox} className="ep_dino"></div>
 				</div>

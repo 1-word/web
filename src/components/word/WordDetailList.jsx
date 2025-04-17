@@ -64,7 +64,7 @@ import React from 'react';
 function WordDetailList({details}){
     return (
     <>
-        <ul className="word_type_wrap flex">
+        <ul className="word_type flex">
     {
             details?.map(detail => 
                 <React.Fragment key={detail.wordGroupId}>

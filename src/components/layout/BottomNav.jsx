@@ -64,10 +64,13 @@ const BottomNav = (activeClass) => {
 		<Link to="/learn"><i className="learn"></i>단어 학습</Link>
 	</li>
 	<li className="flex">
-		<Link to="/daily-sentence/main"><i className="calendar"></i>오늘의 내 문장</Link>
+		<Link to="/lounge"><i className="lounge"></i>라운지</Link>
 	</li>
 	<li className="flex">
-		<Link to="/mypage" ><i className="user"></i>마이페이지</Link>
+		<Link to="/daily-sentence/main"><i className="calendar"></i>달력</Link>
+	</li>
+	<li className="flex">
+		<Link to="/mypage" ><i className="user"></i>마이보카</Link>
 	</li>
 </ul>
 </nav>

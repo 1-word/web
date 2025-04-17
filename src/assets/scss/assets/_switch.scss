@@ -1,0 +1,50 @@
+.switch-wrap {
+  $w: 48px;
+  $h: 26px;
+  $borderW: 6px;
+  $tX: calc(($w - $borderW) / 2);
+  flex-shrink: 0;
+
+  input[type="checkbox"] {
+    visibility: hidden;
+    display: none;
+  }
+
+  .switch {
+    position: relative;
+    width: $w;
+    height: $h;
+    display: inline-block;
+  }
+
+  .slider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 30px;
+    cursor: pointer;
+    border: $borderW solid transparent;
+    background: transparentize($sub-text-color, 0.5);
+    overflow: hidden;
+    transition: 0.2s;
+    &:before {
+      position: absolute;
+      content: "";
+      width: 100%;
+      height: 100%;
+      background-color: $sub-text-color;
+      border-radius: 30px;
+      transform: translateX(-$tX);
+      transition: 0.2s;
+    }
+  }
+  input:checked + .slider {
+    background: transparentize($main-accent-color, 0.5);
+    &:before {
+      transform: translateX($tX);
+      background-color: $main-accent-color;
+    }
+  }
+}

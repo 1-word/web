@@ -2,7 +2,7 @@ import connect from "@/util/axiosUtil"
 import wordListStore from "@/store/wordListStore"
 import authStore from "@/store/authStore"
 import { useNavigate, useLocation } from "react-router"
-import ModalStore, {ALERT_TYPE} from "@/store/modalStore"
+import ModalStore from "@/store/modalStore"
 import { useModal } from "@/hook/_hooks"
 import Toast from "@/components/layout/popup/Toast"
 
@@ -71,6 +71,20 @@ export const MODE = {
     NOTICE_UPDATE: "noticeUpdate",
     NOTICE_CREATE: "noticeCreate",
     NOTICE_DELETE: "noticeDelete",
+    SHAREROOM_READ: "shareroomRead",
+    MY_SHAREROOM_READ: "MyshareroomRead",
+    USER_TUTORIAL_COMPLETE: "userTutorialComplete",
+    SHAREROOM_CREATE: "shareroomCreate",
+    SHAREROOM_DELETE: "shareroomDelete",
+    WORD_COPY: "wordCopy",
+    GROUP_WORD_BOOK_READ: "groupWordBookRead",
+    WORD_BOOK_SETTING_READ: "wordBookSettingRead",
+    WORD_BOOK_SETTING_UPDATE: "wordBookSettingUpdate",
+    WORD_BOOK_MEMBER_READ: "wordBookMemberRead",
+    WORD_BOOK_MEMBER_ADD: "wordBookMemberAdd",
+    WORD_BOOK_MEMBER_DELETE: "wordBookMemberDelete",
+    WORD_BOOK_MEMBER_ROLE_UPDATE: "wordBookMemberRoleUpdate",
+    USER_SEARCH: "userSearch",
 }
 
 /**
@@ -87,7 +101,7 @@ function useEvntHandler(e, modeType, data, func){
     const {setUpdateFlag} = wordListStore(state => state);
     const {setLoading} = ModalStore();
     const [ openModal ] = useModal();
-    const {token, saveToken, clearToken, setUserInfo} = authStore(state=>state);
+    const {token, saveToken, clearToken, setUserInfo, completeUserTutorial} = authStore(state=>state);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -96,31 +110,31 @@ function useEvntHandler(e, modeType, data, func){
     }
 
     const handlerMap = {
-        async read(_, query){
-            const res = await executeSrvConnect("get", `v2/words${query}`, null, {isUpdate: false, returnMsg: false});
+        async [MODE.READ](_, wordBookId, query){
+            const res = await executeSrvConnect("get", `v3/wordbooks/${wordBookId}/words${query}`, null, {isUpdate: false, returnMsg: false});
             return res;
         },
-        async singleRead(_, id) {
-            return await executeSrvConnect("get", `v2/words/${id}`, null, {isUpdate: false, returnMsg: false});
+        async [MODE.SINGLE_READ](_, {wordId, wordBookId}) {
+            return await executeSrvConnect("get", `v3/wordbooks/${wordBookId}/words/${wordId}`, null, {isUpdate: false, returnMsg: false});
         },
-        async search(e, query){
-            const res = await executeSrvConnect("get", `v2/words/search/${query}`, null, {isUpdate:false, isLoading: false, returnMsg: false});
+        async [MODE.SEARCH](e, query){
+            const res = await executeSrvConnect("get", `v3/wordbooks/${wordBookId}/words/search/${query}`, null, {isUpdate:false, isLoading: false, returnMsg: false});
             return res;
         },
-        async delete(_, wordId){
-            await executeSrvConnect("delete", `v2/words/${wordId}`);
+        async [MODE.DELETE](_, {wordId, wordBookId}){
+            await executeSrvConnect("delete", `v3/wordbooks/${wordBookId}/words/${wordId}`, {isUpdate: true});
         },
-        async update(e, wordId, data){
-            return await executeSrvConnect("put", `v2/words/${wordId}/all`, data);
+        async [MODE.UPDATE](e, {wordId, wordBookId}, data){
+            return await executeSrvConnect("put", `v3/wordbooks/${wordBookId}/words/${wordId}/all`, data, {isUpdate: true});
         },
-        async updateMemo(e, id, data){
-            return await executeSrvConnect("put", `v2/words/${id}/memo`, data, {isUpdate: false});
+        async [MODE.UPDATE_MEMO](e, {wordId, wordBookId}, data){
+            return await executeSrvConnect("put", `v3/wordbooks/${wordBookId}/words/${wordId}/memo`, data, {isUpdate: false});
         },
-        async memorization(e, wordId, data){
-            return await executeSrvConnect("put", `v2/words/${wordId}/memorization`, data);
+        async [MODE.MEMORIZATION](e, {wordId, wordBookId}, data){
+            return await executeSrvConnect("put", `v3/wordbooks/${wordBookId}/words/${wordId}/memorization`, data, {isUpdate: true});
         },
-        async save(_, type, data){
-            const res = await executeSrvConnect("post", `v2/words/${type}`, data);
+        async [MODE.SAVE](_, {type, wordBookId}, data){
+            const res = await executeSrvConnect("post", `v3/wordbooks/${wordBookId}/words/${type}`, data, {isUpdate: true});
             return res;
         },
         // 폴더
@@ -134,11 +148,11 @@ function useEvntHandler(e, modeType, data, func){
         async folderSave(_, data){
             return await executeSrvConnect("post", 'wordbooks', data, {isUpdate: false});
         },
-        async wordFolderUpdate(_, {wordId, wordBookId}){
-            return await executeSrvConnect('put', `v2/words/${wordId}/wordbook/${wordBookId}`, null);
+        async wordFolderUpdate(_, {wordId, wordBookId}, data){
+            return await executeSrvConnect('put', `v3/wordbooks/${wordBookId}/words/${wordId}/move`, data, {isUpdate: true});
         },
         async folderDelete(_, wordBookId){
-            return await executeSrvConnect("delete", `wordbooks/${wordBookId}`, null, {isUpdate: false});
+            return await executeSrvConnect("delete", `wordbooks/${wordBookId}?removeWords=true`, null, {isUpdate: false});
         },
         async folderCountRead(_, {wordBookId, query}){
             return await executeSrvConnect("get", `wordbooks/${wordBookId}${query}`, null, {isUpdate: false});
@@ -156,9 +170,9 @@ function useEvntHandler(e, modeType, data, func){
                 "refreshToken": res.refreshToken,
             };
             saveToken(data);
+            await this.userRead(null, data.accessToken);
             navigate('/vocabook');
             setUpdateFlag(true);
-            this.userRead(null, data.accessToken);
         },
         async userRead(_, data) {
             const userRes = await connect('get', 'user', null, data);
@@ -173,6 +187,10 @@ function useEvntHandler(e, modeType, data, func){
                 password
             }
             this.login(null, loginRes);
+        },
+        async [MODE.USER_TUTORIAL_COMPLETE](_) {
+            await executeSrvConnect("patch", "user/onboarding/complete");
+            completeUserTutorial();
         },
         async signout(_) {
             const res = await executeSrvConnect("delete", "auth");
@@ -323,6 +341,50 @@ function useEvntHandler(e, modeType, data, func){
         async [MODE.NOTICE_DELETE](_, postId) {
             return await executeSrvConnect('delete', `posts/${postId}`, null, {isUpdate: false});
         },
+        // 라운지
+        async [MODE.SHAREROOM_READ](_, query) {
+            return await executeSrvConnect('get', `share-rooms${query}`, null, {isUpdate: false});
+        },
+        async [MODE.MY_SHAREROOM_READ](_) {
+            return await executeSrvConnect('get', 'share-rooms/my');
+        },
+        async [MODE.SHAREROOM_CREATE](_, wordBookId) {
+            return await executeSrvConnect('post', `share-rooms/wordbook/${wordBookId}`);
+        },
+        async [MODE.SHAREROOM_DELETE](_, wordBookId) {
+            return await executeSrvConnect('delete', `share-rooms/wordbook/${wordBookId}`);
+        },
+        async [MODE.WORD_COPY](_, wordBookId, targetWordBookId) {
+            return await executeSrvConnect('post', `v3/wordbooks/${wordBookId}/words/copy`, {
+                targetWordBookId
+            });
+        },
+        // 그룹 단어장
+        async [MODE.GROUP_WORD_BOOK_READ](_) {
+            return await executeSrvConnect('get', `wordbooks/share`);
+        },
+        // 단어장 권한
+        async [MODE.WORD_BOOK_SETTING_READ](_, wordBookId) {
+            return await executeSrvConnect('get', `wordbooks/${wordBookId}/setting`);
+        },
+        async [MODE.WORD_BOOK_SETTING_UPDATE](_, wordBookId, data) {
+            return await executeSrvConnect('put', `wordbooks/${wordBookId}/setting`, data);
+        },
+        async [MODE.WORD_BOOK_MEMBER_READ](_, wordBookId) {
+            return await executeSrvConnect('get', `wordbooks/${wordBookId}/members`);
+        },
+        async [MODE.WORD_BOOK_MEMBER_ADD](_, wordBookId, {userId, role}) {
+            return await executeSrvConnect('post', `wordbooks/${wordBookId}/members`, {userId, role});
+        },
+        async [MODE.WORD_BOOK_MEMBER_DELETE](_, {wordBookId, wordBookMemberId}) {
+            return await executeSrvConnect('delete', `wordbooks/${wordBookId}/members/${wordBookMemberId}`);
+        },
+        async [MODE.WORD_BOOK_MEMBER_ROLE_UPDATE](_, wordBookId, {userId, role}) {
+            return await executeSrvConnect('put', `wordbooks/${wordBookId}/members/role`, {userId, role});
+        },
+        async [MODE.USER_SEARCH](_, searchText) {
+            return await executeSrvConnect('get', `user/search?q=${searchText}`, null, {isUpdate: false, isLoading: false});
+        },
     }
 
     /**
@@ -376,8 +438,8 @@ function useEvntHandler(e, modeType, data, func){
             // 데이터 불러온 후 로딩 false처리
             setLoading(false);
 
-            //update state변경, 변경 시 useEffect() 실행, 기본값은 항상 업데이트
-            if (obj?.isUpdate ?? true) { 
+            //update state변경, 변경 시 useEffect() 실행, 기본값은 업데이트 하지 않음
+            if (obj?.isUpdate ?? false) { 
                 setUpdateFlag(true);
             }
         }

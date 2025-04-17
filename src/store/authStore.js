@@ -37,6 +37,14 @@ const store = persist({
                 userInfo: user
             }))
         },
+        completeUserTutorial: () => {
+            set((prev) => ({
+                userInfo: {
+                    ...prev.userInfo,
+                    isOnboardingFinished: true,
+                }
+            }))
+        },
         storeFolderList: [
             {
                 "wordBookId": 0,
