@@ -8,6 +8,8 @@ const WordBookPermission = ({wordBookId}) => {
   const wordRelative = useRef([]);
   const [members, setMembers] = useState([]);
   const [setting, setSetting] = useState([]);
+  const [memberUpdate, setMemberUpdate] = useState(false);
+  const [settingUpdate, setSettingUpdate] = useState(false);
 
   useEffect(() => {
     // setting
@@ -20,6 +22,26 @@ const WordBookPermission = ({wordBookId}) => {
       setMembers(res);
     });
   }, []);
+
+  useEffect(() => {
+    onClickHandler(null, MODE.WORD_BOOK_MEMBER_READ, wordBookId).then((res) => {
+      setMembers(res);
+    });
+  }, [memberUpdate]);
+
+  useEffect(() => {
+    onClickHandler(null, MODE.WORD_BOOK_SETTING_READ, wordBookId).then((res) => {
+      setSetting(res);
+    });
+  }, [settingUpdate]);
+
+  const updateSetting = () => {
+    setSettingUpdate(!settingUpdate);
+  }
+
+  const updateMember = () => {
+    setMemberUpdate(!memberUpdate);
+  }
 
   const handleOnClick = (e) => {
     wordRelative.current.classList.remove("on");
@@ -73,12 +95,16 @@ const WordBookPermission = ({wordBookId}) => {
             nickname={'일반'} 
             role={setting?.anyoneBasicRole} 
             wordBookId={wordBookId}
-            profileImagePath={DefaultImg}></PermissionList>
+            profileImagePath={DefaultImg}
+            updateFunc={updateSetting}
+            ></PermissionList>
             <PermissionList 
             nickname={'멤버'} 
             role={setting?.memberBasicRole} 
             wordBookId={wordBookId}
-            profileImagePath={DefaultImg}></PermissionList>
+            profileImagePath={DefaultImg}
+            updateFunc={updateSetting}
+            ></PermissionList>
           </ul>
         </section>
         <section className="permission_sect">
@@ -93,6 +119,7 @@ const WordBookPermission = ({wordBookId}) => {
               userId={item?.userId}
               role={item?.role}
               wordBookId={wordBookId}
+              updateFunc={updateMember}
               ></PermissionList>
             </ul>
           )}

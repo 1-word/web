@@ -9,7 +9,8 @@ const PermissionList = ({
   id, 
   userId, 
   role,
-  wordBookId
+  wordBookId,
+  updateFunc
 }) => {
   const onClickHandler = api();
   const [isDropDown, setDropDown] = useState(false);
@@ -18,32 +19,34 @@ const PermissionList = ({
     setDropDown(!isDropDown);
   }
 
-  const updateRole = (e) => {
+  const updateRole = async (e) => {
     const { name } = e.target;
     setDropDown(!isDropDown);
 
     // 기본 설정 (전체 또는 멤버 권한)
-    console.log(id);
     if (id === undefined || id === null) {
       if (nickname === "일반") {
-        onClickHandler(null, MODE.WORD_BOOK_SETTING_UPDATE, wordBookId, {
+        await onClickHandler(null, MODE.WORD_BOOK_SETTING_UPDATE, wordBookId, {
           anyoneBasicRole: name
         });
       }
 
       if (nickname === "멤버") {
-        onClickHandler(null, MODE.WORD_BOOK_SETTING_UPDATE, wordBookId, {
+        await onClickHandler(null, MODE.WORD_BOOK_SETTING_UPDATE, wordBookId, {
           memberBasicRole: name
         });
       }
+      updateFunc();
       return;
     }
 
     if (name === 'none') {
-      onClickHandler(null, MODE.WORD_BOOK_MEMBER_DELETE, {wordBookId, wordBookMemberId: id});
+      await onClickHandler(null, MODE.WORD_BOOK_MEMBER_DELETE, {wordBookId, wordBookMemberId: id});
+      updateFunc();
       return;
     }
-    onClickHandler(null, MODE.WORD_BOOK_MEMBER_ROLE_UPDATE, wordBookId, {userId, role: name});
+    await onClickHandler(null, MODE.WORD_BOOK_MEMBER_ROLE_UPDATE, wordBookId, {userId, role: name});
+    updateFunc();
   }
 
   return (
