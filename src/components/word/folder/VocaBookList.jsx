@@ -29,8 +29,10 @@ function VocabookList({
   const [moreModal] = useModal("more");
   const [permissionModal] = useModal("wordbookPermission");
 
-  const handlePermissionModal = () => (e) => {
-    permissionModal(FullModal, WordBookPermission);
+  const handlePermissionModal = (wordBookId) => (e) => {
+    permissionModal(FullModal, WordBookPermission, {
+      wordBookId
+    });
   };
 
   const handleMoreModal = (item) => (e) => {
@@ -46,7 +48,7 @@ function VocabookList({
         },
         {
           title: "공유 설정",
-          onClick: handlePermissionModal(),
+          onClick: handlePermissionModal(item.wordBookId),
         },
       ],
     });

@@ -1,9 +1,26 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import DefaultImg from "@images/myImgDefault.svg";
 import PermissionList from "./PermissionList";
+import api, { MODE } from "@/services/api";
 
-const WordBookPermission = () => {
+const WordBookPermission = ({wordBookId}) => {
+  const onClickHandler = api();
   const wordRelative = useRef([]);
+  const [members, setMembers] = useState([]);
+  const [setting, setSetting] = useState([]);
+
+  useEffect(() => {
+    // setting
+    onClickHandler(null, MODE.WORD_BOOK_SETTING_READ, wordBookId).then((res) => {
+      setSetting(res);
+    });
+
+    // member
+    onClickHandler(null, MODE.WORD_BOOK_MEMBER_READ, wordBookId).then((res) => {
+      setMembers(res);
+    });
+  }, []);
+
   const handleOnClick = (e) => {
     wordRelative.current.classList.remove("on");
   };
@@ -52,16 +69,33 @@ const WordBookPermission = () => {
           <h2>기본 설정</h2>
           {/* li로 복제 */}
           <ul className="permission_lists">
-            <PermissionList standard="whole"></PermissionList>
-            <PermissionList standard="group"></PermissionList>
+            <PermissionList 
+            nickname={'일반'} 
+            role={setting?.anyoneBasicRole} 
+            wordBookId={wordBookId}
+            profileImagePath={DefaultImg}></PermissionList>
+            <PermissionList 
+            nickname={'멤버'} 
+            role={setting?.memberBasicRole} 
+            wordBookId={wordBookId}
+            profileImagePath={DefaultImg}></PermissionList>
           </ul>
         </section>
         <section className="permission_sect">
           <h2>멤버 설정</h2>
           {/* li로 복제 */}
-          <ul className="permission_lists">
-            <PermissionList></PermissionList>
-          </ul>
+          { members.map((item, idx) =>
+            <ul key={`wordbookmembers${idx}`}className="permission_lists">
+              <PermissionList 
+              id={item?.id}
+              nickname={item?.nickname}
+              profileImagePath={item?.profileImagePath ?? DefaultImg}
+              userId={item?.userId}
+              role={item?.role}
+              wordBookId={wordBookId}
+              ></PermissionList>
+            </ul>
+          )}
         </section>
       </div>
     </>

@@ -78,6 +78,13 @@ export const MODE = {
     SHAREROOM_DELETE: "shareroomDelete",
     WORD_COPY: "wordCopy",
     GROUP_WORD_BOOK_READ: "groupWordBookRead",
+    WORD_BOOK_SETTING_READ: "wordBookSettingRead",
+    WORD_BOOK_SETTING_UPDATE: "wordBookSettingUpdate",
+    WORD_BOOK_MEMBER_READ: "wordBookMemberRead",
+    WORD_BOOK_MEMBER_ADD: "wordBookMemberAdd",
+    WORD_BOOK_MEMBER_DELETE: "wordBookMemberDelete",
+    WORD_BOOK_MEMBER_ROLE_UPDATE: "wordBookMemberRoleUpdate",
+    USER_SEARCH: "userSearch",
 }
 
 /**
@@ -352,8 +359,31 @@ function useEvntHandler(e, modeType, data, func){
                 targetWordBookId
             });
         },
+        // 그룹 단어장
         async [MODE.GROUP_WORD_BOOK_READ](_) {
             return await executeSrvConnect('get', `wordbooks/share`);
+        },
+        // 단어장 권한
+        async [MODE.WORD_BOOK_SETTING_READ](_, wordBookId) {
+            return await executeSrvConnect('get', `wordbooks/${wordBookId}/setting`);
+        },
+        async [MODE.WORD_BOOK_SETTING_UPDATE](_, wordBookId, data) {
+            return await executeSrvConnect('put', `wordbooks/${wordBookId}/setting`, data);
+        },
+        async [MODE.WORD_BOOK_MEMBER_READ](_, wordBookId) {
+            return await executeSrvConnect('get', `wordbooks/${wordBookId}/members`);
+        },
+        async [MODE.WORD_BOOK_MEMBER_ADD](_, wordBookId, {userId, role}) {
+            return await executeSrvConnect('post', `wordbooks/${wordBookId}/members`, {userId, role});
+        },
+        async [MODE.WORD_BOOK_MEMBER_DELETE](_, {wordBookId, wordBookMemberId}) {
+            return await executeSrvConnect('delete', `wordbooks/${wordBookId}/members/${wordBookMemberId}`);
+        },
+        async [MODE.WORD_BOOK_MEMBER_ROLE_UPDATE](_, wordBookId, {userId, role}) {
+            return await executeSrvConnect('put', `wordbooks/${wordBookId}/members/role`, {userId, role});
+        },
+        async [MODE.USER_SEARCH](_, searchText) {
+            return await executeSrvConnect('get', `user/search?q=${searchText}`);
         },
     }
 
