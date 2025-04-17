@@ -49,7 +49,7 @@ function ShareBookList({
   };
 
   useEffect(() => {
-    onClickHandler(null, MODE.FOLDER_READ).then((res) => {
+    onClickHandler(null, MODE.GROUP_WORD_BOOK_READ).then((res) => {
       setFolderList(res);
     });
   }, []);
@@ -118,12 +118,14 @@ function ShareBookList({
                   }}
                 ></div>
                 <p className="voca_book_list_name">{item?.name}</p>
-                <button
-                  className="voca_book_list_more"
-                  onClick={handleMoreModal()}
-                >
-                  <i className="xi-ellipsis-v"></i>
-                </button>
+                { item?.role === 'admin' && item?.role === 'edit' &&
+                  <button
+                    className="voca_book_list_more"
+                    onClick={handleMoreModal()}
+                  >
+                    <i className="xi-ellipsis-v"></i>
+                  </button>
+                }
               </div>
               <div className="voca_book_list_sub">
                 oo님의 단어장 / {item?.totalCount}개

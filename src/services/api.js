@@ -77,6 +77,7 @@ export const MODE = {
     SHAREROOM_CREATE: "shareroomCreate",
     SHAREROOM_DELETE: "shareroomDelete",
     WORD_COPY: "wordCopy",
+    GROUP_WORD_BOOK_READ: "groupWordBookRead",
 }
 
 /**
@@ -350,7 +351,10 @@ function useEvntHandler(e, modeType, data, func){
             return await executeSrvConnect('post', `v3/wordbooks/${wordBookId}/words/copy`, {
                 targetWordBookId
             });
-        }
+        },
+        async [MODE.GROUP_WORD_BOOK_READ](_) {
+            return await executeSrvConnect('get', `wordbooks/share`);
+        },
     }
 
     /**
