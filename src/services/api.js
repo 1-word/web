@@ -383,7 +383,7 @@ function useEvntHandler(e, modeType, data, func){
             return await executeSrvConnect('put', `wordbooks/${wordBookId}/members/role`, {userId, role});
         },
         async [MODE.USER_SEARCH](_, searchText) {
-            return await executeSrvConnect('get', `user/search?q=${searchText}`);
+            return await executeSrvConnect('get', `user/search?q=${searchText}`, null, {isUpdate: false, isLoading: false});
         },
     }
 

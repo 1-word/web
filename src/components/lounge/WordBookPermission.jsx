@@ -6,10 +6,13 @@ import api, { MODE } from "@/services/api";
 const WordBookPermission = ({wordBookId}) => {
   const onClickHandler = api();
   const wordRelative = useRef([]);
+  const inputRef = useRef(null);
   const [members, setMembers] = useState([]);
   const [setting, setSetting] = useState([]);
   const [memberUpdate, setMemberUpdate] = useState(false);
   const [settingUpdate, setSettingUpdate] = useState(false);
+  const [relativeData, setRelativeData] = useState([]);
+  const [selectedUser, setSelectedUser] = useState({email: ''});
 
   useEffect(() => {
     // setting
@@ -52,10 +55,31 @@ const WordBookPermission = ({wordBookId}) => {
     const { name, value } = e.target;
     if (name === "member" && value !== "") {
       wordRelative.current.classList.add("on");
+      updateUserData(value);
     } else {
       wordRelative.current.classList.remove("on");
     }
-  };
+  }
+
+  const updateUserData = async (searchText) => {
+    const res = await onClickHandler(null, MODE.USER_SEARCH, searchText);
+    setRelativeData(res);
+  }
+
+  const handleRelativeClick = (user) => e => {
+    setSelectedUser(user);
+    inputRef.current.value = user?.email;
+    wordRelative.current.classList.remove("on");
+  }
+
+  const handleShareClick = async () => {
+    if (selectedUser?.email === null || selectedUser === undefined) {
+      return;
+    }
+
+    await onClickHandler(null, MODE.WORD_BOOK_MEMBER_ADD, wordBookId, {userId: selectedUser.userId, role: 'view'});
+    updateMember();
+  }
 
   return (
     <>
@@ -63,21 +87,26 @@ const WordBookPermission = ({wordBookId}) => {
         <label htmlFor="shareEmail">회원 찾기</label>
         <div className="input_wrap-flex">
           <input
+            ref={inputRef}
             type="text"
             name="member"
             id="shareEmail"
             autoComplete="off"
             onChange={onChangeInput}
           />
-          <button className="btn-fill sizeS">공유</button>
+          <button className="btn-fill sizeS" onClick={handleShareClick}>공유</button>
           <div className="permission_relative_layer">
-            <ul className="permission_relative_layer_lists" onClick={() => {}}>
-              <li className="permission_relative_layer_list">
-                <div className="permission_relative_layer_img">
-                  <img src={DefaultImg} alt="" />
-                </div>
-                현가오리
-              </li>
+            <ul className="permission_relative_layer_lists">
+              {
+                relativeData.map((item, idx) => 
+                  <li key={`permission${idx}`} className="permission_relative_layer_list" onClick={handleRelativeClick(item)}>
+                    <div className="permission_relative_layer_img">
+                      <img src={item?.profileImagePath ?? DefaultImg} alt="" />
+                    </div>
+                    {`${item?.nickname} (${item?.email})`}
+                  </li>
+                )
+              }
             </ul>
           </div>
           <div
