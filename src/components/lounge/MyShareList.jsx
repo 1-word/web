@@ -6,49 +6,32 @@ import { useEffect, useRef, useState } from "react";
 import { Pagination } from "@/util/Pagination";
 import ListEmpty from "../word/ListEmpty";
 
-const MyShareList = ({ update }) => {
+const MyShareList = () => {
   const onClickHandler = api();
-  const [obsPage, obsInit, isEnd, preventDisable] = useObserver();
-  const [shareWordBook, setShareWordBook] = useState({ page: {}, data: [] });
-  const obsRef = useRef();
+  const [shareWordBook, setShareWordBook] = useState([]);
+  const [update, setUpdate] = useState(false);
 
   useEffect(() => {
-    obsInit(obsRef);
-    console.log(shareWordBook.length);
-  }, []);
-
-  useEffect(() => {
-    onClickHandler(null, MODE.SHAREROOM_READ, "").then((res) => {
+    onClickHandler(null, MODE.SHAREROOM_MY_READ).then((res) => {
       setShareWordBook(res);
-      preventDisable();
+    });
+  }, [])
+
+  useEffect(() => {
+    onClickHandler(null, MODE.SHAREROOM_MY_READ).then((res) => {
+      setShareWordBook(res);
     });
   }, [update]);
 
-  useEffect(() => {
-    if (obsPage > -1 && shareWordBook.page?.hasNext) {
-      const queryParams = {
-        current: shareWordBook.page.next ?? 0,
-        limit: 30,
-        lastId: shareWordBook.page.lastId,
-      };
-
-      const query = Pagination.getQueryParameter(queryParams);
-
-      onClickHandler(null, MODE.SHAREROOM_READ, query).then((res) => {
-        setShareWordBook((prev) => {
-          return {
-            page: res.page,
-            data: [...prev.data, ...res.data],
-          };
-        });
-        preventDisable();
-      });
-    }
-  }, [obsPage]);
+  const shareWordBookDeleteHandle = (id) => () => {
+    onClickHandler(null, MODE.SHAREROOM_DELETE, id).then((res) => {
+      setUpdate(!update);
+    });
+  }
 
   return (
     <>
-      {shareWordBook?.data.map((item, idx) =>
+      {shareWordBook.map((item, idx) =>
         // 단어장 없을 경우 체크
         idx >= 0 ? (
           <li key={`shareWordBook${item?.id}`}>
@@ -64,14 +47,11 @@ const MyShareList = ({ update }) => {
                 ></div>
                 <p>{item?.name}</p>
                 {/* 삭제 버튼 */}
-                <button className="voca_book_list_more" onClick={() => {}}>
+                <button className="voca_book_list_more" onClick={shareWordBookDeleteHandle(item?.id)}>
                   <i className="xi-close"></i>
                 </button>
                 {/* 삭제 버튼 */}
               </div>
-              <p className="lounge_list-title-sub">
-                총 단어 : {item?.totalCount}개
-              </p>
             </div>
           </li>
         ) : (
@@ -81,7 +61,7 @@ const MyShareList = ({ update }) => {
             />
         )
       )}
-      <li ref={obsRef} style={{ height: "100px" }}></li>
+      <li style={{ height: "100px" }}></li>
     </>
   );
 };

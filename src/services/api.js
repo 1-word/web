@@ -76,6 +76,7 @@ export const MODE = {
     USER_TUTORIAL_COMPLETE: "userTutorialComplete",
     SHAREROOM_CREATE: "shareroomCreate",
     SHAREROOM_DELETE: "shareroomDelete",
+    SHAREROOM_MY_READ: "shareroomMyRead",
     WORD_COPY: "wordCopy",
     GROUP_WORD_BOOK_READ: "groupWordBookRead",
     WORD_BOOK_SETTING_READ: "wordBookSettingRead",
@@ -193,9 +194,9 @@ function useEvntHandler(e, modeType, data, func){
             completeUserTutorial();
         },
         async signout(_) {
-            const res = await executeSrvConnect("delete", "auth");
             clearToken();
             navigate("/");
+            const res = await executeSrvConnect("delete", "auth");
         },
         audio_play(_, data, endFunc){
             const audio = new Audio();
@@ -351,8 +352,11 @@ function useEvntHandler(e, modeType, data, func){
         async [MODE.SHAREROOM_CREATE](_, wordBookId) {
             return await executeSrvConnect('post', `share-rooms/wordbook/${wordBookId}`);
         },
-        async [MODE.SHAREROOM_DELETE](_, wordBookId) {
-            return await executeSrvConnect('delete', `share-rooms/wordbook/${wordBookId}`);
+        async [MODE.SHAREROOM_DELETE](_, id) {
+            return await executeSrvConnect('delete', `share-rooms/${id}`);
+        },
+        async [MODE.SHAREROOM_MY_READ](_) {
+            return await executeSrvConnect('get', 'share-rooms/my');
         },
         async [MODE.WORD_COPY](_, wordBookId, targetWordBookId) {
             return await executeSrvConnect('post', `v3/wordbooks/${wordBookId}/words/copy`, {
