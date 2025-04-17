@@ -21,7 +21,7 @@ const Tutorial = ({ func }) => {
             <br />
             이런 기능이 있어요
             <button className="tutorial_skip" onClick={closeTutorial}>
-              <i className="xi-angle-right"></i>
+              skip <i className="xi-angle-right"></i>
             </button>
           </h2>
           <Swiper
@@ -89,7 +89,7 @@ const Tutorial = ({ func }) => {
               className="btn-fill sizeL"
               onClick={closeTutorial}
             >
-              다음
+              시작하기
             </button>
           </div>
         </div>
