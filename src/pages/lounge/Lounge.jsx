@@ -5,13 +5,24 @@ import BestList from "@/components/lounge/BestList";
 import { useModal } from "@/hook/_hooks";
 import VocabookList from "@/components/word/folder/VocaBookList";
 import FullModal from "@components/layout/popup/FullModal";
+import api, { MODE } from "@/services/api";
 
 const Lounge = () => {
   const [shareModal] = useModal("share");
+  const [update, setUpdate] = useState(false);
+  const onClickHandler = api();
 
   const handleShareModal = () => (e) => {
-    shareModal(FullModal, VocabookList);
-  };
+    shareModal(FullModal, VocabookList, {
+      afterCompleteFunc: wordBookModalCallBack
+    });
+  }
+
+  const wordBookModalCallBack = async (item) => {
+    const wordBookId = item.wordBookId;
+    await onClickHandler(null, MODE.SHAREROOM_CREATE, wordBookId);
+    setUpdate(!update);
+  }
 
   return (
     <Layout title="라운지" active="lounge">
@@ -19,20 +30,21 @@ const Lounge = () => {
         <div className="lounge_cont">
           <div className="voca_book_top flex">
             <button className="btn-fill sizeS" onClick={handleShareModal()}>
-              내 단어장 공유하기<i className="xi-angle-right-min"></i>
+              내 단어장 공유하기
+              <i className="xi-angle-right-min"></i>
             </button>
           </div>
-          <section className="lounge_sect">
+          {/* 현재 미구현 기능 */}
+          {/* <section className="lounge_sect">
             <h2 className="lounge_title">실시간 베스트 👍</h2>
-            {/* ** EveryList 돌려쓸 수 없으면 말해주기 */}
             <ul>
               <BestList />
             </ul>
-          </section>
+          </section> */}
           <section className="lounge_sect">
             <h2 className="lounge_title">모두의 단어장</h2>
             <ul>
-              <EveryList />
+              <EveryList update={update}/>
             </ul>
           </section>
           <h2 className="lounge_title-center">

@@ -5,23 +5,30 @@ import api, { MODE } from "@/services/api";
 import { useEffect, useRef, useState } from "react";
 import { Pagination } from "@/util/Pagination";
 
-const EveryList = () => {
+const EveryList = ({update}) => {
   const onClickHandler = api();
   const [obsPage, obsInit, isEnd, preventDisable] = useObserver();
   const [SaveWordBookModal] = useModal("saveWordBook");
   const [shareWordBook, setShareWordBook] = useState({ page: {}, data: [] });
-  const handleSaveWordBookModal = () => (e) => {
-    SaveWordBookModal(FullModal, SaveWordBook);
-  };
   const obsRef = useRef();
+
+  const handleSaveWordBookModal = (item) => (e) => {
+    SaveWordBookModal(FullModal, SaveWordBook, {
+      wordBook: item
+    });
+  };
 
   useEffect(() => {
     obsInit(obsRef);
-    onClickHandler(null, MODE.SHAREROOM_READ, "").then((res) => {
+
+  }, []);
+
+  useEffect(() => {
+    onClickHandler(null, MODE.SHAREROOM_READ, '').then((res) => {
       setShareWordBook(res);
       preventDisable();
     });
-  }, []);
+  }, [update]);
 
   useEffect(() => {
     if (obsPage > -1 && shareWordBook.page?.hasNext) {
@@ -49,7 +56,7 @@ const EveryList = () => {
     <>
       {shareWordBook?.data.map((item, idx) => (
         <li key={`shareWordBook${item?.id}`}>
-          <div onClick={handleSaveWordBookModal()}>
+          <div onClick={handleSaveWordBookModal(item)}>
             {/* 단어장 색깔 넣어주기 */}
             <div className="lounge_list-title">
               <div
@@ -60,7 +67,6 @@ const EveryList = () => {
                     item?.background === "#fff" ? "1px solid #666666" : "",
                 }}
               ></div>
-
               <p>{item?.name}</p>
             </div>
             <p className="lounge_list-title-sub">

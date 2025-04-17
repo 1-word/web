@@ -2,7 +2,7 @@ import connect from "@/util/axiosUtil"
 import wordListStore from "@/store/wordListStore"
 import authStore from "@/store/authStore"
 import { useNavigate, useLocation } from "react-router"
-import ModalStore, {ALERT_TYPE} from "@/store/modalStore"
+import ModalStore from "@/store/modalStore"
 import { useModal } from "@/hook/_hooks"
 import Toast from "@/components/layout/popup/Toast"
 
@@ -74,6 +74,8 @@ export const MODE = {
     SHAREROOM_READ: "shareroomRead",
     MY_SHAREROOM_READ: "MyshareroomRead",
     USER_TUTORIAL_COMPLETE: "userTutorialComplete",
+    SHAREROOM_CREATE: "shareroomCreate",
+    SHAREROOM_DELETE: "shareroomDelete",
 }
 
 /**
@@ -336,7 +338,13 @@ function useEvntHandler(e, modeType, data, func){
         },
         async [MODE.MY_SHAREROOM_READ](_) {
             return await executeSrvConnect('get', 'share-rooms/my');
-        }
+        },
+        async [MODE.SHAREROOM_CREATE](_, wordBookId) {
+            return await executeSrvConnect('post', `share-rooms/wordbook/${wordBookId}`);
+        },
+        async [MODE.SHAREROOM_DELETE](_, wordBookId) {
+            return await executeSrvConnect('delete', `share-rooms/wordbook/${wordBookId}`);
+        },
     }
 
     /**
