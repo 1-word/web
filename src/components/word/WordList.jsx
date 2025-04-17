@@ -16,7 +16,7 @@ import { useParams } from "react-router-dom";
 import VocabookList from "./folder/VocaBookList";
 import Toast from "../layout/popup/Toast";
 import ListEmpty from "./ListEmpty";
-import CheckAni from "./checkAni";
+import CheckAni from "./CheckAni";
 
 function WordList(props) {
   const {
