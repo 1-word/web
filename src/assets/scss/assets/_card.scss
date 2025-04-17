@@ -104,36 +104,34 @@
 }
 
 @mixin cardToogle($bg, $border) {
-  padding-bottom: 80px;
-  ul {
-    padding: $main-p;
-    font-size: 14px;
-    li {
-      // default값
-      cursor: pointer;
-      > div:first-child {
-        position: relative;
-        padding: 16px 14px;
-        background-color: $bg;
-				border: 1px solid $border;
-        border-radius: $sub-br;
-        .toggle {
-          position: absolute;
-          top: 50%;
-          right: 14px;
-          transform: translateY(-50%);
-          i {
-            color: $sub-text-color;
-          }
-        }
-      }
-      > div:nth-child(2) {
-        > div {
-          padding: 16px 14px;
-        }
-      }
-    }
-  }
+	padding: $main-p;
+	font-size: 14px;
+	li {
+		// default값
+		cursor: pointer;
+		> div:first-child {
+			position: relative;
+			padding: 16px 14px;
+			background-color: $bg;
+			border: 1px solid $border;
+			border-radius: $sub-br;
+			.toggle {
+				position: absolute;
+				top: 50%;
+				right: 14px;
+				transform: translateY(-50%);
+				i {
+					color: $sub-text-color;
+				}
+			}
+		}
+		> div:nth-child(2) {
+			> div {
+				padding: 16px 14px;
+			}
+		}
+	}
+
   @content;
 }
 

@@ -6,23 +6,29 @@ import { useModal } from "@/hook/_hooks";
 import VocabookList from "@/components/word/folder/VocaBookList";
 import FullModal from "@components/layout/popup/FullModal";
 import api, { MODE } from "@/services/api";
+import MyShareList from "@/components/lounge/MyShareList";
 
 const Lounge = () => {
   const [shareModal] = useModal("share");
   const [update, setUpdate] = useState(false);
   const onClickHandler = api();
+  const [activeTab, setActiveTab] = useState("user");
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
 
   const handleShareModal = () => (e) => {
     shareModal(FullModal, VocabookList, {
-      afterCompleteFunc: wordBookModalCallBack
+      afterCompleteFunc: wordBookModalCallBack,
     });
-  }
+  };
 
   const wordBookModalCallBack = async (item) => {
     const wordBookId = item.wordBookId;
     await onClickHandler(null, MODE.SHAREROOM_CREATE, wordBookId);
     setUpdate(!update);
-  }
+  };
 
   return (
     <Layout title="라운지" active="lounge">
@@ -34,19 +40,43 @@ const Lounge = () => {
               <i className="xi-angle-right-min"></i>
             </button>
           </div>
-          {/* 현재 미구현 기능 */}
-          {/* <section className="lounge_sect">
+          <ul className="vocabook-tab">
+            <li
+              onClick={() => handleTabClick("user")}
+              className={activeTab === "user" ? "active" : ""}
+            >
+              모두의 단어장
+            </li>
+            <li
+              onClick={() => handleTabClick("my")}
+              className={activeTab === "my" ? "active" : ""}
+            >
+              내가 공유한 단어장
+            </li>
+          </ul>
+          {activeTab === "user" ? (
+            <>
+              {/* 현재 미구현 기능 */}
+              {/* <section className="lounge_sect">
             <h2 className="lounge_title">실시간 베스트 👍</h2>
-            <ul>
+            <ul className="lounge_lists">
               <BestList />
             </ul>
           </section> */}
-          <section className="lounge_sect">
-            <h2 className="lounge_title">모두의 단어장</h2>
-            <ul>
-              <EveryList update={update}/>
-            </ul>
-          </section>
+              <section className="lounge_sect">
+                {/* <h2 className="lounge_title">모두의 단어장</h2> */}
+                <ul className="lounge_lists">
+                  <EveryList update={update} />
+                </ul>
+              </section>
+            </>
+          ) : (
+            <section className="lounge_sect">
+              <ul className="lounge_lists">
+                <MyShareList update={update} />
+              </ul>
+            </section>
+          )}
           <h2 className="lounge_title-center">
             내 단어장을 모두에게 공유해보세요
           </h2>

@@ -4,39 +4,50 @@
 .lounge {
   @include layoutDefault;
   &_cont {
-    @include cardToogle(transparent, $main-bg-color);
-  }
+		padding-bottom: 80px;
+	}
   &_sect {
-    margin-top: 24px;
-    &:first-of-type {
-      margin-top: 0;
+		margin-top: 24px;
+  }
+  &_lists {
+		@include cardToogle(transparent, $main-bg-color);
+    > li {
+      margin-top: 16px;
+      &:first-of-type {
+        margin-top: 0;
+      }
+			.voca_book_list_more{
+				font-size: 20px;
+				color: $sub-text-color;
+			}
     }
   }
   &_title {
-    margin-top: 24px;
+    margin-top: 48px;
     margin-bottom: 16px;
     padding: 0 14px;
-    @include fontSize(m);
+    @include fontSize(lFix);
     &-center {
       text-align: center;
       color: $sub-text-color;
     }
   }
-	&_title-flex{
-		margin-bottom: 16px;
-		padding: 0 14px;
-		@include fontSize(m);
-		@include textBreak;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		button{
-			width: auto;
-			flex-shrink: 0;
-		}
-	}
+  &_title-flex {
+    margin-bottom: 16px;
+    padding: 0 14px;
+    @include fontSize(m);
+    @include textBreak;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    button {
+      width: auto;
+      flex-shrink: 0;
+    }
+  }
   &_list-title {
     @include cardTitle;
+		position: relative;
   }
   &_list-title-sub {
     @include cardSubTitle;
