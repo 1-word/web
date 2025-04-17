@@ -28,8 +28,10 @@ function ShareBookList({
   const [permissionModal] = useModal("wordbookPermission");
   const [moreModal] = useModal("more");
 
-  const handlePermissionModal = () => (e) => {
-    permissionModal(FullModal, WordBookPermission);
+  const handlePermissionModal = (wordBookId) => (e) => {
+    permissionModal(FullModal, WordBookPermission, {
+      wordBookId
+    });
   };
 
   const handleMoreModal = (item) => (e) => {
@@ -41,7 +43,7 @@ function ShareBookList({
         },
         {
           title: "멤버 설정",
-          onClick: handlePermissionModal(),
+          onClick: handlePermissionModal(item.wordBookId),
         },
       ],
     });
@@ -49,7 +51,7 @@ function ShareBookList({
   };
 
   useEffect(() => {
-    onClickHandler(null, MODE.FOLDER_READ).then((res) => {
+    onClickHandler(null, MODE.GROUP_WORD_BOOK_READ).then((res) => {
       setFolderList(res);
     });
   }, []);
@@ -118,15 +120,17 @@ function ShareBookList({
                   }}
                 ></div>
                 <p className="voca_book_list_name">{item?.name}</p>
-                <button
-                  className="voca_book_list_more"
-                  onClick={handleMoreModal()}
-                >
-                  <i className="xi-ellipsis-v"></i>
-                </button>
+                { item?.role === 'admin' &&
+                  <button
+                    className="voca_book_list_more"
+                    onClick={handleMoreModal(item)}
+                  >
+                    <i className="xi-ellipsis-v"></i>
+                  </button>
+                }
               </div>
               <div className="voca_book_list_sub">
-                oo님의 단어장 / {item?.totalCount}개
+                {item?.nickname}님의 단어장 / {item?.totalCount}개
               </div>
             </li>
           ))}

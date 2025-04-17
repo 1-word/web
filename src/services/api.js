@@ -76,6 +76,15 @@ export const MODE = {
     USER_TUTORIAL_COMPLETE: "userTutorialComplete",
     SHAREROOM_CREATE: "shareroomCreate",
     SHAREROOM_DELETE: "shareroomDelete",
+    WORD_COPY: "wordCopy",
+    GROUP_WORD_BOOK_READ: "groupWordBookRead",
+    WORD_BOOK_SETTING_READ: "wordBookSettingRead",
+    WORD_BOOK_SETTING_UPDATE: "wordBookSettingUpdate",
+    WORD_BOOK_MEMBER_READ: "wordBookMemberRead",
+    WORD_BOOK_MEMBER_ADD: "wordBookMemberAdd",
+    WORD_BOOK_MEMBER_DELETE: "wordBookMemberDelete",
+    WORD_BOOK_MEMBER_ROLE_UPDATE: "wordBookMemberRoleUpdate",
+    USER_SEARCH: "userSearch",
 }
 
 /**
@@ -143,7 +152,7 @@ function useEvntHandler(e, modeType, data, func){
             return await executeSrvConnect('put', `v3/wordbooks/${wordBookId}/words/${wordId}/move`, data, {isUpdate: true});
         },
         async folderDelete(_, wordBookId){
-            return await executeSrvConnect("delete", `wordbooks/${wordBookId}`, null, {isUpdate: false});
+            return await executeSrvConnect("delete", `wordbooks/${wordBookId}?removeWords=true`, null, {isUpdate: false});
         },
         async folderCountRead(_, {wordBookId, query}){
             return await executeSrvConnect("get", `wordbooks/${wordBookId}${query}`, null, {isUpdate: false});
@@ -344,6 +353,37 @@ function useEvntHandler(e, modeType, data, func){
         },
         async [MODE.SHAREROOM_DELETE](_, wordBookId) {
             return await executeSrvConnect('delete', `share-rooms/wordbook/${wordBookId}`);
+        },
+        async [MODE.WORD_COPY](_, wordBookId, targetWordBookId) {
+            return await executeSrvConnect('post', `v3/wordbooks/${wordBookId}/words/copy`, {
+                targetWordBookId
+            });
+        },
+        // 그룹 단어장
+        async [MODE.GROUP_WORD_BOOK_READ](_) {
+            return await executeSrvConnect('get', `wordbooks/share`);
+        },
+        // 단어장 권한
+        async [MODE.WORD_BOOK_SETTING_READ](_, wordBookId) {
+            return await executeSrvConnect('get', `wordbooks/${wordBookId}/setting`);
+        },
+        async [MODE.WORD_BOOK_SETTING_UPDATE](_, wordBookId, data) {
+            return await executeSrvConnect('put', `wordbooks/${wordBookId}/setting`, data);
+        },
+        async [MODE.WORD_BOOK_MEMBER_READ](_, wordBookId) {
+            return await executeSrvConnect('get', `wordbooks/${wordBookId}/members`);
+        },
+        async [MODE.WORD_BOOK_MEMBER_ADD](_, wordBookId, {userId, role}) {
+            return await executeSrvConnect('post', `wordbooks/${wordBookId}/members`, {userId, role});
+        },
+        async [MODE.WORD_BOOK_MEMBER_DELETE](_, {wordBookId, wordBookMemberId}) {
+            return await executeSrvConnect('delete', `wordbooks/${wordBookId}/members/${wordBookMemberId}`);
+        },
+        async [MODE.WORD_BOOK_MEMBER_ROLE_UPDATE](_, wordBookId, {userId, role}) {
+            return await executeSrvConnect('put', `wordbooks/${wordBookId}/members/role`, {userId, role});
+        },
+        async [MODE.USER_SEARCH](_, searchText) {
+            return await executeSrvConnect('get', `user/search?q=${searchText}`, null, {isUpdate: false, isLoading: false});
         },
     }
 
