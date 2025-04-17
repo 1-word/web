@@ -76,6 +76,7 @@ export const MODE = {
     USER_TUTORIAL_COMPLETE: "userTutorialComplete",
     SHAREROOM_CREATE: "shareroomCreate",
     SHAREROOM_DELETE: "shareroomDelete",
+    WORD_COPY: "wordCopy",
 }
 
 /**
@@ -143,7 +144,7 @@ function useEvntHandler(e, modeType, data, func){
             return await executeSrvConnect('put', `v3/wordbooks/${wordBookId}/words/${wordId}/move`, data, {isUpdate: true});
         },
         async folderDelete(_, wordBookId){
-            return await executeSrvConnect("delete", `wordbooks/${wordBookId}`, null, {isUpdate: false});
+            return await executeSrvConnect("delete", `wordbooks/${wordBookId}?removeWords=true`, null, {isUpdate: false});
         },
         async folderCountRead(_, {wordBookId, query}){
             return await executeSrvConnect("get", `wordbooks/${wordBookId}${query}`, null, {isUpdate: false});
@@ -345,6 +346,11 @@ function useEvntHandler(e, modeType, data, func){
         async [MODE.SHAREROOM_DELETE](_, wordBookId) {
             return await executeSrvConnect('delete', `share-rooms/wordbook/${wordBookId}`);
         },
+        async [MODE.WORD_COPY](_, wordBookId, targetWordBookId) {
+            return await executeSrvConnect('post', `v3/wordbooks/${wordBookId}/words/copy`, {
+                targetWordBookId
+            });
+        }
     }
 
     /**

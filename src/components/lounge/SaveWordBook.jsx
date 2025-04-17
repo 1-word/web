@@ -5,12 +5,14 @@ import FullModal from "@components/layout/popup/FullModal";
 import api, { MODE } from "@/services/api";
 import { Pagination } from "@/util/Pagination";
 import WordDetailList from "../word/WordDetailList";
+import Toast from "../layout/popup/Toast";
 
 const SaveWordBook = ({
   wordBook,
   deleteModalAfterTime,
 }) => {
   const onClickHandler = api();
+  const [openModal] = useModal();
   const [shareModal] = useModal("share");
   const obsRef = useRef();
   const [obsPage, obsInit, isEnd, preventDisable] = useObserver();
@@ -52,9 +54,10 @@ const SaveWordBook = ({
     });
   }
 
-  const afterCompleteFunc = (item) => {
-    const wordBookId = item.wordBookId;
-
+  const afterCompleteFunc = async (item) => {
+    const targetWordBookId = item.wordBookId;
+    await onClickHandler(null, MODE.WORD_COPY, wordBook.wordBookId, targetWordBookId);
+    openModal(Toast, null, { msg: "단어장 복사가 완료되었습니다." }, "toast");
   }
 
   return (
@@ -86,7 +89,8 @@ const SaveWordBook = ({
                 <WordDetailList details={data?.details}></WordDetailList>
               </div>
             </div>
-          )}
+            )
+          }
         </div>
       </div>
       <div ref={obsRef} style={{ height: "100px" }}></div>

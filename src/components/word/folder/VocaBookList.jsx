@@ -152,7 +152,7 @@ function VocabookList({
                 <p className="voca_book_list_name">{item?.name}</p>
                 <button
                   className="voca_book_list_more"
-                  onClick={handleMoreModal()}
+                  onClick={handleMoreModal(item)}
                 >
                   <i className="xi-ellipsis-v"></i>
                 </button>
