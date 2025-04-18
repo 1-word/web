@@ -83,7 +83,7 @@ function Memorize(){
 	
 			const query = Pagination.getQueryParameter(queryParams);
 	
-			onClickHandler(null, MODE.READ, query).then(res => {
+			onClickHandler(null, MODE.READ, wordBookId, query).then(res => {
 				setWordList({
 					page: res.page,
 					data: [...wordList.data, ...res.data]
