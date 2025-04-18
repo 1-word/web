@@ -47,6 +47,9 @@
     --swiper-pagination-bottom: 6px;
     &.swiper {
       margin: 30px 14px 0 14px;
+      @include deviceSmall() {
+        margin: 16px 14px 0 14px;
+      }
       padding-bottom: 29px;
     }
   }
@@ -59,10 +62,13 @@
     &.swiper-slide {
       padding: 24px;
       height: 100%;
-			min-height: 800px;
-			@include deviceSmall(){
-				min-height: 600px;
-			}
+      min-height: 800px;
+      @include deviceMedium() {
+        min-height: 600px;
+      }
+      @include deviceSmall() {
+        min-height: 400px;
+      }
       display: flex;
       flex-direction: column;
       justify-content: space-around;
@@ -85,7 +91,7 @@
     // max-height: 80%;
     overflow: hidden;
     &:has(video) {
-			height: 300px;
+      height: 300px;
     }
     img,
     video {
