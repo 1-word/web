@@ -133,9 +133,9 @@ function Modals(){
 																	Modals.layout,
 																	{
 																		idx,
-																		deleteModalAfterTime: (ms, mode) => deleteModalAfterTime(ms, idx, null, mode, false),
-																		deleteModal: (element) => deleteModalAfterTime(null, idx, element, false),
-																		closeModal: () => closeModal(idx, Modals.id, false),
+																		deleteModalAfterTime: (ms, mode, isBacked) => deleteModalAfterTime(ms, idx, null, mode, isBacked??false),
+																		deleteModal: (element, isBacked) => deleteModalAfterTime(null, idx, element, isBacked??false),
+																		closeModal: (isBacked) => closeModal(idx, Modals.id, isBacked??false),
 																		setOpenModal: () => setOpenModal(idx),
 																		isOpened: Modals.isOpened,
 																		contents: Modals.contents,

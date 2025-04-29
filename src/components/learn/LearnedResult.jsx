@@ -40,14 +40,15 @@ function LearnedResult({
 	}
 
 	const handleResult = (quizStat) => e => {
-		navigate('/quiz-result', {
-			replace: true,
-			state: {
-				end: true,
-				result: quizStat,
-				quizInfoId: quizStat.quizStatId
-			}});
-			deleteModalAfterTime(300);
+		deleteModalAfterTime(0, true);
+		setTimeout(() => {
+			navigate('/quiz-result', {
+				state: {
+					end: true,
+					result: quizStat,
+					quizInfoId: quizStat.quizStatId
+				}});
+		}, 30);
 	}
 
 	const resultItems = (items) => {

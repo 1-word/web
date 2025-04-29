@@ -147,34 +147,37 @@ function BeforeLearn({ deleteModalAfterTime, learnType }) {
       ...quizInfo.current,
       count: parseInt(slider.value),
     };
-
+    
     if (data.wordBookId === null) {
       openModal(Toast, null, { msg: "단어장을 선택해주세요" }, "toast");
       return;
     }
 
-    if (learnType === "quiz") {
-      onClickHandler(null, MODE.QUIZ_INFO_SAVE, data).then((res) => {
-        const quizInfoId = res;
-        navigate("/quiz", {
-          state: {
-            ...data,
-            quizInfoId,
-            quizType: "create",
+    deleteModalAfterTime(0, true);
+    
+    setTimeout(() => {
+      if (learnType === "quiz") {
+        onClickHandler(null, MODE.QUIZ_INFO_SAVE, data).then((res) => {
+          const quizInfoId = res;
+          navigate("/quiz", {
+            state: {
+              ...data,
+              quizInfoId,
+              quizType: "create",
+            },
+          });
+        });
+      } else {
+          navigate("/memorize", {
+            state: {
+              ...data,
+              count: parseInt(slider.value),
           },
         });
-      });
-    } else {
-      navigate("/memorize", {
-        state: {
-          ...data,
-          count: parseInt(slider.value),
-        },
-      });
-    }
-    deleteModalAfterTime(0);
+      }
+    }, 30);
   };
-
+  
   return (
     <>
       <p>시작 전에 체크해주세요</p>
