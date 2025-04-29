@@ -1,7 +1,7 @@
 import ModalStore from "@/store/modalStore";
 import ModalPortal from "@components/modal/ModalPortal";
 import Loading from "./modal/Loading";
-import React, { useEffect, useRef, createElement } from "react";
+import React, { useEffect, useRef, createElement, useState } from "react";
 import { getAnimationDuration } from "@/util/utils";
 import { useNavigationType } from "react-router-dom";
 
@@ -11,6 +11,7 @@ import { useNavigationType } from "react-router-dom";
 function Modals(){
     const { openedModals, deleteModal, loading, setOpenModal, deleteModalById, deleteAllModal } = ModalStore(modal => modal);
     const modalWrapRef = useRef([]);
+		const isBacked = useRef(true);
 
 		useEffect(() => {
 			window.addEventListener('popstate', goBack);
@@ -21,7 +22,16 @@ function Modals(){
 		}, [openedModals]);
 
 		const goBack = () => {
-				deleteModal(openedModals.length - 1);
+			if (isBacked.current) {
+				if (openedModals.length > 0) {
+					closeTopModal(true);
+				}
+			}
+			setBacked(true);
+		}
+
+		const setBacked = (flag) => {
+			isBacked.current = flag;
 		}
 
     /**
@@ -29,26 +39,36 @@ function Modals(){
 		 * 닫는 애니메이션은 없음 
 		 * @param {int} idx 모달 위치
 		 */
-    const closeModal = (idx, id) => {
+    const closeModal = (idx, id, isBacked) => {
 			deleteModalById(id);
+			if (!isBacked) {
+				setBacked(false);
+				history.back();
+				return;
+			}
     }
 
 		// 모달 닫을 때 애니메이션을 적용하기 위해서는
 		// modal-wrap 하위 element에 off css가 적용이 되어있어야 함
-
+		
 		/**
 		 * "최상위"에 있는 모달(팝업)을 닫는다.
-		 */
-    const closeTopModal = () => {
-        // 최상단 모달은 배열의 가장 끝 데이터가 됨
-        const idx = openedModals.length > 0? openedModals.length - 1 : 0;
-				const child = modalWrapRef?.current[idx]?.childNodes[0];
-        child.classList.add("off");
-				let ms = getAnimationDuration(child);
-				if (ms === 0) {
-					ms = 150;
-				}
-        setTimeoutModal(ms, idx, () => deleteModal(idx));
+		*/
+    const closeTopModal = (isBacked) => {
+			// 최상단 모달은 배열의 가장 끝 데이터가 됨
+			const idx = openedModals.length > 0? openedModals.length - 1 : 0;
+			const child = modalWrapRef?.current[idx]?.childNodes[0];
+			child.classList.add("off");
+			let ms = getAnimationDuration(child);
+			if (ms === 0) {
+				ms = 150;
+			}
+			if (!isBacked) {
+				setBacked(false);
+				history.back();
+				return;
+			}
+        setTimeoutModal(ms, idx, () => deleteModal(idx));	
     }
 
 		/**
@@ -57,17 +77,20 @@ function Modals(){
 		 * @param {*} ms 애니메이션 시간 delay
 		 * @param {*} idx 현재 팝업 위치
 		 */
-    const deleteModalAfterTime = (ms, idx, element, mode) => {
-			
+    const deleteModalAfterTime = (ms, idx, element, mode, isBacked) => {
 			if (element) {
 				ms = getAnimationDuration(element);
 			} else {
 				element = modalWrapRef?.current[idx]?.childNodes[0];
 				ms = ms ?? 0;
 			}
-
+			
 			element.classList.add("off");
 			setTimeoutModal(ms, idx, () => {
+				if (!isBacked) {
+					setBacked(false);
+					history.back();
+				}
 				setDeleteModalFunc(mode)(idx);
 			});
 		}
@@ -110,9 +133,9 @@ function Modals(){
 																	Modals.layout,
 																	{
 																		idx,
-																		deleteModalAfterTime: (ms, mode) => deleteModalAfterTime(ms, idx, null, mode),
-																		deleteModal: (element) => deleteModalAfterTime(null, idx, element),
-																		closeModal: () => closeModal(idx, Modals.id),
+																		deleteModalAfterTime: (ms, mode) => deleteModalAfterTime(ms, idx, null, mode, false),
+																		deleteModal: (element) => deleteModalAfterTime(null, idx, element, false),
+																		closeModal: () => closeModal(idx, Modals.id, false),
 																		setOpenModal: () => setOpenModal(idx),
 																		isOpened: Modals.isOpened,
 																		contents: Modals.contents,
