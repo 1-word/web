@@ -4,7 +4,6 @@ import Header from "@components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Canvas from "@/components/main/Canvas";
 import LeftFix from "@/components/layout/LeftFix";
-import Tutorial from "./Tutorial";
 
 function Home() {
   useEffect(() => {
@@ -22,7 +21,6 @@ function Home() {
   }, []);
   return (
     <div className="wrap">
-			<Tutorial></Tutorial>
       <LeftFix></LeftFix>
       <Header></Header>
       <Canvas></Canvas>
