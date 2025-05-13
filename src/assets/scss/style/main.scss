@@ -131,8 +131,9 @@ nav {
     @include deviceSmall() {
       background-size: 90%;
     }
-    &.on {
-      animation: goDown 2s ease-in-out alternate;
+    &.active {
+      animation: goDown 2s ease-in-out forwards;
+      animation-delay: 400ms;
     }
     &_first {
       background-image: url("/src/assets/images/wordList.png");
@@ -153,18 +154,44 @@ nav {
       background-position: right -50px;
       @include deviceSmall() {
         background-position: center -50px;
+        &.active {
+          animation: goDownMo 2s ease-in-out forwards;
+        }
       }
     }
     @keyframes goDown {
       100% {
-        background-position: right -500px;
+        background-position: right -300px;
+      }
+    }
+    @keyframes goDownMo {
+      100% {
+        background-position: center -100px;
       }
     }
   }
   &_title {
+    position: relative;
     font-size: 1.5em;
     line-height: 1.2em;
     font-weight: bold;
+    overflow: hidden;
+    &::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      left: 0;
+      top: 0;
+      height: 100%;
+      background-color: $default-fff;
+      transition: left 0.5s ease;
+      transition-delay: 400ms;
+    }
+    &.active {
+      &::after {
+        left: 100%;
+      }
+    }
   }
   &_contents {
     font-size: 1em;
@@ -196,6 +223,22 @@ nav {
     &_title {
       font-size: 1em;
       line-height: 1.2em;
+    }
+    li.active {
+      animation: reverseAni 0.2s ease-in-out;
+      @for $i from 1 through 6 {
+        &:nth-child(#{$i}) {
+          animation-delay: 0.2s * $i;
+        }
+      }
+    }
+    @keyframes reverseAni {
+      from {
+        filter: opacity(0);
+      }
+      to {
+        filter: opacity(1);
+      }
     }
   }
 }
