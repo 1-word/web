@@ -93,21 +93,21 @@ function Canvas(){
 		Composite.add(world, stack);
 	};
 
-	// 브라우저일때만 활성화
+	// 브라우저일때만 활성화 취소
+	// 마우스 드래그 기능
+	const mouse = Matter.Mouse.create(render.canvas) //마우스 객체 생성
+	const mouseConstraint = Matter.MouseConstraint.create(engine,{ //마우스로 화면에서 바디를 클릭, 드래그 할 수 있도록 함
+					mouse: mouse,
+					constraint: {
+							stiffness: 1.2, // 탄성정도
+							render:{
+									visible: false //마우스 드래그 시 제약조건 보이기X
+							}
+					}
+			})
+	World.add(world,mouseConstraint)
 	if(isBrowser){
-		// 마우스 드래그 기능
-		const mouse = Matter.Mouse.create(render.canvas) //마우스 객체 생성
-		const mouseConstraint = Matter.MouseConstraint.create(engine,{ //마우스로 화면에서 바디를 클릭, 드래그 할 수 있도록 함
-						mouse: mouse,
-						constraint: {
-								stiffness: 1.2, // 탄성정도
-								render:{
-										visible: false //마우스 드래그 시 제약조건 보이기X
-								}
-						}
-				})
-		World.add(world,mouseConstraint)
-		
+		console.log('PC입니다');
 	}
 
 

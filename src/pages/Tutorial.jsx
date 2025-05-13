@@ -43,38 +43,26 @@ const Tutorial = ({ func }) => {
             </SwiperSlide>
             <SwiperSlide className="tutorial_swiper_item">
               <div className="tutorial_swiper_img">
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  src="tutorial/add.mp4"
-                  title="단어를 추가하고 수정해요"
-                />
+                <img src="tutorial/tuto2.png" alt="단어를 추가하고 수정해요" />
               </div>
               <p className="tutorial_swiper_title">단어를 추가하고 수정해요</p>
             </SwiperSlide>
             <SwiperSlide className="tutorial_swiper_item">
               <div className="tutorial_swiper_img">
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  src="tutorial/custom.mp4"
-                  title="내 마음대로 커스텀해요"
-                />
+                <img src="tutorial/tuto3.png" alt="내 마음대로 커스텀해요" />
               </div>
               <p className="tutorial_swiper_title">내 마음대로 커스텀해요</p>
             </SwiperSlide>
             <SwiperSlide className="tutorial_swiper_item">
               <div className="tutorial_swiper_img">
-                <img src="tutorial/tuto2.png" alt="오늘은 무엇을 배웠나요?" />
+                <img src="tutorial/tuto4.png" alt="오늘은 무엇을 배웠나요?" />
               </div>
               <p className="tutorial_swiper_title">오늘은 무엇을 배웠나요?</p>
             </SwiperSlide>
             <SwiperSlide className="tutorial_swiper_item">
               <div className="tutorial_swiper_img">
                 <img
-                  src="tutorial/tuto3.png"
+                  src="tutorial/tuto5.png"
                   alt="내가 추가한 단어를 학습해요"
                 />
               </div>
