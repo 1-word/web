@@ -125,6 +125,7 @@ function DailySentence() {
   }, [update]);
 
   const getSentenceList = (queryParams) => {
+    console.log(queryParams)
     const query = Pagination.getPageParameter(queryParams);
 
     onClickHandler(null, MODE.DAILY_SENTENCE_READ, query).then((res) => {
@@ -165,11 +166,12 @@ function DailySentence() {
       year = date.year -= 1;
     }
 
+    // 월 변경 시 날짜는 그대로
     setDate({
       ...date,
       month,
       year,
-      day: 1,
+      day: date.day,
     });
 
     setSentenceDays({
@@ -239,7 +241,7 @@ function DailySentence() {
         },
         {
           name: "month",
-          value: date.realMonth ?? null,
+          value: date.month ?? null,
         },
         {
           name: "day",
