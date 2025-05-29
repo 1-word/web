@@ -118,7 +118,7 @@ function useEvntHandler(e, modeType, data, func){
         async [MODE.SINGLE_READ](_, {wordId, wordBookId}) {
             return await executeSrvConnect("get", `v3/wordbooks/${wordBookId}/words/${wordId}`, null, {isUpdate: false, returnMsg: false});
         },
-        async [MODE.SEARCH](e, query){
+        async [MODE.SEARCH](e, wordBookId, query){
             const res = await executeSrvConnect("get", `v3/wordbooks/${wordBookId}/words/search/${query}`, null, {isUpdate:false, isLoading: false, returnMsg: false});
             return res;
         },

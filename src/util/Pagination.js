@@ -6,7 +6,6 @@ export class Pagination {
       current,
       lastId,
       wordBookId,
-      wordBookId,
       searchText,
       memorization,
       lang,

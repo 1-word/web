@@ -84,7 +84,7 @@ function Word() {
 
     const query = Pagination.getQueryParameter(queryParams);
 
-    onClickHandler(null, MODE.SEARCH, searchText + query).then((res) => {
+    onClickHandler(null, MODE.SEARCH, wordBookId, searchText + query).then((res) => {
       setWordList(res);
       setPage(res.page);
       previousSearchText.current = searchText;
