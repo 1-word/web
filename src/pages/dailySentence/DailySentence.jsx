@@ -125,7 +125,6 @@ function DailySentence() {
   }, [update]);
 
   const getSentenceList = (queryParams) => {
-    console.log(queryParams)
     const query = Pagination.getPageParameter(queryParams);
 
     onClickHandler(null, MODE.DAILY_SENTENCE_READ, query).then((res) => {
